@@ -26,4 +26,4 @@ Check the output of the run command to see the served ips and ports.
 License
 -------
 
-see [LICENSE](LICENSE.MD)
+MIT, see [LICENSE](LICENSE.MD)
