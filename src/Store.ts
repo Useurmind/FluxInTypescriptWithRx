@@ -26,8 +26,14 @@ export interface IStore<TState>
  */
 export interface IStoreOptions<TState>
 {
+    /** 
+     * The state that the store will have before any commands are executed.
+     */
     initialState: TState;
 
+    /**
+     * Optional parameter to execute a function when the store is first observed.
+     */
     onInit?: () => void;
 }
 
@@ -39,6 +45,10 @@ export abstract class Store<TState> implements IStore<TState> {
     private storeOptions: IStoreOptions<TState>;
     protected subject: Rx.BehaviorSubject<TState>;
 
+    /**
+     * Constructor for stores base clase.
+     * @param options Options object to initialize the store with initial state. 
+     */
     constructor(options: IStoreOptions<TState>)
     {
         this.subject = new Rx.BehaviorSubject<TState>(options.initialState);
@@ -72,6 +82,10 @@ export abstract class Store<TState> implements IStore<TState> {
         return this.observe().subscribe(next);
     }
 
+    /**
+     * Set the state to a fixed value.
+     * @param nexState The new state object that should be applied.
+     */
     protected setState(nextState: TState): void
     {
         if (nextState)
@@ -80,6 +94,10 @@ export abstract class Store<TState> implements IStore<TState> {
         }
     }
 
+    /**
+     * Update the state by taking the existing state and returning the new state.
+     * @param transformState Function that takes the current state and returns the new state.
+     */
     protected updateState(transformState: (currentState: TState) => TState): void
     {
         if (transformState)
@@ -92,16 +110,27 @@ export abstract class Store<TState> implements IStore<TState> {
         }
     }
     
+    /**
+     * Create a command that you can observe and that others can execute.
+     */
     protected createCommand<TParameter>(): Commands.IObservableCommand<TParameter>
     {
         return new Commands.Command<TParameter>();
     }
 
+    /**
+     * Create a command and subscribe it directly.
+     * @param next Handler for command calls.
+     */
     protected createCommandAndSubscribe<TParameter>(next: (data: TParameter) => void): Commands.ICommand<TParameter>
     {
         return this.createCommandAdvanced<TParameter>(command => command.subscribe(next));
     }
 
+    /**
+     * Create a command and configure observation of the command.
+     * @param configure Handler that receives the command observable and subscribes it in any possible way.
+     */
     protected createCommandAdvanced<TParameter>(configure: (commandObservable: Rx.Observable<TParameter>) => void):
         Commands.ICommand<TParameter>
     {
