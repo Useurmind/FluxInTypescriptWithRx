@@ -2,6 +2,10 @@
   "name": "fluxintypescriptwithrx",
   "version": "1.0.0",
   "description": "A tutorial on how to use flux in typescript with rxjs.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Useurmind/FluxInTypescriptWithRx.git"
+  },
   "main": "index.js",
   "scripts": {
     "build": ".\\node_modules\\.bin\\tsc && .\\node_modules\\.bin\\webpack-cli --config webpack.js",
@@ -13,7 +17,7 @@
     "rxjs",
     "typescript"
   ],
-  "author": "Jochen Grün <jochen.gruen2@mhp.com>",
+  "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
   "dependencies": {
     "@types/react": "^16.0.40",
