@@ -6,7 +6,7 @@ module.exports = {
     // entryPoint.js is the main file of your application
     // from there all required parts of the application are imported
     // wepack will start to traverse imports starting from this file
-    entry: "./out/example/index.js",
+    entry: "./out/example/counter/index.js",
     plugins: [
         // clean files in webpack_dist before doing anything
         new CleanWebpackPlugin(['example/dist'])
@@ -25,6 +25,6 @@ module.exports = {
     output: {
         libraryTarget: "umd",
         filename: 'fluxInTypescriptWithRx.bundle.js',
-        path: path.resolve(__dirname, 'example/dist')
+        path: path.resolve(__dirname, 'example/counter/dist')
     }
 };

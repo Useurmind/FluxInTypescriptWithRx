@@ -1,25 +1,9 @@
 import * as Rx from "rxjs/Rx";
-import * as Commands from "./Command";
+import { IAction } from "./IAction";
+import { IObservableAction } from "./IObservableAction";
+import { Action } from "./Action";
+import { IStore } from "./IStore";
 
-/**
- * Interface for a store.
- */
-export interface IStore<TState>
-{
-    /**
-     * Observe the store to subscribe it afterwards with advanced options.
-     * Use subscribe for less verbosity.
-     * @returns {}
-     */
-    observe(): Rx.Observable<TState>;
-
-    /**
-     * Subscribe state changes of the store.
-     * @next The subscription handler that handles changes to the state.
-     * @returns The subscription to cancel the subscription.
-     */
-    subscribe(next: (state: TState) => void): Rx.Subscription;
-}
 
 /**
  * Options to configure a generic store.
@@ -27,7 +11,7 @@ export interface IStore<TState>
 export interface IStoreOptions<TState>
 {
     /** 
-     * The state that the store will have before any commands are executed.
+     * The state that the store will have before any actions are executed.
      */
     initialState: TState;
 
@@ -54,6 +38,13 @@ export abstract class Store<TState> implements IStore<TState> {
         this.subject = new Rx.BehaviorSubject<TState>(options.initialState);
         this.initialized = false;
         this.storeOptions = options;
+    }
+
+    /**
+     * Get the state of this store.
+     */
+    protected get state(): TState {
+        return this.subject.getValue();
     }
 
     /**
@@ -111,34 +102,34 @@ export abstract class Store<TState> implements IStore<TState> {
     }
     
     /**
-     * Create a command that you can observe and that others can execute.
+     * Create an action that you can observe and that others can execute.
      */
-    protected createCommand<TParameter>(): Commands.IObservableCommand<TParameter>
+    protected createAction<TActionEvent>(): IObservableAction<TActionEvent>
     {
-        return new Commands.Command<TParameter>();
+        return new Action<TActionEvent>();
     }
 
     /**
-     * Create a command and subscribe it directly.
-     * @param next Handler for command calls.
+     * Create an action and subscribe it directly.
+     * @param next Handler for action events.
      */
-    protected createCommandAndSubscribe<TParameter>(next: (data: TParameter) => void): Commands.ICommand<TParameter>
+    protected createActionAndSubscribe<TActionEvent>(next: (data: TActionEvent) => void): IAction<TActionEvent>
     {
-        return this.createCommandAdvanced<TParameter>(command => command.subscribe(next));
+        return this.createActionAdvanced<TActionEvent>(action => action.subscribe(next));
     }
 
     /**
-     * Create a command and configure observation of the command.
-     * @param configure Handler that receives the command observable and subscribes it in any possible way.
+     * Create an action and configure observation of the action.
+     * @param configure Handler that receives the action observable and subscribes it in any possible way.
      */
-    protected createCommandAdvanced<TParameter>(configure: (commandObservable: Rx.Observable<TParameter>) => void):
-        Commands.ICommand<TParameter>
+    protected createActionAdvanced<TActionEvent>(configure: (actionObservable: Rx.Observable<TActionEvent>) => void):
+        IAction<TActionEvent>
     {
 
-        let command = this.createCommand<TParameter>();
+        let action = this.createAction<TActionEvent>();
 
-        configure(command.observe());
+        configure(action.observe());
 
-        return command;
+        return action;
     }
 }
