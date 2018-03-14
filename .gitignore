@@ -2,3 +2,5 @@
 /out
 /example/**/dist/*.bundle.js
 rewrite.sh
+InstallUtil.InstallLog
+package-lock.json
