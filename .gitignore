@@ -1,4 +1,4 @@
 /node_modules
 /out
-/example/dist
+/example/**/dist/*.bundle.js
 rewrite.sh
