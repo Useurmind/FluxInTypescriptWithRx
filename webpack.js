@@ -8,13 +8,13 @@ module.exports = {
     // wepack will start to traverse imports starting from this file
     entry: {
         counter: "./out/example/counter/index.js",
-        asyncAction: "./out/example/asyncAction/index.js"
+        asyncAction: "./out/example/asyncAction/index.js",
+        middleware: "./out/example/middleware/index.js"
     },
     plugins: [
         // clean files in webpack_dist before doing anything
         new CleanWebpackPlugin([
-            'example/counter/dist',
-            'example/asyncAction/dist'
+            'example/dist'
         ])
     ],
     plugins: [

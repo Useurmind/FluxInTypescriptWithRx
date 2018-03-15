@@ -3,6 +3,9 @@ import { IAction } from "./IAction";
 import { IObservableAction } from "./IObservableAction";
 import { Action } from "./Action";
 import { IStore } from "./IStore";
+import { IActionFactory } from './ActionFactory/IActionFactory';
+import { SimpleActionFactory } from './ActionFactory/SimpleActionFactory';
+import { IActionMetadata } from './ActionFactory/IActionMetadata';
 
 
 /**
@@ -19,6 +22,12 @@ export interface IStoreOptions<TState>
      * Optional parameter to execute a function when the store is first observed.
      */
     onInit?: () => void;
+
+    /**
+     * Action factory used to create actions.
+     * By default the { @see SimpleActionFactory } is used.
+     */
+    actionFactory?: IActionFactory;
 }
 
 /**
@@ -37,7 +46,10 @@ export abstract class Store<TState> implements IStore<TState> {
     {
         this.subject = new Rx.BehaviorSubject<TState>(options.initialState);
         this.initialized = false;
-        this.storeOptions = options;
+        this.storeOptions = {
+            ...options,
+            actionFactory: options.actionFactory ? options.actionFactory : new SimpleActionFactory()
+        };
     }
 
     /**
@@ -104,29 +116,28 @@ export abstract class Store<TState> implements IStore<TState> {
     /**
      * Create an action that you can observe and that others can execute.
      */
-    protected createAction<TActionEvent>(): IObservableAction<TActionEvent>
+    protected createAction<TActionEvent>(actionMetadata?: IActionMetadata): IObservableAction<TActionEvent>
     {
-        return new Action<TActionEvent>();
+        return this.storeOptions.actionFactory.create<TActionEvent>(actionMetadata);
     }
 
     /**
      * Create an action and subscribe it directly.
      * @param next Handler for action events.
      */
-    protected createActionAndSubscribe<TActionEvent>(next: (data: TActionEvent) => void): IAction<TActionEvent>
+    protected createActionAndSubscribe<TActionEvent>(next: (data: TActionEvent) => void, actionMetadata?: IActionMetadata): IAction<TActionEvent>
     {
-        return this.createActionAdvanced<TActionEvent>(action => action.subscribe(next));
+        return this.createActionAdvanced<TActionEvent>(action => action.subscribe(next), actionMetadata);
     }
 
     /**
      * Create an action and configure observation of the action.
      * @param configure Handler that receives the action observable and subscribes it in any possible way.
      */
-    protected createActionAdvanced<TActionEvent>(configure: (actionObservable: Rx.Observable<TActionEvent>) => void):
+    protected createActionAdvanced<TActionEvent>(configure: (actionObservable: Rx.Observable<TActionEvent>) => void, actionMetadata?: IActionMetadata):
         IAction<TActionEvent>
     {
-
-        let action = this.createAction<TActionEvent>();
+        let action = this.createAction<TActionEvent>(actionMetadata);
 
         configure(action.observe());
 
