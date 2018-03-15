@@ -2,12 +2,12 @@ import * as Rx from "rxjs";
 import * as React from "react";
 import { IAsyncActionStore } from "./IAsyncActionStore";
 
-interface IAsyncActionProps {
+export interface IAsyncActionProps {
     label: string;
     store: IAsyncActionStore;
 }
 
-interface IAsyncActionState {
+export interface IAsyncActionState {
     text: string;
 }
 

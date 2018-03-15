@@ -8,6 +8,7 @@
         "target": "es5",
         "importHelpers": true,
         "lib": [ "dom", "es6", "scripthost" ],
-        "jsx": "react"
+        "jsx": "react",
+        "declaration": true
     }
 }

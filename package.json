@@ -6,7 +6,8 @@
     "type": "git",
     "url": "https://github.com/Useurmind/FluxInTypescriptWithRx.git"
   },
-  "main": "index.js",
+  "main": "out/src/index.js",
+  "types": "out/src/index.d.ts",
   "scripts": {
     "build": ".\\node_modules\\.bin\\tsc && .\\node_modules\\.bin\\webpack-cli --config webpack.js",
     "run": ".\\node_modules\\.bin\\http-server .\\example"

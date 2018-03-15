@@ -2,7 +2,7 @@ import * as Rx from "rxjs";
 import * as React from "react";
 import { pageStore } from "./PageStore";
 
-interface IPageState {
+export interface IPageState {
     counter: number;
 }
 
