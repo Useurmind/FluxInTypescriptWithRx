@@ -2,6 +2,9 @@ import * as Flux from "../../src";
 import { IActionFactory } from '../../src/ActionFactory/IActionFactory';
 import { MiddlewareActionFactory } from '../../src/ActionFactory/MiddlewareActionFactory';
 import { ConsoleLoggingMiddleware } from '../../src/Middleware';
+import { ActionEventLogMiddleware } from '../../src/Middleware/ActionEventLog/ActionEventLogMiddleware';
+import { ActionEventLog } from '../../src/Middleware/ActionEventLog/ActionEventLog';
+import { TimeTraveler } from '../../src/Middleware/ActionEventLog/TimeTraveler';
 
 export interface IPageStoreState {
     counter: number;
@@ -41,13 +44,29 @@ class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
     }
 }
 
+const eventLog = new ActionEventLog();
+const eventLogMiddleware = new ActionEventLogMiddleware(eventLog);
+
 // this is the action factory that applies the middleware to all actions
 // we use a middleware that logs all actions to the console
 const actionFactory = new MiddlewareActionFactory(
-    [new ConsoleLoggingMiddleware()]
+    [
+        new ConsoleLoggingMiddleware(),
+        eventLogMiddleware
+    ]
 );
 
 // publish an instance of this store 
 // you can do this in a nicer way by using a container
 // we keep it simple here on purpose 
 export const pageStore: IPageStore = new PageStore(actionFactory); 
+
+const timeTraveler = new TimeTraveler(
+    eventLog,
+    eventLogMiddleware,
+    () => [pageStore],
+    null
+);
+
+(<any>window).timeTraveler = timeTraveler;
+(<any>window).eventLog = eventLog;

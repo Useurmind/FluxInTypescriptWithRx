@@ -1,9 +1,10 @@
 import * as Rx from "rxjs/Rx";
+import { IResetMyState } from './IResetMyState';
 
 /**
  * Interface for a store.
  */
-export interface IStore<TState>
+export interface IStore<TState> extends IResetMyState
 {
     /**
      * Observe the store to subscribe it afterwards with advanced options.

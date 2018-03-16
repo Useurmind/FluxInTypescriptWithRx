@@ -6,6 +6,7 @@ import { IStore } from "./IStore";
 import { IActionFactory } from './ActionFactory/IActionFactory';
 import { SimpleActionFactory } from './ActionFactory/SimpleActionFactory';
 import { IActionMetadata } from './ActionFactory/IActionMetadata';
+import { IResetMyState } from './IResetMyState';
 
 
 /**
@@ -83,6 +84,13 @@ export abstract class Store<TState> implements IStore<TState> {
     public subscribe(next: (state: TState) => void): Rx.Subscription
     {
         return this.observe().subscribe(next);
+    }
+
+    /**
+     * {@inheritdoc }
+     */
+    public resetState(): void {
+        this.setState(this.storeOptions.initialState);
     }
 
     /**
