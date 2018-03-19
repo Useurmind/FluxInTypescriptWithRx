@@ -65,6 +65,7 @@ const timeTraveler = new TimeTraveler(
     eventLog,
     eventLogMiddleware,
     () => [pageStore],
+    () => [eventLogMiddleware],
     null
 );
 

@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "outDir": "out",
+        "rootDir": ".",
         "module": "commonjs",
         "moduleResolution": "node",
         "watch": false,  // for development specify -w on command line

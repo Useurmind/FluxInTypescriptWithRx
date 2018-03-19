@@ -2,15 +2,24 @@ import { IActionEventLog } from './IActionEventLog';
 import { ActionEventLogMiddleware } from './ActionEventLogMiddleware';
 import { IResetMyState } from '../../IResetMyState';
 import { IActionMetadata, IObservableAction } from '../..';
+import { INeedToKnowIfIAmInThePast } from './INeedToKnowIfIAmInThePast';
 
 export class TimeTraveler {
+    /**
+     * States whether currently we are in the past.
+     * Being in the past for example indicates that no further commands may be executed.
+     */
+    private hasTraveledToPast: boolean;
+
     constructor(
         private eventLog: IActionEventLog,
         private eventLogMiddleware: ActionEventLogMiddleware,
         private getResetStates: () => IResetMyState[],
+        private getPastSubsribers: () => INeedToKnowIfIAmInThePast[],
         private getAction: (actionMetadata: IActionMetadata) => IObservableAction<any>
     ){
-
+        this.hasTraveledToPast = false;
+        this.getPastSubsribers().forEach(subscriber => subscriber.setHasTraveledToPast(this.hasTraveledToPast))
     }
 
     /**
@@ -25,6 +34,7 @@ export class TimeTraveler {
                 resettableState.resetState();
             });
 
+            // some: lets us execute the given function until we return true
             this.eventLog.actionEvents.some(actionEvent => {
                 if(actionEvent.isActive) {
                     let action = actionEvent.action ? actionEvent.action : this.getAction(actionEvent.actionMetaData);
@@ -36,6 +46,10 @@ export class TimeTraveler {
                 return  actionEvent.sequenceNumber >= sequenceNumber;
             })
 
+            // update if we are in the past
+            let lastEvent = this.eventLog.actionEvents.slice(-1).pop()            
+            this.hasTraveledToPast = lastEvent && sequenceNumber < lastEvent.sequenceNumber ? true : false;
+            this.getPastSubsribers().forEach(subscriber => subscriber.setHasTraveledToPast(this.hasTraveledToPast))
         } finally {
             this.eventLogMiddleware.noteReplayEnded();
         }
