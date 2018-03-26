@@ -28,6 +28,17 @@
             }
         },
         {
+            "label": "webpack-dev-server",
+            "type": "shell",
+            "windows": {
+                "command": ".\\node_modules\\.bin\\webpack-dev-server --config webpack.js"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "http-server",
             "type": "shell",
             "windows": {

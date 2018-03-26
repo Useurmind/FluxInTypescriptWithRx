@@ -8,7 +8,15 @@ declare var es6;
 es5.nothing;
 es6.nothing;
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
     let root = document.getElementById("root");
-    ReactDom.render(<Page />, root); 
+    ReactDom.render(<Page />, root);
 });
+
+declare const module: any;
+
+if (module.hot) {
+    module.hot.accept('./Page', function () {
+        console.log('Accepting the updated Page module!');
+    })
+}

@@ -6,6 +6,9 @@ import { IStore } from "./IStore";
 import { IActionFactory } from './ActionFactory/IActionFactory';
 import { SimpleActionFactory } from './ActionFactory/SimpleActionFactory';
 import { IActionMetadata } from './ActionFactory/IActionMetadata';
+import { IResetMyState } from './IResetMyState';
+import { IObservableFetcher } from './Fetch/IObservableFetcher';
+import { ObservableFetcher } from './Fetch/ObservableFetcher';
 
 
 /**
@@ -28,6 +31,11 @@ export interface IStoreOptions<TState>
      * By default the { @see SimpleActionFactory } is used.
      */
     actionFactory?: IActionFactory;
+
+    /** 
+     * Utility class to allow fetching 
+     */
+    fetcher?: IObservableFetcher;
 }
 
 /**
@@ -48,7 +56,8 @@ export abstract class Store<TState> implements IStore<TState> {
         this.initialized = false;
         this.storeOptions = {
             ...options,
-            actionFactory: options.actionFactory ? options.actionFactory : new SimpleActionFactory()
+            actionFactory: options.actionFactory ? options.actionFactory : new SimpleActionFactory(),
+            fetcher: options.fetcher ? options.fetcher : new ObservableFetcher()
         };
     }
 
@@ -86,6 +95,13 @@ export abstract class Store<TState> implements IStore<TState> {
     }
 
     /**
+     * {@inheritdoc }
+     */
+    public resetState(): void {
+        this.setState(this.storeOptions.initialState);
+    }
+
+    /**
      * Set the state to a fixed value.
      * @param nexState The new state object that should be applied.
      */
@@ -111,6 +127,13 @@ export abstract class Store<TState> implements IStore<TState> {
 
             this.setState(nextState);
         }
+    }
+
+    /**
+     * Provides fetching capabilities that are compatible with the replay functionality.
+     */
+    protected fetch(requestInfo: RequestInfo, init?: RequestInit): Rx.Observable<Response> {
+        return this.storeOptions.fetcher.fetch(requestInfo, init);
     }
     
     /**
