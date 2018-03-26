@@ -3,7 +3,16 @@ import { ActionEventLogMiddleware } from './ActionEventLogMiddleware';
 import { IResetMyState } from '../../IResetMyState';
 import { IActionMetadata, IObservableAction } from '../..';
 import { INeedToKnowIfIAmInThePast } from './INeedToKnowIfIAmInThePast';
+import { INeedToKnowAboutReplay } from './INeedToKnowAboutReplay';
 
+/**
+ * This is the class that controls the time travel process.
+ * On the most basic level it
+ * - turns off a lot of stuff
+ * - replays the event log into the corresponding actions
+ * - communicates whether we are in the past
+ * - turns on a lot of stuff
+ */
 export class TimeTraveler {
     /**
      * States whether currently we are in the past.
@@ -11,9 +20,17 @@ export class TimeTraveler {
      */
     private hasTraveledToPast: boolean;
 
+    /**
+     * Create an instance of this class.
+     * @param eventLog The event log that contains all action events.
+     * @param getReplaySubscribers Get an array of all subscribers for occurences of replays.
+     * @param getResetStates Get an array of every component that needs to be reset when beginning a replay.
+     * @param getPastSubscribes Get an array of all subscribes that want to know whether we are in the past.
+     * @param getAction A function that delivers an action based on the metadata that is handed in.
+     */
     constructor(
         private eventLog: IActionEventLog,
-        private eventLogMiddleware: ActionEventLogMiddleware,
+        private getReplaySubscribers: () => INeedToKnowAboutReplay[],
         private getResetStates: () => IResetMyState[],
         private getPastSubsribers: () => INeedToKnowIfIAmInThePast[],
         private getAction: (actionMetadata: IActionMetadata) => IObservableAction<any>
@@ -27,8 +44,9 @@ export class TimeTraveler {
      * @param sequenceNumber The sequence number of the action to which to travel.
      */
     public travelTo(sequenceNumber: number): void {
+        let replaySubscribers = this.getReplaySubscribers();
         try {
-            this.eventLogMiddleware.noteReplayStarted();
+            replaySubscribers.forEach(s => s.noteReplayStarted());
 
             this.getResetStates().forEach(resettableState => {
                 resettableState.resetState();
@@ -50,8 +68,8 @@ export class TimeTraveler {
             let lastEvent = this.eventLog.actionEvents.slice(-1).pop()            
             this.hasTraveledToPast = lastEvent && sequenceNumber < lastEvent.sequenceNumber ? true : false;
             this.getPastSubsribers().forEach(subscriber => subscriber.setHasTraveledToPast(this.hasTraveledToPast))
-        } finally {
-            this.eventLogMiddleware.noteReplayEnded();
+        } finally {            
+            replaySubscribers.forEach(s => s.noteReplayEnded());
         }
     }
 }

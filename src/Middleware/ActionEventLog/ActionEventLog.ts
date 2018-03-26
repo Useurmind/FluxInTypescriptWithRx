@@ -20,7 +20,7 @@ export class ActionEventLog implements IActionEventLog {
         actionEvent.firstTime = new Date(Date.now());
         actionEvent.lastTime = actionEvent.firstTime;
         actionEvent.isActive = true;
-        this.actionEventLog = [...this.actionEventLog, actionEvent]
+        this.actionEventLog.push(actionEvent);
     }
 
     /**

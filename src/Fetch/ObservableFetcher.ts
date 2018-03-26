@@ -6,7 +6,7 @@ import { IObservableFetcher } from './IObservableFetcher';
 /**
  * Wraps a fetch call with an observable.
  * This is completely transparent, no extra logic for fetch.
- * It also implements the INeedToKnowAboutReplay interface and will not actually fetch when replaying.
+ * It also implements the { @see INeedToKnowAboutReplay } interface and will not actually fetch when replaying.
  */
 export class ObservableFetcher implements IObservableFetcher,  INeedToKnowAboutReplay, NeedToKnowAboutReplayMixin {
     

@@ -6,7 +6,7 @@ import { IActionMetadata } from '../ActionFactory/IActionMetadata';
  * Action middleware will take an action and do whatever it needs to do with it.
  * This can be:
  * - subscribing the action
- * - wrapping the action and returning a wrapper
+ * - wrapping the action and returning a wrapper (see {@see LambdaAction} for wraping an action)
  */
 export interface IActionMiddleware {
     /**

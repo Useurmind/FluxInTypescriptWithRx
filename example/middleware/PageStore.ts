@@ -5,6 +5,8 @@ import { ConsoleLoggingMiddleware } from '../../src/Middleware';
 import { ActionEventLogMiddleware } from '../../src/Middleware/ActionEventLog/ActionEventLogMiddleware';
 import { ActionEventLog } from '../../src/Middleware/ActionEventLog/ActionEventLog';
 import { TimeTraveler } from '../../src/Middleware/ActionEventLog/TimeTraveler';
+import { RegisterTimeTraveler } from '../../src/Middleware/ActionEventLog/TimeTravelerFactory';
+import { SimpleContainer } from '../../src/DependencyInjection/SimpleContainer';
 
 export interface IPageStoreState {
     counter: number;
@@ -44,30 +46,17 @@ class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
     }
 }
 
-const eventLog = new ActionEventLog();
-const eventLogMiddleware = new ActionEventLogMiddleware(eventLog);
+let container = new SimpleContainer();
 
-// this is the action factory that applies the middleware to all actions
-// we use a middleware that logs all actions to the console
-const actionFactory = new MiddlewareActionFactory(
-    [
-        new ConsoleLoggingMiddleware(),
-        eventLogMiddleware
-    ]
-);
+container.registerInCollection("IActionMiddleware[]", () => new ConsoleLoggingMiddleware());
+RegisterTimeTraveler(container, true);
+container.registerInCollection("IResetMyState[]", c => new PageStore(c.resolve("IActionFactory")), "IPageStore");
 
 // publish an instance of this store 
 // you can do this in a nicer way by using a container
 // we keep it simple here on purpose 
-export const pageStore: IPageStore = new PageStore(actionFactory); 
+export const pageStore: IPageStore = <IPageStore>container.resolve("IPageStore"); 
 
-const timeTraveler = new TimeTraveler(
-    eventLog,
-    eventLogMiddleware,
-    () => [pageStore],
-    () => [eventLogMiddleware],
-    null
-);
-
-(<any>window).timeTraveler = timeTraveler;
-(<any>window).eventLog = eventLog;
+// resolve the time traveler
+// this will put it into the window
+container.resolve("TimeTraveler");

@@ -1,3 +1,6 @@
+/**
+ * Interface for classes that need to know when a replay is happening.
+ */
 export interface INeedToKnowAboutReplay {
     /**
      * Inform the object that replay has started.
@@ -10,6 +13,9 @@ export interface INeedToKnowAboutReplay {
     noteReplayEnded(): void;
 }
 
+/**
+ * Mixin that can be used to implement { @see INeedToKnowAboutReplay }.
+ */
 export class NeedToKnowAboutReplayMixin {
     isReplaying: boolean;
 
