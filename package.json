@@ -1,10 +1,10 @@
 {
-  "name": "fluxintypescriptwithrx",
-  "version": "1.0.0",
-  "description": "A tutorial on how to use flux in typescript with rxjs.",
+  "name": "rfluxx",
+  "version": "0.1.0",
+  "description": "Framework that implements flux using rxjs.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Useurmind/FluxInTypescriptWithRx.git"
+    "url": "https://github.com/Useurmind/RFluXX.git"
   },
   "main": "out/src/index.js",
   "types": "out/src/index.d.ts",
