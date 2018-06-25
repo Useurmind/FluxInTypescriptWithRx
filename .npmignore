@@ -1,6 +1,6 @@
 .vscode
-example
-out/example
+packages/core/example
+packages/core/out/example
 rewrite.sh
 InstallUtil.InstallLog
 package-lock.json

@@ -1,0 +1,28 @@
+{
+  "name": "rfluxx-dipper",
+  "version": "0.1.0",
+  "description": "Integration of rfluxx with the dependency injection container dipper.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Useurmind/RFluXX.git"
+  },
+  "main": "out/src/index.js",
+  "types": "out/src/index.d.ts",
+  "scripts": {
+    "build": ".\\node_modules\\.bin\\tsc && .\\node_modules\\.bin\\webpack-cli --config webpack.js",
+    "run": ".\\node_modules\\.bin\\http-server .\\example"
+  },
+  "keywords": [
+    "flux",
+    "rx",
+    "rxjs",
+    "typescript",
+    "dependency injection"
+  ],
+  "author": "Jochen Grün <jochen.gruen@googlemail.com>",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
