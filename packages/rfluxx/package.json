@@ -9,7 +9,8 @@
   "main": "out/src/index.js",
   "types": "out/src/index.d.ts",
   "scripts": {
-    "build": ".\\node_modules\\.bin\\tsc && .\\node_modules\\.bin\\webpack-cli --config webpack.js",
+    "buildold": ".\\node_modules\\.bin\\tsc",
+    "buildold": ".\\node_modules\\.bin\\tsc && .\\node_modules\\.bin\\webpack-cli --config webpack.js",
     "run": ".\\node_modules\\.bin\\http-server .\\example"
   },
   "keywords": [
@@ -23,5 +24,6 @@
   "dependencies": {
   },
   "devDependencies": {
+		"typescript": "^2.7.2"
   }
 }

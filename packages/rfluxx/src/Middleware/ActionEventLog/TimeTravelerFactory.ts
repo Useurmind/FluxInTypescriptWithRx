@@ -2,13 +2,12 @@ import { ActionEventLog } from './ActionEventLog';
 import { ActionEventLogMiddleware } from './ActionEventLogMiddleware';
 import { MiddlewareActionFactory, IActionFactory } from '../..';
 import { ConsoleLoggingMiddleware } from '..';
-import { IResetMyState } from '../../../example/dist/out/src/IResetMyState';
 import { TimeTraveler } from './TimeTraveler';
-import { IActionEventLog } from '../../../example/dist/out/src/Middleware/ActionEventLog/IActionEventLog';
-import { IActionMiddleware } from '../../../example/dist/out/src';
 import { IContainer } from '../../DependencyInjection/IContainer';
 import { INeedToKnowAboutReplay } from './INeedToKnowAboutReplay';
 import { INeedToKnowIfIAmInThePast } from './INeedToKnowIfIAmInThePast';
+import { IActionEventLog } from './IActionEventLog';
+import { IResetMyState } from '../../IResetMyState';
 
 export function RegisterTimeTraveler(container: IContainer, registerWithWindow?: boolean): void {
     container.register("IActionEventLog", c => new ActionEventLog());

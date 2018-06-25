@@ -9,8 +9,7 @@
   "main": "out/src/index.js",
   "types": "out/src/index.d.ts",
   "scripts": {
-    "build": ".\\node_modules\\.bin\\tsc && .\\node_modules\\.bin\\webpack-cli --config webpack.js",
-    "run": ".\\node_modules\\.bin\\http-server .\\example"
+    "build": ".\\node_modules\\.bin\\tsc"
   },
   "keywords": [
     "flux",
@@ -22,7 +21,10 @@
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
   "dependencies": {
+    "dipperts": "^0.3.0",
+    "rfluxx": "^0.1.0"
   },
   "devDependencies": {
+    "typescript": "^2.7.2"
   }
 }

@@ -1,6 +1,6 @@
-/node_modules
-/out
-/example/**/dist
+node_modules
+out
+dist
 rewrite.sh
 InstallUtil.InstallLog
 package-lock.json
