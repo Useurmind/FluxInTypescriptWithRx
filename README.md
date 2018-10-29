@@ -1,7 +1,7 @@
-Flux in Typescript with RxJS
+RFluxx - Flux in Typescript with RxJS
 ============================
 
-This repository contains a very small example of how to apply RxJS in a flux architecture.
+Framework that implements the Flux pattern applied in many React apps using RxJS.
 
 This framework basically provides two classes:
 - Commands which are observables
@@ -11,8 +11,12 @@ A UI component (exemplary implemented with react) can bind to the stores which a
 
 When a user interaction must be handled the UI components can call a command on the stores which in turn will update its state.
 
-Build and Run
------------------
+# Docs
+
+Start [here](/docs/index.md)
+
+# Build and Run
+
 After downloading the git repository do an
 
     npm update
@@ -22,8 +26,6 @@ After downloading the git repository do an
 An http server will now server the content of the example probably under 127.0.0.1:8080/index.html.
 Check the output of the run command to see the served ips and ports.
 
-
-License
--------
+# License
 
 MIT, see [LICENSE](LICENSE.MD)

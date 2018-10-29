@@ -6,6 +6,10 @@ import { applyMixins } from '../../Utility/Mixin';
 import { INeedToKnowIfIAmInThePast } from './INeedToKnowIfIAmInThePast';
 import { wrapAction } from '../WrapAction';
 
+/**
+ * This middleware is responsible for adding action events into the event log.
+ * It is also aware of replay and will avoid adding action events twice by ignoring all action events during replay.
+ */
 export class ActionEventLogMiddleware implements INeedToKnowAboutReplay, NeedToKnowAboutReplayMixin, INeedToKnowIfIAmInThePast {
     private hasTraveledToPast: boolean;
 

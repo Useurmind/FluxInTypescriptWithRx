@@ -1,5 +1,8 @@
 /**
  * Simple interface for a container implementation.
+ * The standard registration logic provided by the framework runs on this interface.
+ * You can implement this interface with the container of your choice to be able to use the
+ * integrated registration logic.
  */
 export interface IContainer {
     /**
