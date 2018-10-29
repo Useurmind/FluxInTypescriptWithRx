@@ -4,31 +4,42 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "npm i",
+            "label": "npm: install",
             "type": "shell",
             "windows": {
                 "command": "npm i"
             },
+            "options": {
+                "cwd": "packages\\rfluxx"
+            },
             "group": "none"
         },
         {
-            "label": "tsc watch",
+            "label": "tsc: build",
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "option": "",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "options": {
+                "cwd": "packages\\rfluxx"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "tsc: watch",
             "type": "typescript",
             "tsconfig": "tsconfig.json",
             "option": "watch",
             "problemMatcher": [
                 "$tsc-watch"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "webpack",
-            "type": "shell",
-            "windows": {
-                "command": ".\\node_modules\\.bin\\webpack-cli --config webpack.js"
+            "options": {
+                "cwd": "packages\\rfluxx"
             },
             "group": {
                 "kind": "build",
@@ -36,10 +47,13 @@
             }
         },
         {
-            "label": "webpack-dev-server",
+            "label": "webpack-dev-server: run",
             "type": "shell",
             "windows": {
-                "command": ".\\node_modules\\.bin\\webpack-dev-server --config webpack.js"
+                "command": ".\\node_modules\\.bin\\webpack-dev-server"
+            },
+            "options": {
+                "cwd": "packages\\rfluxx"
             },
             "group": {
                 "kind": "build",
@@ -47,11 +61,15 @@
             }
         },
         {
-            "label": "http-server",
+            "label": "tslint: run",
             "type": "shell",
-            "windows": {
-                "command": ".\\node_modules\\.bin\\http-server .\\example"
+            "command": "./node_modules/.bin/tslint -p tsconfig.json",
+            "options": {
+                "cwd": "./packages/rfluxx"
             },
+            "problemMatcher": [
+                "$tslint5"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true

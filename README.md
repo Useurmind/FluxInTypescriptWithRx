@@ -21,7 +21,9 @@ Start [here](/docs/index.md)
 
 ## Build and Run
 
-TODO
+In packages/rfluxx:
+
+- npm i
 
 ## License
 
