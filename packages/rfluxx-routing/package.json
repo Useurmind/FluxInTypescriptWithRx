@@ -1,0 +1,29 @@
+{
+  "name": "rfluxx-routing",
+  "version": "0.1.0",
+  "description": "Routing package for rfluxx.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Useurmind/RFluXX.git"
+  },
+  "main": "out/src/index.js",
+  "types": "out/src/index.d.ts",
+  "scripts": {
+    "build": ".\\node_modules\\.bin\\tsc"
+  },
+  "keywords": [
+    "flux",
+    "rx",
+    "rxjs",
+    "typescript",
+    "routing"
+  ],
+  "author": "Jochen Grün <jochen.gruen@googlemail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "rfluxx": "^0.1.0"
+  },
+  "devDependencies": {
+		"typescript": "^2.7.2"
+  }
+}
