@@ -10,15 +10,30 @@ import { IObservableFetcher } from "./IObservableFetcher";
  * This is completely transparent, no extra logic for fetch.
  * It also implements the { @see INeedToKnowAboutReplay } interface and will not actually fetch when replaying.
  */
-export class ObservableFetcher implements IObservableFetcher,  INeedToKnowAboutReplay, NeedToKnowAboutReplayMixin {
-
-    // NeedToKnowAboutReplay
+export class ObservableFetcher implements IObservableFetcher,  INeedToKnowAboutReplay, NeedToKnowAboutReplayMixin
+{
+    /**
+     * @inheritDoc
+     */
     public isReplaying: boolean = false;
+
+    /**
+     * @inheritDoc
+     */
     public noteReplayStarted: () => void;
+
+    /**
+     * @inheritDoc
+     */
     public noteReplayEnded: () => void;
 
-    public fetch(requestInfo: RequestInfo, init?: RequestInit): Observable<Response> {
-        if (this.isReplaying) {
+    /**
+     * @inheritDoc
+     */
+    public fetch(requestInfo: RequestInfo, init?: RequestInit): Observable<Response>
+    {
+        if (this.isReplaying)
+        {
             return Observable.empty();
         }
 

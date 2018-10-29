@@ -10,7 +10,8 @@ import { IResetMyState } from "./IResetMyState";
  * The good thing about observables is that advanced stuff like filter, map, and other transformations
  * are included by default.
  */
-export interface IStore<TState> extends IResetMyState {
+export interface IStore<TState> extends IResetMyState
+{
     /**
      * Observe the store to subscribe it afterwards with advanced options.
      * Use subscribe for less verbosity.

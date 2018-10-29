@@ -14,7 +14,8 @@ import { INeedToKnowIfIAmInThePast } from "./INeedToKnowIfIAmInThePast";
  * - communicates whether we are in the past
  * - turns on a lot of stuff
  */
-export class TimeTraveler {
+export class TimeTraveler
+{
     /**
      * States whether currently we are in the past.
      * Being in the past for example indicates that no further commands may be executed.
@@ -35,7 +36,8 @@ export class TimeTraveler {
         private getResetStates: () => IResetMyState[],
         private getPastSubsribers: () => INeedToKnowIfIAmInThePast[],
         private getAction: (actionMetadata: IActionMetadata) => IObservableAction<any>
-    ) {
+    )
+    {
         this.hasTraveledToPast = false;
         this.getPastSubsribers().forEach(subscriber => subscriber.setHasTraveledToPast(this.hasTraveledToPast));
     }
@@ -44,18 +46,23 @@ export class TimeTraveler {
      * Travel in time to a specific action event.
      * @param sequenceNumber The sequence number of the action to which to travel.
      */
-    public travelTo(sequenceNumber: number): void {
+    public travelTo(sequenceNumber: number): void
+    {
         const replaySubscribers = this.getReplaySubscribers();
-        try {
+        try
+        {
             replaySubscribers.forEach(s => s.noteReplayStarted());
 
-            this.getResetStates().forEach(resettableState => {
+            this.getResetStates().forEach(resettableState =>
+            {
                 resettableState.resetState();
             });
 
             // some: lets us execute the given function until we return true
-            this.eventLog.actionEvents.some(actionEvent => {
-                if (actionEvent.isActive) {
+            this.eventLog.actionEvents.some(actionEvent =>
+            {
+                if (actionEvent.isActive)
+                {
                     const action = actionEvent.action ? actionEvent.action : this.getAction(actionEvent.actionMetaData);
 
                     action.trigger(actionEvent.actionEventData);
@@ -69,7 +76,9 @@ export class TimeTraveler {
             const lastEvent = this.eventLog.actionEvents.slice(-1).pop();
             this.hasTraveledToPast = lastEvent && sequenceNumber < lastEvent.sequenceNumber ? true : false;
             this.getPastSubsribers().forEach(subscriber => subscriber.setHasTraveledToPast(this.hasTraveledToPast));
-        } finally {
+        }
+        finally
+        {
             replaySubscribers.forEach(s => s.noteReplayEnded());
         }
     }

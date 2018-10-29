@@ -21,9 +21,15 @@ Start [here](/docs/index.md)
 
 ## Build and Run
 
+In root:
+
+    lerna bootstrap
+
 In packages/rfluxx:
 
-- npm i
+    npm run lint  // to execute tslint
+    npm run test  // to execute karma
+    npm run start
 
 ## License
 

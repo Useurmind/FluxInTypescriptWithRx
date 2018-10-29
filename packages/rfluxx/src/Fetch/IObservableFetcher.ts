@@ -5,7 +5,8 @@ import { Observable } from "rxjs";
  * This interface is necessary to make backend calls aware of replay functionality.
  * See the implementation ObservabelFetcher on how this can be implemented.
  */
-export interface IObservableFetcher {
+export interface IObservableFetcher
+{
     /**
      * Fetch something with the fetch function from a server.
      * @param requestInfo The request info as usually given to the fetch function

@@ -5,7 +5,8 @@ import { IAction } from "./IAction";
 /**
  * Interface of action that can be used by stores to subscribe action event streams.
  */
-export interface IObservableAction<TActionEvent> extends IAction<TActionEvent> {
+export interface IObservableAction<TActionEvent> extends IAction<TActionEvent>
+{
     /**
      * Convert an action into an observable to subscribe it.
      * @returns {}

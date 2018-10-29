@@ -2,17 +2,22 @@
 	"name": "rfluxx-complete",
 	"version": "0.1.0",
 	"devDependencies": {
+		"@types/jasmine": "^2.8.6",
 		"@types/react": "^16.0.40",
 		"@types/react-dom": "^16.0.4",
-		"lerna": "^2.11.0",
 		"clean-webpack-plugin": "^0.1.18",
 		"html-webpack-plugin": "^3.0.6",
+		"jasmine": "^3.1.0",
+		"jasmine-core": "^3.1.0",
+		"karma-chrome-launcher": "^2.2.0",
+		"karma-jasmine": "^1.1.1",
+		"karma-phantomjs-launcher": "^1.0.4",
+		"karma-spec-reporter": "^0.0.32",
+		"karma-trx-reporter": "^0.2.9",
+		"karma-webpack": "^3.0.0",
 		"http-server": "^0.11.1",
 		"ts-loader": "^4.1.0",
-		"typescript": "^2.7.2",
-		"webpack": "^4.1.0",
-		"webpack-cli": "^2.0.10",
-		"webpack-dev-server": "^3.1.1"
+		"webpack": "^4.1.0"
 	},
 	"dependencies": {
 		"es5-shim": "^4.5.10",

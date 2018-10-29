@@ -10,11 +10,31 @@ import { INeedToKnowAboutReplay } from "./INeedToKnowAboutReplay";
 import { INeedToKnowIfIAmInThePast } from "./INeedToKnowIfIAmInThePast";
 import { TimeTraveler } from "./TimeTraveler";
 
-export function RegisterTimeTraveler(container: IContainer, registerWithWindow?: boolean): void {
+/**
+ * This function registers all required components for the time traveling functionality in the given container.
+ * The registered components include
+ * - event log
+ * - event log middleware
+ * - action factory as IActionFactory
+ * - time traveler
+ * If you want to register more middleware or other implementations of { @see INeedToKnowAboutReplay }
+ * or { @see INeedToKnowIfIAmInThePast} then you should use the following calls:
+ * - registerInCollection("IActionMiddleware[]", ...)
+ * - registerInCollection("INeedToKnowIfIAmInThePast[]", ...)
+ * - registerInCollection("INeedToKnowAboutReplay[]", ...)
+ * @param container The container where the components are registered.
+ * @param registerWithWindow Should the event log and time traveler be put into the window itself as
+ * window.timeTraveler and window.eventLog.
+ */
+export function RegisterTimeTraveler(container: IContainer, registerWithWindow?: boolean): void
+{
     container.register("IActionEventLog", c => new ActionEventLog());
-    container.registerInCollection(["IActionMiddleware[]", "INeedToKnowAboutReplay[]", "INeedToKnowIfIAmInThePast[]"], c => new ActionEventLogMiddleware(c.resolve("IActionEventLog")));
+    container.registerInCollection(
+        ["IActionMiddleware[]", "INeedToKnowAboutReplay[]", "INeedToKnowIfIAmInThePast[]"],
+        c => new ActionEventLogMiddleware(c.resolve("IActionEventLog")));
     container.register("IActionFactory", c => new MiddlewareActionFactory(c.resolve("IActionMiddleware[]")));
-    container.register("TimeTraveler", c => {
+    container.register("TimeTraveler", c =>
+    {
         const eventLog = c.resolve("IActionEventLog") as IActionEventLog;
         const timeTraveler = new TimeTraveler(
             eventLog,
@@ -24,7 +44,8 @@ export function RegisterTimeTraveler(container: IContainer, registerWithWindow?:
             null
         );
 
-        if (registerWithWindow) {
+        if (registerWithWindow)
+        {
             (window as any).timeTraveler = timeTraveler;
             (window as any).eventLog = eventLog;
         }

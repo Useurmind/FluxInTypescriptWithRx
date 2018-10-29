@@ -41,14 +41,14 @@
                     "privacies": [ "public", "protected" ],
                     "tags": {
                         "content": { "see": [ "#.*" ] },
-                        "existence": [ "inheritdoc" ]
+                        "existence": [ "inheritDoc" ]
                     }
                 },
                 "properties": {
                     "privacies": [ "public", "protected" ],
                     "tags": {
                         "content": { "see": [ "#.*" ] },
-                        "existence": [ "inheritdoc" ]
+                        "existence": [ "inheritDoc" ]
                     }
                 }
             }
@@ -62,7 +62,17 @@
                 "import-sources-order": "case-insensitive",
                 "named-imports-order": "case-insensitive"
             }
+        ],
+        "one-line": false,
+        "brace-style": [
+            true, 
+            "allman", 
+            {
+            "allowSingleLine": true
+            }
         ]
     },
-    "rulesDirectory": []
+    "rulesDirectory": [
+      "node_modules/tslint-eslint-rules/dist/rules"
+    ]
 }

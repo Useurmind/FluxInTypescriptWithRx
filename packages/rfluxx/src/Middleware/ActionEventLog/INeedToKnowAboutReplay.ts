@@ -1,7 +1,8 @@
 /**
  * Interface for classes that need to know when a replay is happening.
  */
-export interface INeedToKnowAboutReplay {
+export interface INeedToKnowAboutReplay
+{
     /**
      * Inform the object that replay has started.
      */
@@ -16,20 +17,26 @@ export interface INeedToKnowAboutReplay {
 /**
  * Mixin that can be used to implement { @see INeedToKnowAboutReplay }.
  */
-export class NeedToKnowAboutReplayMixin {
+export class NeedToKnowAboutReplayMixin
+{
+    /**
+     * Indicates whether replay is currently taking place.
+     */
     public isReplaying: boolean;
 
     /**
      * Inform the object that replay has started.
      */
-    public noteReplayStarted(): void {
+    public noteReplayStarted(): void
+    {
         this.isReplaying = true;
     }
 
     /**
      * Inform the object that replay has finished.
      */
-    public noteReplayEnded(): void {
+    public noteReplayEnded(): void
+    {
         this.isReplaying = false;
     }
 }

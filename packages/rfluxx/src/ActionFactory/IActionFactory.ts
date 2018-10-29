@@ -5,7 +5,8 @@ import { IActionMetadata } from "./IActionMetadata";
 /**
  * Interface for creating actions.
  */
-export interface IActionFactory {
+export interface IActionFactory
+{
     /**
      * Create an action with given action event type.
      * @param actionMetadata Metadata that describes the action.

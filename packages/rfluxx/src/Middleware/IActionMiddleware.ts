@@ -15,5 +15,6 @@ export interface IActionMiddleware {
      * @param actionMetadata Metadata describing the action.
      * @returns An action that should be used instead of the original action.
      */
-    apply<TActionEvent>(action: IObservableAction<TActionEvent>, actionMetadata: IActionMetadata): IObservableAction<TActionEvent>;
+    apply<TActionEvent>(action: IObservableAction<TActionEvent>, actionMetadata: IActionMetadata)
+        : IObservableAction<TActionEvent>;
 }

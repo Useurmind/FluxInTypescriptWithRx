@@ -7,7 +7,8 @@ import { LambdaAction } from "./LambdaAction";
 /**
  * Interface for options to define how an action is wrapped.
  */
-export interface IActionWrapperOptions<T> {
+export interface IActionWrapperOptions<T>
+{
     observe?: (action: IObservableAction<T>) => Observable<T>;
     subscribe?: (action: IObservableAction<T>, next: (parameter: T) => void) => Subscription;
     trigger?: (action: IObservableAction<T>, actionEvent: T) => void;
@@ -19,7 +20,8 @@ export interface IActionWrapperOptions<T> {
  * @param options Defines how the action is wrapped.
  * @returns The wrapped action.
  */
-export function wrapAction<T>(action: IObservableAction<T>, options: IActionWrapperOptions<T>): IObservableAction<T> {
+export function wrapAction<T>(action: IObservableAction<T>, options: IActionWrapperOptions<T>): IObservableAction<T>
+{
     const observeFunction = options.observe
                                 ? () => options.observe(action)
                                 : () => action.observe();

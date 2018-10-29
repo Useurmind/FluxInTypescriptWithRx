@@ -1,7 +1,9 @@
 import { Action } from "../src/Action";
 
-describe("Actions", () => {
-    it("subcribe and trigger should work", () => {
+describe("Actions", () =>
+{
+    it("subcribe and trigger should work", () =>
+    {
         const action = new Action<number>();
         let triggeredNumber: number = null;
 

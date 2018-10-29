@@ -3,20 +3,26 @@ import { IObservableAction } from "../..";
 import { IActionEvent } from "./IActionEvent";
 import { IActionEventLog } from "./IActionEventLog";
 
-export class ActionEventLog implements IActionEventLog {
+/**
+ * Implementation of an action event log that stores the action events in a simple array.
+ */
+export class ActionEventLog implements IActionEventLog
+{
     private actionEventLog: IActionEvent[] = [];
 
     /**
      * { @inheritdoc }
      */
-    public get actionEvents(): IActionEvent[] {
+    public get actionEvents(): IActionEvent[]
+    {
         return this.actionEventLog;
     }
 
     /**
      * { @inheritdoc }
      */
-    public addEvent(actionEvent: IActionEvent): void {
+    public addEvent(actionEvent: IActionEvent): void
+    {
         actionEvent.sequenceNumber = this.actionEventLog.length;
         actionEvent.firstTime = new Date(Date.now());
         actionEvent.lastTime = actionEvent.firstTime;
@@ -27,9 +33,11 @@ export class ActionEventLog implements IActionEventLog {
     /**
      * { @inheritdoc }
      */
-    public setActive(sequenceNumber: number, isActive: boolean): void {
+    public setActive(sequenceNumber: number, isActive: boolean): void
+    {
         let actionEvent = this.actionEvents[sequenceNumber];
-        if (actionEvent.sequenceNumber != sequenceNumber) {
+        if (actionEvent.sequenceNumber !== sequenceNumber)
+        {
             actionEvent = this.actionEvents.find(a => a.sequenceNumber === sequenceNumber);
         }
 
