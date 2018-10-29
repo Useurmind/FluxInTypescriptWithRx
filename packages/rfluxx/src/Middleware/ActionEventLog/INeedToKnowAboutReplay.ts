@@ -17,7 +17,7 @@ export interface INeedToKnowAboutReplay {
  * Mixin that can be used to implement { @see INeedToKnowAboutReplay }.
  */
 export class NeedToKnowAboutReplayMixin {
-    isReplaying: boolean;
+    public isReplaying: boolean;
 
     /**
      * Inform the object that replay has started.

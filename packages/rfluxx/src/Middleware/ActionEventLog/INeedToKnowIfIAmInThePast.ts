@@ -1,4 +1,4 @@
-/** 
+/**
  * Interface that can be implemented by components that need to know
  * about whether time travel has taken place.
 */

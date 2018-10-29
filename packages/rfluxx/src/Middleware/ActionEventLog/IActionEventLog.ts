@@ -1,4 +1,4 @@
-import { IActionEvent } from './IActionEvent';
+import { IActionEvent } from "./IActionEvent";
 
 /**
  * Data structure that holds action events.

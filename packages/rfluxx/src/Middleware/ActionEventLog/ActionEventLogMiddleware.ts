@@ -1,26 +1,27 @@
-import { IActionEventLog } from './IActionEventLog';
-import { IActionMiddleware } from '..';
-import { IObservableAction, IActionMetadata } from '../..';
-import { INeedToKnowAboutReplay, NeedToKnowAboutReplayMixin } from './INeedToKnowAboutReplay';
-import { applyMixins } from '../../Utility/Mixin';
-import { INeedToKnowIfIAmInThePast } from './INeedToKnowIfIAmInThePast';
-import { wrapAction } from '../WrapAction';
+import { IActionMiddleware } from "..";
+import { IActionMetadata, IObservableAction } from "../..";
+import { applyMixins } from "../../Utility/Mixin";
+import { wrapAction } from "../WrapAction";
+
+import { IActionEventLog } from "./IActionEventLog";
+import { INeedToKnowAboutReplay, NeedToKnowAboutReplayMixin } from "./INeedToKnowAboutReplay";
+import { INeedToKnowIfIAmInThePast } from "./INeedToKnowIfIAmInThePast";
 
 /**
  * This middleware is responsible for adding action events into the event log.
  * It is also aware of replay and will avoid adding action events twice by ignoring all action events during replay.
  */
 export class ActionEventLogMiddleware implements INeedToKnowAboutReplay, NeedToKnowAboutReplayMixin, INeedToKnowIfIAmInThePast {
-    private hasTraveledToPast: boolean;
-
-    constructor(private eventLog: IActionEventLog){
-
-    }
 
     // NeedToKnowAboutReplay
-    isReplaying: boolean = false;
-    noteReplayStarted: () => void;
-    noteReplayEnded: () => void;
+    public isReplaying: boolean = false;
+    public noteReplayStarted: () => void;
+    public noteReplayEnded: () => void;
+    private hasTraveledToPast: boolean;
+
+    constructor(private eventLog: IActionEventLog) {
+
+    }
 
     public setHasTraveledToPast(hasTraveledToPast: boolean): void {
         this.hasTraveledToPast = hasTraveledToPast;
@@ -28,7 +29,7 @@ export class ActionEventLogMiddleware implements INeedToKnowAboutReplay, NeedToK
 
     public apply<TActionEvent>(action: IObservableAction<TActionEvent>, actionMetadata: IActionMetadata): IObservableAction<TActionEvent> {
         action.subscribe(actionEvent => {
-            if(this.isReplaying) {
+            if (this.isReplaying) {
                 // ignore incoming actions during replay
                 return;
             }
@@ -36,7 +37,7 @@ export class ActionEventLogMiddleware implements INeedToKnowAboutReplay, NeedToK
             this.eventLog.addEvent({
                 // we hand over the original action here because
                 // the time traveler should be able to trigger it
-                action: action,
+                action,
                 actionMetaData: actionMetadata,
                 actionEventData: actionEvent
             });
@@ -50,11 +51,11 @@ export class ActionEventLogMiddleware implements INeedToKnowAboutReplay, NeedToK
                     // - UI
                     // - stores
                     // - other components unaware of time travel
-                    if(!this.hasTraveledToPast) {
+                    if (!this.hasTraveledToPast) {
                         action.trigger(actionEvent);
                     }
                 }
             });
     }
 }
-applyMixins(ActionEventLogMiddleware, [NeedToKnowAboutReplayMixin])
+applyMixins(ActionEventLogMiddleware, [NeedToKnowAboutReplayMixin]);

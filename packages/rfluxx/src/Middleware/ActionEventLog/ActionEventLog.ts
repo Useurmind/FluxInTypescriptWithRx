@@ -1,6 +1,7 @@
-import { IActionEventLog } from './IActionEventLog';
-import { IActionEvent } from './IActionEvent';
-import { IObservableAction } from '../..';
+import { IObservableAction } from "../..";
+
+import { IActionEvent } from "./IActionEvent";
+import { IActionEventLog } from "./IActionEventLog";
 
 export class ActionEventLog implements IActionEventLog {
     private actionEventLog: IActionEvent[] = [];
@@ -26,9 +27,9 @@ export class ActionEventLog implements IActionEventLog {
     /**
      * { @inheritdoc }
      */
-    setActive(sequenceNumber: number, isActive: boolean): void {
+    public setActive(sequenceNumber: number, isActive: boolean): void {
         let actionEvent = this.actionEvents[sequenceNumber];
-        if(actionEvent.sequenceNumber != sequenceNumber) {
+        if (actionEvent.sequenceNumber != sequenceNumber) {
             actionEvent = this.actionEvents.find(a => a.sequenceNumber === sequenceNumber);
         }
 

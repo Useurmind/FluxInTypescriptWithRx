@@ -1,5 +1,6 @@
-import * as Rx from "rxjs";
 import * as React from "react";
+import * as Rx from "rxjs";
+
 import { IAsyncActionStore } from "./IAsyncActionStore";
 
 export interface IAsyncActionProps {
@@ -14,38 +15,38 @@ export interface IAsyncActionState {
 export class AsyncAction extends React.Component<IAsyncActionProps, IAsyncActionState> {
     private _subscription: Rx.Subscription;
 
-    constructor(props: any){
+    constructor(props: any) {
         super(props);
 
         this.state = {
             text: "nothing yet"
-        }    
+        };
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         // subscribe to the page store instances state
         this._subscription = this.props.store.subscribe(state => {
             this.setState({
                 ...this.state,
                 // set the counter in the state of the component to that of the store
                 text: state.error ? state.error : state.dataModel.text
-            })
-        })
+            });
+        });
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount() {
         // unsubscribe if component is unmounted
-        if(this._subscription) {
+        if (this._subscription) {
             this._subscription.unsubscribe();
         }
     }
 
-    onSuccessClick() {
+    public onSuccessClick() {
         // execute command to start successful download
         this.props.store.startSuccessfulDownload.trigger(null);
     }
 
-    onFailClick() {
+    public onFailClick() {
         // execute command to start failing download
         this.props.store.startFailingDownload.trigger(null);
     }

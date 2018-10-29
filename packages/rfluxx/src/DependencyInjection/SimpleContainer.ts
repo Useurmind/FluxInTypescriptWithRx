@@ -1,4 +1,4 @@
-import { IContainer } from './IContainer';
+import { IContainer } from "./IContainer";
 
 /**
  * Simple container implements the container interface by holding an internal map.
@@ -13,10 +13,10 @@ export class SimpleContainer implements IContainer {
 
     public registerInCollection(collectionName: string|string[], create: (c: IContainer) => any, typeName?: string): void {
         // we want singleton behaviour for multiple names here
-        let createSingleton = (function() {
-            var instance = null;
+        const createSingleton = (function() {
+            let instance = null;
             function createSingletonInner(container) {
-                if(!instance) {
+                if (!instance) {
                     instance = create(container);
                 }
                 return instance;
@@ -24,13 +24,13 @@ export class SimpleContainer implements IContainer {
             return createSingletonInner;
         }());
 
-        let collectionNames: string[] = <string[]>collectionName;
-        if(typeof collectionName === "string") {
+        let collectionNames: string[] = collectionName as string[];
+        if (typeof collectionName === "string") {
             collectionNames = [collectionName];
         }
 
-        collectionNames.forEach(name => {            
-            if(!this.registrationMap[name]) {
+        collectionNames.forEach(name => {
+            if (!this.registrationMap[name]) {
                 this.registrationMap[name] = [];
             }
             this.registrationMap[name].push(createSingleton);
@@ -41,12 +41,12 @@ export class SimpleContainer implements IContainer {
     public resolve(typeName: string, instanceName?: string): any {
         let instance = this.instanceMap[typeName];
 
-        if(!instance) {
-            let create = this.registrationMap[typeName];
-            if(typeof create == "function") {
+        if (!instance) {
+            const create = this.registrationMap[typeName];
+            if (typeof create == "function") {
                 // single create function
                 instance = create(this);
-            }else if(typeof create == "object") {
+            } else if (typeof create == "object") {
                 // multiple create functions for a collection
                 instance = create.map(x => x(this));
             }

@@ -1,8 +1,9 @@
-import { IObservableAction } from '..';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from "rxjs";
+
+import { IObservableAction } from "..";
 
 /**
- * This class allows to define actions on the fly by specifying a set of functions to execute 
+ * This class allows to define actions on the fly by specifying a set of functions to execute
  * for the different methods of an action.
  */
 export class LambdaAction<T> implements IObservableAction<T> {
@@ -15,9 +16,9 @@ export class LambdaAction<T> implements IObservableAction<T> {
     constructor(
         private observeFunction: () => Observable<T>,
         private subscribeFunction: (next: (parameter: T) => void) => Subscription,
-        private triggerFunction: (actionEvent: T) => void,
+        private triggerFunction: (actionEvent: T) => void
     ) {
-        
+
     }
 
     public observe(): Observable<T> {

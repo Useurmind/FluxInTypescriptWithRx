@@ -21,7 +21,8 @@ module.exports = {
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
             { 
                 test: /\.tsx?$/, 
-                loader: "ts-loader" 
+                loader: "ts-loader",
+                exclude: /node_modules/
             }
         ]
     },
@@ -52,7 +53,7 @@ module.exports = {
     mode: "development",
     output: {
         libraryTarget: "umd",
-        filename: 'fluxInTypescriptWithRx.[name].bundle.js',
+        filename: 'rfluxx.[name].bundle.js',
         path: path.resolve(__dirname, 'example/dist')
     }
 };

@@ -1,9 +1,10 @@
-import { IActionEventLog } from './IActionEventLog';
-import { ActionEventLogMiddleware } from './ActionEventLogMiddleware';
-import { IResetMyState } from '../../IResetMyState';
-import { IActionMetadata, IObservableAction } from '../..';
-import { INeedToKnowIfIAmInThePast } from './INeedToKnowIfIAmInThePast';
-import { INeedToKnowAboutReplay } from './INeedToKnowAboutReplay';
+import { IActionMetadata, IObservableAction } from "../..";
+import { IResetMyState } from "../../IResetMyState";
+
+import { ActionEventLogMiddleware } from "./ActionEventLogMiddleware";
+import { IActionEventLog } from "./IActionEventLog";
+import { INeedToKnowAboutReplay } from "./INeedToKnowAboutReplay";
+import { INeedToKnowIfIAmInThePast } from "./INeedToKnowIfIAmInThePast";
 
 /**
  * This is the class that controls the time travel process.
@@ -34,9 +35,9 @@ export class TimeTraveler {
         private getResetStates: () => IResetMyState[],
         private getPastSubsribers: () => INeedToKnowIfIAmInThePast[],
         private getAction: (actionMetadata: IActionMetadata) => IObservableAction<any>
-    ){
+    ) {
         this.hasTraveledToPast = false;
-        this.getPastSubsribers().forEach(subscriber => subscriber.setHasTraveledToPast(this.hasTraveledToPast))
+        this.getPastSubsribers().forEach(subscriber => subscriber.setHasTraveledToPast(this.hasTraveledToPast));
     }
 
     /**
@@ -44,7 +45,7 @@ export class TimeTraveler {
      * @param sequenceNumber The sequence number of the action to which to travel.
      */
     public travelTo(sequenceNumber: number): void {
-        let replaySubscribers = this.getReplaySubscribers();
+        const replaySubscribers = this.getReplaySubscribers();
         try {
             replaySubscribers.forEach(s => s.noteReplayStarted());
 
@@ -54,21 +55,21 @@ export class TimeTraveler {
 
             // some: lets us execute the given function until we return true
             this.eventLog.actionEvents.some(actionEvent => {
-                if(actionEvent.isActive) {
-                    let action = actionEvent.action ? actionEvent.action : this.getAction(actionEvent.actionMetaData);
+                if (actionEvent.isActive) {
+                    const action = actionEvent.action ? actionEvent.action : this.getAction(actionEvent.actionMetaData);
 
                     action.trigger(actionEvent.actionEventData);
                 }
 
                 // replay all active actions until including the target sequence number
                 return  actionEvent.sequenceNumber >= sequenceNumber;
-            })
+            });
 
             // update if we are in the past
-            let lastEvent = this.eventLog.actionEvents.slice(-1).pop()            
+            const lastEvent = this.eventLog.actionEvents.slice(-1).pop();
             this.hasTraveledToPast = lastEvent && sequenceNumber < lastEvent.sequenceNumber ? true : false;
-            this.getPastSubsribers().forEach(subscriber => subscriber.setHasTraveledToPast(this.hasTraveledToPast))
-        } finally {            
+            this.getPastSubsribers().forEach(subscriber => subscriber.setHasTraveledToPast(this.hasTraveledToPast));
+        } finally {
             replaySubscribers.forEach(s => s.noteReplayEnded());
         }
     }

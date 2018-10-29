@@ -1,8 +1,9 @@
-import { IObservableAction } from "../IObservableAction";
 import { Action } from "../Action";
+import { IObservableAction } from "../IObservableAction";
+import { IActionMiddleware } from "../Middleware";
+
 import { IActionFactory } from "./IActionFactory";
-import { IActionMetadata } from './IActionMetadata';
-import { IActionMiddleware } from '../Middleware';
+import { IActionMetadata } from "./IActionMetadata";
 
 /**
  * This action factory applies arbitrary middleware to the actions.
@@ -17,7 +18,7 @@ export class MiddlewareActionFactory implements IActionFactory {
     }
 
     public create<TActionEvent>(actionMetadata?: IActionMetadata): IObservableAction<TActionEvent> {
-        var action: IObservableAction<TActionEvent> = new Action<TActionEvent>();
+        let action: IObservableAction<TActionEvent> = new Action<TActionEvent>();
         actionMetadata = actionMetadata ? actionMetadata : { name: "none" };
 
         this.middleware.forEach(m => {

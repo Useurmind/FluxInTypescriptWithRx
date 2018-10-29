@@ -1,13 +1,13 @@
-import { IObservableAction, IActionMetadata } from '../..';
+import { IActionMetadata, IObservableAction } from "../..";
 
 /**
  * Interface for events that describe an action event fully.
  */
 export interface IActionEvent {
-    /** 
+    /**
      * This is the action on which the event was observed.
      */
-    action?: IObservableAction<any>
+    action?: IObservableAction<any>;
 
     /**
      * This is the actual event data of the action event.

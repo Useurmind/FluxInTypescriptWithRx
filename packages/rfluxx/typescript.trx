@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="d27b4792-abca-6569-1545-da534e312c65" name="Jochen@Jochen-PC 2018-10-29T19:38:12" runUser="Jochen" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Karma Test Run" id="e1290fa5-d334-7857-4cc5-3e1fac9ea47f"/>
+  <Times creation="2018-10-29T19:38:12" queuing="2018-10-29T19:38:12" start="2018-10-29T19:38:12" finish="2018-10-29T19:38:12"/>
+  <ResultSummary outcome="Passed">
+    <Counters total="1" executed="1" passed="1" error="0" failed="0"/>
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_subcribe and trigger should work" id="8bc97d73-7ab9-3a84-af32-9dc545c1c7cb">
+      <Execution id="59332867-49fc-5eda-9039-a5ffa43eafb2"/>
+      <TestMethod codeBase="Actions.Chrome 70.0.3538 (Windows 10 0.0.0)_subcribe and trigger should work" name="Chrome 70.0.3538 (Windows 10 0.0.0)_subcribe and trigger should work" className="Actions"/>
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda"/>
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="8bc97d73-7ab9-3a84-af32-9dc545c1c7cb" executionId="59332867-49fc-5eda-9039-a5ffa43eafb2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="59332867-49fc-5eda-9039-a5ffa43eafb2" testId="8bc97d73-7ab9-3a84-af32-9dc545c1c7cb" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_subcribe and trigger should work" computerName="Jochen-PC" duration="00:00:00.002" startTime="2018-10-29T19:38:12" endTime="2018-10-29T19:38:12" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+  </Results>
+</TestRun>

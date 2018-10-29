@@ -1,6 +1,8 @@
-import { IAction, IObservableAction } from '..';
-import { Observable, Subscription } from 'rxjs';
-import { LambdaAction } from './LambdaAction';
+import { Observable, Subscription } from "rxjs";
+
+import { IAction, IObservableAction } from "..";
+
+import { LambdaAction } from "./LambdaAction";
 
 /**
  * Interface for options to define how an action is wrapped.
@@ -18,13 +20,13 @@ export interface IActionWrapperOptions<T> {
  * @returns The wrapped action.
  */
 export function wrapAction<T>(action: IObservableAction<T>, options: IActionWrapperOptions<T>): IObservableAction<T> {
-    let observeFunction = options.observe 
+    const observeFunction = options.observe
                                 ? () => options.observe(action)
                                 : () => action.observe();
-    let subscribeFunction = options.subscribe 
+    const subscribeFunction = options.subscribe
                                 ? (next: (parameter: T) => void) => options.subscribe(action, next)
                                 : (next: (parameter: T) => void) => action.subscribe(next);
-    let triggerFunction = options.trigger 
+    const triggerFunction = options.trigger
                                 ? (actionEvent: T) => options.trigger(action, actionEvent)
                                 : (actionEvent: T) => action.trigger(actionEvent);
 

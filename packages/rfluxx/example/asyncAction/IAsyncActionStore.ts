@@ -1,4 +1,4 @@
-import { IStore, IAction } from "../../src";
+import { IAction, IStore } from "../../src";
 
 export interface IDataModel {
     text: string;

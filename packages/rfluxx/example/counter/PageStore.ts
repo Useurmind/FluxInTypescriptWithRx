@@ -4,18 +4,18 @@ export interface IPageStoreState {
     counter: number;
 }
 
-/** 
+/**
  * This is the interface by which the store is available in the components.
  * It offers a command to increment the counter.
  */
-export interface IPageStore extends Flux.IStore<IPageStoreState> {    
+export interface IPageStore extends Flux.IStore<IPageStoreState> {
     increment: Flux.IAction<number>;
 }
 
 class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
     public readonly increment: Flux.IAction<number>;
 
-    constructor(){
+    constructor() {
         super({
             initialState: {
                 counter: 0
@@ -34,7 +34,7 @@ class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
     }
 }
 
-// publish an instance of this store 
+// publish an instance of this store
 // you can do this in a nicer way by using a container
-// we keep it simple here on purpose 
-export const pageStore: IPageStore = new PageStore(); 
+// we keep it simple here on purpose
+export const pageStore: IPageStore = new PageStore();

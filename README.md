@@ -11,21 +11,18 @@ A UI component (exemplary implemented with react) can bind to the stores which a
 
 When a user interaction must be handled the UI components can call a command on the stores which in turn will update its state.
 
-# Docs
+## Install
+
+    npm i rfluxx
+
+## Docs
 
 Start [here](/docs/index.md)
 
-# Build and Run
+## Build and Run
 
-After downloading the git repository do an
+TODO
 
-    npm update
-    npm run build
-    npm run run
-
-An http server will now server the content of the example probably under 127.0.0.1:8080/index.html.
-Check the output of the run command to see the served ips and ports.
-
-# License
+## License
 
 MIT, see [LICENSE](LICENSE.MD)

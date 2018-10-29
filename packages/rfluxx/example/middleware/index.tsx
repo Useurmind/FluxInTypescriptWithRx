@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
+
 import { Page } from "./Page";
 
 // use these variables to insert the corresponding shims through webpack
@@ -8,15 +9,15 @@ declare var es6;
 es5.nothing;
 es6.nothing;
 
-document.addEventListener("DOMContentLoaded", function (event) {
-    let root = document.getElementById("root");
+document.addEventListener("DOMContentLoaded", function(event) {
+    const root = document.getElementById("root");
     ReactDom.render(<Page />, root);
 });
 
 declare const module: any;
 
 if (module.hot) {
-    module.hot.accept('./Page', function () {
-        console.log('Accepting the updated Page module!');
-    })
+    module.hot.accept("./Page", function() {
+        console.log("Accepting the updated Page module!");
+    });
 }

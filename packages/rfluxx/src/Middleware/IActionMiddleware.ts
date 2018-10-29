@@ -1,5 +1,5 @@
-import { IObservableAction } from '../IObservableAction';
-import { IActionMetadata } from '../ActionFactory/IActionMetadata';
+import { IActionMetadata } from "../ActionFactory/IActionMetadata";
+import { IObservableAction } from "../IObservableAction";
 
 /**
  * Interface for action middleware.

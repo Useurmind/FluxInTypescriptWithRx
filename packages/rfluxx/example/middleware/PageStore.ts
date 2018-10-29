@@ -1,18 +1,18 @@
 import * as Flux from "../../src";
-import { IActionFactory } from '../../src/ActionFactory/IActionFactory';
-import { MiddlewareActionFactory } from '../../src/ActionFactory/MiddlewareActionFactory';
-import { ConsoleLoggingMiddleware } from '../../src/Middleware';
-import { ActionEventLogMiddleware } from '../../src/Middleware/ActionEventLog/ActionEventLogMiddleware';
-import { ActionEventLog } from '../../src/Middleware/ActionEventLog/ActionEventLog';
-import { TimeTraveler } from '../../src/Middleware/ActionEventLog/TimeTraveler';
-import { RegisterTimeTraveler } from '../../src/Middleware/ActionEventLog/TimeTravelerFactory';
-import { SimpleContainer } from '../../src/DependencyInjection/SimpleContainer';
+import { IActionFactory } from "../../src/ActionFactory/IActionFactory";
+import { MiddlewareActionFactory } from "../../src/ActionFactory/MiddlewareActionFactory";
+import { SimpleContainer } from "../../src/DependencyInjection/SimpleContainer";
+import { ConsoleLoggingMiddleware } from "../../src/Middleware";
+import { ActionEventLog } from "../../src/Middleware/ActionEventLog/ActionEventLog";
+import { ActionEventLogMiddleware } from "../../src/Middleware/ActionEventLog/ActionEventLogMiddleware";
+import { TimeTraveler } from "../../src/Middleware/ActionEventLog/TimeTraveler";
+import { RegisterTimeTraveler } from "../../src/Middleware/ActionEventLog/TimeTravelerFactory";
 
 export interface IPageStoreState {
     counter: number;
 }
 
-/** 
+/**
  * This is the interface by which the store is available in the components.
  * It offers a command to increment the counter.
  */
@@ -28,7 +28,7 @@ class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
             initialState: {
                 counter: 0
             },
-            actionFactory: actionFactory
+            actionFactory
         });
 
         // create an action that is observable by the store and subscribe it
@@ -46,16 +46,16 @@ class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
     }
 }
 
-let container = new SimpleContainer();
+const container = new SimpleContainer();
 
 container.registerInCollection("IActionMiddleware[]", () => new ConsoleLoggingMiddleware());
 RegisterTimeTraveler(container, true);
 container.registerInCollection("IResetMyState[]", c => new PageStore(c.resolve("IActionFactory")), "IPageStore");
 
-// publish an instance of this store 
+// publish an instance of this store
 // you can do this in a nicer way by using a container
-// we keep it simple here on purpose 
-export const pageStore: IPageStore = <IPageStore>container.resolve("IPageStore"); 
+// we keep it simple here on purpose
+export const pageStore: IPageStore = container.resolve("IPageStore") as IPageStore;
 
 // resolve the time traveler
 // this will put it into the window

@@ -1,7 +1,8 @@
-import { IObservableAction } from "../IObservableAction";
 import { Action } from "../Action";
+import { IObservableAction } from "../IObservableAction";
+
 import { IActionFactory } from "./IActionFactory";
-import { IActionMetadata } from './IActionMetadata';
+import { IActionMetadata } from "./IActionMetadata";
 
 /**
  * This is a very simple action factory that does nothing special about the actions.

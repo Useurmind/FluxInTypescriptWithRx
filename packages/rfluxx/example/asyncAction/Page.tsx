@@ -1,12 +1,13 @@
-import * as Rx from "rxjs";
 import * as React from "react";
-import { implicitAsyncActionStore } from "./ImplicitAsyncActionStore";
-import { explicitAsyncActionStore } from "./ExplicitAsyncActionStore";
+import * as Rx from "rxjs";
+
 import { AsyncAction } from "./AsyncAction";
+import { explicitAsyncActionStore } from "./ExplicitAsyncActionStore";
+import { implicitAsyncActionStore } from "./ImplicitAsyncActionStore";
 
 export class Page extends React.Component<{}, {}> {
 
-    constructor(props: any){
+    constructor(props: any) {
         super(props);
     }
 

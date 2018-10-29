@@ -1,7 +1,8 @@
 import { IObservableAction } from "../IObservableAction";
-import { IActionMetadata } from './IActionMetadata';
 
-/** 
+import { IActionMetadata } from "./IActionMetadata";
+
+/**
  * Interface for creating actions.
  */
 export interface IActionFactory {
