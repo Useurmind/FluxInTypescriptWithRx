@@ -1,77 +1,53 @@
-export interface ISiteNode {
-    caption: string;
-    type: SiteNodeType;
-    relativeRoute?: string;
-    route?: string;
-    description?: string;
-    imagePath?: string;
-    subNodes?: ISiteNode[];
+import { IInjectedStoreOptions, Store, IAction } from 'rfluxx';
+
+export class Window {
+
 }
 
-export enum SiteNodeType  {
-    SiteNodeCollection,
-    CustomComponent
+/**
+ * Constructor options for the { @see WindowManagementStore }.
+ */
+export interface WindowManagementStoreOptions extends IInjectedStoreOptions {
+
 }
 
-export enum ViewMode {
-    View,
-    New,
-    Edit,
+/**
+ * State for the { @see WindowManagementStore }.
+ */
+export interface WindowManagementStoreState {
+    /**
+     * The window that is currently active and shown to the user.
+     */
+    activeWindow: Window | null;
+
+    /**
+     * The windows that are currently open and tracked.
+     */
+    openWindows: Window[];
 }
 
-export interface ISiteNodeCollection extends ISiteNode {
+/**
+ * Interface for interacting with the window management store.
+ */
+export interface IWindowManagementStore {
+
 }
 
-export interface ISiteNodePropsNoType {
-    caption: string;
-    relativeRoute?: string;
-    route?: string;
-    description?: string;
-    imagePath?: string;
-    subNodes?: ISiteNode[];
-}
-
-export interface ISiteNodeProps extends ISiteNodePropsNoType {
-    type: SiteNodeType;
-}
-
-export class SiteNode implements ISiteNode {
-    caption: string;
-    type: SiteNodeType;
-    relativeRoute?: string;
-    route?: string;
-    description?: string;
-    imagePath?: string;
-    subNodes?: ISiteNode[];
-
-    constructor(props : ISiteNodeProps) {
-        this.caption = props.caption;
-        this.type = props.type;
-        this.relativeRoute = props.relativeRoute;
-        this.route = props.route;
-        this.description = props.description;
-        this.imagePath = props.imagePath;
-        this.subNodes = props.subNodes;
-    }
-}
-
-export interface ISiteNodeCollectionProps extends ISiteNodePropsNoType {
-    subNodes: ISiteNode[];    
-}
-export class SiteNodeCollection extends SiteNode implements ISiteNodeCollection {
-    subNodes: ISiteNode[];
-
-    constructor(props: ISiteNodeCollectionProps) {
+/**
+ * This store is responsible for keeping track of all open windows and opening, switching, 
+ * eand closing windows.
+ */
+export class WindowManagementStore extends Store<WindowManagementStoreState> {
+    /**
+     * Create a new instance.
+     */
+    constructor(private options: WindowManagementStoreOptions) {
         super({
-            caption: props.caption, 
-            relativeRoute: props.relativeRoute,
-            route: props.route,
-            description: props.description,
-            imagePath: props.imagePath,
-            type: SiteNodeType.SiteNodeCollection,
-            subNodes: props.subNodes
+            initialState: {
+                activeWindow: null,
+                openWindows: []
+            }
         });
-
-        this.subNodes = props.subNodes;
+        
     }
 }
