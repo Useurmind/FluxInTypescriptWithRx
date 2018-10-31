@@ -18,7 +18,7 @@ export interface IRouterLinkProps {
     /**
      * The css class name to apply to the link.
      */
-    className: string;
+    className?: string;
 }
 
 /**
@@ -31,15 +31,16 @@ export class RouterLink extends React.Component<IRouterLinkProps, {}> {
         super(props)
     }
 
-    private onLinkClicked(): boolean {
+    private onLinkClicked(e: any): boolean {
         routerStore.navigateTo.trigger(this.props.path);
+        e.preventDefault();
         return false;
     }
 
     public render(): any {
         const href = routerStore.getHref(this.props.path);
 
-        return <a onClick={() => {return this.onLinkClicked()}} className={this.props.className} href={href} >
+        return <a onClick={(e) => {return this.onLinkClicked(e)}} className={this.props.className} href={href} >
             { this.props.caption && this.props.caption }
             { !this.props.caption && this.props.children }
         </a>

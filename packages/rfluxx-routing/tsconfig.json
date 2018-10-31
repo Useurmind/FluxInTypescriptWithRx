@@ -8,7 +8,7 @@
         "sourceMap": true,
         "target": "es5",
         "importHelpers": true,
-        "lib": [ "dom", "es6", "scripthost" ],
+        "lib": [ "dom", "es6", "scripthost", "es2017.object" ],
         "jsx": "react",
         "declaration": true
     }

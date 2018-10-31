@@ -8,7 +8,8 @@ module.exports = {
     // from there all required parts of the application are imported
     // wepack will start to traverse imports starting from this file
     entry: {
-        simpleRoutes: "./example/simpleRoutes/index.tsx"
+        routerStore: "./example/routerStore/index.tsx",
+        siteMap: "./example/siteMap/index.tsx"
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
@@ -38,13 +39,13 @@ module.exports = {
             es6: 'es6-shim'
         }),
         new HtmlWebpackPlugin({
-            title: 'Flux with Typescript Examples'
+            title: 'RFluxx Routing Examples'
         }),    
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-        contentBase: './example',
+        contentBase: path.resolve(__dirname, 'example'),
         hot: true
     },
     devtool: 'inline-source-map',
@@ -52,6 +53,6 @@ module.exports = {
     output: {
         libraryTarget: "umd",
         filename: 'rfluxx.[name].bundle.js',
-        path: path.resolve(__dirname, 'example/dist')
+        path: __dirname + 'example/dist'
     }
 };

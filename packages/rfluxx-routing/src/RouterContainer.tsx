@@ -1,39 +1,39 @@
-import * as React from "react";
-import { IRouteLocation } from './RouterStore';
+// import * as React from "react";
+// import { IRouteLocation } from './RouterStore';
 
 
-export interface IRouterContainerProps {
-}
+// export interface IRouterContainerProps {
+// }
 
-export interface IRouterContainerState {
-    location: IRouteLocation;
-}
+// export interface IRouterContainerState {
+//     location: IRouteLocation;
+// }
 
-export class RouterContainer extends React.Component<IRouterContainerProps, IRouterContainerState> {
-    private subscription: Rx.Subscription;
+// export class RouterContainer extends React.Component<IRouterContainerProps, IRouterContainerState> {
+//     private subscription: Rx.Subscription;
     
-    constructor(props: IRouterContainerProps) {
-        super(props)
+//     constructor(props: IRouterContainerProps) {
+//         super(props)
 
-        this.state = {
-            location: null
-        };
-    }
+//         this.state = {
+//             location: null
+//         };
+//     }
 
-    public componentDidMount() {
-        this.subscription = getRouterStore().subscribe(x => this.setState({
-            ...this.state, 
-            location:  x.location}));
-    }
+//     public componentDidMount() {
+//         this.subscription = getRouterStore().subscribe(x => this.setState({
+//             ...this.state, 
+//             location:  x.location}));
+//     }
 
-    public componentWillUnmount() {
-        if(this.subscription) {
-            this.subscription.unsubscribe();
-            this.subscription = null;
-        }
-    }
+//     public componentWillUnmount() {
+//         if(this.subscription) {
+//             this.subscription.unsubscribe();
+//             this.subscription = null;
+//         }
+//     }
 
-    public render(): any {
-        return <SiteNodeComponent location={this.state.location}/>;
-    }
-}
+//     public render(): any {
+//         return <SiteNodeComponent location={this.state.location}/>;
+//     }
+// }

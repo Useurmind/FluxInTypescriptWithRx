@@ -1,5 +1,4 @@
 import * as Rfluxx from "rfluxx";
-import { IRouterHandler, IRoute } from './Router';
 import { IInjectedStoreOptions, IAction } from "rfluxx";
 
 /**
@@ -126,9 +125,11 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
         {
             this.options.mode = (historyModeChosen && !!(history.pushState)) ? RouterMode.History : RouterMode.Hash;
         }
-        this.options.root = this.options.root !== undefined ? '/' + this.clearSlashes(options.root) + '/' : '/';
+        this.options.root = this.options.root !== undefined ? '/' + this.clearSlashes(options.root) + '/' : window.location.pathname;
 
-        this.navigateTo = this.createActionAndSubscribe<string>(this.navigateToImpl);
+        this.navigateTo = this.createActionAndSubscribe<string>(s => this.navigateToImpl(s));
+
+        this.listenToUrlChanges();
     }
 
     /**
@@ -194,13 +195,15 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
 
             const paramRegex = new RegExp(route.expression, "i");
             const match: RegExpMatchArray = fragment.match(paramRegex);
-            let routeParams = new Map(Object.entries((match as any).groups));
-            if(!routeParams) {
-                routeParams = new Map();
-            }
 
             if(match)
             {
+                let routeParams: Map<string, string> =  new Map<string, string>();
+                if((match as any).groups)
+                {
+                    routeParams = new Map<string, string>(Object.entries((match as any).groups));
+                }
+
                 return (<IRouteHit>{
                     route,
                     parameters: routeParams
