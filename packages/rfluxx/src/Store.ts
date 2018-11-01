@@ -12,9 +12,27 @@ import { IResetMyState } from "./IResetMyState";
 import { IStore } from "./IStore";
 
 /**
+ * Interface that describes options that are usually injected into the store
+ * by a container.
+ */
+export interface IInjectedStoreOptions
+{
+    /**
+     * Action factory used to create actions.
+     * By default the { @see SimpleActionFactory } is used.
+     */
+    actionFactory?: IActionFactory;
+
+    /**
+     * Utility class to allow fetching from a backend.
+     */
+    fetcher?: IObservableFetcher;
+}
+
+/**
  * Options to configure a generic store.
  */
-export interface IStoreOptions<TState>
+export interface IStoreOptions<TState> extends IInjectedStoreOptions
 {
     /**
      * The state that the store will have before any actions are executed.
@@ -25,17 +43,6 @@ export interface IStoreOptions<TState>
      * Optional parameter to execute a function when the store is first observed.
      */
     onInit?: () => void;
-
-    /**
-     * Action factory used to create actions.
-     * By default the { @see SimpleActionFactory } is used.
-     */
-    actionFactory?: IActionFactory;
-
-    /**
-     * Utility class to allow fetching
-     */
-    fetcher?: IObservableFetcher;
 }
 
 /**

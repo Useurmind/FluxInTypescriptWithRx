@@ -8,9 +8,8 @@ module.exports = {
     // from there all required parts of the application are imported
     // wepack will start to traverse imports starting from this file
     entry: {
-        counter: "./example/counter/index.tsx",
-        asyncAction: "./example/asyncAction/index.tsx",
-        middleware: "./example/middleware/index.tsx"
+        routerStore: "./example/routerStore/index.tsx",
+        siteMap: "./example/siteMap/index.tsx"
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
@@ -21,7 +20,8 @@ module.exports = {
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
             { 
                 test: /\.tsx?$/, 
-                loader: "ts-loader" 
+                loader: "ts-loader",
+                exclude: /node_modules/
             }
         ]
     },
@@ -39,20 +39,20 @@ module.exports = {
             es6: 'es6-shim'
         }),
         new HtmlWebpackPlugin({
-            title: 'Flux with Typescript Examples'
+            title: 'RFluxx Routing Examples'
         }),    
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-        contentBase: './example',
+        contentBase: path.resolve(__dirname, 'example'),
         hot: true
     },
     devtool: 'inline-source-map',
     mode: "development",
     output: {
         libraryTarget: "umd",
-        filename: 'fluxInTypescriptWithRx.[name].bundle.js',
-        path: path.resolve(__dirname, 'example/dist')
+        filename: 'rfluxx.[name].bundle.js',
+        path: __dirname + 'example/dist'
     }
 };

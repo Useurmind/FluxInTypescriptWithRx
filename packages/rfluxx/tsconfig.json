@@ -10,6 +10,13 @@
         "importHelpers": true,
         "lib": [ "dom", "es6", "scripthost" ],
         "jsx": "react",
-        "declaration": true
-    }
+        "declaration": true,
+        "skipLibCheck": true,
+        "types" : ["react", "react-dom", "jasmine"]
+    },
+    "exclude": [
+        "node_modules",
+        "../../node_modules",
+        "out"
+    ]
 }
