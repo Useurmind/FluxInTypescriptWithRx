@@ -50,6 +50,12 @@ export interface ISiteMapNode
      * The child site map nodes of this node.
      */
     children?: ISiteMapNode[];
+
+    /**
+     * Render the site map node.
+     * Takes the parameter values of the route.
+     */
+    render: (parameters: Map<string, string>) => any;
 }
 
 /**

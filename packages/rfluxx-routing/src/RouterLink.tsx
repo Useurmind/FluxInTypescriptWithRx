@@ -1,5 +1,6 @@
 import * as React from "react";
-import { routerStore, RouterMode } from "./RouterStore";
+
+import { RouterMode, routerStore } from "./RouterStore";
 
 /**
  * Props for { @see RouterLink }.
@@ -26,23 +27,27 @@ export interface IRouterLinkProps {
  * via the integrated routing mechanism.
  * Uses { @see RouterStore } to navigate to the path.
  */
-export class RouterLink extends React.Component<IRouterLinkProps, {}> {
-    constructor(props: IRouterLinkProps) {
-        super(props)
+export class RouterLink extends React.Component<IRouterLinkProps, {}>
+{
+    constructor(props: IRouterLinkProps)
+    {
+        super(props);
     }
 
-    private onLinkClicked(e: any): boolean {
+    public onLinkClicked(e: any): boolean
+    {
         routerStore.navigateTo.trigger(this.props.path);
         e.preventDefault();
         return false;
     }
 
-    public render(): any {
+    public render(): any
+    {
         const href = routerStore.getHref(this.props.path);
 
-        return <a onClick={(e) => {return this.onLinkClicked(e)}} className={this.props.className} href={href} >
+        return <a onClick={e => this.onLinkClicked(e)} className={this.props.className} href={href} >
             { this.props.caption && this.props.caption }
             { !this.props.caption && this.props.children }
-        </a>
+        </a>;
     }
 }

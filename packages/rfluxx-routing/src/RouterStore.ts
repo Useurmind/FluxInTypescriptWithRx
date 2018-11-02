@@ -1,5 +1,5 @@
 import * as Rfluxx from "rfluxx";
-import { IInjectedStoreOptions, IAction } from "rfluxx";
+import { IAction, IInjectedStoreOptions } from "rfluxx";
 
 /**
  * Interface for a route that can be entered.
@@ -34,7 +34,7 @@ export interface IRouteHit
 /**
  * Different modes in which the router can operate.
  */
-export enum RouterMode 
+export enum RouterMode
 {
     /**
      * Work in the default history of the browser using url segments.
@@ -102,14 +102,14 @@ export interface IRouterStore extends Rfluxx.IStore<IRouterStoreState>
 export class RouterStore extends Rfluxx.Store<IRouterStoreState>
 {
     /**
-     * Interval number used to listen to url changes periodically.
-     */
-    private interval: number = null;
-
-    /**
      * @inheritDoc
      */
     public navigateTo: IAction<string>;
+
+    /**
+     * Interval number used to listen to url changes periodically.
+     */
+    private interval: number = null;
 
     constructor(private options: IRouterStoreOptions)
     {
@@ -121,11 +121,13 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
 
         const historyModeChosen: boolean = this.options.mode !== undefined;
 
-        if(!historyModeChosen)
+        if (!historyModeChosen)
         {
             this.options.mode = (historyModeChosen && !!(history.pushState)) ? RouterMode.History : RouterMode.Hash;
         }
-        this.options.root = this.options.root !== undefined ? '/' + this.clearSlashes(options.root) + '/' : window.location.pathname;
+        this.options.root = this.options.root !== undefined
+                                ? "/" + this.clearSlashes(options.root) + "/"
+                                : window.location.pathname;
 
         this.navigateTo = this.createActionAndSubscribe<string>(s => this.navigateToImpl(s));
 
@@ -137,29 +139,29 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
      */
     public getHref(path: string): string
     {
-        const href = this.options.mode == RouterMode.Hash ? `#${path}` : path;
+        const href = this.options.mode === RouterMode.Hash ? `#${path}` : path;
 
         return href;
     }
 
     private navigateToImpl(path: string): void
     {
-        path = path ? path : '';
+        path = path ? path : "";
         if (this.options.mode === RouterMode.History)
         {
             history.pushState(null, null, this.options.root + this.clearSlashes(path));
         }
         else
         {
-            window.location.href = window.location.href.replace(/#(.*)$/, '') + '#' + path;
+            window.location.href = window.location.href.replace(/#(.*)$/, "") + "#" + path;
         }
     }
 
     private listenToUrlChanges(): void
     {
-        var current = null;
+        let current = null;
 
-        var applyCurrentRouteHit = () =>
+        const applyCurrentRouteHit = () =>
         {
             if (current !== this.getFragment())
             {
@@ -168,7 +170,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
                 const currentRouteHit = this.getRouteHit(current);
                 this.setState({ currentHit: currentRouteHit });
             }
-        }
+        };
 
         applyCurrentRouteHit();
 
@@ -178,7 +180,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
 
     private clearSlashes(path: string): string
     {
-        return path.toString().replace(/\/$/, '').replace(/^\//, '');
+        return path.toString().replace(/\/$/, "").replace(/^\//, "");
     }
 
     /**
@@ -189,25 +191,25 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
     private getRouteHit(fragment: string): IRouteHit | null
     {
         fragment = fragment || this.getFragment();
-        for (var i = 0; i < this.options.routes.length; i++)
+        for (const route of this.options.routes)
         {
-            const route = this.options.routes[i];
-
             const paramRegex = new RegExp(route.expression, "i");
             const match: RegExpMatchArray = fragment.match(paramRegex);
 
-            if(match)
+            if (match)
             {
                 let routeParams: Map<string, string> =  new Map<string, string>();
-                if((match as any).groups)
+                if ((match as any).groups)
                 {
                     routeParams = new Map<string, string>(Object.entries((match as any).groups));
                 }
 
-                return (<IRouteHit>{
+                const routeHit: IRouteHit = {
                     route,
                     parameters: routeParams
-                });
+                };
+
+                return routeHit;
             }
         }
 
@@ -219,17 +221,17 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
      */
     private getFragment(): string
     {
-        let fragment = '';
+        let fragment = "";
         if (this.options.mode === RouterMode.History)
         {
             fragment = this.clearSlashes(decodeURI(location.pathname + location.search));
-            fragment = fragment.replace(/\?(.*)$/, '');
-            fragment = this.options.root !== '/' ? fragment.replace(this.options.root, '') : fragment;
+            fragment = fragment.replace(/\?(.*)$/, "");
+            fragment = this.options.root !== "/" ? fragment.replace(this.options.root, "") : fragment;
         }
         else
         {
-            var match = window.location.href.match(/#(.*)$/);
-            fragment = match ? match[1] : '';
+            const match = window.location.href.match(/#(.*)$/);
+            fragment = match ? match[1] : "";
         }
 
         return this.clearSlashes(fragment);
@@ -242,11 +244,11 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
  */
 export let routerStore: IRouterStore = null;
 
-export function configureRouterStore(options: IRouterStoreOptions) 
+export function configureRouterStore(options: IRouterStoreOptions)
 {
-    if(routerStore)
+    if (routerStore)
     {
-        throw "The function configureRouterStore was called twice. ";
+        throw new Error("The function configureRouterStore was called twice. ");
     }
 
     routerStore = new RouterStore(options);

@@ -1,14 +1,17 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 
-import { routerStore, configureRouterStore, RouterMode } from "../../src/RouterStore";
+import { configureRouterStore, RouterMode, routerStore } from "../../src/RouterStore";
+import { getSiteMapRoutes, ISiteMapNode, SiteMapStore } from "../../src/SiteMapStore";
+
 import { Page } from "./Page";
-import { ISiteMapNode, getSiteMapRoutes, SiteMapStore } from '../../src/SiteMapStore';
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
 declare var es6;
+// tslint:disable-next-line:no-unused-expression
 es5.nothing;
+// tslint:disable-next-line:no-unused-expression
 es6.nothing;
 
 const siteMap: ISiteMapNode = {
@@ -16,24 +19,28 @@ const siteMap: ISiteMapNode = {
     route: {
         expression: "home"
     },
+    render: p => <div>My home node</div>,
     children: [
         {
             caption: "Route 1",
             route: {
                 expression: "home/route1"
-            }
+            },
+            render: p => <div>My route 1 node</div>
         },
         {
             caption: "Route 2",
             route: {
                 expression: "area1/route2"
-            }
+            },
+            render: p => <div>My route 2 node</div>
         },
         {
             caption: "Route 3",
             route: {
                 expression: "HOME/route3"
-            }
+            },
+            render: p => <div>My route 3 node</div>
         }
     ]
 };
