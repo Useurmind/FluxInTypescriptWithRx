@@ -18,7 +18,7 @@ export interface ISiteMapNodeHit
     parameters: Map<string, string>;
 
     /**
-     * An array of site map nodes that reflect the path from the root node to 
+     * An array of site map nodes that reflect the path from the root node to
      * the site map node that was hit (including it).
      */
     siteMapPath: ISiteMapNode[];
