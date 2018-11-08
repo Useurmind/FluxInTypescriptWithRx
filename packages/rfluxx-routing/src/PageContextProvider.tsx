@@ -11,13 +11,13 @@ export interface IPageContextProps
     /**
      * The container that holds the state of the page.
      */
-    container: IContainer;
+    container?: IContainer;
 }
 
 /**
- * Props for { @see PageContextProvider }.
+ * Props for { @see PageContextProvider } and also for a consumer bound via { @see bindToPageContext }.
  */
-export interface IPageProviderProps
+export interface IPageContextProviderProps
 {
     /**
      * The container that holds the state of the page.
@@ -33,25 +33,56 @@ export const PageContext = React.createContext<IPageContextProps>({
     container: null
 });
 
+export function withPageContext(pageComponent: React.ReactElement<any>): any
+{
+    return <PageContext.Consumer>
+        {pageContext => React.cloneElement(pageComponent, pageContext)}
+    </PageContext.Consumer>;
+}
+
+/**
+ * State for { @see PageContextProvider }.
+ */
+export interface IPageContextProviderState
+{
+    /**
+     * The props that should be provided as context.
+     */
+    pageProps: IPageContextProps;
+}
+
 /**
  * Provider for the rfluxx page context.
  * Uses the react context api to provide a context for each page.
  */
-export class PageContextProvider extends React.Component<IPageProviderProps>
+export class PageContextProvider extends React.Component<IPageContextProviderProps, IPageContextProviderState>
 {
-    constructor(props: IPageProviderProps)
+    constructor(props: IPageContextProviderProps)
     {
         super(props);
 
-        this.state = {};
+        this.state = {
+            pageProps: {
+                container: props.container
+            }
+        };
+    }
+
+    public componentDidUpdate(prevProps: IPageContextProviderProps): void
+    {
+        if (prevProps.container !== this.props.container)
+        {
+            this.setState({
+                pageProps: {
+                    container: this.props.container
+                }
+            });
+        }
     }
 
     public render(): any
     {
-      return <PageContext.Provider value={
-          {
-            container: this.props.container
-          }}>
+      return <PageContext.Provider value={this.state.pageProps}>
           {this.props.children}
       </PageContext.Provider>;
     }

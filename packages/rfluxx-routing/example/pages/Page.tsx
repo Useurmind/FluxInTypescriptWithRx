@@ -2,13 +2,16 @@ import * as React from "react";
 import * as Rx from "rxjs";
 
 import { Breadcrumb } from "../../src/Breadcrumb";
+import { CurrentPage } from "../../src/CurrentPage";
 import { CurrentSiteMapNode } from "../../src/CurrentSiteMapNode";
+import { IPageManagementStore } from "../../src/PageManagementStore";
 import { RouterLink } from "../../src/RouterLink";
 import { ISiteMapNode, ISiteMapStore } from "../../src/SiteMapStore";
 
 export interface IPageProps
 {
     siteMapStore: ISiteMapStore;
+    pageManagementStore: IPageManagementStore;
 }
 
 export interface IPageState
@@ -52,7 +55,7 @@ export class Page extends React.Component<IPageProps, IPageState> {
             <RouterLink caption="route3" path="/home/route3" /><br />
             <span>Current route</span><br />
             <span>{this.state.currentSiteMapExpression}</span><br />
-            <CurrentSiteMapNode siteMapStore={this.props.siteMapStore} />
+            <CurrentPage pageManagementStore={this.props.pageManagementStore} />
         </div>;
     }
 }

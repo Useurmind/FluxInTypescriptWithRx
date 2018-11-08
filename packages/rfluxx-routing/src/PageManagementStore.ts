@@ -2,8 +2,8 @@ import * as Rfluxx from "rfluxx";
 import { IAction, IInjectedStoreOptions } from "rfluxx";
 
 import { IPageContainerFactory } from "./IPageContainerFactory";
+import { IRouterStore } from "./RouterStore";
 import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMapStore";
-import { IRouterStore } from './RouterStore';
 
 /**
  * The state of a single page.

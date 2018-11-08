@@ -9,7 +9,8 @@ module.exports = {
     // wepack will start to traverse imports starting from this file
     entry: {
         routerStore: "./example/routerStore/index.tsx",
-        siteMap: "./example/siteMap/index.tsx"
+        siteMap: "./example/siteMap/index.tsx",
+        pages: "./example/pages/index.tsx"
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
