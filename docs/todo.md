@@ -10,7 +10,7 @@ Page routing sees pages as unit of work that can be parametrized and return a re
 
 ## page state
 
-A page is the implementation of UI for a single route.
+A page is the implementation of UI for a single site map node.
 
 The state of a page is the sum of store instances used specifically in that page. All other "state" like the data contained in the components of the page should be assumed to be evicted when a different route is hit.
 

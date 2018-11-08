@@ -13,6 +13,11 @@ export interface ISiteMapNodeHit
     siteMapNode: ISiteMapNode;
 
     /**
+     * The url fragment that lead to the site map node being hit.
+     */
+    urlFragment: string;
+
+    /**
      * The paramaters of the route that lead to the hit of the node.
      */
     parameters: Map<string, string>;
@@ -38,13 +43,6 @@ export interface ISiteMapNode
      * The route that should be matched by the site map node.
      */
     route: IRoute;
-
-    /**
-     * A function that checks the parameters of the route.
-     * Only if this field is null or returns true in addition to the route match
-     * the site map node is a match for the selected route.
-     */
-    matchParameters?: (parameters: Map<string, string>) => boolean;
 
     /**
      * The child site map nodes of this node.
@@ -166,16 +164,18 @@ export class SiteMapStore extends Store<ISiteMapStoreState> implements ISiteMapS
 
             for (const node of nodeList)
             {
-                if (node.matchParameters === undefined || node.matchParameters(routeHit.parameters))
-                {
-                    const siteMapNodeHit: ISiteMapNodeHit = {
-                        parameters: routeHit.parameters,
-                        siteMapNode: node,
-                        siteMapPath: this.siteMapNodePathMap.get(node)                    };
+                // we take the first node that matches the expression of the route
+                // we do this because we use the expression as a unique identifier
+                // for the route
 
-                    this.setState({ siteMapNodeHit });
-                    return;
-                }
+                const siteMapNodeHit: ISiteMapNodeHit = {
+                    parameters: routeHit.parameters,
+                    siteMapNode: node,
+                    urlFragment: routeHit.urlFragment,
+                    siteMapPath: this.siteMapNodePathMap.get(node)                    };
+
+                this.setState({ siteMapNodeHit });
+                return;
             }
         }
         else

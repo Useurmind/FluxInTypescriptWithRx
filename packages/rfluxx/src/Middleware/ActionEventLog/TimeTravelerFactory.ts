@@ -1,6 +1,7 @@
-import { ConsoleLoggingMiddleware } from "..";
-import { IActionFactory, MiddlewareActionFactory } from "../..";
+import { ConsoleLoggingMiddleware, IActionMiddleware } from "..";
+import { IAction, IActionFactory, MiddlewareActionFactory } from "../..";
 import { IContainer } from "../../DependencyInjection/IContainer";
+import { IContainerBuilder } from "../../DependencyInjection/IContainerBuilder";
 import { IResetMyState } from "../../IResetMyState";
 
 import { ActionEventLog } from "./ActionEventLog";
@@ -22,25 +23,27 @@ import { TimeTraveler } from "./TimeTraveler";
  * - registerInCollection("IActionMiddleware[]", ...)
  * - registerInCollection("INeedToKnowIfIAmInThePast[]", ...)
  * - registerInCollection("INeedToKnowAboutReplay[]", ...)
- * @param container The container where the components are registered.
+ * @param containerBuilder The container builder where the components are registered.
  * @param registerWithWindow Should the event log and time traveler be put into the window itself as
  * window.timeTraveler and window.eventLog.
  */
-export function RegisterTimeTraveler(container: IContainer, registerWithWindow?: boolean): void
+export function RegisterTimeTraveler(containerBuilder: IContainerBuilder, registerWithWindow?: boolean): void
 {
-    container.register("IActionEventLog", c => new ActionEventLog());
-    container.registerInCollection(
+    containerBuilder.register("IActionEventLog", c => new ActionEventLog());
+    containerBuilder.registerInCollection(
         ["IActionMiddleware[]", "INeedToKnowAboutReplay[]", "INeedToKnowIfIAmInThePast[]"],
-        c => new ActionEventLogMiddleware(c.resolve("IActionEventLog")));
-    container.register("IActionFactory", c => new MiddlewareActionFactory(c.resolve("IActionMiddleware[]")));
-    container.register("TimeTraveler", c =>
+        c => new ActionEventLogMiddleware(c.resolve<IActionEventLog>("IActionEventLog")));
+    containerBuilder.register(
+        "IActionFactory",
+        c => new MiddlewareActionFactory(c.resolve<IActionMiddleware[]>("IActionMiddleware[]")));
+    containerBuilder.register("TimeTraveler", c =>
     {
-        const eventLog = c.resolve("IActionEventLog") as IActionEventLog;
+        const eventLog = c.resolve<IActionEventLog>("IActionEventLog");
         const timeTraveler = new TimeTraveler(
             eventLog,
-            () => c.resolve("INeedToKnowAboutReplay[]") as INeedToKnowAboutReplay[],
-            () => c.resolve("IResetMyState[]") as IResetMyState[],
-            () => c.resolve("INeedToKnowIfIAmInThePast[]") as INeedToKnowIfIAmInThePast[],
+            () => c.resolve<INeedToKnowAboutReplay[]>("INeedToKnowAboutReplay[]"),
+            () => c.resolve<IResetMyState[]>("IResetMyState[]"),
+            () => c.resolve<INeedToKnowIfIAmInThePast[]>("INeedToKnowIfIAmInThePast[]"),
             null
         );
 

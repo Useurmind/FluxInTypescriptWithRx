@@ -23,7 +23,8 @@ export interface IPageStore extends Flux.IStore<IPageStoreState> {
 class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
     public readonly increment: Flux.IAction<number>;
 
-    constructor(actionFactory: IActionFactory) {
+    constructor(actionFactory: IActionFactory)
+    {
         super({
             initialState: {
                 counter: 0
@@ -32,7 +33,8 @@ class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
         });
 
         // create an action that is observable by the store and subscribe it
-        this.increment = this.createActionAndSubscribe<number>(increment => {
+        this.increment = this.createActionAndSubscribe<number>(increment =>
+            {
                 // when the action is triggered the subscription is called
                 // we increment the counter of this store
                 this.setState(({
@@ -50,13 +52,16 @@ const container = new SimpleContainer();
 
 container.registerInCollection("IActionMiddleware[]", () => new ConsoleLoggingMiddleware());
 RegisterTimeTraveler(container, true);
-container.registerInCollection("IResetMyState[]", c => new PageStore(c.resolve("IActionFactory")), "IPageStore");
+container.registerInCollection(
+    "IResetMyState[]",
+    c => new PageStore(c.resolve<IActionFactory>("IActionFactory")),
+    "IPageStore");
 
 // publish an instance of this store
 // you can do this in a nicer way by using a container
 // we keep it simple here on purpose
-export const pageStore: IPageStore = container.resolve("IPageStore") as IPageStore;
+export const pageStore: IPageStore = container.resolve<IPageStore>("IPageStore");
 
 // resolve the time traveler
 // this will put it into the window
-container.resolve("TimeTraveler");
+container.resolve<TimeTraveler>("TimeTraveler");

@@ -8,8 +8,9 @@ export interface IRoute
 {
     /**
      * An expression that is used to check if the route matches the url.
-     * Can also contain named group, e.g. (?<name>regex) that can be used to capture 
+     * Can also contain named group, e.g. (?<name>regex) that can be used to capture
      * values for parameters of the route.
+     * Expressions should be unique values that identify the route clearly.
      */
     expression: string;
 }
@@ -23,6 +24,11 @@ export interface IRouteHit
      * The route that was hit.
      */
     route: IRoute;
+
+    /**
+     * The url fragment that leads to the route being hit (excluding the root).
+     */
+    urlFragment: string;
 
     /**
      * A set of parameters that was extracted from the regular expression in the route
@@ -206,6 +212,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
 
                 const routeHit: IRouteHit = {
                     route,
+                    urlFragment: fragment,
                     parameters: routeParams
                 };
 

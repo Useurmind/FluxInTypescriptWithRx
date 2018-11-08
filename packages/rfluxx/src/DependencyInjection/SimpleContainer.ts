@@ -1,18 +1,25 @@
 import { IContainer } from "./IContainer";
+import { IContainerBuilder } from "./IContainerBuilder";
 
 /**
  * Simple container implements the container interface by holding an internal map.
  */
-export class SimpleContainer implements IContainer
+export class SimpleContainer implements IContainer, IContainerBuilder
 {
     private registrationMap = {};
     private instanceMap = {};
 
+    /**
+     * @inheritDoc
+     */
     public register(typeName: string, create: (c: IContainer) => any): void
     {
         this.registrationMap[typeName] = create;
     }
 
+    /**
+     * @inheritDoc
+     */
     public registerInCollection(collectionName: string|string[], create: (c: IContainer) => any, typeName?: string)
         : void
     {
@@ -48,7 +55,10 @@ export class SimpleContainer implements IContainer
         this.registrationMap[typeName] = createSingleton;
     }
 
-    public resolve(typeName: string, instanceName?: string): any
+    /**
+     * @inheritDoc
+     */
+    public resolve<T>(typeName: string, instanceName?: string): T
     {
         let instance = this.instanceMap[typeName];
 
@@ -68,6 +78,6 @@ export class SimpleContainer implements IContainer
             this.instanceMap[typeName] = instance;
         }
 
-        return instance;
+        return instance as T;
     }
 }
