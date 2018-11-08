@@ -1,10 +1,9 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 
+import * as RfluxxRouting from "../../src";
 import { withPageContext } from "../../src/PageContextProvider";
-import { PageManagementStore } from "../../src/PageManagementStore";
-import { configureRouterStore, RouterMode, routerStore } from "../../src/RouterStore";
-import { getSiteMapRoutes, ISiteMapNode, SiteMapStore } from "../../src/SiteMapStore";
+import { ISiteMapNode } from "../../src/SiteMapStore";
 
 import { ContainerFactory } from "./ContainerFactory";
 import { Counter } from "./Counter";
@@ -49,28 +48,14 @@ const siteMap: ISiteMapNode = {
     ]
 };
 
-const routes = getSiteMapRoutes(siteMap);
-
-configureRouterStore({
-    routes,
-    mode: RouterMode.History
-});
-
-const siteMapStore = new SiteMapStore({
-    routerStore,
-    siteMap
-});
-
 const containerFactory = new ContainerFactory();
 
-const pageManagementStore = new PageManagementStore({
-    routerStore,
-    siteMapStore,
-    containerFactory
-});
+const globalStores = RfluxxRouting.init(siteMap, containerFactory);
 
 document.addEventListener("DOMContentLoaded", event =>
 {
     const root = document.getElementById("root");
-    ReactDom.render(<Page siteMapStore={siteMapStore} pageManagementStore={pageManagementStore} />, root);
+    ReactDom.render(
+        <Page siteMapStore={globalStores.siteMapStore} pageManagementStore={globalStores.pageManagementStore} />,
+        root);
 });

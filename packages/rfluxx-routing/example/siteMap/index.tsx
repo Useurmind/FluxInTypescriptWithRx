@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 
-import { configureRouterStore, RouterMode, routerStore } from "../../src/RouterStore";
+import { configureRouterStore, RouterMode, RouterStore, routerStore } from "../../src/RouterStore";
 import { getSiteMapRoutes, ISiteMapNode, SiteMapStore } from "../../src/SiteMapStore";
 
 import { Page } from "./Page";

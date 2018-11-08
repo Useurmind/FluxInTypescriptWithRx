@@ -26,9 +26,9 @@ export interface IRouteHit
     route: IRoute;
 
     /**
-     * The url fragment that leads to the route being hit (excluding the root).
+     * The url that leads to the route being hit.
      */
-    urlFragment: string;
+    url: URL;
 
     /**
      * A set of parameters that was extracted from the regular expression in the route
@@ -173,7 +173,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
             {
                 current = this.getFragment();
 
-                const currentRouteHit = this.getRouteHit(current);
+                const currentRouteHit = this.getRouteHit(current, window.location.href);
                 this.setState({ currentHit: currentRouteHit });
             }
         };
@@ -194,7 +194,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
      * @param fragment The fragment for which the route should be determined.
      * @returns The first matching route or null.
      */
-    private getRouteHit(fragment: string): IRouteHit | null
+    private getRouteHit(fragment: string, url: string): IRouteHit | null
     {
         fragment = fragment || this.getFragment();
         for (const route of this.options.routes)
@@ -212,7 +212,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
 
                 const routeHit: IRouteHit = {
                     route,
-                    urlFragment: fragment,
+                    url: new URL(url),
                     parameters: routeParams
                 };
 

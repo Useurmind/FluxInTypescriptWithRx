@@ -1,20 +1,13 @@
 import { IContainer, SimpleContainer } from "rfluxx";
 
-import { IGlobalStores, IPageContainerFactory } from "../../src/IPageContainerFactory";
+import { IGlobalStores, IPageContainerFactory, SimplePageContainerFactoryBase } from "../../src/IPageContainerFactory";
 
 import { CounterStore } from "./CounterStore";
 
-export class ContainerFactory implements IPageContainerFactory
+export class ContainerFactory extends SimplePageContainerFactoryBase
 {
-    public createContainer(
-        urlFragment: string,
-        routeParameters: Map<string, string>,
-        globalStores: IGlobalStores): IContainer
+    protected registerStores(container: SimpleContainer, url: URL, routeParameters: Map<string, string>): void
     {
-        const container = new SimpleContainer();
-
         container.register("ICounterStore", c => new CounterStore());
-
-        return container;
     }
 }

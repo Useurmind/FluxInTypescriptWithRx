@@ -1,4 +1,4 @@
-import { IContainer } from "rfluxx";
+import { IContainer, SimpleContainer } from "rfluxx";
 
 import { IPageManagementStore } from "./PageManagementStore";
 import { IRouterStore } from "./RouterStore";
@@ -35,10 +35,44 @@ export interface IPageContainerFactory
 {
     /**
      * Create a new container.
-     * @param urlFragment The url fragment of the page for which the container is created.
+     * @param url The url of the page for which the container is created.
      * @param routeParamters The parameters that were extracted from the route.
      * @param globalStores The global stores provided by the framework.
      * @returns The new container.
      */
-    createContainer(urlFragment: string, routeParameters: Map<string, string>, globalStores: IGlobalStores): IContainer;
+    createContainer(url: URL, routeParameters: Map<string, string>, globalStores: IGlobalStores): IContainer;
+}
+
+/**
+ * A base class for a page factory that already includes functionality like
+ * - registering global stores (IRouterStore, ISiteMapStore, IPageManagementStore)
+ *
+ * Uses { @see SimpleContainer } for dependency injection and resolution.
+ */
+export abstract class SimplePageContainerFactoryBase implements IPageContainerFactory {
+
+    /**
+     * @inheritDoc
+     */
+    public createContainer(url: URL, routeParameters: Map<string, string>, globalStores: IGlobalStores)
+        : IContainer
+    {
+        const container = new SimpleContainer();
+
+        container.register("IRouterStore", c => globalStores.routerStore);
+        container.register("ISiteMapStore", c => globalStores.siteMapStore);
+        container.register("IPageManagementStore", c => globalStores.pageManagementStore);
+
+        this.registerStores(container, url, routeParameters);
+
+        return container;
+    }
+
+    /**
+     * Implement this method to register your own stores.
+     * @param container The container in which you can register your stores.
+     * @param url The url of the page for which the container is created.
+     * @param routeParamters The parameters that were extracted from the route.
+     */
+    protected abstract registerStores(container: SimpleContainer, url: URL, routeParameters: Map<string, string>);
 }

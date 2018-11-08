@@ -13,9 +13,9 @@ export interface ISiteMapNodeHit
     siteMapNode: ISiteMapNode;
 
     /**
-     * The url fragment that lead to the site map node being hit.
+     * The url that lead to the site map node being hit.
      */
-    urlFragment: string;
+    url: URL;
 
     /**
      * The paramaters of the route that lead to the hit of the node.
@@ -171,7 +171,7 @@ export class SiteMapStore extends Store<ISiteMapStoreState> implements ISiteMapS
                 const siteMapNodeHit: ISiteMapNodeHit = {
                     parameters: routeHit.parameters,
                     siteMapNode: node,
-                    urlFragment: routeHit.urlFragment,
+                    url: routeHit.url,
                     siteMapPath: this.siteMapNodePathMap.get(node)                    };
 
                 this.setState({ siteMapNodeHit });

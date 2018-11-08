@@ -32,9 +32,9 @@ export interface IPage
     state: IPageState;
 
     /**
-     * The url fragment of the page.
+     * The url of the page.
      */
-    urlFragment: string;
+    url: URL;
 
     /**
      * Is the page currently being edited.
@@ -88,7 +88,7 @@ export interface ISetEditModeArguments
 {
     /**
      * The id of the page for which to set the edit mode.
-     * The id of a page is its url fragment.
+     * The id of a page is its url pathname and search.
      */
     pageId: string;
 
@@ -111,7 +111,7 @@ export interface IPageManagementStore extends Rfluxx.IStore<IPageManagementStore
     /**
      * Action to close a page.
      * Parameters:
-     * - pageId/urlFragment
+     * - pageId (which is computed from pathname and search)
      */
     close: IAction<string>;
 }
@@ -183,15 +183,16 @@ export class PageManagementStore
             return;
         }
 
-        const urlFragment = siteMapNodeHit.urlFragment;
+        const url = siteMapNodeHit.url;
+        const pageId = this.getPageId(url);
 
-        if (!this.pageMap.has(urlFragment))
+        if (!this.pageMap.has(pageId))
         {
-            this.pageMap.set(urlFragment, {
+            this.pageMap.set(pageId, {
                 siteMapNode: siteMapNodeHit.siteMapNode,
                 state: {
                     container: this.options.containerFactory.createContainer(
-                        siteMapNodeHit.urlFragment,
+                        siteMapNodeHit.url,
                         siteMapNodeHit.parameters,
                         {
                             routerStore: this.options.routerStore,
@@ -199,13 +200,25 @@ export class PageManagementStore
                             pageManagementStore: this
                         })
                 },
-                urlFragment: siteMapNodeHit.urlFragment,
+                url: siteMapNodeHit.url,
                 isInEditMode: false,
                 routeParameters: siteMapNodeHit.parameters
             });
         }
 
-        const page = this.pageMap.get(urlFragment);
+        const page = this.pageMap.get(pageId);
         this.setState({ currentPage: page });
+    }
+
+    /**
+     * Get the id of a page (used to identify it) from its URL.
+     * @param url The url of the page.
+     * @returns The id of the page.
+     */
+    private getPageId(url: URL): string
+    {
+        // we currently use pathname and search as key for a page
+        // the hash can be used for intra page navigation
+        return url.pathname + url.search;
     }
 }
