@@ -1,5 +1,6 @@
 import { IContainer, SimpleContainer } from "rfluxx";
 
+import { IPageCommunicationStore, IPageRequest } from "./PageCommunicationStore";
 import { IPageManagementStore } from "./PageManagementStore";
 import { IRouterStore } from "./RouterStore";
 import { ISiteMapStore } from "./SiteMapStore";
@@ -24,6 +25,11 @@ export interface IGlobalStores
      * The page management store that manages the state for the active pages.
      */
     pageManagementStore: IPageManagementStore;
+
+    /**
+     * The store that allows for communication between pages.
+     */
+    pageCommunicationStore: IPageCommunicationStore;
 }
 
 /**
@@ -35,12 +41,25 @@ export interface IPageContainerFactory
 {
     /**
      * Create a new container.
+     * The container should contain the following registrations:
+     * - IRouterStore
+     * - ISiteMapStore
+     * - IPageManagementStore
+     * - IPageCommunicationStore
+     * - IPageRequest: The request that lead to the page opening, optional can be null|undefined.
+     * - PageUrl: The url (of type URL) that was called for the page to open.
      * @param url The url of the page for which the container is created.
      * @param routeParamters The parameters that were extracted from the route.
      * @param globalStores The global stores provided by the framework.
+     * @param pageRequest The request that leads to the page. Can be null for pages to which was just navigated.
      * @returns The new container.
      */
-    createContainer(url: URL, routeParameters: Map<string, string>, globalStores: IGlobalStores): IContainer;
+    createContainer(
+        url: URL,
+        routeParameters: Map<string, string>,
+        globalStores: IGlobalStores,
+        pageRequest?: IPageRequest)
+        : IContainer;
 }
 
 /**
@@ -54,7 +73,11 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
     /**
      * @inheritDoc
      */
-    public createContainer(url: URL, routeParameters: Map<string, string>, globalStores: IGlobalStores)
+    public createContainer(
+        url: URL,
+        routeParameters: Map<string, string>,
+        globalStores: IGlobalStores,
+        pageRequest?: IPageRequest)
         : IContainer
     {
         const container = new SimpleContainer();
@@ -62,6 +85,10 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
         container.register("IRouterStore", c => globalStores.routerStore);
         container.register("ISiteMapStore", c => globalStores.siteMapStore);
         container.register("IPageManagementStore", c => globalStores.pageManagementStore);
+        container.register("IPageCommunicationStore", c => globalStores.pageCommunicationStore);
+
+        container.register("IPageRequest", c => pageRequest);
+        container.register("PageUrl", c => url);
 
         this.registerStores(container, url, routeParameters);
 

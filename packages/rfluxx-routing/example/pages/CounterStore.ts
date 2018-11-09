@@ -1,7 +1,16 @@
 import { IAction, IStore, Store } from "rfluxx";
 
-export interface ICounterStoreState {
+import { IPageCommunicationStore, IPageRequest } from "../../src/PageCommunicationStore";
+
+export interface ICounterStoreState
+{
     counter: number;
+}
+
+export interface ICounterStoreOptions
+{
+    pageRequest: IPageRequest;
+    pageCommunicationStore: IPageCommunicationStore;
 }
 
 /**
@@ -10,13 +19,21 @@ export interface ICounterStoreState {
  */
 export interface ICounterStore extends IStore<ICounterStoreState> {
     increment: IAction<number>;
+    setCount: IAction<number>;
+
+    /**
+     * Tell the counter on the given url path the count of this counter.
+     */
+    tellCounter: IAction<string>;
 }
 
 export class CounterStore extends Store<ICounterStoreState> implements ICounterStore
 {
     public readonly increment: IAction<number>;
+    public setCount: IAction<number>;
+    public tellCounter: IAction<string>;
 
-    public constructor()
+    public constructor(private options: ICounterStoreOptions)
     {
         super({
             initialState: {
@@ -37,5 +54,26 @@ export class CounterStore extends Store<ICounterStoreState> implements ICounterS
             {
                 name: "increment"
             });
+
+        this.setCount = this.createActionAndSubscribe<number>(count =>
+            {
+                this.setState(({
+                    ...this.state,
+                    counter: count
+                }));
+            });
+
+        this.tellCounter = this.createActionAndSubscribe<string>(urlPath =>
+            {
+                // one way communication
+                this.options.pageCommunicationStore.sendToPage(
+                    urlPath,
+                    this.state.counter);
+            });
+
+        if (options.pageRequest)
+        {
+            this.setCount.trigger(options.pageRequest.pageInput);
+        }
     }
 }

@@ -13,6 +13,7 @@ export interface ICounterProps extends IPageContextProps
 
 export interface ICounterState {
     counter: number;
+    toldCounter: string;
 }
 
 export class Counter extends React.Component<ICounterProps, ICounterState> {
@@ -23,7 +24,8 @@ export class Counter extends React.Component<ICounterProps, ICounterState> {
         super(props);
 
         this.state = {
-            counter: 0
+            counter: 0,
+            toldCounter: "/home/route1"
         };
     }
 
@@ -53,17 +55,34 @@ export class Counter extends React.Component<ICounterProps, ICounterState> {
         this.subscription.unsubscribe();
     }
 
-    public onClick()
+    public onIncrement()
     {
         // execute command to increase the counter
         this.subscription.store.increment.trigger(1);
+    }
+
+    public onTellOtherCounter()
+    {
+        // execute command to increase the counter
+        this.subscription.store.tellCounter.trigger(this.state.toldCounter);
+    }
+
+    public onToldCounterChanged(e: any)
+    {
+        this.setState({
+            ...this.state,
+            toldCounter: e.target.value
+        });
     }
 
     public render(): any
     {
         return <div>
             <div>Hello {this.props.caption} {this.state.counter}</div>
-            <button onClick={_ => this.onClick()} >Increment</button>
+            <button onClick={_ => this.onIncrement()} >Increment</button>
+            <button onClick={_ => this.onTellOtherCounter()} >Tell other counter</button>
+            <label>Told counter:</label>
+            <input type="text" onChange={e => this.onToldCounterChanged(e)} value={this.state.toldCounter} />
         </div>;
     }
 }

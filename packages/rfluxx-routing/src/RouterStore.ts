@@ -93,13 +93,24 @@ export interface IRouterStore extends Rfluxx.IStore<IRouterStoreState>
     /**
      * Navigate to the path given as an argument to the action.
      */
-    navigateTo: IAction<string>;
+    navigateToPath: IAction<string>;
+
+    /**
+     * Navigate to the url given as an argument to the action.
+     */
+    navigateToUrl: IAction<URL>;
 
     /**
      * Get the href that can be applied to links from a path segment.
      * @param path The path segment. The href can differ from this segment for e.g. hash routing.
      */
     getHref(path: string): string;
+
+    /**
+     * Get the href that can be applied to links from a path segment.
+     * @param path The path segment. The href can differ from this segment for e.g. hash routing.
+     */
+    getUrl(path: string): URL;
 }
 
 /**
@@ -110,7 +121,12 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
     /**
      * @inheritDoc
      */
-    public navigateTo: IAction<string>;
+    public navigateToPath: IAction<string>;
+
+    /**
+     * @inheritDoc
+     */
+    public navigateToUrl: IAction<URL>;
 
     /**
      * Interval number used to listen to url changes periodically.
@@ -135,7 +151,10 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
                                 ? "/" + this.clearSlashes(options.root) + "/"
                                 : window.location.pathname;
 
-        this.navigateTo = this.createActionAndSubscribe<string>(s => this.navigateToImpl(s));
+        console.info("root for router store is " + this.options.root);
+
+        this.navigateToPath = this.createActionAndSubscribe(s => this.onNavigateToPath(s));
+        this.navigateToUrl = this.createActionAndSubscribe(s => this.onNavigateToUrl(s));
 
         this.listenToUrlChanges();
     }
@@ -150,9 +169,18 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
         return href;
     }
 
-    private navigateToImpl(path: string): void
+    /**
+     * @inheritDoc
+     */
+    public getUrl(path: string): URL
+    {
+        return new URL(window.location.origin + this.options.root + this.clearSlashes(path));
+    }
+
+    private onNavigateToPath(path: string): void
     {
         path = path ? path : "";
+
         if (this.options.mode === RouterMode.History)
         {
             history.pushState(null, null, this.options.root + this.clearSlashes(path));
@@ -161,6 +189,15 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
         {
             window.location.href = window.location.href.replace(/#(.*)$/, "") + "#" + path;
         }
+    }
+
+    private onNavigateToUrl(url: URL): void
+    {
+        let path = url.pathname + url.search + url.hash;
+
+        path = path.replace(this.options.root, "/");
+
+        this.onNavigateToPath(path);
     }
 
     private listenToUrlChanges(): void

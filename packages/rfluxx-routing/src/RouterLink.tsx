@@ -12,7 +12,7 @@ export interface IRouterLinkProps {
     caption?: string;
 
     /**
-     * The path fragment to which the link should navigate.
+     * The path to which the link should navigate (also include search and hash if required).
      */
     path: string;
 
@@ -36,7 +36,7 @@ export class RouterLink extends React.Component<IRouterLinkProps, {}>
 
     public onLinkClicked(e: any): boolean
     {
-        routerStore.navigateTo.trigger(this.props.path);
+        routerStore.navigateToPath.trigger(this.props.path);
         e.preventDefault();
         return false;
     }

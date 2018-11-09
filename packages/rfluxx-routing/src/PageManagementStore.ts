@@ -2,6 +2,7 @@ import * as Rfluxx from "rfluxx";
 import { IAction, IInjectedStoreOptions } from "rfluxx";
 
 import { IPageContainerFactory } from "./IPageContainerFactory";
+import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore } from "./PageCommunicationStore";
 import { IRouterStore } from "./RouterStore";
 import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMapStore";
 
@@ -87,15 +88,25 @@ export interface IPageManagementStoreState
 export interface ISetEditModeArguments
 {
     /**
-     * The id of the page for which to set the edit mode.
-     * The id of a page is its url pathname and search.
+     * The url of the page for which to set the edit mode.
      */
-    pageId: string;
+    pageUrl: URL;
 
     /**
      * A bool flag that indicates whether the page is edited.
      */
     isInEditMode: boolean;
+}
+
+/**
+ * Arguments for the action that opens a page.
+ */
+export interface IOpenPageArguments
+{
+    /**
+     * The page request to open the page.
+     */
+    pageRequest: IPageRequest;
 }
 
 /**
@@ -110,14 +121,19 @@ export interface IPageManagementStore extends Rfluxx.IStore<IPageManagementStore
 
     /**
      * Action to close a page.
-     * Parameters:
-     * - pageId (which is computed from pathname and search)
+     * Gets the page url.
      */
-    close: IAction<string>;
+    closePage: IAction<URL>;
+
+    /**
+     * Action to open a page.
+     */
+    openPage: IAction<IPageRequest>;
 }
 
 /**
  * This store manages the state of open pages.
+ * TODO: implement LRU cache
  */
 export class PageManagementStore
     extends Rfluxx.Store<IPageManagementStoreState>
@@ -131,7 +147,14 @@ export class PageManagementStore
     /**
      * @inheritDoc
      */
-    public close: IAction<string>;
+    public closePage: IAction<URL>;
+
+    /**
+     * @inheritDoc
+     */
+    public openPage: IAction<IPageRequest>;
+
+    public pageCommunicationStore: IPageCommunicationStore;
 
     private siteMapNodeHit: IAction<ISiteMapNodeHit>;
 
@@ -141,6 +164,13 @@ export class PageManagementStore
      */
     private pageMap: Map<string, IPage>;
 
+    /**
+     * A map of page requests keyed by the href of their url.
+     * Used to include the page request into dependency injection for communication
+     * between pages.
+     */
+    private pendingRequests: Map<string, IPageRequest>;
+
     constructor(private options: IPageManagementStoreOptions)
     {
         super({
@@ -149,12 +179,23 @@ export class PageManagementStore
             }
         });
 
+        // TODO: somehow we must avoid the circle of creating the stores
+        // sadly communication between and management of pages are
+        // tightly interwoven (open for suggestions here)
+        this.pageCommunicationStore = new PageCommunicationStore({
+            pageManagementStore: this,
+            routerStore: this.options.routerStore,
+            fetcher: options.fetcher,
+            actionFactory: options.actionFactory
+        });
         this.pageMap = new Map<string, IPage>();
+        this.pendingRequests = new Map<string, IPageRequest>();
 
         this.siteMapNodeHit = this.createActionAndSubscribe(x => this.onSiteMapNodeHit(x));
 
         this.setEditMode = this.createActionAndSubscribe(x => this.onSetEditMode(x));
-        this.close = this.createActionAndSubscribe(x => this.onClose(x));
+        this.closePage = this.createActionAndSubscribe(x => this.onClosePage(x));
+        this.openPage = this.createActionAndSubscribe(x => this.onOpenPage(x));
 
         this.options.siteMapStore.subscribe(s => this.siteMapNodeHit.trigger(s.siteMapNodeHit));
     }
@@ -163,16 +204,25 @@ export class PageManagementStore
     {
         // setting the edit mode should block the page management store
         // from deleting the state of the page
-        const page = this.pageMap.get(params.pageId);
+        const pageId = this.getPageId(params.pageUrl);
+        const page = this.pageMap.get(pageId);
         page.isInEditMode = params.isInEditMode;
     }
 
-    private onClose(pageId: string): void
+    private onClosePage(pageUrl: URL): void
     {
         // when closing a page we just delete its state here
         // closing a page also ignores if it is in edit mode
         // TODO: allow to show a dialog to the user here
+        const pageId = this.getPageId(pageUrl);
         this.pageMap.delete(pageId);
+    }
+
+    private onOpenPage(pageRequest: IPageRequest): void
+    {
+        // save a pending request and route to page
+        this.pendingRequests.set(pageRequest.url.href, pageRequest);
+        this.options.routerStore.navigateToUrl.trigger(pageRequest.url);
     }
 
     private onSiteMapNodeHit(siteMapNodeHit: ISiteMapNodeHit): void
@@ -186,7 +236,17 @@ export class PageManagementStore
         const url = siteMapNodeHit.url;
         const pageId = this.getPageId(url);
 
-        if (!this.pageMap.has(pageId))
+        const pendingRequest = this.pendingRequests.get(siteMapNodeHit.url.href);
+        let hasPageState = this.pageMap.has(pageId);
+        if (hasPageState && pendingRequest)
+        {
+            // if we have a pending request and state we want to override the state as the page is reopened
+            console.warn("Page state is thrown away on page request of page " + siteMapNodeHit.url.href);
+            hasPageState = false;
+            this.pendingRequests.delete(siteMapNodeHit.url.href);
+        }
+
+        if (!hasPageState)
         {
             this.pageMap.set(pageId, {
                 siteMapNode: siteMapNodeHit.siteMapNode,
@@ -197,8 +257,10 @@ export class PageManagementStore
                         {
                             routerStore: this.options.routerStore,
                             siteMapStore: this.options.siteMapStore,
-                            pageManagementStore: this
-                        })
+                            pageManagementStore: this,
+                            pageCommunicationStore: this.pageCommunicationStore
+                        },
+                        pendingRequest)
                 },
                 url: siteMapNodeHit.url,
                 isInEditMode: false,
@@ -207,6 +269,7 @@ export class PageManagementStore
         }
 
         const page = this.pageMap.get(pageId);
+
         this.setState({ currentPage: page });
     }
 

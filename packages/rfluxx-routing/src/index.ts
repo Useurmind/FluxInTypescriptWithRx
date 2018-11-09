@@ -27,6 +27,7 @@ export function init(siteMap: ISiteMapNode, containerFactory: IPageContainerFact
     return {
         routerStore,
         siteMapStore,
-        pageManagementStore
+        pageManagementStore,
+        pageCommunicationStore: pageManagementStore.pageCommunicationStore
     };
 }

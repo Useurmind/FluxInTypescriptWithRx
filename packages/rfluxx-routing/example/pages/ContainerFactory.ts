@@ -8,6 +8,9 @@ export class ContainerFactory extends SimplePageContainerFactoryBase
 {
     protected registerStores(container: SimpleContainer, url: URL, routeParameters: Map<string, string>): void
     {
-        container.register("ICounterStore", c => new CounterStore());
+        container.register("ICounterStore", c => new CounterStore({
+            pageCommunicationStore: c.resolve("IPageCommunicationStore"),
+            pageRequest: c.resolve("IPageRequest")
+        }));
     }
 }

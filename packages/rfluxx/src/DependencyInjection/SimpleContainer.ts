@@ -3,6 +3,7 @@ import { IContainerBuilder } from "./IContainerBuilder";
 
 /**
  * Simple container implements the container interface by holding an internal map.
+ * TODO: implement instance names
  */
 export class SimpleContainer implements IContainer, IContainerBuilder
 {
