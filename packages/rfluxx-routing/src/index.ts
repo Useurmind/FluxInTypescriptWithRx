@@ -1,12 +1,12 @@
 import { IGlobalStores, IPageContainerFactory } from "./IPageContainerFactory";
 import { PageManagementStore } from "./PageManagementStore";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./RouterStore";
-import { getSiteMapRoutes, ISiteMapNode, SiteMapStore } from "./SiteMapStore";
+import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "./SiteMapStore";
 
 export function init(siteMap: ISiteMapNode, containerFactory: IPageContainerFactory)
     : IGlobalStores
 {
-    const routes = getSiteMapRoutes(siteMap);
+    const routes = computeSiteMapRoutesAndSetAbsoluteRouteExpressions(siteMap);
 
     configureRouterStore({
         mode: RouterMode.History,

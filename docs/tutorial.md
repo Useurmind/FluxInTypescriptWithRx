@@ -29,16 +29,12 @@ import { Page1 } from "./components/page1";
 
 export const siteMap: ISiteMapNode = {
     caption: "Home",
-    route: {
-        expression: "/home"
-    },
+    routeExpression: "/home",
     render: p => withPageContext(<Home />),
     children: [
         {
             caption: "Page 1",
-            route: {
-                expression: "page1"
-            },
+            routeExpression: "page1",
             render: p => withPageContext(<Page1 />)
         },
         // ...
@@ -52,9 +48,7 @@ Let's examine the home site map node in more detail.
 
 Each node has a caption that is down in different places in the UI to the user, e.g. the breadcrumb. You could also use it as the title of your pages.
 
-    route: {
-        expression: "/home"
-    },
+    routeExpression: "/home",
 
 Every node also needs a route expression that defines which URLs should show this node. Routes starting with a slash e.g. `/home` are absolute and interpreted with regard to the base url of the app. Routes without a starting slash e.g. `page1` are combined with the route of the parent. In this case to get `/home/page1`.
 

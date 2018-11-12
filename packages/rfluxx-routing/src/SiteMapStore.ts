@@ -41,8 +41,21 @@ export interface ISiteMapNode
 
     /**
      * The route that should be matched by the site map node.
+     * Can be
+     * - relative to parent (without leading slash), e.g. partial/path/to/route1
+     * - absolute (with leading slash), e.g. /complete/path/to/route1
      */
-    route: IRoute;
+    routeExpression: string;
+
+    /**
+     * DONT SET THIS.
+     * The absolute route expression is calculated from
+     * the routeExpression and the hierarchie of the
+     * site map nodes.
+     * Relative paths are prefixed with the absolute route
+     * expression of their parents.
+     */
+    absoluteRouteExpression?: string;
 
     /**
      * The child site map nodes of this node.
@@ -125,19 +138,19 @@ export class SiteMapStore extends Store<ISiteMapStoreState> implements ISiteMapS
         // add all site map nodes to a map
         forEachSiteMapNode(this.options.siteMap, (sn, snPath) =>
         {
-            sn.route.expression = sn.route.expression.toLowerCase();
+            sn.absoluteRouteExpression = sn.absoluteRouteExpression.toLowerCase();
 
             this.siteMapNodePathMap.set(sn, snPath);
 
-            if (this.siteMapNodeMap.has(sn.route.expression))
+            if (this.siteMapNodeMap.has(sn.absoluteRouteExpression))
             {
-                const snList = this.siteMapNodeMap.get(sn.route.expression);
+                const snList = this.siteMapNodeMap.get(sn.absoluteRouteExpression);
                 snList.push(sn);
             }
             else
             {
                 const snList = [sn];
-                this.siteMapNodeMap.set(sn.route.expression, snList);
+                this.siteMapNodeMap.set(sn.absoluteRouteExpression, snList);
             }
         });
 
@@ -191,14 +204,15 @@ export class SiteMapStore extends Store<ISiteMapStoreState> implements ISiteMapS
  * @param action An action to execute for each node.
  * @param path The path of site map nodes until before the current root node (excluding the root node).
  */
-function forEachSiteMapNode(
+function forEachSiteMapNode<T>(
     root: ISiteMapNode,
-    action: (s: ISiteMapNode, sPath: ISiteMapNode[]) => void,
-    path: ISiteMapNode[] = []): void
+    action: (s: ISiteMapNode, sPath: ISiteMapNode[], parentValue?: T) => void | T,
+    path: ISiteMapNode[] = [],
+    parentValue?: T): void
 {
     const newPath = path.concat([root]);
 
-    action(root, newPath);
+    const rootValue = action(root, newPath, parentValue);
 
     if (root.children === undefined)
     {
@@ -207,20 +221,31 @@ function forEachSiteMapNode(
 
     for (const node of root.children)
     {
-        forEachSiteMapNode(node, action, newPath);
+        forEachSiteMapNode(node, action, newPath, rootValue);
     }
 }
 
 /**
  * Get a list of routes for the site map in the correct order.
+ * AND set the absolute route expressions on all site map nodes.
  * We deduplicate the routes by expression and sort them from highest to lowest length.
  * @param root The root node of the site map.
  */
-export function getSiteMapRoutes(root: ISiteMapNode): IRoute[]
+export function computeSiteMapRoutesAndSetAbsoluteRouteExpressions(root: ISiteMapNode): IRoute[]
 {
     const routeExpressions: string[] = [];
 
-    forEachSiteMapNode(root, sn => routeExpressions.push(sn.route.expression.toLowerCase()));
+    forEachSiteMapNode(
+        root,
+        (sn, snPath, parentValue: string) =>
+        {
+            const absoluteRouteExpression: string = getAbsoluteRouteExpression(sn, parentValue);
+
+            sn.absoluteRouteExpression = absoluteRouteExpression;
+            routeExpressions.push(absoluteRouteExpression);
+
+            return absoluteRouteExpression;
+        });
 
     const uniqueRouteExpressions = new Set(routeExpressions);
 
@@ -234,4 +259,28 @@ export function getSiteMapRoutes(root: ISiteMapNode): IRoute[]
 
         return route;
     });
+}
+
+/**
+ * Compute the absolute route expression of a site map node with its parent expression.
+ * @param siteMapNode The site map node for which to compute the absolute route expression.
+ * @param parentExpression The absolute route expression of the site map nodes parent.
+ */
+function getAbsoluteRouteExpression(siteMapNode: ISiteMapNode, parentExpression?: string): string
+{
+    const routeIsAbsolute = siteMapNode.routeExpression.startsWith("/");
+    const expression = siteMapNode.routeExpression;
+
+    if (!parentExpression)
+    {
+        // the url of the root node must be absolute
+        return routeIsAbsolute ? expression : "/" + expression;
+    }
+
+    if (routeIsAbsolute)
+    {
+        return expression;
+    }
+
+    return parentExpression.replace(/\/*$/, "") + "/" + expression;
 }

@@ -41,7 +41,7 @@ export class Page extends React.Component<IPageProps, IPageState>
     public render(): any
     {
         return <PageContextProvider container={this.props.page.state.container} >
-            <SiteMapNode siteMapNode={this.props.page.siteMapNode} routeParameters={this.props.page.routeParameters} />;
+            <SiteMapNode siteMapNode={this.props.page.siteMapNode} routeParameters={this.props.page.routeParameters} />
         </PageContextProvider>;
     }
 }

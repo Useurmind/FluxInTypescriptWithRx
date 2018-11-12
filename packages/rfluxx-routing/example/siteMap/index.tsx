@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDom from "react-dom";
 
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "../../src/RouterStore";
-import { getSiteMapRoutes, ISiteMapNode, SiteMapStore } from "../../src/SiteMapStore";
+import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "../../src/SiteMapStore";
 
 import { Page } from "./Page";
 
@@ -16,36 +16,30 @@ es6.nothing;
 
 const siteMap: ISiteMapNode = {
     caption: "Home",
-    route: {
-        expression: "home"
-    },
+    routeExpression: "home",
     render: p => <div>My home node</div>,
     children: [
         {
             caption: "Route 1",
-            route: {
-                expression: "home/route1"
-            },
+            routeExpression: "route1",
             render: p => <div>My route 1 node</div>
         },
         {
             caption: "Route 2",
-            route: {
-                expression: "area1/route2"
-            },
+            routeExpression: "/area1/route2",
             render: p => <div>My route 2 node</div>
         },
         {
             caption: "Route 3",
-            route: {
-                expression: "HOME/route3"
-            },
+            routeExpression: "/HOME/route3",
             render: p => <div>My route 3 node</div>
         }
     ]
 };
 
-const routes = getSiteMapRoutes(siteMap);
+const routes = computeSiteMapRoutesAndSetAbsoluteRouteExpressions(siteMap);
+
+console.info(routes);
 
 configureRouterStore({
     routes,

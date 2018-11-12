@@ -19,30 +19,22 @@ es6.nothing;
 
 const siteMap: ISiteMapNode = {
     caption: "Home",
-    route: {
-        expression: "home"
-    },
+    routeExpression: "home",
     render: p => withPageContext(<Counter caption="Home Counter" />),
     children: [
         {
             caption: "Route 1",
-            route: {
-                expression: "home/route1"
-            },
+            routeExpression: "route1",
             render: p => withPageContext(<Counter caption="Route 1 Counter" />)
         },
         {
             caption: "Route 2",
-            route: {
-                expression: "area1/route2"
-            },
+            routeExpression: "/area1/route2",
             render: p => withPageContext(<Counter caption="Route 2 Counter" />)
         },
         {
             caption: "Route 3",
-            route: {
-                expression: "HOME/route3"
-            },
+            routeExpression: "/HOME/route3",
             render: p => withPageContext(<Counter caption="Route 3 Counter" />)
         }
     ]
