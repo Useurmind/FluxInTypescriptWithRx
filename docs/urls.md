@@ -14,13 +14,13 @@ Take the following URL:
 
 The URL should show the address of the user with id 1. 
 
-Note that we put the info about showing the address into the hash. This means our page must decide for itself based on the hash what part of the user it wants to show. If it should show the personal information that would mean a different hash value. The page must recognize the different hashes and do the necessary processing itself. The framework does not bother with the hash.
+Note that we put the info about showing the address into the hash. This means our page must decide for itself based on the hash what part of the user it wants to show. If it should show the personal information that would mean a different hash value. The page must recognize the different hashes and do the necessary processing itself (also reacting on hash changes). The framework does not bother with the hash.
 
 What is evaluated by the framework is the path and search of the URL.
 
 `/myapp/users?id=1`
 
-This string represents an id for the page. Each page id is assigned a different persistent state.
+This string represents the id for the page. Each page id is assigned a different persistent state.
 
 For this user page it means that the state of each different user is persisted in the page routing system.
 
