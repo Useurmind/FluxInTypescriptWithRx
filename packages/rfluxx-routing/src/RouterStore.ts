@@ -1,6 +1,8 @@
 import * as Rfluxx from "rfluxx";
 import { IAction, IInjectedStoreOptions } from "rfluxx";
 
+import { IRouteMatchStrategy } from "./RouteMatching/IRouteMatchStrategy";
+
 /**
  * Interface for a route that can be entered.
  */
@@ -72,6 +74,11 @@ export interface IRouterStoreOptions extends IInjectedStoreOptions
      * The root url of the page.
      */
     root?: string;
+
+    /**
+     * The strategy used to match urls against routes.
+     */
+    routeMatchStrategy: IRouteMatchStrategy;
 }
 
 /**
@@ -234,23 +241,17 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
     private getRouteHit(fragment: string, url: string): IRouteHit | null
     {
         fragment = fragment || this.getFragment();
+
         for (const route of this.options.routes)
         {
-            const paramRegex = new RegExp(route.expression, "i");
-            const match: RegExpMatchArray = fragment.match(paramRegex);
+            const matchResult = this.options.routeMatchStrategy.matchUrl(fragment, route.expression);
 
-            if (match)
+            if (matchResult.isMatch === true)
             {
-                let routeParams: Map<string, string> =  new Map<string, string>();
-                if ((match as any).groups)
-                {
-                    routeParams = new Map<string, string>(Object.entries((match as any).groups));
-                }
-
                 const routeHit: IRouteHit = {
                     route,
                     url: new URL(url),
-                    parameters: routeParams
+                    parameters: matchResult.parameters
                 };
 
                 return routeHit;
@@ -268,7 +269,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
         let fragment = "";
         if (this.options.mode === RouterMode.History)
         {
-            fragment = this.clearSlashes(decodeURI(location.pathname + location.search));
+            fragment = this.clearSlashes(decodeURI(location.pathname + location.search + location.hash));
             fragment = fragment.replace(/\?(.*)$/, "");
             fragment = this.options.root !== "/" ? fragment.replace(this.options.root, "") : fragment;
         }

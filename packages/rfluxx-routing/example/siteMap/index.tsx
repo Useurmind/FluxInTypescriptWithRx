@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 
+import { ComplexRouteMatching } from "../../src/RouteMatching/ComplexRouteMatching";
+import { RegexRouteMatching } from "../../src/RouteMatching/RegexRouteMatching";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "../../src/RouterStore";
 import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "../../src/SiteMapStore";
 
@@ -43,7 +45,8 @@ console.info(routes);
 
 configureRouterStore({
     routes,
-    mode: RouterMode.History
+    mode: RouterMode.History,
+    routeMatchStrategy: new ComplexRouteMatching()
 });
 
 const siteMapStore = new SiteMapStore({

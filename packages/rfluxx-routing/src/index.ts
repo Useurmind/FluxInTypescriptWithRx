@@ -1,5 +1,6 @@
 import { IGlobalStores, IPageContainerFactory } from "./IPageContainerFactory";
 import { PageManagementStore } from "./PageManagementStore";
+import { RegexRouteMatching } from "./RouteMatching/RegexRouteMatching";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./RouterStore";
 import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "./SiteMapStore";
 
@@ -10,7 +11,8 @@ export function init(siteMap: ISiteMapNode, containerFactory: IPageContainerFact
 
     configureRouterStore({
         mode: RouterMode.History,
-        routes
+        routes,
+        routeMatchStrategy: new RegexRouteMatching()
     });
 
     const siteMapStore = new SiteMapStore({

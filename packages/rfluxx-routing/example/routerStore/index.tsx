@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 
+import { RegexRouteMatching } from "../../src/RouteMatching/RegexRouteMatching";
 import {  configureRouterStore } from "../../src/RouterStore";
 
 import { Page } from "./Page";
@@ -24,7 +25,8 @@ configureRouterStore({
         {
             expression: "sub/route3"
         }
-    ]
+    ],
+    routeMatchStrategy: new RegexRouteMatching()
 });
 
 document.addEventListener("DOMContentLoaded", event =>
