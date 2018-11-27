@@ -3,8 +3,10 @@ import { IAction, IInjectedStoreOptions } from "rfluxx";
 
 import { IPageContainerFactory } from "./IPageContainerFactory";
 import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore } from "./PageCommunicationStore";
+import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
 import { IRouterStore } from "./RouterStore";
 import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMapStore";
+import { IPageEvictionStrategy } from './Pages/IPageEvictionStrategy';
 
 /**
  * The state of a single page.
@@ -47,6 +49,14 @@ export interface IPage
      * The route parameters extracted from the url fragment.
      */
     routeParameters: Map<string, string>;
+
+    /**
+     * The request that lead to the page being opened.
+     * Pages can (and if possible should) be opened without a page request.
+     * In case of inter page communication page request are necesarry as the
+     * input mechanism for the calling page.
+     */
+    pageRequest: IPageRequest | null;
 }
 
 /**
@@ -69,6 +79,17 @@ export interface IPageManagementStoreOptions extends IInjectedStoreOptions
      * The container factory to create a container for a page.
      */
     containerFactory: IPageContainerFactory;
+
+    /**
+     * The algorithm used to compute the page id which in turn determines
+     * which parts of a url lead to distinctive state aka. different pages.
+     */
+    pageIdAlgorithm: IPageIdAlgorithm;
+
+    /**
+     * This strategy determines how the state of the pages is evicted over time.
+     */
+    pageEvictionStrategy: IPageEvictionStrategy;
 }
 
 /**
@@ -204,7 +225,7 @@ export class PageManagementStore
     {
         // setting the edit mode should block the page management store
         // from deleting the state of the page
-        const pageId = this.getPageId(params.pageUrl);
+        const pageId = this.options.pageIdAlgorithm.getPageId(params.pageUrl);
         const page = this.pageMap.get(pageId);
         page.isInEditMode = params.isInEditMode;
     }
@@ -214,7 +235,7 @@ export class PageManagementStore
         // when closing a page we just delete its state here
         // closing a page also ignores if it is in edit mode
         // TODO: allow to show a dialog to the user here
-        const pageId = this.getPageId(pageUrl);
+        const pageId = this.options.pageIdAlgorithm.getPageId(pageUrl);
         this.pageMap.delete(pageId);
     }
 
@@ -234,7 +255,7 @@ export class PageManagementStore
         }
 
         const url = siteMapNodeHit.url;
-        const pageId = this.getPageId(url);
+        const pageId = this.options.pageIdAlgorithm.getPageId(url);
 
         const pendingRequest = this.pendingRequests.get(siteMapNodeHit.url.href);
         let hasPageState = this.pageMap.has(pageId);
@@ -264,24 +285,21 @@ export class PageManagementStore
                 },
                 url: siteMapNodeHit.url,
                 isInEditMode: false,
-                routeParameters: siteMapNodeHit.parameters
+                routeParameters: siteMapNodeHit.parameters,
+                pageRequest: pendingRequest
             });
         }
 
         const page = this.pageMap.get(pageId);
 
-        this.setState({ currentPage: page });
-    }
+        const evictedPages = this.options
+                                 .pageEvictionStrategy
+                                 .getEvictionsOnSiteMapNodeHit(siteMapNodeHit, this.pageMap);
+        for (const evictedPageId of evictedPages)
+        {
+            this.pageMap.delete(evictedPageId);
+        }
 
-    /**
-     * Get the id of a page (used to identify it) from its URL.
-     * @param url The url of the page.
-     * @returns The id of the page.
-     */
-    private getPageId(url: URL): string
-    {
-        // we currently use pathname and search as key for a page
-        // the hash can be used for intra page navigation
-        return url.pathname + url.search;
+        this.setState({ currentPage: page });
     }
 }
