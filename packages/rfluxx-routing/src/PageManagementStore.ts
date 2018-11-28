@@ -3,10 +3,10 @@ import { IAction, IInjectedStoreOptions } from "rfluxx";
 
 import { IPageContainerFactory } from "./IPageContainerFactory";
 import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore } from "./PageCommunicationStore";
+import { IPageEvictionStrategy } from "./Pages/IPageEvictionStrategy";
 import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
 import { IRouterStore } from "./RouterStore";
 import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMapStore";
-import { IPageEvictionStrategy } from './Pages/IPageEvictionStrategy';
 
 /**
  * The state of a single page.

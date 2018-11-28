@@ -2,6 +2,7 @@ import { IContainer, SimpleContainer } from "rfluxx";
 
 import { IPageCommunicationStore, IPageRequest } from "./PageCommunicationStore";
 import { IPageManagementStore } from "./PageManagementStore";
+import { PageStore } from "./PageStore";
 import { IRouterStore } from "./RouterStore";
 import { ISiteMapStore } from "./SiteMapStore";
 
@@ -46,6 +47,7 @@ export interface IPageContainerFactory
      * - ISiteMapStore
      * - IPageManagementStore
      * - IPageCommunicationStore
+     * - IPageStore: The store that can be used by the page to get easy access to central services.
      * - IPageRequest: The request that lead to the page opening, optional can be null|undefined.
      * - PageUrl: The url (of type URL) that was called for the page to open.
      * @param url The url of the page for which the container is created.
@@ -77,7 +79,7 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
         url: URL,
         routeParameters: Map<string, string>,
         globalStores: IGlobalStores,
-        pageRequest?: IPageRequest)
+        pageRequest?: IPageRequest | null)
         : IContainer
     {
         const container = new SimpleContainer();
@@ -86,6 +88,12 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
         container.register("ISiteMapStore", c => globalStores.siteMapStore);
         container.register("IPageManagementStore", c => globalStores.pageManagementStore);
         container.register("IPageCommunicationStore", c => globalStores.pageCommunicationStore);
+        container.register("IPageStore", c => new PageStore({
+            pageUrl: url,
+            pageRequest,
+            pageCommunicationStore: globalStores.pageCommunicationStore,
+            pageManagementStore: globalStores.pageManagementStore
+        }));
 
         container.register("IPageRequest", c => pageRequest);
         container.register("PageUrl", c => url);

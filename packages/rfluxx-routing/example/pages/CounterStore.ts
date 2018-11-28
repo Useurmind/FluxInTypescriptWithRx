@@ -1,6 +1,7 @@
 import { IAction, IStore, Store } from "rfluxx";
 
-import { IPageCommunicationStore, IPageRequest } from "../../src/PageCommunicationStore";
+import { IPageRequest } from "../../src/PageCommunicationStore";
+import { IPageStore } from "../../src/PageStore";
 
 export interface ICounterStoreState
 {
@@ -10,7 +11,7 @@ export interface ICounterStoreState
 export interface ICounterStoreOptions
 {
     pageRequest: IPageRequest;
-    pageCommunicationStore: IPageCommunicationStore;
+    pageStore: IPageStore;
 }
 
 /**
@@ -66,14 +67,14 @@ export class CounterStore extends Store<ICounterStoreState> implements ICounterS
         this.tellCounter = this.createActionAndSubscribe<string>(urlPath =>
             {
                 // one way communication
-                this.options.pageCommunicationStore.sendToPage(
+                this.options.pageStore.requestPage(
                     urlPath,
                     this.state.counter);
             });
 
         if (options.pageRequest)
         {
-            this.setCount.trigger(options.pageRequest.pageInput);
+            this.setCount.trigger(options.pageRequest.data);
         }
     }
 }

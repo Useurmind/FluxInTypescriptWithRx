@@ -41,7 +41,7 @@ export interface IPageRequest
      * Both requesting page and responding page must be aware
      * of the correct data transported here.
      */
-    pageInput: any | null;
+    data: any | null;
 }
 
 export interface IPageResponse
@@ -60,7 +60,7 @@ export interface IPageResponse
      * of the correct data transported here.
      * The page result can be null!
      */
-    pageResult: any | null;
+    data: any | null;
 
     /**
      * The result status of the requested page.
@@ -108,7 +108,7 @@ export interface IPageCommunicationStore extends Rfluxx.IStore<IPageCommunicatio
      * Before doing this you need to subscribe the state of the store.
      * Else it could be that you miss your response.
      */
-    requestPage: IAction<IPageRequest>;
+    request: IAction<IPageRequest>;
 
     /**
      * Send a response when closing a page.
@@ -121,7 +121,7 @@ export interface IPageCommunicationStore extends Rfluxx.IStore<IPageCommunicatio
      * @param urlPath The url for the requested page withouth origin (protocol and host/port), starting from path.
      * @param pageInput The input data for the requested page.
      */
-    sendToPage(urlPath: string, pageInput: any): void;
+    requestPage(urlPath: string, pageInput: any): void;
 
     /**
      * This function encapsulates the complete request process for another page.
@@ -151,12 +151,12 @@ export class PageCommunicationStore
     /**
      * @inheritDoc
      */
-    public requestPage: IAction<IPageRequest>;
+    public respond: IAction<IPageResponse>;
 
     /**
      * @inheritDoc
      */
-    public respond: IAction<IPageResponse>;
+    public request: IAction<IPageRequest>;
 
     constructor(private options: IPageCommunicationStoreOptions)
     {
@@ -166,28 +166,28 @@ export class PageCommunicationStore
             }
         });
 
-        this.requestPage = this.createActionAndSubscribe(x => this.onRequestPage(x));
+        this.request = this.createActionAndSubscribe(x => this.onRequest(x));
         this.respond = this.createActionAndSubscribe(x => this.onRespond(x));
     }
 
     /**
      * @inheritDoc
      */
-    public sendToPage(urlPath: string, pageInput: any): void
+    public requestPage(urlPath: string, data: any): void
     {
         const url = this.options.routerStore.getUrl(urlPath);
 
         const request = {
             url,
-            pageInput
+            data
         };
-        this.requestPage.trigger(request);
+        this.request.trigger(request);
     }
 
     /**
      * @inheritDoc
      */
-    public requestPageWithResult(urlPath: string, pageInput: any): Rx.Observable<IPageResponse>
+    public requestPageWithResult(urlPath: string, data: any): Rx.Observable<IPageResponse>
     {
         const url = this.options.routerStore.getUrl(urlPath);
 
@@ -196,7 +196,7 @@ export class PageCommunicationStore
             // create a trackable request
             const request = {
                 url,
-                pageInput
+                data
             };
 
             // subscribe the response
@@ -230,20 +230,20 @@ export class PageCommunicationStore
                     });
 
             // trigger the request
-            this.requestPage.trigger(request);
+            this.request.trigger(request);
         });
     }
 
-    private onRequestPage(pageRequest: IPageRequest): void
+    private onRequest(pageRequest: IPageRequest): void
     {
         this.options.pageManagementStore.openPage.trigger(pageRequest);
     }
 
     private onRespond(pageResponse: IPageResponse): void
     {
-        // when responding we at the same time close the page
-        // TODO: is this a good idea or does this conflict with other requirements?
-        this.options.pageManagementStore.closePage.trigger(pageResponse.request.url);
+        // we only close in the PageStore, then we have the flexibility to decide what to do
+        // when calling this stores respond method
+        // this.options.pageManagementStore.closePage.trigger(pageResponse.request.url);
         this.setState({ ...this.state, response: pageResponse });
     }
 }
