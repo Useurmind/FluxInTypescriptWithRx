@@ -152,7 +152,7 @@ export class PageStore
      */
     public requestPage(urlFragment: string, data: any): void
     {
-        this.options.pageCommunicationStore.requestPage(urlFragment, data);
+        this.options.pageCommunicationStore.requestPage(this.options.pageUrl, urlFragment, data);
     }
 
     /**
@@ -160,7 +160,7 @@ export class PageStore
      */
     public requestPageWithResult(urlFragment: string, data: any): Rx.Observable<IPageResponse>
     {
-        return this.options.pageCommunicationStore.requestPageWithResult(urlFragment, data);
+        return this.options.pageCommunicationStore.requestPageWithResult(this.options.pageUrl, urlFragment, data);
     }
 
     private onSetEditMode(params: boolean): void
@@ -183,6 +183,7 @@ export class PageStore
         }
 
         this.options.pageManagementStore.closePage.trigger(this.state.pageUrl);
+        // TODO: navigate to origin page
     }
 
 }

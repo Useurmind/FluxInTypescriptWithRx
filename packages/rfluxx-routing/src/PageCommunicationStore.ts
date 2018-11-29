@@ -32,9 +32,14 @@ export enum PageResultStatus
 export interface IPageRequest
 {
     /**
+     * The url of the page that poses the request.
+     */
+    origin: URL;
+
+    /**
      * The url of the page to request.
      */
-    url: URL;
+    target: URL;
 
     /**
      * Data that should be handed to the requested page.
@@ -117,23 +122,25 @@ export interface IPageCommunicationStore extends Rfluxx.IStore<IPageCommunicatio
 
     /**
      * This function is for easier use of only sending a request to a page (and not expecting a result).
-     * @param pageCommunicationStore The page communication store to use.
-     * @param urlPath The url for the requested page withouth origin (protocol and host/port), starting from path.
+     * @param origin The url of the page that creates the request.
+     * @param targetUrlFragment The url for the requested page withouth origin (protocol and host/port),
+     *                          starting from path.
      * @param pageInput The input data for the requested page.
      */
-    requestPage(urlPath: string, pageInput: any): void;
+    requestPage(origin: URL, targetUrlFragment: string, pageInput: any): void;
 
     /**
      * This function encapsulates the complete request process for another page.
-     * @param pageCommunicationStore The page communication store to use.
-     * @param urlPath The url for the requested page withouth origin (protocol and host/port), starting from path.
+     * @param origin The url of the page that creates the request.
+     * @param targetUrlFragment The url for the requested page withouth origin (protocol and host/port),
+     *                          starting from path.
      * @param pageInput The input data for the requested page.
      * @returns An observable that can be subscribed to handle the response or any error.
      *          In case of completion the response is returned in the next handler.
      *          In case of cancelation the only complete handler is invoked, no response is returned.
      *          In case of error a response is returned in the error handler.
      */
-    requestPageWithResult(urlPath: string, pageInput: any): Rx.Observable<IPageResponse>;
+    requestPageWithResult(origin: URL, targetUrlFragment: string, pageInput: any): Rx.Observable<IPageResponse>;
 }
 
 /**
@@ -173,12 +180,13 @@ export class PageCommunicationStore
     /**
      * @inheritDoc
      */
-    public requestPage(urlPath: string, data: any): void
+    public requestPage(origin: URL, targetUrlFragment: string, data: any): void
     {
-        const url = this.options.routerStore.getUrl(urlPath);
+        const target = this.options.routerStore.getUrl(targetUrlFragment);
 
         const request = {
-            url,
+            origin,
+            target,
             data
         };
         this.request.trigger(request);
@@ -187,15 +195,16 @@ export class PageCommunicationStore
     /**
      * @inheritDoc
      */
-    public requestPageWithResult(urlPath: string, data: any): Rx.Observable<IPageResponse>
+    public requestPageWithResult(origin: URL, targetUrlFragment: string, data: any): Rx.Observable<IPageResponse>
     {
-        const url = this.options.routerStore.getUrl(urlPath);
+        const target = this.options.routerStore.getUrl(targetUrlFragment);
 
         return Rx.Observable.create((observer: Rx.Observer<IPageResponse>) =>
         {
             // create a trackable request
             const request = {
-                url,
+                origin,
+                target,
                 data
             };
 

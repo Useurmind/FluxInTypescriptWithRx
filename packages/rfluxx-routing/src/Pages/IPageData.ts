@@ -41,4 +41,12 @@ export interface IPageData
      * input mechanism for the calling page.
      */
     pageRequest: IPageRequest | null;
+
+    /**
+     * A set of page requests that were created by this page.
+     * The key of the requests is the target page id (the id of the requested page).
+     * This tracks the pages that were opened through communication by this page.
+     * It can influence how state is evicted.
+     */
+    openRequests: Map<string, IPageRequest>;
 }

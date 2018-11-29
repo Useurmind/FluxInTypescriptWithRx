@@ -176,7 +176,7 @@ export class PageManagementStore
         // setting the edit mode should block the page management store
         // from deleting the state of the page
         const pageId = this.options.pageIdAlgorithm.getPageId(params.pageUrl);
-        const page = this.pageMap.get(pageId);
+        const page = this.getPageOrThrow(pageId);
         page.isInEditMode = params.isInEditMode;
     }
 
@@ -186,14 +186,34 @@ export class PageManagementStore
         // closing a page also ignores if it is in edit mode
         // TODO: allow to show a dialog to the user here
         const pageId = this.options.pageIdAlgorithm.getPageId(pageUrl);
+        const page = this.getPageOrThrow(pageId);
+
+        // if the page was requested we should remove the open request
+        // from the origin page
+        if (page.pageRequest)
+        {
+            const originId = this.options.pageIdAlgorithm.getPageId(page.pageRequest.origin);
+            const origin = this.getPageOrThrow(originId);
+            origin.openRequests.delete(pageId);
+        }
+
         this.pageMap.delete(pageId);
     }
 
     private onOpenPage(pageRequest: IPageRequest): void
     {
         // save a pending request and route to page
-        this.pendingRequests.set(pageRequest.url.href, pageRequest);
-        this.options.routerStore.navigateToUrl.trigger(pageRequest.url);
+        this.pendingRequests.set(pageRequest.target.href, pageRequest);
+
+        // add the request as open request to the requesting page
+        const originId = this.options.pageIdAlgorithm.getPageId(pageRequest.origin);
+        const targetId = this.options.pageIdAlgorithm.getPageId(pageRequest.target);
+        const origin = this.getPageOrThrow(originId);
+        // we can just overwrite here because this conforms with adding new state
+        // for a repeatedly requested page
+        origin.openRequests.set(targetId, pageRequest);
+
+        this.options.routerStore.navigateToUrl.trigger(pageRequest.target);
     }
 
     private onSiteMapNodeHit(siteMapNodeHit: ISiteMapNodeHit): void
@@ -234,11 +254,12 @@ export class PageManagementStore
                 url: siteMapNodeHit.url,
                 isInEditMode: false,
                 routeParameters: siteMapNodeHit.parameters,
-                pageRequest: pendingRequest
+                pageRequest: pendingRequest,
+                openRequests: new Map()
             });
         }
 
-        const page = this.pageMap.get(pageId);
+        const page = this.getPageOrThrow(pageId);
 
         const evictedPages = this.options
                                  .pageEvictionStrategy
@@ -249,5 +270,16 @@ export class PageManagementStore
         }
 
         this.setState({ currentPage: page });
+    }
+
+    private getPageOrThrow(pageId: string): IPageData
+    {
+        const page = this.pageMap.get(pageId);
+        if (!page)
+        {
+            throw new Error(`Could not find page ${pageId} for closing it properly`);
+        }
+
+        return page;
     }
 }
