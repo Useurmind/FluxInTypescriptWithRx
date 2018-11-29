@@ -1,6 +1,6 @@
-import { IPage } from "../PageManagementStore";
 import { ISiteMapNodeHit } from "../SiteMapStore";
 
+import { IPageData } from "./IPageData";
 import { IPageEvictionStrategy } from "./IPageEvictionStrategy";
 
 /**
@@ -11,7 +11,7 @@ export class NoPageStateEvictions implements IPageEvictionStrategy
     /**
      * @inheritDoc
      */
-    public getEvictionsOnSiteMapNodeHit(siteMapNodeHit: ISiteMapNodeHit, pageMap: Map<string, IPage>): string[]
+    public getEvictionsOnSiteMapNodeHit(siteMapNodeHit: ISiteMapNodeHit, pageMap: Map<string, IPageData>): string[]
     {
         return [];
     }

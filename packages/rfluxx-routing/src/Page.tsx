@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Rx from "rxjs";
 
 import { IPageContextProps, PageContextProvider } from "./PageContextProvider";
-import { IPage } from "./PageManagementStore";
+import { IPageData } from "./Pages/IPageData";
 import { SiteMapNode } from "./SiteMapNode";
 
 /**
@@ -13,7 +13,7 @@ export interface IPageProps
     /**
      * The page that should be rendered.
      */
-    page: IPage;
+    page: IPageData;
 }
 
 /**
@@ -40,7 +40,7 @@ export class Page extends React.Component<IPageProps, IPageState>
      */
     public render(): any
     {
-        return <PageContextProvider container={this.props.page.state.container} >
+        return <PageContextProvider container={this.props.page.container} >
             <SiteMapNode siteMapNode={this.props.page.siteMapNode} routeParameters={this.props.page.routeParameters} />
         </PageContextProvider>;
     }

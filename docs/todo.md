@@ -1,11 +1,5 @@
 # Topics for documentation
 
-## page state
-
-A page is the implementation of UI for a single site map node.
-
-The state of a page is the sum of store instances used specifically in that page. All other "state" like the data contained in the components of the page should be assumed to be evicted when a different route is hit.
-
 ## store management
 
 To make stores reusable across pages and not use static instances defined somewhere in a module rfluxx manages stores centrally via a container.

@@ -5,7 +5,7 @@ import { IAction, IInjectedStoreOptions } from "rfluxx";
 
 import { IPageContainerFactory } from "./IPageContainerFactory";
 import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore, PageResultStatus } from "./PageCommunicationStore";
-import { IPage, IPageManagementStore } from "./PageManagementStore";
+import { IPageManagementStore } from "./PageManagementStore";
 import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
 import { IRouterStore } from "./RouterStore";
 import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMapStore";

@@ -1,6 +1,6 @@
-import { IPage } from "../PageManagementStore";
 import { ISiteMapNodeHit } from "../SiteMapStore";
 
+import { IPageData } from "./IPageData";
 import { IPageEvictionStrategy } from "./IPageEvictionStrategy";
 import { IPageIdAlgorithm } from "./IPageIdAlgorithm";
 
@@ -48,7 +48,7 @@ export class LruPageStateEvictions implements IPageEvictionStrategy
     /**
      * @inheritDoc
      */
-    public getEvictionsOnSiteMapNodeHit(siteMapNodeHit: ISiteMapNodeHit, pageMap: Map<string, IPage>): string[]
+    public getEvictionsOnSiteMapNodeHit(siteMapNodeHit: ISiteMapNodeHit, pageMap: Map<string, IPageData>): string[]
     {
         const pageId = this.options.pageIdAlgorithm.getPageId(siteMapNodeHit.url);
 

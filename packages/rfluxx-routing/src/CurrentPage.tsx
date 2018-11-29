@@ -2,7 +2,8 @@ import * as React from "react";
 import * as Rx from "rxjs";
 
 import { Page } from "./Page";
-import { IPage, IPageManagementStore, IPageState } from "./PageManagementStore";
+import { IPageManagementStore } from "./PageManagementStore";
+import { IPageData } from "./Pages/IPageData";
 
 /**
  * Props for { @see CurrentPage }.
@@ -23,7 +24,7 @@ export interface ICurrentPageState
     /**
      * The site map node that should be rendered.
      */
-    currentPage: IPage;
+    currentPage: IPageData;
 }
 
 /**

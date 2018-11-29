@@ -42,7 +42,10 @@ const siteMap: ISiteMapNode = {
 
 const containerFactory = new ContainerFactory();
 
-const globalStores = RfluxxRouting.init(siteMap, containerFactory);
+const globalStores = RfluxxRouting.init({
+    siteMap,
+    containerFactory
+});
 
 document.addEventListener("DOMContentLoaded", event =>
 {

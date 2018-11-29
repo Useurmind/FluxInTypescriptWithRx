@@ -3,61 +3,11 @@ import { IAction, IInjectedStoreOptions } from "rfluxx";
 
 import { IPageContainerFactory } from "./IPageContainerFactory";
 import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore } from "./PageCommunicationStore";
+import { IPageData } from "./Pages/IPageData";
 import { IPageEvictionStrategy } from "./Pages/IPageEvictionStrategy";
 import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
 import { IRouterStore } from "./RouterStore";
 import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMapStore";
-
-/**
- * The state of a single page.
- */
-export interface IPageState
-{
-    /**
-     * The container managing the stores for the page.
-     */
-    container: Rfluxx.IContainer;
-}
-
-/**
- * A page represents the UI for a single site map node.
- */
-export interface IPage
-{
-    /**
-     * The site map node implemented by this page.
-     */
-    siteMapNode: ISiteMapNode;
-
-    /**
-     * The state of a single page.
-     */
-    state: IPageState;
-
-    /**
-     * The url of the page.
-     */
-    url: URL;
-
-    /**
-     * Is the page currently being edited.
-     * Editing blocks eviction of the page state.
-     */
-    isInEditMode: boolean;
-
-    /**
-     * The route parameters extracted from the url fragment.
-     */
-    routeParameters: Map<string, string>;
-
-    /**
-     * The request that lead to the page being opened.
-     * Pages can (and if possible should) be opened without a page request.
-     * In case of inter page communication page request are necesarry as the
-     * input mechanism for the calling page.
-     */
-    pageRequest: IPageRequest | null;
-}
 
 /**
  * The options to configure the { @see PageManagementStore }
@@ -100,7 +50,7 @@ export interface IPageManagementStoreState
     /**
      * This is the page that is currently active.
      */
-    currentPage: IPage;
+    currentPage: IPageData;
 }
 
 /**
@@ -183,7 +133,7 @@ export class PageManagementStore
      * The map of open pages keyed by their url fragment, usually each url
      * (independent of the route) should have its own state.
      */
-    private pageMap: Map<string, IPage>;
+    private pageMap: Map<string, IPageData>;
 
     /**
      * A map of page requests keyed by the href of their url.
@@ -209,7 +159,7 @@ export class PageManagementStore
             fetcher: options.fetcher,
             actionFactory: options.actionFactory
         });
-        this.pageMap = new Map<string, IPage>();
+        this.pageMap = new Map<string, IPageData>();
         this.pendingRequests = new Map<string, IPageRequest>();
 
         this.siteMapNodeHit = this.createActionAndSubscribe(x => this.onSiteMapNodeHit(x));
@@ -271,18 +221,16 @@ export class PageManagementStore
         {
             this.pageMap.set(pageId, {
                 siteMapNode: siteMapNodeHit.siteMapNode,
-                state: {
-                    container: this.options.containerFactory.createContainer(
-                        siteMapNodeHit.url,
-                        siteMapNodeHit.parameters,
-                        {
-                            routerStore: this.options.routerStore,
-                            siteMapStore: this.options.siteMapStore,
-                            pageManagementStore: this,
-                            pageCommunicationStore: this.pageCommunicationStore
-                        },
-                        pendingRequest)
-                },
+                container: this.options.containerFactory.createContainer(
+                    siteMapNodeHit.url,
+                    siteMapNodeHit.parameters,
+                    {
+                        routerStore: this.options.routerStore,
+                        siteMapStore: this.options.siteMapStore,
+                        pageManagementStore: this,
+                        pageCommunicationStore: this.pageCommunicationStore
+                    },
+                    pendingRequest),
                 url: siteMapNodeHit.url,
                 isInEditMode: false,
                 routeParameters: siteMapNodeHit.parameters,
