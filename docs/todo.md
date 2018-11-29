@@ -1,13 +1,5 @@
 # Topics for documentation
 
-
-
-## two forms of navigation
-
-Plain URL routing allows to only navigate via history. No communication between pages possible.
-
-Page routing sees pages as unit of work that can be parametrized and return a result. It is based on URL routing but also includes ways to transfer data between pages. Page routing is performed by stores as react components do not persist between routing actions.
-
 ## page state
 
 A page is the implementation of UI for a single site map node.

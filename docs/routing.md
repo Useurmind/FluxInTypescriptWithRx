@@ -75,7 +75,30 @@ Based on the tree structure of the site map we can automatically derive a breadc
 
 It is as simple as joining the captions of the site map nodes in the active path.
 
-## Page management
+## Pages
+
+Pages are an layer on top of the site map node system that introduces state management for the different site map nodes. You can say that a site map node can be mapped to one or several pages. Each page has completely separate state from all other pages.
+
+### Page Id
+
+The mapping of site map nodes to pages is based on a page id algorithm that computes which urls belong to one page. The default page id algorithm computes the page id as the path and search of the url that was navigated to. This means that the path and all search parameters influence the page id. If you want to you can create your own page id algorithm that. You can also ignore certain search parameters from the page id.
+
+`index.tsx`
+```typescript
+//...
+
+const globalStores = RfluxxRouting.init({
+    siteMap,
+    containerFactory,
+    pageIdOptions: {
+        // here you can define to ignore certain parameters
+        // for the page id computation
+        ignoredParameters: ["param1", "param2"]
+    }
+});
+
+//...
+```
 
 ### Page state
 
@@ -90,5 +113,6 @@ Also stores should be reusable across pages and the creation of stores should no
 Another important feature that is closely related to routing is the communication between pages.
 
 Imagine for example the opening of a new page to select/create data that should be used in the previous page.
-
 We need a mechanism to open the second page from the first page and to retrieve the result data that the second page created.
+
+For more info on this topic see [Forms of navigation](navigation_forms.md)

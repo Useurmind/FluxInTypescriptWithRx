@@ -1,17 +1,44 @@
 import { IGlobalStores, IPageContainerFactory } from "./IPageContainerFactory";
 import { PageManagementStore } from "./PageManagementStore";
 import { NoPageStateEvictions } from "./Pages/NoPageStateEvictions";
-import { PathAndSearchPageId } from "./Pages/PathAndSearchPageId";
+import { IPathAndSearchPageIdOptions, PathAndSearchPageId } from "./Pages/PathAndSearchPageId";
 import { RegexRouteMatching } from "./RouteMatching/RegexRouteMatching";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./RouterStore";
 import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "./SiteMapStore";
 
-export function init(siteMap: ISiteMapNode, containerFactory: IPageContainerFactory)
+/**
+ * Options for the { @see init } function.
+ */
+export interface IRfluxxOptions
+{
+    /**
+     * The site map to use for navigation.
+     * The routing table is derived from this.
+     */
+    siteMap: ISiteMapNode;
+
+    /**
+     * Container factory that contains all registrations for
+     * stores and other classes you need.
+     */
+    containerFactory: IPageContainerFactory;
+
+    /**
+     * Options to configure the page id computation.
+     */
+    pageIdOptions?: IPathAndSearchPageIdOptions;
+}
+
+/**
+ * Initialize the rfluxx routing framework.
+ * @param options Options to configure rfluxx routing framework.
+ */
+export function init(options: IRfluxxOptions)
     : IGlobalStores
 {
-    const pageIdAlgorithm = new PathAndSearchPageId();
+    const pageIdAlgorithm = new PathAndSearchPageId(options.pageIdOptions);
     const pageEvictionStrategy = new NoPageStateEvictions();
-    const routes = computeSiteMapRoutesAndSetAbsoluteRouteExpressions(siteMap);
+    const routes = computeSiteMapRoutesAndSetAbsoluteRouteExpressions(options.siteMap);
 
     configureRouterStore({
         mode: RouterMode.History,
@@ -21,13 +48,13 @@ export function init(siteMap: ISiteMapNode, containerFactory: IPageContainerFact
 
     const siteMapStore = new SiteMapStore({
         routerStore,
-        siteMap
+        siteMap: options.siteMap
     });
 
     const pageManagementStore = new PageManagementStore({
         routerStore,
         siteMapStore,
-        containerFactory,
+        containerFactory: options.containerFactory,
         pageIdAlgorithm,
         pageEvictionStrategy
     });

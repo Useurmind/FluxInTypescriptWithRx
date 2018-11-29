@@ -1,93 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TestRun id="45fbc95b-bd4c-5d80-c86e-48d49d99a1da" name="Jochen@Jochen-PC 2018-11-27T11:34:08" runUser="Jochen" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
-  <TestSettings name="Karma Test Run" id="5409a603-6487-c7f6-d436-0586d8b4e3f0"/>
-  <Times creation="2018-11-27T11:34:08" queuing="2018-11-27T11:34:08" start="2018-11-27T11:34:08" finish="2018-11-27T11:34:08"/>
+<TestRun id="8c550589-9e28-a080-788c-731ca553be09" name="Jochen@Jochen-PC 2018-11-29T09:37:45" runUser="Jochen" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Karma Test Run" id="42314e90-86ac-078e-f1e6-e89b9313d2ec"/>
+  <Times creation="2018-11-29T09:37:45" queuing="2018-11-29T09:37:45" start="2018-11-29T09:37:45" finish="2018-11-29T09:37:46"/>
   <ResultSummary outcome="Passed">
-    <Counters total="21" executed="21" passed="21" error="0" failed="0"/>
+    <Counters total="30" executed="30" passed="30" error="0" failed="0"/>
   </ResultSummary>
   <TestDefinitions>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and search is correctly splitted" id="2fa75e4e-f7ee-9a99-9b1e-8171a59d18fe">
-      <Execution id="42e51e8b-46e3-b88d-733e-43e893f4d7fe"/>
-      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and search is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and search is correctly splitted" className="UrlFragment"/>
-    </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (2 search parameters) is correctly splitted" id="e9924576-8da9-664f-8741-e9f0e27d95e0">
-      <Execution id="b2428cb8-6fa4-1c4b-7d69-874f42279184"/>
-      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (2 search parameters) is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (2 search parameters) is correctly splitted" className="UrlFragment"/>
-    </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment with parameters and second hash is correctly splitted" id="68ef5588-f6c4-9eb3-501d-25f42e02c73d">
-      <Execution id="4c4e2f76-e0dc-45ab-24ef-e5651cd1b6a3"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment with parameters and second hash is correctly splitted" id="b7688e6c-654c-42aa-2dce-68b692bfa18e">
+      <Execution id="5d36a6e1-a282-c697-478c-d67046e8b3b3"/>
       <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment with parameters and second hash is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment with parameters and second hash is correctly splitted" className="UrlFragment"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and no search is correctly splitted" id="ca6d8572-0ea3-a38e-4de5-83867b81680d">
-      <Execution id="dc531a72-486c-fe09-e342-3a43e0cd205b"/>
-      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and no search is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and no search is correctly splitted" className="UrlFragment"/>
-    </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without hash is correctly splitted" id="5b687242-362d-0b66-85d6-b02429699a3a">
-      <Execution id="e236912e-c6de-79fe-f7b3-0c733c5d0da6"/>
-      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without hash is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without hash is correctly splitted" className="UrlFragment"/>
-    </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and second hash is correctly splitted" id="724d12df-e22a-2c94-d145-4810a1917f9b">
-      <Execution id="5e5371c6-b452-dae0-40e7-35e2cbeccc74"/>
-      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and second hash is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and second hash is correctly splitted" className="UrlFragment"/>
-    </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (1 search parameters) is correctly splitted" id="6756977e-8fcc-ccd2-2ef2-9736877a2a31">
-      <Execution id="45ff4a3e-4c87-8b21-ad18-6f61bed2c126"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (1 search parameters) is correctly splitted" id="b4fb998b-305d-e829-67af-59c3c1123010">
+      <Execution id="1f444b23-0c09-0137-bb09-6360d8e15263"/>
       <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (1 search parameters) is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (1 search parameters) is correctly splitted" className="UrlFragment"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters is correctly splitted" id="8e1dcf26-509d-f104-3d8d-01a7425c11dc">
-      <Execution id="71df1c81-1c69-e8bc-ee51-ca48c71009cc"/>
-      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters is correctly splitted" className="UrlFragment"/>
-    </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and hash is correctly splitted" id="81b27305-248b-dfcd-ce98-ee76660c1d24">
-      <Execution id="dbb6a600-10f2-fa5c-0f79-70a2188acc7a"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and hash is correctly splitted" id="59eb28d3-ac01-0574-38c6-b93b0164f14c">
+      <Execution id="decd13b1-e8aa-8bf9-fa11-42d4b96d3829"/>
       <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and hash is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and hash is correctly splitted" className="UrlFragment"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameters and hash is correctly splitted" id="92d4fe49-dccb-de6a-47a4-c27acef2e394">
-      <Execution id="f9ff1f38-5516-a850-0de9-f98b1d030eff"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameters and hash is correctly splitted" id="a92590da-acff-25d8-7390-3153cd9e368e">
+      <Execution id="c6dd110c-053e-0bde-b8cf-eab5ed2f0302"/>
       <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameters and hash is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameters and hash is correctly splitted" className="UrlFragment"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter that contains full url is correctly splitted" id="cc8ae210-8458-5999-c9d7-98cff87efac4">
-      <Execution id="4a849305-7280-46f7-318c-2cbe26f1db7c"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and search is correctly splitted" id="467ad32e-9797-17d9-1119-ef81b0938b7f">
+      <Execution id="5a14d2eb-d3c4-ce1b-1adf-a6b7f05c6d84"/>
+      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and search is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and search is correctly splitted" className="UrlFragment"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and no search is correctly splitted" id="75744a24-3ee5-bc3d-4e19-51a54ced4966">
+      <Execution id="4396f054-a0c1-9d1f-9986-5dd4e5421387"/>
+      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and no search is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and no search is correctly splitted" className="UrlFragment"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (2 search parameters) is correctly splitted" id="7cf4a385-059b-02d5-9ca0-75167db181ca">
+      <Execution id="8c9a970e-ca60-9f0a-e223-8d1f77582abc"/>
+      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (2 search parameters) is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (2 search parameters) is correctly splitted" className="UrlFragment"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter that contains full url is correctly splitted" id="4d71aaab-4d60-3101-9dde-186f77862bd7">
+      <Execution id="3ae447c9-d8fa-8658-5c06-5fbe0f2130cb"/>
       <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter that contains full url is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter that contains full url is correctly splitted" className="UrlFragment"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to few search parameters is NOT matched" id="6bac606f-2a87-efa5-8a92-871188de1e1a">
-      <Execution id="69bc0f1b-488e-e470-d1e1-0c2b963485a1"/>
-      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to few search parameters is NOT matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to few search parameters is NOT matched" className="ComplexRouteMatching"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and second hash is correctly splitted" id="79a93d28-50af-71de-dd5c-06b637143782">
+      <Execution id="c22bd907-3e05-032b-0267-7b37ff9343b0"/>
+      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and second hash is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and second hash is correctly splitted" className="UrlFragment"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is NOT matched" id="92f396a5-6191-22d2-2067-ece2a7458817">
-      <Execution id="a83aebb6-9949-7be4-d7d9-87a2f67b7ee9"/>
-      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is NOT matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is NOT matched" className="ComplexRouteMatching"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters is correctly splitted" id="c5cc8bde-1892-88df-c931-ecf505f10c5d">
+      <Execution id="d97dde5e-7631-0c3a-2af1-70728a3e1052"/>
+      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters is correctly splitted" className="UrlFragment"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with two parameters and search is matched" id="cd822fc9-faea-f14c-2bea-86967d6efd58">
-      <Execution id="b3610ca2-6e15-f674-f690-c578afe0c7cd"/>
-      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_path with two parameters and search is matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with two parameters and search is matched" className="ComplexRouteMatching"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without hash is correctly splitted" id="09fa334e-3b6a-5502-e2b6-4410bc69f770">
+      <Execution id="bc803e76-f96d-0ba0-1815-9237dc815e98"/>
+      <TestMethod codeBase="UrlFragment.Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without hash is correctly splitted" name="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without hash is correctly splitted" className="UrlFragment"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and simple hash is matched" id="1253b6d6-4434-4d43-8771-4ed90c8e6349">
-      <Execution id="b40c92c1-61f2-3409-bca9-bdcc1b720cef"/>
-      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and simple hash is matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and simple hash is matched" className="ComplexRouteMatching"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id is different for different path" id="a99788af-6d25-65f6-f9d7-238d5b1fcb08">
+      <Execution id="5f7a91cc-05c9-d62e-f877-190bb677d3cf"/>
+      <TestMethod codeBase="PathAndSearchPageId.Chrome 70.0.3538 (Windows 10 0.0.0)_page id is different for different path" name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id is different for different path" className="PathAndSearchPageId"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched" id="7fffbbc5-537c-89c4-e37d-08ae7ae46fa1">
-      <Execution id="14a2c372-1dac-46e9-4499-6767f7ba4299"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id is different for different search" id="b7f1f535-17ad-97b3-4889-b5dd9794a066">
+      <Execution id="f845a25c-e540-e6ec-c577-2bb6b285bbdc"/>
+      <TestMethod codeBase="PathAndSearchPageId.Chrome 70.0.3538 (Windows 10 0.0.0)_page id is different for different search" name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id is different for different search" className="PathAndSearchPageId"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when protocol/server changes" id="1b801fe0-04ec-6ba7-61dc-d6591ea99015">
+      <Execution id="ce591ab8-6028-8285-a25c-3c75f3cee00a"/>
+      <TestMethod codeBase="PathAndSearchPageId.Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when protocol/server changes" name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when protocol/server changes" className="PathAndSearchPageId"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash changes" id="b142b08e-8d41-be86-8dc9-8e78f68c994f">
+      <Execution id="8e085234-25f3-be7c-45e1-dc3ef054ea65"/>
+      <TestMethod codeBase="PathAndSearchPageId.Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash changes" name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash changes" className="PathAndSearchPageId"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when params occur in different order" id="a50e5965-d126-bb8a-bc71-51807f43831e">
+      <Execution id="14fb00f7-81c2-8f06-acf7-379ff90d65aa"/>
+      <TestMethod codeBase="PathAndSearchPageId.Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when params occur in different order" name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when params occur in different order" className="PathAndSearchPageId"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash is missing" id="edcc05ef-e6e0-d06c-f1d6-8af979360b4f">
+      <Execution id="b4c70134-2430-a95e-c6db-8ba83b172b7d"/>
+      <TestMethod codeBase="PathAndSearchPageId.Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash is missing" name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash is missing" className="PathAndSearchPageId"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when another ignored parameter is added" id="edbda483-4515-c320-4ea2-54de65115f32">
+      <Execution id="6d177aca-bae8-eb56-b1bf-3683b519dd86"/>
+      <TestMethod codeBase="PathAndSearchPageId with ignored parameters.Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when another ignored parameter is added" name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when another ignored parameter is added" className="PathAndSearchPageId with ignored parameters"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when ignored parameter is added" id="8b4a68fc-add6-f730-a80a-84dbe627e8e2">
+      <Execution id="aea7b03f-8639-c028-0c7a-2a44cd9a4514"/>
+      <TestMethod codeBase="PathAndSearchPageId with ignored parameters.Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when ignored parameter is added" name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when ignored parameter is added" className="PathAndSearchPageId with ignored parameters"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash changes" id="17d74e17-228e-2feb-f7fc-ce7c10a52e18">
+      <Execution id="8aa39ef7-ac13-f678-d10a-28eb62b4b81e"/>
+      <TestMethod codeBase="PathAndSearchPageId with ignored parameters.Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash changes" name="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash changes" className="PathAndSearchPageId with ignored parameters"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched" id="57ebca35-56d1-3d09-5581-e267df4a3218">
+      <Execution id="7fe7c2d2-f2e1-0be2-d007-f7b063978243"/>
       <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched" className="ComplexRouteMatching"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to many search parameters is matched" id="8c630bd9-0ea7-8991-aaa8-08c988c34eaa">
-      <Execution id="5da8f4e5-b240-4858-5647-079e46835543"/>
-      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to many search parameters is matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to many search parameters is matched" className="ComplexRouteMatching"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to few search parameters is NOT matched" id="0c65026f-228d-f7a5-120f-956f36c5a8b4">
+      <Execution id="0c6f46c4-9c30-e114-a0a0-7c3ce6a9bbe6"/>
+      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to few search parameters is NOT matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to few search parameters is NOT matched" className="ComplexRouteMatching"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is matched" id="f5d3632f-baa1-4dbf-a9d3-b3ee95245d6f">
-      <Execution id="e565cdb6-6c93-4206-a6de-65fc914d0afb"/>
-      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is matched" className="ComplexRouteMatching"/>
-    </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is NOT matched" id="b8334074-b058-96e1-1e05-f355fca160f6">
-      <Execution id="6f3f489b-ca73-0042-5de2-cc984d221b8a"/>
-      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is NOT matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is NOT matched" className="ComplexRouteMatching"/>
-    </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched CASE INSENTIVE" id="2226efea-073c-cedf-adc6-cf5a0609a9a7">
-      <Execution id="0a2e4839-4804-b667-1b14-8a9c97d39e63"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched CASE INSENTIVE" id="923e535c-6da0-096f-4399-ac999c0f3d8b">
+      <Execution id="83b7a8e7-90ff-5367-12b8-0ff1c94f1adb"/>
       <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched CASE INSENTIVE" name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched CASE INSENTIVE" className="ComplexRouteMatching"/>
     </UnitTest>
-    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is matched" id="9aeaec05-3f62-10a5-d113-08453922e62e">
-      <Execution id="f561c754-262a-2f51-44db-574600d79c34"/>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to many search parameters is matched" id="42b7f0bc-42f7-7a34-9f4c-6e4acbbef2c7">
+      <Execution id="30249624-6ce2-c503-bcae-5a08aab007e1"/>
+      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to many search parameters is matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to many search parameters is matched" className="ComplexRouteMatching"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with two parameters and search is matched" id="19c85f01-0bfe-f690-c6f4-5eea0cc7ec77">
+      <Execution id="e4360161-eea9-2ed4-f8a2-926334753a14"/>
+      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_path with two parameters and search is matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with two parameters and search is matched" className="ComplexRouteMatching"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and simple hash is matched" id="c347e0f6-544e-0240-6699-0d0e060580f9">
+      <Execution id="f6b3a60d-e03a-4aec-52cb-553ed2ed73bb"/>
+      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and simple hash is matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and simple hash is matched" className="ComplexRouteMatching"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is NOT matched" id="67746c48-1c61-f80c-f3c6-74364cc8b7b1">
+      <Execution id="4003d329-e8d0-29e4-538e-0a886eb7ec8a"/>
+      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is NOT matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is NOT matched" className="ComplexRouteMatching"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is matched" id="ed3fc381-a0ab-2950-1318-93e4800588ef">
+      <Execution id="c20bf2de-f0e1-75df-fc2f-e7cae2c711d9"/>
+      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is matched" className="ComplexRouteMatching"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is NOT matched" id="8535078a-f33a-629a-fac2-7480e47385bb">
+      <Execution id="aa6ed71e-d1a4-77af-cd70-7ece6566c4ab"/>
+      <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is NOT matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is NOT matched" className="ComplexRouteMatching"/>
+    </UnitTest>
+    <UnitTest name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is matched" id="4f7fbd78-9029-69a2-c803-44eced838516">
+      <Execution id="c9402092-74f6-fb20-a5f9-e76aa3cc1a16"/>
       <TestMethod codeBase="ComplexRouteMatching.Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is matched" name="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is matched" className="ComplexRouteMatching"/>
     </UnitTest>
   </TestDefinitions>
@@ -96,49 +132,67 @@
     <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda"/>
   </TestLists>
   <TestEntries>
-    <TestEntry testId="2fa75e4e-f7ee-9a99-9b1e-8171a59d18fe" executionId="42e51e8b-46e3-b88d-733e-43e893f4d7fe" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="e9924576-8da9-664f-8741-e9f0e27d95e0" executionId="b2428cb8-6fa4-1c4b-7d69-874f42279184" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="68ef5588-f6c4-9eb3-501d-25f42e02c73d" executionId="4c4e2f76-e0dc-45ab-24ef-e5651cd1b6a3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="ca6d8572-0ea3-a38e-4de5-83867b81680d" executionId="dc531a72-486c-fe09-e342-3a43e0cd205b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="5b687242-362d-0b66-85d6-b02429699a3a" executionId="e236912e-c6de-79fe-f7b3-0c733c5d0da6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="724d12df-e22a-2c94-d145-4810a1917f9b" executionId="5e5371c6-b452-dae0-40e7-35e2cbeccc74" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="6756977e-8fcc-ccd2-2ef2-9736877a2a31" executionId="45ff4a3e-4c87-8b21-ad18-6f61bed2c126" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="8e1dcf26-509d-f104-3d8d-01a7425c11dc" executionId="71df1c81-1c69-e8bc-ee51-ca48c71009cc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="81b27305-248b-dfcd-ce98-ee76660c1d24" executionId="dbb6a600-10f2-fa5c-0f79-70a2188acc7a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="92d4fe49-dccb-de6a-47a4-c27acef2e394" executionId="f9ff1f38-5516-a850-0de9-f98b1d030eff" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="cc8ae210-8458-5999-c9d7-98cff87efac4" executionId="4a849305-7280-46f7-318c-2cbe26f1db7c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="6bac606f-2a87-efa5-8a92-871188de1e1a" executionId="69bc0f1b-488e-e470-d1e1-0c2b963485a1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="92f396a5-6191-22d2-2067-ece2a7458817" executionId="a83aebb6-9949-7be4-d7d9-87a2f67b7ee9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="cd822fc9-faea-f14c-2bea-86967d6efd58" executionId="b3610ca2-6e15-f674-f690-c578afe0c7cd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="1253b6d6-4434-4d43-8771-4ed90c8e6349" executionId="b40c92c1-61f2-3409-bca9-bdcc1b720cef" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="7fffbbc5-537c-89c4-e37d-08ae7ae46fa1" executionId="14a2c372-1dac-46e9-4499-6767f7ba4299" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="8c630bd9-0ea7-8991-aaa8-08c988c34eaa" executionId="5da8f4e5-b240-4858-5647-079e46835543" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="f5d3632f-baa1-4dbf-a9d3-b3ee95245d6f" executionId="e565cdb6-6c93-4206-a6de-65fc914d0afb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="b8334074-b058-96e1-1e05-f355fca160f6" executionId="6f3f489b-ca73-0042-5de2-cc984d221b8a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="2226efea-073c-cedf-adc6-cf5a0609a9a7" executionId="0a2e4839-4804-b667-1b14-8a9c97d39e63" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <TestEntry testId="9aeaec05-3f62-10a5-d113-08453922e62e" executionId="f561c754-262a-2f51-44db-574600d79c34" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="b7688e6c-654c-42aa-2dce-68b692bfa18e" executionId="5d36a6e1-a282-c697-478c-d67046e8b3b3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="b4fb998b-305d-e829-67af-59c3c1123010" executionId="1f444b23-0c09-0137-bb09-6360d8e15263" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="59eb28d3-ac01-0574-38c6-b93b0164f14c" executionId="decd13b1-e8aa-8bf9-fa11-42d4b96d3829" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="a92590da-acff-25d8-7390-3153cd9e368e" executionId="c6dd110c-053e-0bde-b8cf-eab5ed2f0302" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="467ad32e-9797-17d9-1119-ef81b0938b7f" executionId="5a14d2eb-d3c4-ce1b-1adf-a6b7f05c6d84" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="75744a24-3ee5-bc3d-4e19-51a54ced4966" executionId="4396f054-a0c1-9d1f-9986-5dd4e5421387" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="7cf4a385-059b-02d5-9ca0-75167db181ca" executionId="8c9a970e-ca60-9f0a-e223-8d1f77582abc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="4d71aaab-4d60-3101-9dde-186f77862bd7" executionId="3ae447c9-d8fa-8658-5c06-5fbe0f2130cb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="79a93d28-50af-71de-dd5c-06b637143782" executionId="c22bd907-3e05-032b-0267-7b37ff9343b0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="c5cc8bde-1892-88df-c931-ecf505f10c5d" executionId="d97dde5e-7631-0c3a-2af1-70728a3e1052" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="09fa334e-3b6a-5502-e2b6-4410bc69f770" executionId="bc803e76-f96d-0ba0-1815-9237dc815e98" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="a99788af-6d25-65f6-f9d7-238d5b1fcb08" executionId="5f7a91cc-05c9-d62e-f877-190bb677d3cf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="b7f1f535-17ad-97b3-4889-b5dd9794a066" executionId="f845a25c-e540-e6ec-c577-2bb6b285bbdc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="1b801fe0-04ec-6ba7-61dc-d6591ea99015" executionId="ce591ab8-6028-8285-a25c-3c75f3cee00a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="b142b08e-8d41-be86-8dc9-8e78f68c994f" executionId="8e085234-25f3-be7c-45e1-dc3ef054ea65" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="a50e5965-d126-bb8a-bc71-51807f43831e" executionId="14fb00f7-81c2-8f06-acf7-379ff90d65aa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="edcc05ef-e6e0-d06c-f1d6-8af979360b4f" executionId="b4c70134-2430-a95e-c6db-8ba83b172b7d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="edbda483-4515-c320-4ea2-54de65115f32" executionId="6d177aca-bae8-eb56-b1bf-3683b519dd86" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="8b4a68fc-add6-f730-a80a-84dbe627e8e2" executionId="aea7b03f-8639-c028-0c7a-2a44cd9a4514" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="17d74e17-228e-2feb-f7fc-ce7c10a52e18" executionId="8aa39ef7-ac13-f678-d10a-28eb62b4b81e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="57ebca35-56d1-3d09-5581-e267df4a3218" executionId="7fe7c2d2-f2e1-0be2-d007-f7b063978243" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="0c65026f-228d-f7a5-120f-956f36c5a8b4" executionId="0c6f46c4-9c30-e114-a0a0-7c3ce6a9bbe6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="923e535c-6da0-096f-4399-ac999c0f3d8b" executionId="83b7a8e7-90ff-5367-12b8-0ff1c94f1adb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="42b7f0bc-42f7-7a34-9f4c-6e4acbbef2c7" executionId="30249624-6ce2-c503-bcae-5a08aab007e1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="19c85f01-0bfe-f690-c6f4-5eea0cc7ec77" executionId="e4360161-eea9-2ed4-f8a2-926334753a14" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="c347e0f6-544e-0240-6699-0d0e060580f9" executionId="f6b3a60d-e03a-4aec-52cb-553ed2ed73bb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="67746c48-1c61-f80c-f3c6-74364cc8b7b1" executionId="4003d329-e8d0-29e4-538e-0a886eb7ec8a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="ed3fc381-a0ab-2950-1318-93e4800588ef" executionId="c20bf2de-f0e1-75df-fc2f-e7cae2c711d9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="8535078a-f33a-629a-fac2-7480e47385bb" executionId="aa6ed71e-d1a4-77af-cd70-7ece6566c4ab" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <TestEntry testId="4f7fbd78-9029-69a2-c803-44eced838516" executionId="c9402092-74f6-fb20-a5f9-e76aa3cc1a16" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
   </TestEntries>
   <Results>
-    <UnitTestResult executionId="42e51e8b-46e3-b88d-733e-43e893f4d7fe" testId="2fa75e4e-f7ee-9a99-9b1e-8171a59d18fe" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and search is correctly splitted" computerName="Jochen-PC" duration="00:00:00.003" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="b2428cb8-6fa4-1c4b-7d69-874f42279184" testId="e9924576-8da9-664f-8741-e9f0e27d95e0" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (2 search parameters) is correctly splitted" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="4c4e2f76-e0dc-45ab-24ef-e5651cd1b6a3" testId="68ef5588-f6c4-9eb3-501d-25f42e02c73d" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment with parameters and second hash is correctly splitted" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="dc531a72-486c-fe09-e342-3a43e0cd205b" testId="ca6d8572-0ea3-a38e-4de5-83867b81680d" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and no search is correctly splitted" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="e236912e-c6de-79fe-f7b3-0c733c5d0da6" testId="5b687242-362d-0b66-85d6-b02429699a3a" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without hash is correctly splitted" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="5e5371c6-b452-dae0-40e7-35e2cbeccc74" testId="724d12df-e22a-2c94-d145-4810a1917f9b" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and second hash is correctly splitted" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="45ff4a3e-4c87-8b21-ad18-6f61bed2c126" testId="6756977e-8fcc-ccd2-2ef2-9736877a2a31" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (1 search parameters) is correctly splitted" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="71df1c81-1c69-e8bc-ee51-ca48c71009cc" testId="8e1dcf26-509d-f104-3d8d-01a7425c11dc" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters is correctly splitted" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="dbb6a600-10f2-fa5c-0f79-70a2188acc7a" testId="81b27305-248b-dfcd-ce98-ee76660c1d24" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and hash is correctly splitted" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="f9ff1f38-5516-a850-0de9-f98b1d030eff" testId="92d4fe49-dccb-de6a-47a4-c27acef2e394" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameters and hash is correctly splitted" computerName="Jochen-PC" duration="00:00:00.002" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="4a849305-7280-46f7-318c-2cbe26f1db7c" testId="cc8ae210-8458-5999-c9d7-98cff87efac4" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter that contains full url is correctly splitted" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="69bc0f1b-488e-e470-d1e1-0c2b963485a1" testId="6bac606f-2a87-efa5-8a92-871188de1e1a" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to few search parameters is NOT matched" computerName="Jochen-PC" duration="00:00:00.002" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="a83aebb6-9949-7be4-d7d9-87a2f67b7ee9" testId="92f396a5-6191-22d2-2067-ece2a7458817" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is NOT matched" computerName="Jochen-PC" duration="00:00:00.002" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="b3610ca2-6e15-f674-f690-c578afe0c7cd" testId="cd822fc9-faea-f14c-2bea-86967d6efd58" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with two parameters and search is matched" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="b40c92c1-61f2-3409-bca9-bdcc1b720cef" testId="1253b6d6-4434-4d43-8771-4ed90c8e6349" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and simple hash is matched" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="14a2c372-1dac-46e9-4499-6767f7ba4299" testId="7fffbbc5-537c-89c4-e37d-08ae7ae46fa1" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="5da8f4e5-b240-4858-5647-079e46835543" testId="8c630bd9-0ea7-8991-aaa8-08c988c34eaa" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to many search parameters is matched" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="e565cdb6-6c93-4206-a6de-65fc914d0afb" testId="f5d3632f-baa1-4dbf-a9d3-b3ee95245d6f" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is matched" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="6f3f489b-ca73-0042-5de2-cc984d221b8a" testId="b8334074-b058-96e1-1e05-f355fca160f6" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is NOT matched" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="0a2e4839-4804-b667-1b14-8a9c97d39e63" testId="2226efea-073c-cedf-adc6-cf5a0609a9a7" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched CASE INSENTIVE" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
-    <UnitTestResult executionId="f561c754-262a-2f51-44db-574600d79c34" testId="9aeaec05-3f62-10a5-d113-08453922e62e" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is matched" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-27T11:34:08" endTime="2018-11-27T11:34:08" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="5d36a6e1-a282-c697-478c-d67046e8b3b3" testId="b7688e6c-654c-42aa-2dce-68b692bfa18e" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment with parameters and second hash is correctly splitted" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="1f444b23-0c09-0137-bb09-6360d8e15263" testId="b4fb998b-305d-e829-67af-59c3c1123010" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (1 search parameters) is correctly splitted" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="decd13b1-e8aa-8bf9-fa11-42d4b96d3829" testId="59eb28d3-ac01-0574-38c6-b93b0164f14c" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and hash is correctly splitted" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="c6dd110c-053e-0bde-b8cf-eab5ed2f0302" testId="a92590da-acff-25d8-7390-3153cd9e368e" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameters and hash is correctly splitted" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="5a14d2eb-d3c4-ce1b-1adf-a6b7f05c6d84" testId="467ad32e-9797-17d9-1119-ef81b0938b7f" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and search is correctly splitted" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="4396f054-a0c1-9d1f-9986-5dd4e5421387" testId="75744a24-3ee5-bc3d-4e19-51a54ced4966" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter regex in hash and no search is correctly splitted" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="8c9a970e-ca60-9f0a-e223-8d1f77582abc" testId="7cf4a385-059b-02d5-9ca0-75167db181ca" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_full url fragment (2 search parameters) is correctly splitted" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="3ae447c9-d8fa-8658-5c06-5fbe0f2130cb" testId="4d71aaab-4d60-3101-9dde-186f77862bd7" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_route with parameter that contains full url is correctly splitted" computerName="Jochen-PC" duration="00:00:00.002" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="c22bd907-3e05-032b-0267-7b37ff9343b0" testId="79a93d28-50af-71de-dd5c-06b637143782" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters and second hash is correctly splitted" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="d97dde5e-7631-0c3a-2af1-70728a3e1052" testId="c5cc8bde-1892-88df-c931-ecf505f10c5d" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without parameters is correctly splitted" computerName="Jochen-PC" duration="00:00:00.002" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="bc803e76-f96d-0ba0-1815-9237dc815e98" testId="09fa334e-3b6a-5502-e2b6-4410bc69f770" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_url fragment without hash is correctly splitted" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="5f7a91cc-05c9-d62e-f877-190bb677d3cf" testId="a99788af-6d25-65f6-f9d7-238d5b1fcb08" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_page id is different for different path" computerName="Jochen-PC" duration="00:00:00.002" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="f845a25c-e540-e6ec-c577-2bb6b285bbdc" testId="b7f1f535-17ad-97b3-4889-b5dd9794a066" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_page id is different for different search" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="ce591ab8-6028-8285-a25c-3c75f3cee00a" testId="1b801fe0-04ec-6ba7-61dc-d6591ea99015" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when protocol/server changes" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="8e085234-25f3-be7c-45e1-dc3ef054ea65" testId="b142b08e-8d41-be86-8dc9-8e78f68c994f" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash changes" computerName="Jochen-PC" duration="00:00:00.003" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="14fb00f7-81c2-8f06-acf7-379ff90d65aa" testId="a50e5965-d126-bb8a-bc71-51807f43831e" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when params occur in different order" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="b4c70134-2430-a95e-c6db-8ba83b172b7d" testId="edcc05ef-e6e0-d06c-f1d6-8af979360b4f" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash is missing" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="6d177aca-bae8-eb56-b1bf-3683b519dd86" testId="edbda483-4515-c320-4ea2-54de65115f32" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when another ignored parameter is added" computerName="Jochen-PC" duration="00:00:00.002" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="aea7b03f-8639-c028-0c7a-2a44cd9a4514" testId="8b4a68fc-add6-f730-a80a-84dbe627e8e2" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when ignored parameter is added" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="8aa39ef7-ac13-f678-d10a-28eb62b4b81e" testId="17d74e17-228e-2feb-f7fc-ce7c10a52e18" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_page id does not differ when hash changes" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="7fe7c2d2-f2e1-0be2-d007-f7b063978243" testId="57ebca35-56d1-3d09-5581-e267df4a3218" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="0c6f46c4-9c30-e114-a0a0-7c3ce6a9bbe6" testId="0c65026f-228d-f7a5-120f-956f36c5a8b4" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to few search parameters is NOT matched" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="83b7a8e7-90ff-5367-12b8-0ff1c94f1adb" testId="923e535c-6da0-096f-4399-ac999c0f3d8b" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and regex hash with capture group is matched CASE INSENTIVE" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="30249624-6ce2-c503-bcae-5a08aab007e1" testId="42b7f0bc-42f7-7a34-9f4c-6e4acbbef2c7" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters and to many search parameters is matched" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="e4360161-eea9-2ed4-f8a2-926334753a14" testId="19c85f01-0bfe-f690-c6f4-5eea0cc7ec77" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with two parameters and search is matched" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="f6b3a60d-e03a-4aec-52cb-553ed2ed73bb" testId="c347e0f6-544e-0240-6699-0d0e060580f9" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_path with parameters, search and simple hash is matched" computerName="Jochen-PC" duration="00:00:00.001" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="4003d329-e8d0-29e4-538e-0a886eb7ec8a" testId="67746c48-1c61-f80c-f3c6-74364cc8b7b1" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is NOT matched" computerName="Jochen-PC" duration="00:00:00.004" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="c20bf2de-f0e1-75df-fc2f-e7cae2c711d9" testId="ed3fc381-a0ab-2950-1318-93e4800588ef" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path with two parameters is matched" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="aa6ed71e-d1a4-77af-cd70-7ece6566c4ab" testId="8535078a-f33a-629a-fac2-7480e47385bb" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is NOT matched" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
+    <UnitTestResult executionId="c9402092-74f6-fb20-a5f9-e76aa3cc1a16" testId="4f7fbd78-9029-69a2-c803-44eced838516" testName="Chrome 70.0.3538 (Windows 10 0.0.0)_simple path without any parameters is matched" computerName="Jochen-PC" duration="00:00:00.000" startTime="2018-11-29T09:37:46" endTime="2018-11-29T09:37:46" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d"/>
   </Results>
 </TestRun>
