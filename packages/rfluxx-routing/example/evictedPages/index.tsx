@@ -5,9 +5,10 @@ import * as RfluxxRouting from "../../src";
 import { withPageContext } from "../../src/PageContextProvider";
 import { ISiteMapNode } from "../../src/SiteMapStore";
 
+import { App } from "./App";
 import { ContainerFactory } from "./ContainerFactory";
-import { Counter } from "./Counter";
-import { Page } from "./Page";
+import { FormPage } from "./FormWithSelectPage/FormPage";
+import { SelectPage } from "./FormWithSelectPage/SelectPage";
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -20,22 +21,17 @@ es6.nothing;
 const siteMap: ISiteMapNode = {
     caption: "Home",
     routeExpression: "home",
-    render: p => withPageContext(<Counter caption="Home Counter" />),
+    render: p => <span>Home page</span>,
     children: [
         {
-            caption: "Route 1",
-            routeExpression: "route1",
-            render: p => withPageContext(<Counter caption="Route 1 Counter" />)
+            caption: "Form with select page",
+            routeExpression: "/form/with/select",
+            render: p => withPageContext(<FormPage />)
         },
         {
-            caption: "Route 2",
-            routeExpression: "/area1/route2",
-            render: p => withPageContext(<Counter caption="Route 2 Counter" />)
-        },
-        {
-            caption: "Route 3",
-            routeExpression: "/HOME/route3",
-            render: p => withPageContext(<Counter caption="Route 3 Counter" />)
+            caption: "Select string",
+            routeExpression: "/select/page",
+            render: p => withPageContext(<SelectPage caption="Default"/>)
         }
     ]
 };
@@ -51,6 +47,6 @@ document.addEventListener("DOMContentLoaded", event =>
 {
     const root = document.getElementById("root");
     ReactDom.render(
-        <Page siteMapStore={globalStores.siteMapStore} pageManagementStore={globalStores.pageManagementStore} />,
+        <App siteMapStore={globalStores.siteMapStore} pageManagementStore={globalStores.pageManagementStore} />,
         root);
 });

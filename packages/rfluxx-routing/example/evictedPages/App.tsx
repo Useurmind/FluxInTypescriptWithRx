@@ -8,18 +8,18 @@ import { IPageManagementStore } from "../../src/PageManagementStore";
 import { RouterLink } from "../../src/RouterLink";
 import { ISiteMapNode, ISiteMapStore } from "../../src/SiteMapStore";
 
-export interface IPageProps
+export interface IAppProps
 {
     siteMapStore: ISiteMapStore;
     pageManagementStore: IPageManagementStore;
 }
 
-export interface IPageState
+export interface IAppState
 {
     currentSiteMapExpression: string;
 }
 
-export class Page extends React.Component<IPageProps, IPageState> {
+export class App extends React.Component<IAppProps, IAppState> {
 
     constructor(props: any)
     {
@@ -50,9 +50,7 @@ export class Page extends React.Component<IPageProps, IPageState> {
             <Breadcrumb siteMapStore={this.props.siteMapStore}
                        renderPart={(sn: ISiteMapNode) => <span>... {sn.caption}</span>} /><br />
             <RouterLink caption="home" path="/home" /><br />
-            <RouterLink caption="route1" path="/home/route1" /><br />
-            <RouterLink caption="route2" path="/area1/route2" /><br />
-            <RouterLink caption="route3" path="/home/route3" /><br />
+            <RouterLink caption="form with select" path="/form/with/select" /><br />
             <span>Current route</span><br />
             <span>{this.state.currentSiteMapExpression}</span><br />
             <CurrentPage pageManagementStore={this.props.pageManagementStore} />

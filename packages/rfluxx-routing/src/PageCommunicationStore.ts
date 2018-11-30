@@ -214,7 +214,7 @@ export class PageCommunicationStore
                     {
                         // the request object stays the same between calls
                         // so we can compare it like this
-                        if (state.response.request === request)
+                        if (state && state.response && state.response.request === request)
                         {
                             switch (state.response.status)
                             {
