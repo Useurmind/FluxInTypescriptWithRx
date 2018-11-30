@@ -10,7 +10,8 @@ module.exports = {
     entry: {
         routerStore: "./example/routerStore/index.tsx",
         siteMap: "./example/siteMap/index.tsx",
-        pages: "./example/pages/index.tsx"
+        pages: "./example/pages/index.tsx",
+        evictedPages: "./example/evictedPages/index.tsx"
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.

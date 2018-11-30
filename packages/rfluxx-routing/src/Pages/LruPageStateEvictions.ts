@@ -31,11 +31,11 @@ interface ILinkedList {
 /**
  * This strategy evicts the state of the pages that weren't used recently.
  * There are however some special attributes that need to be taken into account.
- * When a page has
- * - `isInEditMode` set to true
- * - is part of a page track
- * When a page is in edit mode we should not just throw away the edited content
- * ... TODO
+ * When a page
+ * - has `isInEditMode` set to true
+ * - has open requests that were not yet finished
+ * - was requested by another page
+ * the state of the page may not be deleted.
  */
 export class LruPageStateEvictions implements IPageEvictionStrategy
 {
@@ -44,6 +44,15 @@ export class LruPageStateEvictions implements IPageEvictionStrategy
     private lruListMap: Map<string, ILinkedList> = new Map();
 
     constructor(private options: ILruPageStateEvictionsOptions) {}
+
+    /**
+     * @inheritDoc
+     */
+    public onPageClosed(pageId: string): void
+    {
+        const pageEntry = this.lruListMap.get(pageId);
+        this.removeFromLinkedList(pageEntry);
+    }
 
     /**
      * @inheritDoc
@@ -59,16 +68,41 @@ export class LruPageStateEvictions implements IPageEvictionStrategy
             this.removeFromLinkedList(pageEntry);
             this.addToFront(pageEntry);
         }
+        else
+        {
+            const pageEntry: ILinkedList = {
+                next: null,
+                previous: null,
+                pageId
+            };
+
+            this.lruListMap.set(pageId, pageEntry);
+            this.addToFront(pageEntry);
+        }
 
         if (this.lruListMap.size > this.options.targetNumberPagesInCache)
         {
+            const entriesToDelete: ILinkedList[] = [];
             const numberEntriesToDelete = this.lruListMap.size - this.options.targetNumberPagesInCache;
-            const entriesToDelete = this.getLastEntriesReversed(numberEntriesToDelete);
-            const firstEntryToDelete = entriesToDelete[-1];
 
-            // make the element before the one to delete the tail
-            firstEntryToDelete.previous.next = null;
-            this.lruListTail = firstEntryToDelete.previous;
+            // gather entries to delete and delete them here
+            let currentEntry = this.lruListTail;
+            while (currentEntry)
+            {
+                const nextEntry = currentEntry.previous;
+                if (this.mayDeletePageState(currentEntry.pageId, pageMap))
+                {
+                    entriesToDelete.push(currentEntry);
+                    this.removeFromLinkedList(currentEntry);
+                }
+
+                if (entriesToDelete.length >= numberEntriesToDelete)
+                {
+                    break;
+                }
+
+                currentEntry = nextEntry;
+            }
 
             // delete all entries from the map
             for (const entry of entriesToDelete)
@@ -83,9 +117,20 @@ export class LruPageStateEvictions implements IPageEvictionStrategy
         return [];
     }
 
+    private mayDeletePageState(pageId: string, pageMap: Map<string, IPageData>)
+    {
+        const page = pageMap.get(pageId);
+
+        return !page.isInEditMode && !page.pageRequest && page.openRequests.size === 0;
+    }
+
     private addToFront(entry: ILinkedList): void
     {
         entry.next = this.lruListHead;
+        if (entry.next)
+        {
+            entry.next.previous = entry;
+        }
         this.lruListHead = entry;
         if (!this.lruListTail)
         {
@@ -105,9 +150,6 @@ export class LruPageStateEvictions implements IPageEvictionStrategy
             entry.next.previous = entry.previous;
         }
 
-        entry.next = null;
-        entry.previous = null;
-
         if (this.lruListHead === entry)
         {
             this.lruListHead = entry.next;
@@ -117,6 +159,9 @@ export class LruPageStateEvictions implements IPageEvictionStrategy
         {
             this.lruListTail = entry.previous;
         }
+
+        entry.next = null;
+        entry.previous = null;
     }
 
     /**
@@ -136,5 +181,19 @@ export class LruPageStateEvictions implements IPageEvictionStrategy
         }
 
         return gatheredEntries;
+    }
+
+    private loopInReverse(foreachEntry: (entry: ILinkedList) => boolean): void
+    {
+        let currentEntry = this.lruListTail;
+        while (currentEntry)
+        {
+            if (foreachEntry(currentEntry))
+            {
+                break;
+            }
+
+            currentEntry = currentEntry.previous;
+        }
     }
 }

@@ -197,6 +197,17 @@ export class PageManagementStore
             origin.openRequests.delete(pageId);
         }
 
+        // close all requested pages as well
+        // TODO: decide whether this is a good idea
+        if (page.openRequests.size > 0)
+        {
+            for (const request of Array.from(page.openRequests.values()))
+            {
+                this.closePage.trigger(request.target);
+            }
+        }
+
+        this.options.pageEvictionStrategy.onPageClosed(pageId);
         this.pageMap.delete(pageId);
     }
 

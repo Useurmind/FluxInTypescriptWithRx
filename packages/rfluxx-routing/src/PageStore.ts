@@ -35,6 +35,11 @@ export interface IPageStoreOptions extends IInjectedStoreOptions
      * Store that manages pages.
      */
     pageManagementStore: IPageManagementStore;
+
+    /**
+     * The router store used to navigate between pages.
+     */
+    routerStore: IRouterStore;
 }
 
 /**
@@ -183,7 +188,11 @@ export class PageStore
         }
 
         this.options.pageManagementStore.closePage.trigger(this.state.pageUrl);
-        // TODO: navigate to origin page
+
+        if (this.options.pageRequest)
+        {
+            this.options.routerStore.navigateToUrl.trigger(this.options.pageRequest.origin);
+        }
     }
 
 }

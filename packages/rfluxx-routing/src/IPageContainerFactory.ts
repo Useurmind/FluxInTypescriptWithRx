@@ -92,7 +92,8 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
             pageUrl: url,
             pageRequest,
             pageCommunicationStore: globalStores.pageCommunicationStore,
-            pageManagementStore: globalStores.pageManagementStore
+            pageManagementStore: globalStores.pageManagementStore,
+            routerStore: globalStores.routerStore
         }));
 
         container.register("IPageRequest", c => pageRequest);
