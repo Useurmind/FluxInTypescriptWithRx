@@ -7,7 +7,7 @@ import { ISiteMapNode } from "../../src/SiteMapStore";
 
 import { ContainerFactory } from "./ContainerFactory";
 import { Counter } from "./Counter";
-import { Page } from "./Page";
+import { App } from "./App";
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -51,6 +51,6 @@ document.addEventListener("DOMContentLoaded", event =>
 {
     const root = document.getElementById("root");
     ReactDom.render(
-        <Page siteMapStore={globalStores.siteMapStore} pageManagementStore={globalStores.pageManagementStore} />,
+        <App siteMapStore={globalStores.siteMapStore} pageManagementStore={globalStores.pageManagementStore} />,
         root);
 });

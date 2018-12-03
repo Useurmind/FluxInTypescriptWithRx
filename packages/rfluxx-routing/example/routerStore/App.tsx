@@ -4,13 +4,15 @@ import * as Rx from "rxjs";
 import { RouterLink } from "../../src/RouterLink";
 import { routerStore } from "../../src/RouterStore";
 
-export interface PageState {
+export interface IAppState
+{
     currentRouteName: string;
 }
 
-export class Page extends React.Component<{}, PageState> {
+export class App extends React.Component<{}, IAppState> {
 
-    constructor(props: any) {
+    constructor(props: any)
+    {
         super(props);
 
         this.state = {
@@ -18,18 +20,22 @@ export class Page extends React.Component<{}, PageState> {
         };
     }
 
-    componentDidMount() {
-        routerStore.subscribe(s => {
+    public componentDidMount()
+    {
+        routerStore.subscribe(s =>
+        {
             let currentRouteName = "";
-            if(s.currentHit && s.currentHit.route) {
+            if (s.currentHit && s.currentHit.route)
+            {
                 currentRouteName = s.currentHit.route.expression;
             }
 
             this.setState({ currentRouteName });
-        })
+        });
     }
 
-    public render(): any {
+    public render(): any
+    {
         return <div>
             <RouterLink caption="route1" path="route1" /><br />
             <RouterLink caption="route2" path="route2" /><br />

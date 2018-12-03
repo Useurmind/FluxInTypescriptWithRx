@@ -6,17 +6,17 @@ import { CurrentSiteMapNode } from "../../src/CurrentSiteMapNode";
 import { RouterLink } from "../../src/RouterLink";
 import { ISiteMapNode, ISiteMapStore } from "../../src/SiteMapStore";
 
-export interface IPageProps
+export interface IAppProps
 {
     siteMapStore: ISiteMapStore;
 }
 
-export interface IPageState
+export interface IAppState
 {
     currentSiteMapExpression: string;
 }
 
-export class Page extends React.Component<IPageProps, IPageState> {
+export class App extends React.Component<IAppProps, IAppState> {
 
     constructor(props: any)
     {

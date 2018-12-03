@@ -4,7 +4,7 @@ import * as ReactDom from "react-dom";
 import { RegexRouteMatching } from "../../src/RouteMatching/RegexRouteMatching";
 import {  configureRouterStore } from "../../src/RouterStore";
 
-import { Page } from "./Page";
+import { App } from "./App";
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -32,5 +32,5 @@ configureRouterStore({
 document.addEventListener("DOMContentLoaded", event =>
 {
     const root = document.getElementById("root");
-    ReactDom.render(<Page />, root);
+    ReactDom.render(<App />, root);
 });

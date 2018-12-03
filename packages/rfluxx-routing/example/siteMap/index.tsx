@@ -6,7 +6,7 @@ import { RegexRouteMatching } from "../../src/RouteMatching/RegexRouteMatching";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "../../src/RouterStore";
 import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "../../src/SiteMapStore";
 
-import { Page } from "./Page";
+import { App } from "./App";
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -57,5 +57,5 @@ const siteMapStore = new SiteMapStore({
 document.addEventListener("DOMContentLoaded", event =>
 {
     const root = document.getElementById("root");
-    ReactDom.render(<Page siteMapStore={siteMapStore} />, root);
+    ReactDom.render(<App siteMapStore={siteMapStore} />, root);
 });
