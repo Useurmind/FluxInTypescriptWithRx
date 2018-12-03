@@ -14,6 +14,11 @@ export interface ICurrentPageProps
      * The site map store that states the currently active site map node.
      */
     pageManagementStore: IPageManagementStore;
+
+    /**
+     * Function to render an element when no page is selected.
+     */
+    renderNoPage?: () => any;
 }
 
 /**
@@ -72,9 +77,11 @@ export class CurrentPage extends React.Component<ICurrentPageProps, ICurrentPage
      */
     public render(): any
     {
+        const renderNoPage = this.props.renderNoPage ? this.props.renderNoPage : () => <div>No page active</div>;
+
         if (this.state.currentPage === null)
         {
-            return <div>No page active</div>;
+            return renderNoPage();
         }
 
         return <Page page={this.state.currentPage} />;

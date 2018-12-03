@@ -2,6 +2,7 @@ import * as React from "react";
 import * as Rx from "rxjs";
 
 import { ISiteMapNode, ISiteMapStore } from "./SiteMapStore";
+import { RouterLink } from './RouterLink';
 
 /**
  * Props for { @see Breadcrumb }.
@@ -19,9 +20,9 @@ export interface IBreadcrumbProps
     siteMapStore: ISiteMapStore;
 
     /**
-     * Render one node of the breadcrumb. By default it renders a div prepended with a >.
+     * Render one node of the breadcrumb. By default renders a bootstrap nav entry.
      */
-    renderPart?: (node: ISiteMapNode) => any;
+    renderPart?: (node: ISiteMapNode, isLastItem: boolean) => any;
 }
 
 /**
@@ -82,12 +83,24 @@ export class Breadcrumb extends React.Component<IBreadcrumbProps, IBreadcrumbSta
         const className = this.props.className ? this.props.className : "breadcrumb";
         const renderPart = this.props.renderPart
                                 ? this.props.renderPart
-                                : (sn: ISiteMapNode) => <div>> {sn.caption}</div>;
+                                : (sn: ISiteMapNode, isLastItem: boolean) =>
+                                {
+                                    let snClassName = "breadcrumb-item";
+                                    if (isLastItem)
+                                    {
+                                        snClassName += " active";
+                                    }
+                                    return <li className={snClassName}>
+                                        <RouterLink caption={sn.caption} path={sn.absoluteRouteExpression} />
+                                    </li>;
+                                };
 
-        return <div className={className}>
+        return <nav aria-label="breadcrumb">
+            <ol className="breadcrumb">
             {
-                this.state.siteMapPath.map(renderPart)
+                this.state.siteMapPath.map((sn, index) => renderPart(sn, index === (this.state.siteMapPath.length - 1)))
             }
-        </div>;
+            </ol>
+        </nav>;
     }
 }

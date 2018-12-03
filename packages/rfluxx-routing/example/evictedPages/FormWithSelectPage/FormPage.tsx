@@ -29,10 +29,25 @@ export class FormPage extends React.Component<IFormPageProps, IFormPageState> {
 
     public componentDidMount()
     {
+        // tslint:disable-next-line:no-console
         console.log("FormPage did mount");
+        this.subscribeStore();
     }
 
     public componentDidUpdate(prevProps: IFormPageProps): void
+    {
+        this.subscribeStore();
+    }
+
+    public componentWillUnmount()
+    {
+        // tslint:disable-next-line:no-console
+        console.log("FormPage unmount");
+        // unsubscribe if component is unmounted
+        this.subscription.unsubscribe();
+    }
+
+    public subscribeStore()
     {
         this.subscription.subscribeStore(
             this.props.container.resolve<IFormPageStore>("IFormPageStore"),
@@ -46,13 +61,6 @@ export class FormPage extends React.Component<IFormPageProps, IFormPageState> {
             });
     }
 
-    public componentWillUnmount()
-    {
-        console.log("FormPage unmount");
-        // unsubscribe if component is unmounted
-        this.subscription.unsubscribe();
-    }
-
     public onSelectStringClicked()
     {
         this.subscription.store.selectString.trigger(null);
@@ -60,10 +68,25 @@ export class FormPage extends React.Component<IFormPageProps, IFormPageState> {
 
     public render(): any
     {
-        return <div>
-            <button onClick={_ => this.onSelectStringClicked()}>Select a string</button>
-            <span>Selected string</span>
-            <span>{this.state.selectedString}</span>
+        return <div className="container-fluid">
+            <h2>Form with select</h2>
+            <p>
+                This page shows a form control in which you can select a value using another page.
+                The communicating pages feature is used here.
+            </p>
+            <label htmlFor="selectedTextInput">Selected String</label>
+            <div className="input-group">
+                <div className="input-group-prepend">
+                    <span className="input-group-text"
+                          onClick={_ => this.onSelectStringClicked()}>...</span>
+                </div>
+                <input type="text" className="form-control"
+                        id="selectedTextInput" aria-describedby="selectedTextHelp" placeholder="Select a string"
+                        value={this.state.selectedString} />
+            </div>
+            <small id="selectedTextHelp" className="form-text text-muted">
+                Click the tree dots to select a string from a different page.
+            </small>
         </div>;
     }
 }

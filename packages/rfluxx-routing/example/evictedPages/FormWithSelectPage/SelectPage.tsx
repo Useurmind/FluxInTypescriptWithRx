@@ -31,6 +31,7 @@ export class SelectPage extends React.Component<ISelectPageProps, ISelectPageSta
 
     public componentDidMount()
     {
+        // tslint:disable-next-line:no-console
         console.log("SelectPage did mount");
     }
 
@@ -50,6 +51,7 @@ export class SelectPage extends React.Component<ISelectPageProps, ISelectPageSta
 
     public componentWillUnmount()
     {
+        // tslint:disable-next-line:no-console
         console.log("SelectPage unmount");
         // unsubscribe if component is unmounted
         this.subscription.unsubscribe();
@@ -74,15 +76,45 @@ export class SelectPage extends React.Component<ISelectPageProps, ISelectPageSta
 
     public render(): any
     {
-        return <div>
-            <h1>Select a string '{this.props.caption}'</h1>
-            <span>Some context:</span>
-            <span>{this.state.contextInfo}</span>
+        return <div className="container-fluid">
+            <h1>Select a string</h1>
+            <p>
+                On this page you can select a string that will be handed back to the calling control.
+            </p>
 
-            <span>Select a string on this page (yeah its not selected :P):</span>
-            <input type="text" onChange={e => this.onSelectionChanged(e)}/>
-            <button onClick={e => this.onCancel()}>Cancel</button>
-            <button onClick={e => this.onConfirm()}>Confirm</button>
+            <form>
+                <div className="form-group">
+                    <label htmlFor="contextInfo">Some Context Info</label>
+                    <div className="input-group">
+                        <input type="text" className="form-control"
+                                disabled={true}
+                                id="contextInfo" aria-describedby="contextInfoHelp" placeholder="Context info"
+                                value={this.state.contextInfo} />
+                    </div>
+                    <small id="contextInfoHelp" className="form-text text-muted">
+                        Context info can be handed by the calling control to this page.
+                    </small>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="selectecTextInput">Selected text</label>
+                    <div className="input-group">
+                        <input type="text" className="form-control"
+                                id="selectecTextInput" aria-describedby="selectecTextInputHelp" placeholder="Select a text"
+                                value={this.state.selectedString}
+                                onChange={e => this.onSelectionChanged(e)} />
+                    </div>
+                    <small id="selectecTextInputHelp" className="form-text text-muted">
+                        Select a text to hand back to the calling control. Yeah its not selected, you got me.
+                    </small>
+                </div>
+
+                <div className="btn-toolbar" role="toolbar" >
+                        <button type="button" onClick={e => this.onCancel()} className="btn btn-secondary"
+                        style={{ marginRight: "5px" }}>Cancel</button>
+                        <button type="button" onClick={e => this.onConfirm()} className="btn btn-primary">Confirm</button>
+                </div>
+            </form>
         </div>;
     }
 }

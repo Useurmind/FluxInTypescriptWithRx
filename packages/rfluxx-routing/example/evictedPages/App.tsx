@@ -16,7 +16,6 @@ export interface IAppProps
 
 export interface IAppState
 {
-    currentSiteMapExpression: string;
 }
 
 export class App extends React.Component<IAppProps, IAppState> {
@@ -26,34 +25,38 @@ export class App extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = {
-            currentSiteMapExpression: ""
         };
-    }
-
-    public componentDidMount(): void
-    {
-        this.props.siteMapStore.subscribe(s =>
-        {
-            let currentSiteMapExpression = "";
-            if (s.siteMapNodeHit && s.siteMapNodeHit.siteMapNode)
-            {
-                currentSiteMapExpression = s.siteMapNodeHit.siteMapPath.map(x => x.caption).join(" > ");
-            }
-
-            this.setState({ currentSiteMapExpression });
-        });
     }
 
     public render(): any
     {
-        return <div>
-            <Breadcrumb siteMapStore={this.props.siteMapStore}
-                       renderPart={(sn: ISiteMapNode) => <span>... {sn.caption}</span>} /><br />
-            <RouterLink caption="home" path="/home" /><br />
-            <RouterLink caption="form with select" path="/form/with/select" /><br />
-            <span>Current route</span><br />
-            <span>{this.state.currentSiteMapExpression}</span><br />
-            <CurrentPage pageManagementStore={this.props.pageManagementStore} />
+        return <div className="container-fluid">
+            <div className="row">
+                <div className="col">
+                    <h1>Rfluxx Evicted Pages Example</h1>
+                    <Breadcrumb siteMapStore={this.props.siteMapStore} />
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col-auto">
+                    <ul className="nav flex-column">
+                        <li className="nav-item">
+                            <RouterLink caption="home" path="/home" className="nav-link" />
+                        </li>
+                        <li className="nav-item">
+                            <RouterLink caption="form with select" path="/form/with/select" className="nav-link" />
+                        </li>
+                    </ul>
+                </div>
+
+                <div className="col">
+
+                    <CurrentPage pageManagementStore={this.props.pageManagementStore}
+                                renderNoPage={() => <div className="container-fluid">
+                                404: No page found on this url!</div>} />
+                </div>
+            </div>
         </div>;
     }
 }

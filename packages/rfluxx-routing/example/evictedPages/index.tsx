@@ -9,6 +9,7 @@ import { App } from "./App";
 import { ContainerFactory } from "./ContainerFactory";
 import { FormPage } from "./FormWithSelectPage/FormPage";
 import { SelectPage } from "./FormWithSelectPage/SelectPage";
+import { HomePage } from "./HomePage";
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -21,7 +22,7 @@ es6.nothing;
 const siteMap: ISiteMapNode = {
     caption: "Home",
     routeExpression: "home",
-    render: p => <span>Home page</span>,
+    render: p => <HomePage />,
     children: [
         {
             caption: "Form with select page",
