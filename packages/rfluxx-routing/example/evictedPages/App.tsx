@@ -1,9 +1,12 @@
 import * as React from "react";
+import { IContainer } from "rfluxx";
 import * as Rx from "rxjs";
 
 import { Breadcrumb } from "../../src/Breadcrumb";
 import { CurrentPage } from "../../src/CurrentPage";
 import { CurrentSiteMapNode } from "../../src/CurrentSiteMapNode";
+import { OpenPageList } from "../../src/OpenPageList";
+import { withPageContext } from "../../src/PageContextProvider";
 import { IPageManagementStore } from "../../src/PageManagementStore";
 import { RouterLink } from "../../src/RouterLink";
 import { ISiteMapNode, ISiteMapStore } from "../../src/SiteMapStore";
@@ -47,6 +50,9 @@ export class App extends React.Component<IAppProps, IAppState> {
                         <li className="nav-item">
                             <RouterLink caption="form with select" path="/form/with/select" className="nav-link" />
                         </li>
+                        <li className="nav-item">
+                            <RouterLink caption="endless sequence" path="/endlessSequence/1" className="nav-link" />
+                        </li>
                     </ul>
                 </div>
 
@@ -55,6 +61,10 @@ export class App extends React.Component<IAppProps, IAppState> {
                     <CurrentPage pageManagementStore={this.props.pageManagementStore}
                                 renderNoPage={() => <div className="container-fluid">
                                 404: No page found on this url!</div>} />
+                </div>
+
+                <div className="col">
+                    <OpenPageList pageManagementStore={this.props.pageManagementStore}/>
                 </div>
             </div>
         </div>;

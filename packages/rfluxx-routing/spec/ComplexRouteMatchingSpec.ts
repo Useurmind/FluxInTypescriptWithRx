@@ -22,6 +22,19 @@ describe("ComplexRouteMatching", () =>
         expect(result.parameters.size).toBe(0);
     });
 
+    it("simple path with one parameters is matched", () =>
+    {
+        const routeMatching = new ComplexRouteMatching();
+
+        const result = routeMatching.matchUrl(
+            "/path/value1/",
+             "/path/{parameter1}");
+
+        expect(result.isMatch).toBe(true);
+        expect(result.parameters.size).toBe(1);
+        expect(result.parameters.get("parameter1")).toBe("value1");
+    });
+
     it("simple path with two parameters is matched", () =>
     {
         const routeMatching = new ComplexRouteMatching();

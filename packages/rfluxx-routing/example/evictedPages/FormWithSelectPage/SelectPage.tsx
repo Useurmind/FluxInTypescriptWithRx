@@ -100,7 +100,8 @@ export class SelectPage extends React.Component<ISelectPageProps, ISelectPageSta
                     <label htmlFor="selectecTextInput">Selected text</label>
                     <div className="input-group">
                         <input type="text" className="form-control"
-                                id="selectecTextInput" aria-describedby="selectecTextInputHelp" placeholder="Select a text"
+                                id="selectecTextInput" aria-describedby="selectecTextInputHelp"
+                                placeholder="Select a text"
                                 value={this.state.selectedString}
                                 onChange={e => this.onSelectionChanged(e)} />
                     </div>
@@ -112,7 +113,9 @@ export class SelectPage extends React.Component<ISelectPageProps, ISelectPageSta
                 <div className="btn-toolbar" role="toolbar" >
                         <button type="button" onClick={e => this.onCancel()} className="btn btn-secondary"
                         style={{ marginRight: "5px" }}>Cancel</button>
-                        <button type="button" onClick={e => this.onConfirm()} className="btn btn-primary">Confirm</button>
+                        <button type="button" onClick={e => this.onConfirm()} className="btn btn-primary">
+                            Confirm
+                        </button>
                 </div>
             </form>
         </div>;

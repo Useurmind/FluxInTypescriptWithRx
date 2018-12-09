@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as Rx from "rxjs";
 
+import { RouterLink } from "./RouterLink";
 import { ISiteMapNode, ISiteMapStore } from "./SiteMapStore";
-import { RouterLink } from './RouterLink';
 
 /**
  * Props for { @see Breadcrumb }.
@@ -98,7 +98,12 @@ export class Breadcrumb extends React.Component<IBreadcrumbProps, IBreadcrumbSta
         return <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
             {
+                this.state.siteMapPath.length > 0 &&
                 this.state.siteMapPath.map((sn, index) => renderPart(sn, index === (this.state.siteMapPath.length - 1)))
+            }
+            {
+                this.state.siteMapPath.length === 0 &&
+                "404: not found"
             }
             </ol>
         </nav>;

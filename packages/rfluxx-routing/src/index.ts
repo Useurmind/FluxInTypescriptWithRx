@@ -2,9 +2,11 @@ import { IGlobalStores, IPageContainerFactory } from "./IPageContainerFactory";
 import { PageManagementStore } from "./PageManagementStore";
 import { NoPageStateEvictions } from "./Pages/NoPageStateEvictions";
 import { IPathAndSearchPageIdOptions, PathAndSearchPageId } from "./Pages/PathAndSearchPageId";
+import { ComplexRouteMatching } from "./RouteMatching/ComplexRouteMatching";
 import { RegexRouteMatching } from "./RouteMatching/RegexRouteMatching";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./RouterStore";
 import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "./SiteMapStore";
+import { LruPageStateEvictions } from './Pages/LruPageStateEvictions';
 
 /**
  * Options for the { @see init } function.
@@ -27,6 +29,12 @@ export interface IRfluxxOptions
      * Options to configure the page id computation.
      */
     pageIdOptions?: IPathAndSearchPageIdOptions;
+
+    /**
+     * If this number is specified the app will try to keep
+     * only the target number of pages open and close all other pages.
+     */
+    targetNumberOpenPages?: number;
 }
 
 /**
@@ -37,13 +45,18 @@ export function init(options: IRfluxxOptions)
     : IGlobalStores
 {
     const pageIdAlgorithm = new PathAndSearchPageId(options.pageIdOptions);
-    const pageEvictionStrategy = new NoPageStateEvictions();
+    const pageEvictionStrategy = options.targetNumberOpenPages
+                                 ? new LruPageStateEvictions({
+                                     pageIdAlgorithm,
+                                     targetNumberPagesInCache: options.targetNumberOpenPages
+                                    })
+                                 : new NoPageStateEvictions();
     const routes = computeSiteMapRoutesAndSetAbsoluteRouteExpressions(options.siteMap);
 
     configureRouterStore({
         mode: RouterMode.History,
         routes,
-        routeMatchStrategy: new RegexRouteMatching()
+        routeMatchStrategy: new ComplexRouteMatching()
     });
 
     const siteMapStore = new SiteMapStore({

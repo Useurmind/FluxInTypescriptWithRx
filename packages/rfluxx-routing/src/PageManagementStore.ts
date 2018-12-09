@@ -51,6 +51,11 @@ export interface IPageManagementStoreState
      * This is the page that is currently active.
      */
     currentPage: IPageData;
+
+    /**
+     * A list of pages that do have state at the moment.
+     */
+    openPages: IPageData[];
 }
 
 /**
@@ -146,7 +151,8 @@ export class PageManagementStore
     {
         super({
             initialState: {
-                currentPage: null
+                currentPage: null,
+                openPages: []
             }
         });
 
@@ -209,6 +215,11 @@ export class PageManagementStore
 
         this.options.pageEvictionStrategy.onPageClosed(pageId);
         this.pageMap.delete(pageId);
+
+        this.setState({
+            ...this.state,
+            openPages: Array.from(this.pageMap.values())
+        });
     }
 
     private onOpenPage(pageRequest: IPageRequest): void
@@ -231,7 +242,10 @@ export class PageManagementStore
     {
         if (siteMapNodeHit === null)
         {
-            this.setState({ currentPage: null });
+            this.setState({
+                ...this.state,
+                 currentPage: null
+            });
             return;
         }
 
@@ -248,9 +262,11 @@ export class PageManagementStore
             this.pendingRequests.delete(siteMapNodeHit.url.href);
         }
 
+        let openPages = this.state.openPages;
         if (!hasPageState)
         {
             this.pageMap.set(pageId, {
+                pageId,
                 siteMapNode: siteMapNodeHit.siteMapNode,
                 container: this.options.containerFactory.createContainer(
                     siteMapNodeHit.url,
@@ -268,6 +284,7 @@ export class PageManagementStore
                 pageRequest: pendingRequest,
                 openRequests: new Map()
             });
+            openPages = Array.from(this.pageMap.values());
         }
 
         const page = this.getPageOrThrow(pageId);
@@ -280,7 +297,11 @@ export class PageManagementStore
             this.pageMap.delete(evictedPageId);
         }
 
-        this.setState({ currentPage: page });
+        this.setState({
+            ...this.state,
+            currentPage: page,
+            openPages
+        });
     }
 
     private getPageOrThrow(pageId: string): IPageData

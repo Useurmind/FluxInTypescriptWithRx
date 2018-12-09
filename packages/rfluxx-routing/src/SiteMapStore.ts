@@ -166,6 +166,10 @@ export class SiteMapStore extends Store<ISiteMapStoreState> implements ISiteMapS
     {
         if (!routeHit)
         {
+            this.setState({
+                ...this.state,
+                siteMapNodeHit: null
+            });
             return;
         }
 

@@ -74,17 +74,17 @@ export class FormPage extends React.Component<IFormPageProps, IFormPageState> {
                 This page shows a form control in which you can select a value using another page.
                 The communicating pages feature is used here.
             </p>
-            <label htmlFor="selectedTextInput">Selected String</label>
+            <label htmlFor="sequenceNumberInput">Selected String</label>
             <div className="input-group">
                 <div className="input-group-prepend">
                     <span className="input-group-text"
                           onClick={_ => this.onSelectStringClicked()}>...</span>
                 </div>
                 <input type="text" className="form-control"
-                        id="selectedTextInput" aria-describedby="selectedTextHelp" placeholder="Select a string"
+                        id="sequenceNumberInput" aria-describedby="sequenceNumberHelp" placeholder="Select a string"
                         value={this.state.selectedString} />
             </div>
-            <small id="selectedTextHelp" className="form-text text-muted">
+            <small id="sequenceNumberHelp" className="form-text text-muted">
                 Click the tree dots to select a string from a different page.
             </small>
         </div>;

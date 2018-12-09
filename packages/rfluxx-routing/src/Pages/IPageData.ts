@@ -9,6 +9,11 @@ import { ISiteMapNode } from "../SiteMapStore";
 export interface IPageData
 {
     /**
+     * The id of the page according to the page id algorithm.
+     */
+    pageId: string;
+
+    /**
      * The site map node implemented by this page.
      */
     siteMapNode: ISiteMapNode;

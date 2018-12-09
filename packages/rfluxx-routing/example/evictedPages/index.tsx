@@ -7,6 +7,7 @@ import { ISiteMapNode } from "../../src/SiteMapStore";
 
 import { App } from "./App";
 import { ContainerFactory } from "./ContainerFactory";
+import { EndlessSequencePage } from "./EndlessSequence/EndlessSequencePage";
 import { FormPage } from "./FormWithSelectPage/FormPage";
 import { SelectPage } from "./FormWithSelectPage/SelectPage";
 import { HomePage } from "./HomePage";
@@ -33,6 +34,11 @@ const siteMap: ISiteMapNode = {
             caption: "Select string",
             routeExpression: "/select/page",
             render: p => withPageContext(<SelectPage caption="Default"/>)
+        },
+        {
+            caption: "Endless sequence",
+            routeExpression: "/endlessSequence/{sequenceNumber}",
+            render: p => withPageContext(<EndlessSequencePage />)
         }
     ]
 };
@@ -41,13 +47,15 @@ const containerFactory = new ContainerFactory();
 
 const globalStores = RfluxxRouting.init({
     siteMap,
-    containerFactory
+    containerFactory,
+    targetNumberOpenPages: 5
 });
 
 document.addEventListener("DOMContentLoaded", event =>
 {
     const root = document.getElementById("root");
     ReactDom.render(
-        <App siteMapStore={globalStores.siteMapStore} pageManagementStore={globalStores.pageManagementStore} />,
+        <App siteMapStore={globalStores.siteMapStore}
+             pageManagementStore={globalStores.pageManagementStore} />,
         root);
 });

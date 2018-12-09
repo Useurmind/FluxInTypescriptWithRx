@@ -57,7 +57,9 @@ describe("LruPageStateEvictions", () =>
 
     for (const siteMapNodeHit of siteMapNodeHits)
     {
-        pageMap.set(pageIdAlg.getPageId(siteMapNodeHit.url), {
+        const pageId = pageIdAlg.getPageId(siteMapNodeHit.url);
+        pageMap.set(pageId, {
+            pageId,
             isInEditMode: false,
             openRequests: new Map(),
             siteMapNode: siteMapNodeHit.siteMapNode,
