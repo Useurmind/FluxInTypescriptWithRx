@@ -1,6 +1,6 @@
-import { IContainer, SimpleContainer } from "rfluxx";
+import { IContainer, SimpleContainer, registerStore, resolveStore } from "rfluxx";
 
-import { IGlobalStores, IPageContainerFactory, SimplePageContainerFactoryBase } from "../../src/IPageContainerFactory";
+import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoryBase } from "../../src/IPageContainerFactory";
 
 import { EndlessSequencePageStore } from "./EndlessSequence/EndlessSequencePageStore";
 import { FormPageStore } from "./FormWithSelectPage/FormPageStore";
@@ -10,17 +10,17 @@ export class ContainerFactory extends SimplePageContainerFactoryBase
 {
     protected registerStores(container: SimpleContainer, url: URL, routeParameters: Map<string, string>): void
     {
-        container.register("IFormPageStore", c => new FormPageStore({
+        registerStore(container, "IFormPageStore", (c, injOpt) => new FormPageStore(injOpt({
             pageStore: c.resolve("IPageStore")
-        }));
-        container.register("ISelectPageStore", c => new SelectPageStore({
+        })));
+        registerStore(container, "ISelectPageStore", (c, injOpt) => new SelectPageStore(injOpt({
             pageStore: c.resolve("IPageStore"),
             pageRequest: c.resolve("IPageRequest")
-        }));
+        })));
 
-        container.register("IEndlessSequencePageStore", c => new EndlessSequencePageStore({
+        registerStore(container, "IEndlessSequencePageStore", (c, injOpt) => new EndlessSequencePageStore(injOpt({
             pageStore: c.resolve("IPageStore"),
             sequenceNumber: Number.parseInt(routeParameters.get("sequenceNumber"))
-        }));
+        })));
     }
 }

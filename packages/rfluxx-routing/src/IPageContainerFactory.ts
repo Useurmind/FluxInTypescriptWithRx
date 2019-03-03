@@ -1,4 +1,4 @@
-import { IContainer, SimpleContainer } from "rfluxx";
+import { IContainer, registerStore, registerTimeTraveler, SimpleContainer, TimeTraveler } from "rfluxx";
 
 import { IPageCommunicationStore, IPageRequest } from "./PageCommunicationStore";
 import { IPageManagementStore } from "./PageManagementStore";
@@ -10,7 +10,7 @@ import { ISiteMapStore } from "./SiteMapStore";
  * Data object to hold the stores that are globally unique in the
  * routing library.
  */
-export interface IGlobalStores
+export interface IGlobalComponents
 {
     /**
      * The router store that watches the window location for changes.
@@ -50,16 +50,18 @@ export interface IPageContainerFactory
      * - IPageStore: The store that can be used by the page to get easy access to central services.
      * - IPageRequest: The request that lead to the page opening, optional can be null|undefined.
      * - PageUrl: The url (of type URL) that was called for the page to open.
+     * @param pageId The page id uniquely identifies the page for which the container is created (computed from the url)
      * @param url The url of the page for which the container is created.
      * @param routeParamters The parameters that were extracted from the route.
-     * @param globalStores The global stores provided by the framework.
+     * @param globalComponents The global stores provided by the framework.
      * @param pageRequest The request that leads to the page. Can be null for pages to which was just navigated.
      * @returns The new container.
      */
     createContainer(
+        pageId: string,
         url: URL,
         routeParameters: Map<string, string>,
-        globalStores: IGlobalStores,
+        globalComponents: IGlobalComponents,
         pageRequest?: IPageRequest)
         : IContainer;
 }
@@ -76,30 +78,36 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
      * @inheritDoc
      */
     public createContainer(
+        pageId: string,
         url: URL,
         routeParameters: Map<string, string>,
-        globalStores: IGlobalStores,
+        globalComponents: IGlobalComponents,
         pageRequest?: IPageRequest | null)
         : IContainer
     {
         const container = new SimpleContainer();
 
-        container.register("IRouterStore", c => globalStores.routerStore);
-        container.register("ISiteMapStore", c => globalStores.siteMapStore);
-        container.register("IPageManagementStore", c => globalStores.pageManagementStore);
-        container.register("IPageCommunicationStore", c => globalStores.pageCommunicationStore);
-        container.register("IPageStore", c => new PageStore({
+        registerTimeTraveler(container, true, pageId);
+
+        container.register("IRouterStore", c => globalComponents.routerStore);
+        container.register("ISiteMapStore", c => globalComponents.siteMapStore);
+        container.register("IPageManagementStore", c => globalComponents.pageManagementStore);
+        container.register("IPageCommunicationStore", c => globalComponents.pageCommunicationStore);
+
+        registerStore(container, "IPageStore", (c, injOpt) => new PageStore(injOpt({
             pageUrl: url,
             pageRequest,
-            pageCommunicationStore: globalStores.pageCommunicationStore,
-            pageManagementStore: globalStores.pageManagementStore,
-            routerStore: globalStores.routerStore
-        }));
+            pageCommunicationStore: globalComponents.pageCommunicationStore,
+            pageManagementStore: globalComponents.pageManagementStore,
+            routerStore: globalComponents.routerStore
+        })));
 
         container.register("IPageRequest", c => pageRequest);
         container.register("PageUrl", c => url);
 
         this.registerStores(container, url, routeParameters);
+
+        container.resolve<TimeTraveler>("TimeTraveler");
 
         return container;
     }

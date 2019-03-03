@@ -1,4 +1,4 @@
-import { IGlobalStores, IPageContainerFactory } from "./IPageContainerFactory";
+import { IGlobalComponents, IPageContainerFactory } from "./IPageContainerFactory";
 import { PageManagementStore } from "./PageManagementStore";
 import { NoPageStateEvictions } from "./Pages/NoPageStateEvictions";
 import { IPathAndSearchPageIdOptions, PathAndSearchPageId } from "./Pages/PathAndSearchPageId";
@@ -42,7 +42,7 @@ export interface IRfluxxOptions
  * @param options Options to configure rfluxx routing framework.
  */
 export function init(options: IRfluxxOptions)
-    : IGlobalStores
+    : IGlobalComponents
 {
     const pageIdAlgorithm = new PathAndSearchPageId(options.pageIdOptions);
     const pageEvictionStrategy = options.targetNumberOpenPages

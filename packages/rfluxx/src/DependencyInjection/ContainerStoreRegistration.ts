@@ -13,7 +13,7 @@ import { IObservableFetcher } from "../Fetch/IObservableFetcher";
 export function registerStore<TState>(
     containerBuilder: IContainerBuilder,
     typeName: string,
-    create: (c: IContainer, injectStoreOptions: (o: IInjectedStoreOptions) => any) => IStore<TState>,
+    create: (c: IContainer, injectStoreOptions: (o: any) => any) => IStore<TState>,
     key?: string): void
 {
     const storeKey = getStoreRegistrationKey(typeName, key);

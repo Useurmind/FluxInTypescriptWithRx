@@ -1,6 +1,6 @@
 import { IContainer, SimpleContainer } from "rfluxx";
 
-import { IGlobalStores, IPageContainerFactory, SimplePageContainerFactoryBase } from "../../src/IPageContainerFactory";
+import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoryBase } from "../../src/IPageContainerFactory";
 
 import { CounterStore } from "./CounterStore";
 

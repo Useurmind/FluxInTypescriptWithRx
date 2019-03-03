@@ -81,7 +81,7 @@ The page management needs to know how to create a container for your app if the 
 ```typescript
 import { IContainer, SimpleContainer } from "rfluxx";
 
-import { IGlobalStores, IPageContainerFactory, SimplePageContainerFactoyBase } from "rfluxx-routing/IPageContainerFactory";
+import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoyBase } from "rfluxx-routing/IPageContainerFactory";
 
 import { HomeStore } from "./stores/HomeStore";
 

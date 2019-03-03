@@ -269,6 +269,7 @@ export class PageManagementStore
                 pageId,
                 siteMapNode: siteMapNodeHit.siteMapNode,
                 container: this.options.containerFactory.createContainer(
+                    pageId,
                     siteMapNodeHit.url,
                     siteMapNodeHit.parameters,
                     {
