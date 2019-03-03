@@ -21,7 +21,7 @@ interface IInstancesForTypeName
  * We use this interface to make resolution of collection registrations
  * aware of multiple instance names.
  */
-interface IMultiResolver
+interface IResolveWithInstanceName
 {
     (container: IContainer, instanceName: string): any;
 }
@@ -31,15 +31,27 @@ interface IMultiResolver
  */
 export class SimpleContainer implements IContainer, IContainerBuilder
 {
-    private registrationMap: Map<string, IResolver | IMultiResolver[]> = new Map();
+    private registrationMap: Map<string, IResolveWithInstanceName | IResolveWithInstanceName[]> = new Map();
     private instanceMap: Map<string, IInstancesForTypeName> = new Map();
 
     /**
      * @inheritDoc
      */
-    public register(typeName: string, create: IResolver): void
+    public register(typeName: string|string[], create: IResolver): void
     {
-        this.registrationMap.set(typeName, create);
+        // we want singleton behaviour for multiple names here
+        const createSingleton = this.getSingletonCreator(create);
+
+        let typeNames: string[] = typeName as string[];
+        if (typeof typeName === "string")
+        {
+            typeNames = [typeName];
+        }
+
+        for (const name of typeNames)
+        {
+            this.registrationMap.set(name, (c: IContainer, instanceName?: string) => createSingleton(c, instanceName));
+        }
     }
 
     /**
@@ -49,6 +61,85 @@ export class SimpleContainer implements IContainer, IContainerBuilder
         : void
     {
         // we want singleton behaviour for multiple names here
+        const createSingleton = this.getSingletonCreator(create);
+
+        let collectionNames: string[] = collectionName as string[];
+        if (typeof collectionName === "string")
+        {
+            collectionNames = [collectionName];
+        }
+
+        collectionNames.forEach(name =>
+        {
+            if (!this.registrationMap.get(name))
+            {
+                this.registrationMap.set(name, []);
+            }
+            const resolvers = this.registrationMap.get(name) as IResolveWithInstanceName[];
+            resolvers.push(createSingleton);
+        });
+
+        if (typeName)
+        {
+            this.registrationMap.set(typeName, (c: IContainer, instanceName?: string) => createSingleton(c, undefined));
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public resolve<T>(typeName: string, instanceName?: string): T
+    {
+        let instancesPerTypeName = this.instanceMap.get(typeName);
+        if (!instancesPerTypeName)
+        {
+            instancesPerTypeName = {
+                defaultInstance: null,
+                namedInstances: new Map()
+            };
+            this.instanceMap.set(typeName, instancesPerTypeName);
+        }
+
+        let instance = instancesPerTypeName.defaultInstance;
+        if (instanceName)
+        {
+            instance = instancesPerTypeName.namedInstances.get(instanceName);
+        }
+
+        if (!instance)
+        {
+            const create = this.registrationMap.get(typeName);
+            if (!create)
+            {
+                throw new Error(`Could not find any registrations for typeName '${typeName}' in container`);
+            }
+
+            if (typeof create === "function")
+            {
+                // single create function
+                instance = create(this, instanceName);
+            }
+            else if (typeof create === "object")
+            {
+                // multiple create functions for a collection
+                instance = create.map(x => x(this, instanceName));
+            }
+
+            if (!instanceName)
+            {
+                instancesPerTypeName.defaultInstance = instance;
+            }
+            else
+            {
+                instancesPerTypeName.namedInstances.set(instanceName, instance);
+            }
+        }
+
+        return instance as T;
+    }
+
+    private getSingletonCreator(create: IResolver)
+    {
         const createSingleton = ((() =>
         {
             let defaultInstance: any = null;
@@ -85,78 +176,6 @@ export class SimpleContainer implements IContainer, IContainerBuilder
             return createSingletonInner;
         })());
 
-        let collectionNames: string[] = collectionName as string[];
-        if (typeof collectionName === "string")
-        {
-            collectionNames = [collectionName];
-        }
-
-        collectionNames.forEach(name =>
-        {
-            if (!this.registrationMap.get(name))
-            {
-                this.registrationMap.set(name, []);
-            }
-            const resolvers = this.registrationMap.get(name) as IMultiResolver[];
-            resolvers.push(createSingleton);
-        });
-
-        if (typeName)
-        {
-            this.registrationMap.set(typeName, (c: IContainer) => createSingleton(c, undefined));
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public resolve<T>(typeName: string, instanceName?: string): T
-    {
-        let instancesPerTypeName = this.instanceMap.get(typeName);
-        if (!instancesPerTypeName)
-        {
-            instancesPerTypeName = {
-                defaultInstance: null,
-                namedInstances: new Map()
-            };
-            this.instanceMap.set(typeName, instancesPerTypeName);
-        }
-
-        let instance = instancesPerTypeName.defaultInstance;
-        if (instanceName)
-        {
-            instance = instancesPerTypeName.namedInstances.get(instanceName);
-        }
-
-        if (!instance)
-        {
-            const create = this.registrationMap.get(typeName);
-            if (!create)
-            {
-                throw new Error(`Could not find any registrations for typeName '${typeName}' in container`);
-            }
-
-            if (typeof create === "function")
-            {
-                // single create function
-                instance = create(this);
-            }
-            else if (typeof create === "object")
-            {
-                // multiple create functions for a collection
-                instance = create.map(x => x(this, instanceName));
-            }
-
-            if (!instanceName)
-            {
-                instancesPerTypeName.defaultInstance = instance;
-            }
-            else
-            {
-                instancesPerTypeName.namedInstances.set(instanceName, instance);
-            }
-        }
-
-        return instance as T;
+        return createSingleton;
     }
 }

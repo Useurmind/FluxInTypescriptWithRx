@@ -1,15 +1,22 @@
 import * as Flux from "../../src";
+import { IInjectedStoreOptions } from "../../src";
 import { IActionFactory } from "../../src/ActionFactory/IActionFactory";
 import { MiddlewareActionFactory } from "../../src/ActionFactory/MiddlewareActionFactory";
+import { registerStore } from "../../src/DependencyInjection/ContainerStoreRegistration";
 import { SimpleContainer } from "../../src/DependencyInjection/SimpleContainer";
 import { ConsoleLoggingMiddleware } from "../../src/Middleware";
 import { ActionEventLog } from "../../src/Middleware/ActionEventLog/ActionEventLog";
 import { ActionEventLogMiddleware } from "../../src/Middleware/ActionEventLog/ActionEventLogMiddleware";
 import { TimeTraveler } from "../../src/Middleware/ActionEventLog/TimeTraveler";
-import { RegisterTimeTraveler } from "../../src/Middleware/ActionEventLog/TimeTravelerFactory";
+import { registerTimeTraveler } from "../../src/Middleware/ActionEventLog/TimeTravelerFactory";
 
 export interface IPageStoreState {
     counter: number;
+}
+
+export interface IPageStoreOptions extends IInjectedStoreOptions
+{
+
 }
 
 /**
@@ -23,13 +30,13 @@ export interface IPageStore extends Flux.IStore<IPageStoreState> {
 class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
     public readonly increment: Flux.IAction<number>;
 
-    constructor(actionFactory: IActionFactory)
+    constructor(options: IPageStoreOptions)
     {
         super({
+            ...options,
             initialState: {
                 counter: 0
-            },
-            actionFactory
+            }
         });
 
         // create an action that is observable by the store and subscribe it
@@ -41,9 +48,6 @@ class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
                     ...this.state,
                     counter: this.state.counter + increment
                 }));
-            },
-            {
-                name: "increment"
             });
     }
 }
@@ -51,11 +55,8 @@ class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
 const container = new SimpleContainer();
 
 container.registerInCollection("IActionMiddleware[]", () => new ConsoleLoggingMiddleware());
-RegisterTimeTraveler(container, true);
-container.registerInCollection(
-    "IResetMyState[]",
-    c => new PageStore(c.resolve<IActionFactory>("IActionFactory")),
-    "IPageStore");
+registerTimeTraveler(container, true, "MiddlewareDemo");
+registerStore(container, "IPageStore", (c, injectOptions) => new PageStore(injectOptions({})));
 
 // publish an instance of this store
 // you can do this in a nicer way by using a container

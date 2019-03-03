@@ -3,7 +3,8 @@ import { IActionMetadata, IObservableAction } from "../..";
 /**
  * Interface for events that describe an action event fully.
  */
-export interface IActionEvent {
+export interface IActionEvent
+{
     /**
      * This is the action on which the event was observed.
      */

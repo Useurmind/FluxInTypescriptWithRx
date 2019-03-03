@@ -1,5 +1,6 @@
 import { IObservableAction } from "../..";
 
+import { ActionEventLogPreserver } from "./ActionEventLogPreserver";
 import { IActionEvent } from "./IActionEvent";
 import { IActionEventLog } from "./IActionEventLog";
 
@@ -9,6 +10,14 @@ import { IActionEventLog } from "./IActionEventLog";
 export class ActionEventLog implements IActionEventLog
 {
     private actionEventLog: IActionEvent[] = [];
+
+    constructor(private actionEventLogPreserver?: ActionEventLogPreserver)
+    {
+        if (this.actionEventLogPreserver)
+        {
+            this.actionEventLog = this.actionEventLogPreserver.getPersistedActionEvents();
+        }
+    }
 
     /**
      * { @inheritdoc }
@@ -28,6 +37,11 @@ export class ActionEventLog implements IActionEventLog
         actionEvent.lastTime = actionEvent.firstTime;
         actionEvent.isActive = true;
         this.actionEventLog.push(actionEvent);
+
+        if (this.actionEventLogPreserver)
+        {
+            this.actionEventLogPreserver.persistActionEvent(actionEvent);
+        }
     }
 
     /**
@@ -42,5 +56,10 @@ export class ActionEventLog implements IActionEventLog
         }
 
         actionEvent.isActive = isActive;
+
+        if (this.actionEventLogPreserver)
+        {
+            this.actionEventLogPreserver.persistActionEvent(actionEvent);
+        }
     }
 }

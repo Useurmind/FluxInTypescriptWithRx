@@ -54,6 +54,6 @@ module.exports = {
     output: {
         libraryTarget: "umd",
         filename: 'rfluxx.[name].bundle.js',
-        path: path.resolve(__dirname, 'example/dist')
+        path: path.resolve(__dirname, 'example')
     }
 };

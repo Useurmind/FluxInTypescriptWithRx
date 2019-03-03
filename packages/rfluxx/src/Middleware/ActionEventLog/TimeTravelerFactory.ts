@@ -1,11 +1,16 @@
 import { ConsoleLoggingMiddleware, IActionMiddleware } from "..";
 import { IAction, IActionFactory, MiddlewareActionFactory } from "../..";
+import { DefaultActionFactory } from "../../ActionFactory/DefaultActionFactory";
+import { IActionRegistry } from "../../ActionFactory/IActionRegistry";
+import { MapActionRegistry } from "../../ActionFactory/MapActionRegistry";
 import { IContainer } from "../../DependencyInjection/IContainer";
 import { IContainerBuilder } from "../../DependencyInjection/IContainerBuilder";
+import { ObservableFetcher } from "../../Fetch/ObservableFetcher";
 import { IResetMyState } from "../../IResetMyState";
 
 import { ActionEventLog } from "./ActionEventLog";
 import { ActionEventLogMiddleware } from "./ActionEventLogMiddleware";
+import { ActionEventLogPreserver } from "./ActionEventLogPreserver";
 import { IActionEventLog } from "./IActionEventLog";
 import { INeedToKnowAboutReplay } from "./INeedToKnowAboutReplay";
 import { INeedToKnowIfIAmInThePast } from "./INeedToKnowIfIAmInThePast";
@@ -27,15 +32,35 @@ import { TimeTraveler } from "./TimeTraveler";
  * @param registerWithWindow Should the event log and time traveler be put into the window itself as
  * window.timeTraveler and window.eventLog.
  */
-export function RegisterTimeTraveler(containerBuilder: IContainerBuilder, registerWithWindow?: boolean): void
+export function registerTimeTraveler(
+    containerBuilder: IContainerBuilder,
+    registerWithWindow?: boolean,
+    actionEventLogStorageKey?: string): void
 {
-    containerBuilder.register("IActionEventLog", c => new ActionEventLog());
+    containerBuilder.register("IActionRegistry", c => new MapActionRegistry());
+    containerBuilder.register(
+        ["DefaultActionFactory", "IActionFactory"],
+        c => new DefaultActionFactory(
+                c.resolve<IActionMiddleware[]>("IActionMiddleware[]"),
+                c.resolve<IActionRegistry>("IActionRegistry")));
+
+    containerBuilder.register("IObservableFetcher", c => new ObservableFetcher());
+
+    if (actionEventLogStorageKey)
+    {
+        containerBuilder.register(
+            "ActionEventLogPreserver",
+            c => new ActionEventLogPreserver(actionEventLogStorageKey));
+    }
+
+    containerBuilder.register(
+        "IActionEventLog",
+        c => new ActionEventLog(c.resolve<ActionEventLogPreserver>("ActionEventLogPreserver")));
+
     containerBuilder.registerInCollection(
         ["IActionMiddleware[]", "INeedToKnowAboutReplay[]", "INeedToKnowIfIAmInThePast[]"],
         c => new ActionEventLogMiddleware(c.resolve<IActionEventLog>("IActionEventLog")));
-    containerBuilder.register(
-        "IActionFactory",
-        c => new MiddlewareActionFactory(c.resolve<IActionMiddleware[]>("IActionMiddleware[]")));
+
     containerBuilder.register("TimeTraveler", c =>
     {
         const eventLog = c.resolve<IActionEventLog>("IActionEventLog");
@@ -44,7 +69,7 @@ export function RegisterTimeTraveler(containerBuilder: IContainerBuilder, regist
             () => c.resolve<INeedToKnowAboutReplay[]>("INeedToKnowAboutReplay[]"),
             () => c.resolve<IResetMyState[]>("IResetMyState[]"),
             () => c.resolve<INeedToKnowIfIAmInThePast[]>("INeedToKnowIfIAmInThePast[]"),
-            null
+            c.resolve<IActionRegistry>("IActionRegistry")
         );
 
         if (registerWithWindow)

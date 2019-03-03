@@ -18,10 +18,10 @@ export interface IContainerBuilder
 {
     /**
      * Register a type to be constructed (assumes singleton registration).
-     * @param typeName The name of the type to register.
+     * @param typeName The name of the (multiple) type(s) to register the component under.
      * @param create A function that creates the instance with the help of the container.
      */
-    register(typeName: string, create: IResolver): void;
+    register(typeName: string|string[], create: IResolver): void;
 
     /**
      * Register a type to be constructed and put into a collection with other types of the same name.

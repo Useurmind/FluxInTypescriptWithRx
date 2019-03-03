@@ -44,6 +44,33 @@ describe("SimpleContainer", () =>
         expect(result3).toBe(result4);
     });
 
+    it("register and resolve with multiple type names returns the same object per instance name", () =>
+    {
+        const container = new SimpleContainer();
+        container.register([registrationKey1, registrationKey2], c => ({ a: 1 }));
+
+        const result1 = container.resolve(registrationKey1);
+        const result2 = container.resolve(registrationKey1, "instance1");
+        const result3 = container.resolve(registrationKey1, "instance2");
+        const result4 = container.resolve(registrationKey1, "instance2");
+
+        const result12 = container.resolve(registrationKey2);
+        const result22 = container.resolve(registrationKey2, "instance1");
+        const result32 = container.resolve(registrationKey2, "instance2");
+        const result42 = container.resolve(registrationKey2, "instance2");
+
+        expect(result1).not.toBe(result2);
+        expect(result1).not.toBe(result3);
+        expect(result2).not.toBe(result3);
+        expect(result1).not.toBe(result4);
+        expect(result3).toBe(result4);
+
+        expect(result12).toBe(result1);
+        expect(result22).toBe(result2);
+        expect(result32).toBe(result3);
+        expect(result42).toBe(result4);
+    });
+
     it("register collection and resolve with instance names returns the same collection per name", () =>
     {
         const container = new SimpleContainer();

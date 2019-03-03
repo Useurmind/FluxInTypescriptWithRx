@@ -4,7 +4,12 @@
 export interface IActionMetadata
 {
     /**
-     * Name of the action.
+     * Name of the action (usually unique inside a store).
      */
-    name: string;
+    name?: string;
+
+    /**
+     * A unique full path of the action (unique per page).
+     */
+    fullPath?: string;
 }

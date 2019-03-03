@@ -1,4 +1,5 @@
 import { IActionMetadata, IObservableAction } from "../..";
+import { IActionRegistry } from "../../ActionFactory/IActionRegistry";
 import { IResetMyState } from "../../IResetMyState";
 
 import { ActionEventLogMiddleware } from "./ActionEventLogMiddleware";
@@ -22,6 +23,8 @@ export class TimeTraveler
      */
     private hasTraveledToPast: boolean;
 
+    private resettableStates: IResetMyState[];
+
     /**
      * Create an instance of this class.
      * @param eventLog The event log that contains all action events.
@@ -35,11 +38,15 @@ export class TimeTraveler
         private getReplaySubscribers: () => INeedToKnowAboutReplay[],
         private getResetStates: () => IResetMyState[],
         private getPastSubsribers: () => INeedToKnowIfIAmInThePast[],
-        private getAction: (actionMetadata: IActionMetadata) => IObservableAction<any>
+        private actionRegistry: IActionRegistry
     )
     {
         this.hasTraveledToPast = false;
         this.getPastSubsribers().forEach(subscriber => subscriber.setHasTraveledToPast(this.hasTraveledToPast));
+
+        this.resettableStates = this.getResetStates();
+
+        this.travelTo(this.eventLog.actionEvents.length);
     }
 
     /**
@@ -53,7 +60,7 @@ export class TimeTraveler
         {
             replaySubscribers.forEach(s => s.noteReplayStarted());
 
-            this.getResetStates().forEach(resettableState =>
+            this.resettableStates.forEach(resettableState =>
             {
                 resettableState.resetState();
             });
@@ -63,7 +70,12 @@ export class TimeTraveler
             {
                 if (actionEvent.isActive)
                 {
-                    const action = actionEvent.action ? actionEvent.action : this.getAction(actionEvent.actionMetaData);
+                    if (!actionEvent.action)
+                    {
+                        actionEvent.action = this.actionRegistry.getAction(actionEvent.actionMetaData);
+                    }
+
+                    const action = actionEvent.action;
 
                     action.trigger(actionEvent.actionEventData);
                 }

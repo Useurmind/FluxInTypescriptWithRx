@@ -50,6 +50,10 @@ export interface IStoreOptions<TState> extends IInjectedStoreOptions
  */
 export abstract class Store<TState> implements IStore<TState>
 {
+    /**
+     * In case not metadata is given for the actions we just number them.
+     */
+    private currentActionNameIndex: number = 0;
 
     /**
      * Get the state of this store.
@@ -157,6 +161,17 @@ export abstract class Store<TState> implements IStore<TState>
      */
     protected createAction<TActionEvent>(actionMetadata?: IActionMetadata): IObservableAction<TActionEvent>
     {
+        if (!actionMetadata)
+        {
+            actionMetadata = {};
+        }
+
+        if (!actionMetadata.name)
+        {
+            actionMetadata.name = `Action${this.currentActionNameIndex}`;
+            this.currentActionNameIndex++;
+        }
+
         return this.storeOptions.actionFactory.create<TActionEvent>(actionMetadata);
     }
 
