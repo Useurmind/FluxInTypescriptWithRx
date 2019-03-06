@@ -89,10 +89,21 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
 
         registerTimeTraveler(container, true, pageId);
 
-        container.register("IRouterStore", c => globalComponents.routerStore);
+        container.registerInCollection(
+            "INeedToKnowAboutReplay[]",
+            c => globalComponents.routerStore,
+            "IRouterStore");
         container.register("ISiteMapStore", c => globalComponents.siteMapStore);
-        container.register("IPageManagementStore", c => globalComponents.pageManagementStore);
-        container.register("IPageCommunicationStore", c => globalComponents.pageCommunicationStore);
+
+        container.registerInCollection(
+            "INeedToKnowAboutReplay[]",
+            c => globalComponents.pageManagementStore,
+            "IPageManagementStore");
+
+        container.registerInCollection(
+            "INeedToKnowAboutReplay[]",
+            c => globalComponents.pageCommunicationStore,
+            "IPageCommunicationStore");
 
         registerStore(container, "IPageStore", (c, injOpt) => new PageStore(injOpt({
             pageUrl: url,

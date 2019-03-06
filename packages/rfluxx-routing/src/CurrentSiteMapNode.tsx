@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as Rx from "rxjs";
+import { Subscription } from "rxjs/Subscription";
 
 import { SiteMapNode } from "./SiteMapNode";
 import { ISiteMapNode, ISiteMapStore } from "./SiteMapStore";
@@ -36,7 +36,7 @@ export interface ICurrentSiteMapNodeState
  */
 export class CurrentSiteMapNode extends React.Component<ICurrentSiteMapNodeProps, ICurrentSiteMapNodeState>
 {
-    private subscription: Rx.Subscription;
+    private subscription: Subscription;
 
     constructor(props: ICurrentSiteMapNodeProps)
     {

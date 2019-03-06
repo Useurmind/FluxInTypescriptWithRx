@@ -1,4 +1,4 @@
-import { IAction, IStore, Store } from "rfluxx";
+import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
 import { IPageRequest } from "../../../src/PageCommunicationStore";
 import { IPageStore } from "../../../src/PageStore";
@@ -9,7 +9,7 @@ export interface ISelectPageStoreState
     selectedString: string;
 }
 
-export interface ISelectPageStoreOptions
+export interface ISelectPageStoreOptions extends IInjectedStoreOptions
 {
     pageRequest: IPageRequest;
     pageStore: IPageStore;
@@ -34,6 +34,7 @@ export class SelectPageStore extends Store<ISelectPageStoreState> implements ISe
     public constructor(private options: ISelectPageStoreOptions)
     {
         super({
+            ...options,
             initialState: {
                 contextInfo: options.pageRequest.data as string,
                 selectedString: ""

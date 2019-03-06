@@ -48,7 +48,10 @@ module.exports = {
     ],
     devServer: {
         contentBase: path.resolve(__dirname, 'example'),
-        hot: true
+        hot: true,
+        historyApiFallback: {
+            index: "evictedPages/index.html"
+        }
     },
     devtool: 'inline-source-map',
     mode: "development",

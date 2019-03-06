@@ -1,5 +1,5 @@
 import * as Rfluxx from "rfluxx";
-import { IAction, IInjectedStoreOptions } from "rfluxx";
+import { applyMixins, IAction, IActionEventLogPreserver, IInjectedStoreOptions, NeedToKnowAboutReplayMixin } from "rfluxx";
 
 import { IPageContainerFactory } from "./IPageContainerFactory";
 import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore } from "./PageCommunicationStore";
@@ -113,8 +113,23 @@ export interface IPageManagementStore extends Rfluxx.IStore<IPageManagementStore
  */
 export class PageManagementStore
     extends Rfluxx.Store<IPageManagementStoreState>
-    implements IPageManagementStore
+    implements IPageManagementStore, NeedToKnowAboutReplayMixin
 {
+    /**
+     * @inheritDoc
+     */
+    public isReplaying: boolean = false;
+
+    /**
+     * @inheritDoc
+     */
+    public noteReplayStarted: () => void;
+
+    /**
+     * @inheritDoc
+     */
+    public noteReplayEnded: () => void;
+
     /**
      * @inheritDoc
      */
@@ -179,6 +194,11 @@ export class PageManagementStore
 
     private onSetEditMode(params: ISetEditModeArguments): void
     {
+        if (this.isReplaying)
+        {
+            return;
+        }
+
         // setting the edit mode should block the page management store
         // from deleting the state of the page
         const pageId = this.options.pageIdAlgorithm.getPageId(params.pageUrl);
@@ -188,6 +208,11 @@ export class PageManagementStore
 
     private onClosePage(pageUrl: URL): void
     {
+        if (this.isReplaying)
+        {
+            return;
+        }
+
         // when closing a page we just delete its state here
         // closing a page also ignores if it is in edit mode
         // TODO: allow to show a dialog to the user here
@@ -213,8 +238,7 @@ export class PageManagementStore
             }
         }
 
-        this.options.pageEvictionStrategy.onPageClosed(pageId);
-        this.pageMap.delete(pageId);
+        this.evictPage(page);
 
         this.setState({
             ...this.state,
@@ -224,6 +248,11 @@ export class PageManagementStore
 
     private onOpenPage(pageRequest: IPageRequest): void
     {
+        if (this.isReplaying)
+        {
+            return;
+        }
+
         // save a pending request and route to page
         this.pendingRequests.set(pageRequest.target.href, pageRequest);
 
@@ -240,6 +269,11 @@ export class PageManagementStore
 
     private onSiteMapNodeHit(siteMapNodeHit: ISiteMapNodeHit): void
     {
+        if (this.isReplaying)
+        {
+            return;
+        }
+
         if (siteMapNodeHit === null)
         {
             this.setState({
@@ -265,10 +299,16 @@ export class PageManagementStore
         let openPages = this.state.openPages;
         if (!hasPageState)
         {
+            // when the sitemap node specifies an own container factory we
+            // will use it instead of the central one
+            const containerFactory = siteMapNodeHit.siteMapNode.containerFactory
+                                        ? siteMapNodeHit.siteMapNode.containerFactory
+                                        : this.options.containerFactory;
+
             this.pageMap.set(pageId, {
                 pageId,
                 siteMapNode: siteMapNodeHit.siteMapNode,
-                container: this.options.containerFactory.createContainer(
+                container: containerFactory.createContainer(
                     pageId,
                     siteMapNodeHit.url,
                     siteMapNodeHit.parameters,
@@ -295,7 +335,8 @@ export class PageManagementStore
                                  .getEvictionsOnSiteMapNodeHit(siteMapNodeHit, this.pageMap);
         for (const evictedPageId of evictedPages)
         {
-            this.pageMap.delete(evictedPageId);
+            const evictedPage = this.getPageOrThrow(evictedPageId);
+            this.evictPage(evictedPage);
         }
 
         this.setState({
@@ -315,4 +356,15 @@ export class PageManagementStore
 
         return page;
     }
+
+    private evictPage(page: IPageData): void
+    {
+        const eventLogPreserver = page.container.resolve<IActionEventLogPreserver>("IActionEventLogPreserver");
+        eventLogPreserver.clearPersistedEvents();
+
+        this.options.pageEvictionStrategy.onPageClosed(page.pageId);
+        this.pageMap.delete(page.pageId);
+    }
 }
+
+applyMixins(PageManagementStore, [NeedToKnowAboutReplayMixin]);

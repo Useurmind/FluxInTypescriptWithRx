@@ -1,4 +1,6 @@
-import * as Rx from "rxjs/Rx";
+import { Observable } from "rxjs/Observable";
+import { Subject } from "rxjs/Subject";
+import { Subscription } from "rxjs/Subscription";
 
 import { IAction } from "./IAction";
 import { IObservableAction } from "./IObservableAction";
@@ -8,17 +10,17 @@ import { IObservableAction } from "./IObservableAction";
  */
 export class Action<TActionEvent> implements IObservableAction<TActionEvent>
 {
-    private subject: Rx.Subject<TActionEvent>;
+    private subject: Subject<TActionEvent>;
 
     constructor()
     {
-        this.subject = new Rx.Subject<TActionEvent>();
+        this.subject = new Subject<TActionEvent>();
     }
 
     /**
      * {@inheritdoc }
      */
-    public observe(): Rx.Observable<TActionEvent>
+    public observe(): Observable<TActionEvent>
     {
         return this.subject;
     }
@@ -26,7 +28,7 @@ export class Action<TActionEvent> implements IObservableAction<TActionEvent>
     /**
      * {@inheritdoc }
      */
-    public subscribe(next: (actionEvent: TActionEvent) => void): Rx.Subscription
+    public subscribe(next: (actionEvent: TActionEvent) => void): Subscription
     {
         return this.observe().subscribe(next);
     }

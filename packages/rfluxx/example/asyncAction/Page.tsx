@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Rx from "rxjs";
 
 import { AsyncAction } from "./AsyncAction";
 import { explicitAsyncActionStore } from "./ExplicitAsyncActionStore";

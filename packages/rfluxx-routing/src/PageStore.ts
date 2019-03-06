@@ -1,4 +1,4 @@
-import * as Rx from "rxjs";
+import { Observable } from "rxjs/Observable";
 
 import * as Rfluxx from "rfluxx";
 import { IAction, IInjectedStoreOptions } from "rfluxx";
@@ -105,7 +105,7 @@ export interface IPageStore extends Rfluxx.IStore<IPageStoreState>
      *          In case of cancelation the only complete handler is invoked, no response is returned.
      *          In case of error a response is returned in the error handler.
      */
-    requestPageWithResult(urlFragment: string, data: any): Rx.Observable<IPageResponse>;
+    requestPageWithResult(urlFragment: string, data: any): Observable<IPageResponse>;
 }
 
 /**
@@ -141,6 +141,7 @@ export class PageStore
     constructor(private options: IPageStoreOptions)
     {
         super({
+            ...options,
             initialState: {
                 pageUrl: options.pageUrl
             }
@@ -163,7 +164,7 @@ export class PageStore
     /**
      * @inheritDoc
      */
-    public requestPageWithResult(urlFragment: string, data: any): Rx.Observable<IPageResponse>
+    public requestPageWithResult(urlFragment: string, data: any): Observable<IPageResponse>
     {
         return this.options.pageCommunicationStore.requestPageWithResult(this.options.pageUrl, urlFragment, data);
     }

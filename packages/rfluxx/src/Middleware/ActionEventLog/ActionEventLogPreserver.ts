@@ -1,10 +1,23 @@
 import { IActionEvent } from "./IActionEvent";
 
+export interface IActionEventLogPreserver
+{
+    /**
+     * Get an array of all action events stored in the persistent storage.
+     */
+    getPersistedActionEvents(): IActionEvent[];
+
+    /**
+     * Clear all action events stored in the persistent storage.
+     */
+    clearPersistedEvents(): void;
+}
+
 /**
  * Can store action events from the event log in the local storage of the browser.
  * See https://www.w3schools.com/html/html5_webstorage.asp.
  */
-export class ActionEventLogPreserver
+export class ActionEventLogPreserver implements IActionEventLogPreserver
 {
     private readonly actionEventCountBaseKey: string = "ActionEventCount";
     private readonly actionEventBaseKey: string = "ActionEvent";
@@ -50,7 +63,7 @@ export class ActionEventLogPreserver
     /**
      * Clear all action events stored in the persistent storage.
      */
-    public clearPersistedEvents()
+    public clearPersistedEvents(): void
     {
         const eventCount = this.getActionEventCount();
 

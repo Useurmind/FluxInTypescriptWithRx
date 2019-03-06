@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Rx from "rxjs";
 
 import { IPageContextProps, PageContextProvider } from "./PageContextProvider";
 import { IPageData } from "./Pages/IPageData";

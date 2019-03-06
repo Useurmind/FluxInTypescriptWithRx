@@ -9,8 +9,9 @@ import { App } from "./App";
 import { ContainerFactory } from "./ContainerFactory";
 import { EndlessSequencePage } from "./EndlessSequence/EndlessSequencePage";
 import { FormPage } from "./FormWithSelectPage/FormPage";
-import { SelectPage } from "./FormWithSelectPage/SelectPage";
 import { HomePage } from "./HomePage";
+import { ContainerFactory as SelectPageContainerFactory } from "./SelectPage/ContainerFactory";
+import { SelectPage } from "./SelectPage/SelectPage";
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -33,6 +34,7 @@ const siteMap: ISiteMapNode = {
         {
             caption: "Select string",
             routeExpression: "/select/page",
+            containerFactory: new SelectPageContainerFactory(),
             render: p => withPageContext(<SelectPage caption="Default"/>)
         },
         {
@@ -48,7 +50,8 @@ const containerFactory = new ContainerFactory();
 const globalStores = RfluxxRouting.init({
     siteMap,
     containerFactory,
-    targetNumberOpenPages: 5
+    targetNumberOpenPages: 5,
+    rootPath: "evictedPages"
 });
 
 document.addEventListener("DOMContentLoaded", event =>

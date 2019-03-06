@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as Rx from "rxjs";
+import { Subscription } from "rxjs/Subscription";
 
 import { ISiteMapNode } from "./SiteMapStore";
 
@@ -31,7 +31,7 @@ export interface ISiteMapNodeState
  */
 export class SiteMapNode extends React.Component<ISiteMapNodeProps, ISiteMapNodeState>
 {
-    private subscription: Rx.Subscription;
+    private subscription: Subscription;
 
     constructor(props: ISiteMapNodeProps)
     {

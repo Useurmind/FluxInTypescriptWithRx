@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Rx from "rxjs";
 
 import { Breadcrumb } from "../../src/Breadcrumb";
 import { CurrentSiteMapNode } from "../../src/CurrentSiteMapNode";

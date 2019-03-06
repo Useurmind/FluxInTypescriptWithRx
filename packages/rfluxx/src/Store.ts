@@ -1,4 +1,6 @@
-import * as Rx from "rxjs/Rx";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 
 import { Action } from "./Action";
 import { IActionFactory } from "./ActionFactory/IActionFactory";
@@ -43,6 +45,11 @@ export interface IStoreOptions<TState> extends IInjectedStoreOptions
      * Optional parameter to execute a function when the store is first observed.
      */
     onInit?: () => void;
+
+    /**
+     * Allow any other properties.
+     */
+    [x: string]: any;
 }
 
 /**
@@ -50,6 +57,11 @@ export interface IStoreOptions<TState> extends IInjectedStoreOptions
  */
 export abstract class Store<TState> implements IStore<TState>
 {
+    /**
+     * The subject that holds the state of the store.
+     */
+    protected subject: BehaviorSubject<TState>;
+
     /**
      * In case not metadata is given for the actions we just number them.
      */
@@ -63,11 +75,6 @@ export abstract class Store<TState> implements IStore<TState>
         return this.subject.getValue();
     }
 
-    /**
-     * The subject that holds the state of the store.
-     */
-    protected subject: Rx.BehaviorSubject<TState>;
-
     private initialized: boolean;
     private storeOptions: IStoreOptions<TState>;
 
@@ -77,7 +84,7 @@ export abstract class Store<TState> implements IStore<TState>
      */
     constructor(options: IStoreOptions<TState>)
     {
-        this.subject = new Rx.BehaviorSubject<TState>(options.initialState);
+        this.subject = new BehaviorSubject<TState>(options.initialState);
         this.initialized = false;
         this.storeOptions = {
             ...options,
@@ -89,7 +96,7 @@ export abstract class Store<TState> implements IStore<TState>
     /**
      * {@inheritdoc }
      */
-    public observe(): Rx.Observable<TState>
+    public observe(): Observable<TState>
     {
         if (this.initialized === false)
         {
@@ -107,7 +114,7 @@ export abstract class Store<TState> implements IStore<TState>
     /**
      * {@inheritdoc }
      */
-    public subscribe(next: (state: TState) => void): Rx.Subscription
+    public subscribe(next: (state: TState) => void): Subscription
     {
         return this.observe().subscribe(next);
     }
@@ -151,7 +158,7 @@ export abstract class Store<TState> implements IStore<TState>
     /**
      * Provides fetching capabilities that are compatible with the replay functionality.
      */
-    protected fetch(requestInfo: RequestInfo, init?: RequestInit): Rx.Observable<Response>
+    protected fetch(requestInfo: RequestInfo, init?: RequestInit): Observable<Response>
     {
         return this.storeOptions.fetcher.fetch(requestInfo, init);
     }
@@ -191,7 +198,7 @@ export abstract class Store<TState> implements IStore<TState>
      * @param configure Handler that receives the action observable and subscribes it in any possible way.
      */
     protected createActionAdvanced<TActionEvent>(
-        configure: (actionObservable: Rx.Observable<TActionEvent>) => void,
+        configure: (actionObservable: Observable<TActionEvent>) => void,
         actionMetadata?: IActionMetadata)
         : IAction<TActionEvent>
     {

@@ -49,7 +49,7 @@ export function registerTimeTraveler(
     if (actionEventLogStorageKey)
     {
         containerBuilder.register(
-            "ActionEventLogPreserver",
+            ["ActionEventLogPreserver", "IActionEventLogPreserver"],
             c => new ActionEventLogPreserver(actionEventLogStorageKey));
     }
 

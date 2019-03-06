@@ -6,4 +6,5 @@ export * from "./Store";
 
 export * from "./ActionFactory";
 export * from "./Middleware";
+export * from "./Utility";
 export * from "./DependencyInjection";

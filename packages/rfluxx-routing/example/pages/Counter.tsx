@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Rx from "rxjs";
 
 import { IPageContextProps, PageContext } from "../../src/PageContextProvider";
 import { StoreSubscription } from "../../src/StoreSubscription";

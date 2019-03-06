@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Rx from "rxjs";
 
 import { RouterLink } from "../../src/RouterLink";
 import { routerStore } from "../../src/RouterStore";

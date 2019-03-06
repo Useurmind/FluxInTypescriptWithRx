@@ -1,6 +1,7 @@
 import * as Rfluxx from "rfluxx";
-import { IAction, IInjectedStoreOptions } from "rfluxx";
-import * as Rx from "rxjs";
+import { applyMixins, IAction, IInjectedStoreOptions, INeedToKnowAboutReplay, NeedToKnowAboutReplayMixin } from "rfluxx";
+import { Observable } from "rxjs/Observable";
+import { Observer } from "rxjs/Observer";
 
 import { IPageManagementStore } from "./PageManagementStore";
 import { IRouterStore } from "./RouterStore";
@@ -140,7 +141,7 @@ export interface IPageCommunicationStore extends Rfluxx.IStore<IPageCommunicatio
      *          In case of cancelation the only complete handler is invoked, no response is returned.
      *          In case of error a response is returned in the error handler.
      */
-    requestPageWithResult(origin: URL, targetUrlFragment: string, pageInput: any): Rx.Observable<IPageResponse>;
+    requestPageWithResult(origin: URL, targetUrlFragment: string, pageInput: any): Observable<IPageResponse>;
 }
 
 /**
@@ -153,7 +154,7 @@ export interface IPageCommunicationStore extends Rfluxx.IStore<IPageCommunicatio
  */
 export class PageCommunicationStore
     extends Rfluxx.Store<IPageCommunicationStoreState>
-    implements IPageCommunicationStore
+    implements IPageCommunicationStore, NeedToKnowAboutReplayMixin
 {
     /**
      * @inheritDoc
@@ -164,6 +165,21 @@ export class PageCommunicationStore
      * @inheritDoc
      */
     public request: IAction<IPageRequest>;
+
+    /**
+     * @inheritDoc
+     */
+   public isReplaying: boolean = false;
+
+   /**
+    * @inheritDoc
+    */
+   public noteReplayStarted: () => void;
+
+   /**
+    * @inheritDoc
+    */
+   public noteReplayEnded: () => void;
 
     constructor(private options: IPageCommunicationStoreOptions)
     {
@@ -195,11 +211,11 @@ export class PageCommunicationStore
     /**
      * @inheritDoc
      */
-    public requestPageWithResult(origin: URL, targetUrlFragment: string, data: any): Rx.Observable<IPageResponse>
+    public requestPageWithResult(origin: URL, targetUrlFragment: string, data: any): Observable<IPageResponse>
     {
         const target = this.options.routerStore.getUrl(targetUrlFragment);
 
-        return Rx.Observable.create((observer: Rx.Observer<IPageResponse>) =>
+        return Observable.create((observer: Observer<IPageResponse>) =>
         {
             // create a trackable request
             const request = {
@@ -245,14 +261,22 @@ export class PageCommunicationStore
 
     private onRequest(pageRequest: IPageRequest): void
     {
-        this.options.pageManagementStore.openPage.trigger(pageRequest);
+        if (!this.isReplaying)
+        {
+            this.options.pageManagementStore.openPage.trigger(pageRequest);
+        }
     }
 
     private onRespond(pageResponse: IPageResponse): void
     {
-        // we only close in the PageStore, then we have the flexibility to decide what to do
-        // when calling this stores respond method
-        // this.options.pageManagementStore.closePage.trigger(pageResponse.request.url);
-        this.setState({ ...this.state, response: pageResponse });
+        if (!this.isReplaying)
+        {
+            // we only close in the PageStore, then we have the flexibility to decide what to do
+            // when calling this stores respond method
+            // this.options.pageManagementStore.closePage.trigger(pageResponse.request.url);
+            this.setState({ ...this.state, response: pageResponse });
+        }
     }
 }
+
+applyMixins(PageCommunicationStore, [NeedToKnowAboutReplayMixin]);

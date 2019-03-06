@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Rx from "rxjs";
 
 import { IPageContextProps, PageContext } from "../../../src/PageContextProvider";
 import { StoreSubscription } from "../../../src/StoreSubscription";
@@ -33,10 +32,7 @@ export class SelectPage extends React.Component<ISelectPageProps, ISelectPageSta
     {
         // tslint:disable-next-line:no-console
         console.log("SelectPage did mount");
-    }
 
-    public componentDidUpdate(prevProps: ISelectPageProps): void
-    {
         this.subscription.subscribeStore(
             this.props.container.resolve<ISelectPageStore>("ISelectPageStore"),
             state =>

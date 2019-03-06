@@ -35,6 +35,11 @@ export interface IRfluxxOptions
      * only the target number of pages open and close all other pages.
      */
     targetNumberOpenPages?: number;
+
+    /**
+     * The part of the path in the url that is constant across the page.
+     */
+    rootPath?: string;
 }
 
 /**
@@ -55,6 +60,7 @@ export function init(options: IRfluxxOptions)
 
     configureRouterStore({
         mode: RouterMode.History,
+        root: options.rootPath,
         routes,
         routeMatchStrategy: new ComplexRouteMatching()
     });

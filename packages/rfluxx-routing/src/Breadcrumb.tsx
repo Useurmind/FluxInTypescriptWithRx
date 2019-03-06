@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as Rx from "rxjs";
+import { Subscription } from "rxjs/Subscription";
 
 import { RouterLink } from "./RouterLink";
 import { ISiteMapNode, ISiteMapStore } from "./SiteMapStore";
@@ -41,7 +41,7 @@ export interface IBreadcrumbState
  */
 export class Breadcrumb extends React.Component<IBreadcrumbProps, IBreadcrumbState>
 {
-    private subscription: Rx.Subscription;
+    private subscription: Subscription;
 
     constructor(props: IBreadcrumbProps)
     {
@@ -90,7 +90,7 @@ export class Breadcrumb extends React.Component<IBreadcrumbProps, IBreadcrumbSta
                                     {
                                         snClassName += " active";
                                     }
-                                    return <li className={snClassName}>
+                                    return <li className={snClassName} key={sn.routeExpression}>
                                         <RouterLink caption={sn.caption} path={sn.absoluteRouteExpression} />
                                     </li>;
                                 };

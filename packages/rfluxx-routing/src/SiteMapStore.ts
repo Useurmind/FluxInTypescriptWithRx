@@ -1,5 +1,6 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
+import { IPageContainerFactory } from "./IPageContainerFactory";
 import { IRoute, IRouteHit, IRouterStoreState } from "./RouterStore";
 
 /**
@@ -61,6 +62,15 @@ export interface ISiteMapNode
      * The child site map nodes of this node.
      */
     children?: ISiteMapNode[];
+
+    /**
+     * This is a factory that creates a container specific for this page (optional).
+     * When no container factory is specified in the site map node it will use the
+     * central container factory.
+     * Specifying one container per page will split their registrations
+     * properly and reduce interference between different pages.
+     */
+    containerFactory?: IPageContainerFactory;
 
     /**
      * Render the site map node.

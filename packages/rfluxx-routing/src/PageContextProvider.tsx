@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Rx from "rxjs";
 
 import { IContainer } from "rfluxx";
 
@@ -63,27 +62,36 @@ export class PageContextProvider extends React.Component<IPageContextProviderPro
 
         this.state = {
             pageProps: {
-                container: props.container
+                // container: props.container
             }
         };
     }
 
-    public componentDidUpdate(prevProps: IPageContextProviderProps): void
-    {
-        if (prevProps.container !== this.props.container)
-        {
-            this.setState({
-                pageProps: {
-                    container: this.props.container
-                }
-            });
-        }
-    }
+    // public componentDidUpdate(prevProps: IPageContextProviderProps): void
+    // {
+    //     if (prevProps.container !== this.props.container)
+    //     {
+    //         this.setState({
+    //             pageProps: {
+    //                 container: this.props.container
+    //             }
+    //         });
+    //     }
+    // }
 
     public render(): any
     {
-      return <PageContext.Provider value={this.state.pageProps}>
-          {this.props.children}
-      </PageContext.Provider>;
+        if (!this.props.container)
+        {
+            return null;
+        }
+
+        const pageProps: IPageContextProps = {
+            container: this.props.container
+        };
+
+        return <PageContext.Provider value={pageProps}>
+            {this.props.children}
+        </PageContext.Provider>;
     }
 }

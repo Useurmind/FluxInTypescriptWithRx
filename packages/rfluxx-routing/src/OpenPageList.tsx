@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Rx from "rxjs";
 
 import { IPageContextProps } from "./PageContextProvider";
 import { IPageManagementStore, IPageManagementStoreState } from "./PageManagementStore";
@@ -93,7 +92,7 @@ export class OpenPageList extends React.Component<IOpenPageListProps, IOpenPageL
                     const isActivePage = p.pageId === this.state.currentPage.pageId;
                     const className = isActivePage ? "list-group-item active" : "list-group-item";
 
-                    return <li className={className}>
+                    return <li className={className} key={p.pageId}>
                         {p.pageId}
                     </li>;
                 })

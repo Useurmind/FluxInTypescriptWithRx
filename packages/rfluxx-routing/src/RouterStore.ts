@@ -1,5 +1,5 @@
 import * as Rfluxx from "rfluxx";
-import { IAction, IInjectedStoreOptions } from "rfluxx";
+import { applyMixins, IAction, IInjectedStoreOptions, NeedToKnowAboutReplayMixin } from "rfluxx";
 
 import { IRouteMatchStrategy } from "./RouteMatching/IRouteMatchStrategy";
 
@@ -123,8 +123,23 @@ export interface IRouterStore extends Rfluxx.IStore<IRouterStoreState>
 /**
  * This store listens to changes of the url and signals the match for the currently active route.
  */
-export class RouterStore extends Rfluxx.Store<IRouterStoreState>
+export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements NeedToKnowAboutReplayMixin
 {
+    /**
+     * @inheritDoc
+     */
+    public isReplaying: boolean = false;
+
+    /**
+     * @inheritDoc
+     */
+    public noteReplayStarted: () => void;
+
+    /**
+     * @inheritDoc
+     */
+    public noteReplayEnded: () => void;
+
     /**
      * @inheritDoc
      */
@@ -282,6 +297,8 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState>
         return this.clearSlashes(fragment);
     }
 }
+
+applyMixins(RouterStore, [NeedToKnowAboutReplayMixin]);
 
 /**
  * The router store may only exist once per browser window.

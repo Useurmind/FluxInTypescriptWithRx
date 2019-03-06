@@ -1,4 +1,4 @@
-import { Observable } from "rxjs/Rx";
+import { Observable } from "rxjs/Observable";
 
 import { INeedToKnowAboutReplay, NeedToKnowAboutReplayMixin } from "../Middleware/ActionEventLog/INeedToKnowAboutReplay";
 import { applyMixins } from "../Utility/Mixin";

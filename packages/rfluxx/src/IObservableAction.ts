@@ -1,4 +1,5 @@
-import * as Rx from "rxjs/Rx";
+import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 
 import { IAction } from "./IAction";
 
@@ -11,12 +12,12 @@ export interface IObservableAction<TActionEvent> extends IAction<TActionEvent>
      * Convert an action into an observable to subscribe it.
      * @returns {}
      */
-    observe(): Rx.Observable<TActionEvent>;
+    observe(): Observable<TActionEvent>;
 
     /**
      * Subscribe to the streams of action events directly.
      * @param next
      * @returns {}
      */
-    subscribe(next: (parameter: TActionEvent) => void): Rx.Subscription;
+    subscribe(next: (parameter: TActionEvent) => void): Subscription;
 }

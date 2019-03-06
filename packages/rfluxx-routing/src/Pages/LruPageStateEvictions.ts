@@ -51,7 +51,10 @@ export class LruPageStateEvictions implements IPageEvictionStrategy
     public onPageClosed(pageId: string): void
     {
         const pageEntry = this.lruListMap.get(pageId);
-        this.removeFromLinkedList(pageEntry);
+        if (pageEntry)
+        {
+            this.removeFromLinkedList(pageEntry);
+        }
     }
 
     /**

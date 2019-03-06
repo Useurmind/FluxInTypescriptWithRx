@@ -1,4 +1,4 @@
-import { IAction, IStore, Store } from "rfluxx";
+import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
 import { IPageStore } from "../../../src/PageStore";
 
@@ -7,7 +7,7 @@ export interface IEndlessSequencePageStoreState
     sequenceNumber: number;
 }
 
-export interface IEndlessSequencePageStoreOptions
+export interface IEndlessSequencePageStoreOptions extends IInjectedStoreOptions
 {
     pageStore: IPageStore;
 
@@ -29,6 +29,7 @@ export class EndlessSequencePageStore extends Store<IEndlessSequencePageStoreSta
     public constructor(private options: IEndlessSequencePageStoreOptions)
     {
         super({
+            ...options,
             initialState: {
                 sequenceNumber: options.sequenceNumber
             }

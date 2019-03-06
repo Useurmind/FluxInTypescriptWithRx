@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Rx from "rxjs";
 
 import { IPageContextProps, PageContext } from "../../../src/PageContextProvider";
 import { RouterLink } from "../../../src/RouterLink";

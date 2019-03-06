@@ -1,6 +1,5 @@
 import * as React from "react";
 import { IContainer } from "rfluxx";
-import * as Rx from "rxjs";
 
 import { Breadcrumb } from "../../src/Breadcrumb";
 import { CurrentPage } from "../../src/CurrentPage";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as Rx from "rxjs";
+import { Subscription } from "rxjs/Subscription";
 
 import { pageStore } from "./PageStore";
 
@@ -8,7 +8,7 @@ export interface IPageState {
 }
 
 export class Page extends React.Component<{}, IPageState> {
-    private _subscription: Rx.Subscription;
+    private subscription: Subscription;
 
     constructor(props: any) {
         super(props);
@@ -20,7 +20,7 @@ export class Page extends React.Component<{}, IPageState> {
 
     public componentDidMount() {
         // subscribe to the page store instances state
-        this._subscription = pageStore.subscribe(state => {
+        this.subscription = pageStore.subscribe(state => {
             this.setState({
                 ...this.state,
                 // set the counter in the state of the component to that of the store
@@ -31,8 +31,8 @@ export class Page extends React.Component<{}, IPageState> {
 
     public componentWillUnmount() {
         // unsubscribe if component is unmounted
-        if (this._subscription) {
-            this._subscription.unsubscribe();
+        if (this.subscription) {
+            this.subscription.unsubscribe();
         }
     }
 

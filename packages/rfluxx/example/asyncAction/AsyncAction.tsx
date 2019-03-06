@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as Rx from "rxjs";
+import { Subscription } from "rxjs/Subscription";
 
 import { IAsyncActionStore } from "./IAsyncActionStore";
 
@@ -12,10 +12,12 @@ export interface IAsyncActionState {
     text: string;
 }
 
-export class AsyncAction extends React.Component<IAsyncActionProps, IAsyncActionState> {
-    private _subscription: Rx.Subscription;
+export class AsyncAction extends React.Component<IAsyncActionProps, IAsyncActionState>
+{
+    private subscription: Subscription;
 
-    constructor(props: any) {
+    constructor(props: any)
+    {
         super(props);
 
         this.state = {
@@ -23,9 +25,11 @@ export class AsyncAction extends React.Component<IAsyncActionProps, IAsyncAction
         };
     }
 
-    public componentDidMount() {
+    public componentDidMount()
+    {
         // subscribe to the page store instances state
-        this._subscription = this.props.store.subscribe(state => {
+        this.subscription = this.props.store.subscribe(state =>
+        {
             this.setState({
                 ...this.state,
                 // set the counter in the state of the component to that of the store
@@ -34,24 +38,29 @@ export class AsyncAction extends React.Component<IAsyncActionProps, IAsyncAction
         });
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount()
+    {
         // unsubscribe if component is unmounted
-        if (this._subscription) {
-            this._subscription.unsubscribe();
+        if (this.subscription)
+        {
+            this.subscription.unsubscribe();
         }
     }
 
-    public onSuccessClick() {
+    public onSuccessClick()
+    {
         // execute command to start successful download
         this.props.store.startSuccessfulDownload.trigger(null);
     }
 
-    public onFailClick() {
+    public onFailClick()
+    {
         // execute command to start failing download
         this.props.store.startFailingDownload.trigger(null);
     }
 
-    public render(): any {
+    public render(): any
+    {
         return <div>
             <h2>{this.props.label}</h2>
             <button onClick={_ => this.onSuccessClick()} >Please succeed</button>

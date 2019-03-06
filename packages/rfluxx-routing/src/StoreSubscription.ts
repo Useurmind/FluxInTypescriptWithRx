@@ -1,4 +1,4 @@
-import * as Rx from "rxjs";
+import { Subscription } from "rxjs/Subscription";
 
 import { IStore } from "rfluxx";
 import { ISubscription } from "rxjs/Subscription";
@@ -13,7 +13,7 @@ export class StoreSubscription<TStore extends IStore<TStoreState>, TStoreState>
     /**
      * The subscription to the store.
      */
-    private subscription: Rx.Subscription;
+    private subscription: Subscription;
 
     public subscribeStore(
         store: TStore,

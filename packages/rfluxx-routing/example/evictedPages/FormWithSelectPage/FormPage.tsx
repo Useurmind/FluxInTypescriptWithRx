@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Rx from "rxjs";
 
 import { IPageContextProps, PageContext } from "../../../src/PageContextProvider";
 import { StoreSubscription } from "../../../src/StoreSubscription";
@@ -82,7 +81,8 @@ export class FormPage extends React.Component<IFormPageProps, IFormPageState> {
                 </div>
                 <input type="text" className="form-control"
                         id="sequenceNumberInput" aria-describedby="sequenceNumberHelp" placeholder="Select a string"
-                        value={this.state.selectedString} />
+                        value={this.state.selectedString}
+                        readOnly={true}/>
             </div>
             <small id="sequenceNumberHelp" className="form-text text-muted">
                 Click the tree dots to select a string from a different page.

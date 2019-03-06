@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as Rx from "rxjs";
+import { Subscription } from "rxjs/Subscription";
 
 import { Page } from "./Page";
 import { IPageManagementStore } from "./PageManagementStore";
@@ -37,7 +37,7 @@ export interface ICurrentPageState
  */
 export class CurrentPage extends React.Component<ICurrentPageProps, ICurrentPageState>
 {
-    private subscription: Rx.Subscription;
+    private subscription: Subscription;
 
     constructor(props: ICurrentPageProps)
     {

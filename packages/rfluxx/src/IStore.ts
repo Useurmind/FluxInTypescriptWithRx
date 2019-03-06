@@ -1,4 +1,5 @@
-import * as Rx from "rxjs/Rx";
+import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 
 import { IResetMyState } from "./IResetMyState";
 
@@ -17,12 +18,12 @@ export interface IStore<TState> extends IResetMyState
      * Use subscribe for less verbosity.
      * @returns A full observable of the state that can be subscribed.
      */
-    observe(): Rx.Observable<TState>;
+    observe(): Observable<TState>;
 
     /**
      * Subscribe state changes of the store.
      * @param next The subscription handler that handles changes to the state.
      * @returns The subscription to cancel the subscription.
      */
-    subscribe(next: (state: TState) => void): Rx.Subscription;
+    subscribe(next: (state: TState) => void): Subscription;
 }
