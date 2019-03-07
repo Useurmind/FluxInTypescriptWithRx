@@ -32,7 +32,7 @@ Here we render a welcome page that has a link pointing to a tutorial page.
     }
 ```
 
-When you click on the link the url will be changed to `<baseUrl>/tutorial`. If a site map node was defined for that url fragment it will be opened. The user can still navigate back as he is used to as the rfluxx uses the history of the browser to perform navigation.
+When you click on the link the url will be changed to `<baseUrl>/tutorial`. If a site map node was defined for that url fragment it will be opened. The user can still navigate back as he is used to as rfluxx uses the history of the browser to perform navigation.
 
 ## Communication based navigation
 
@@ -44,13 +44,13 @@ Rfluxx provides you with the possibility to do page communication. From a store 
 
 ### Pages as units of work
 
-We assume the pages to be units of work. This means page communication is not meant to transmit information back and forth. It should rather be used like backend calls.
+We assume the pages requested through page communication to be units of work. This means page communication is not meant to transmit information back and forth. It should rather be used like backend calls.
 
 __Example__: A page wants certain inputs that another page can ask from the user. The page calls onto the other page, the user inputs everything there and the response is given back to the initial page.
 
 ### Using page communication
 
-In your requesting store you should inject the `IPageStore` which is an interface that allows you to interact with the central services from inside your page. On this interface you can then call `requestPageWithResult` to request another page.
+In a store on your requesting page you should inject the `IPageStore` which is an interface that allows you to interact with the central services from inside your page. On this interface you can then call `requestPageWithResult` to request another page.
 
 `RequestingStore.ts`
 ```typescript
@@ -82,7 +82,7 @@ export class RequestingStore extends Store<...>
 }
 ```
 
-In the requested store you can use the page request object by injecting it alongside your page store. When the user is finished and wants to commit his input you can respond to the other page. This will close the requested page.
+In the store on the requested page you can use the page request object by injecting it alongside your page store. When the user is finished and wants to commit his input you can respond to the other page. This will close the requested page.
 
 `RequestedStore.ts`
 ```typescript

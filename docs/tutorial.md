@@ -35,6 +35,7 @@ export const siteMap: ISiteMapNode = {
         {
             caption: "Page 1",
             routeExpression: "page1",
+            containerFactory: new MyPage1ContainerFactory(),
             render: p => withPageContext(<Page1 />)
         },
         // ...
@@ -53,6 +54,10 @@ Each node has a caption that is down in different places in the UI to the user, 
 Every node also needs a route expression that defines which URLs should show this node. Routes starting with a slash e.g. `/home` are absolute and interpreted with regard to the base url of the app. Routes without a starting slash e.g. `page1` are combined with the route of the parent. In this case to get `/home/page1`.
 
 The default initialization code of rfluxx assumes that the routes of nodes further down the tree are more specific ("longer") than the routes at the top of the tree. The routes further down the tree are matched before the routes at the top of the tree.
+
+    containerFactory: new MyPage1ContainerFactory(),
+
+Each page has the possibility to define it's own container factory. This reduces friction between pages as the registrations in one page can be changed without affecting another page. If no container factory is specified for a page the central factory is used. In any case a new container is created per page opened.
 
     render: p => withPageContext(<Home />),
 
@@ -74,7 +79,7 @@ The container is used for dependency injection of required stores or other class
 
 The framework provides an interface to integrate your container of choice but comes with a default container.
 
-The page management needs to know how to create a container for your app if the need arises. Therefore, you must provide an implementation of the `IPageContainerFactory` interface that creates a new container for a page.
+The page management needs to know how to create a container for your app if the need arises. Therefore, you must provide at least one central implementation of the `IPageContainerFactory` interface that creates a new container for any page that does not specify its own container factory.
 
 `ContainerFactory.ts`:
 
@@ -89,10 +94,12 @@ export class ContainerFactory extends SimplePageContainerFactoryBase
 {
     protected registerStores(container: SimpleContainer, url: URL, routeParameters: Map<string, string>): void
     {
-        container.register("IHomeStore", c => new HomeStore({
+        registerStore(
+        container,
+        c => new HomeStore({
             pageCommunicationStore: c.resolve("IPageCommunicationStore"),
             pageRequest: c.resolve("IPageRequest")
-        }));
+        })).as("IHomeStore");
     }
 }
 ```
@@ -113,12 +120,18 @@ It provides the following arguments:
 - `url`: this is the URL for which a page is loaded
 - `routeParameters`: nap of parameters that were extracted from the route
 
-    container.register("IHomeStore", c => new HomeStore({
-            pageCommunicationStore: c.resolve("IPageCommunicationStore"),
-            pageRequest: c.resolve("IPageRequest")
-        }));
+```ts
+registerStore(
+    container,
+    c => new HomeStore({
+        pageCommunicationStore: c.resolve("IPageCommunicationStore"),
+        pageRequest: c.resolve("IPageRequest")
+    })).as("IHomeStore");
+```
 
 Here we register the `HomeStore` which implements the interface `IHomeStore`. It's good practice to use the interface as the key off the registration. 
+
+We use the helper function `registerStore` which ensures injection of common dependencies into the stores (e.g. `IActionFactory` and `IObservableFetcher`). It also allows to register the store type multiple times by applying a postfix to the registration key if given. In case you apply such an additional postfix make sure to use `resolveStore` to get an instance of the store.
 
 The home store has dependencies on two of the preregistered components in the container:
 
@@ -129,7 +142,7 @@ The home store has dependencies on two of the preregistered components in the co
 
 For the pages to show you need to design your app component in a proper way.
 
-It needs to render the `CurrentPage` component that always shows the page that the current root leads to.
+It needs to render the `CurrentPage` component that always shows the page that the current url leads to.
 
 `App.tsx`:
 
@@ -194,7 +207,12 @@ import { ContainerFactory } from "./ContainerFactory";
 
 const containerFactory = new ContainerFactory();
 
-const globalStores = RfluxxRouting.init(siteMap, containerFactory);
+const globalStores = RfluxxRouting.init({
+    siteMap,
+    containerFactory,
+    targetNumberOpenPages: 5,
+    rootPath: "/"
+});
 
 document.addEventListener("DOMContentLoaded", event =>
 {
@@ -209,3 +227,7 @@ document.addEventListener("DOMContentLoaded", event =>
 That's it. We load the site map, create a container factory and init rfluxx routing with them.
 
 Afterwards we start up the react app as usual.
+
+## Disclaimer
+
+I try to keep this up to date. But the code of the examples will always be more up to date.
