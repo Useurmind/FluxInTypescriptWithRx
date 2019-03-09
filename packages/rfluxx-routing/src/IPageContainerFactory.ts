@@ -1,4 +1,4 @@
-import { IContainer, registerStore, registerTimeTraveler, SimpleContainer, TimeTraveler } from "rfluxx";
+import { IContainer, registerStore, registerTimeTraveler, SimpleContainerBuilder, TimeTraveler, IContainerBuilder } from "rfluxx";
 
 import { IPageCommunicationStore, IPageRequest } from "./PageCommunicationStore";
 import { IPageManagementStore } from "./PageManagementStore";
@@ -85,27 +85,25 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
         pageRequest?: IPageRequest | null)
         : IContainer
     {
-        const container = new SimpleContainer();
+        const builder = new SimpleContainerBuilder();
 
-        registerTimeTraveler(container, true, pageId);
+        registerTimeTraveler(builder, true, pageId);
 
-        container.registerInCollection(
-            "INeedToKnowAboutReplay[]",
-            c => globalComponents.routerStore,
-            "IRouterStore");
-        container.register("ISiteMapStore", c => globalComponents.siteMapStore);
+        builder.register(c => globalComponents.routerStore)
+            .as("IRouterStore")
+            .in("INeedToKnowAboutReplay[]");
+        builder.register(c => globalComponents.siteMapStore)
+            .as("ISiteMapStore");
 
-        container.registerInCollection(
-            "INeedToKnowAboutReplay[]",
-            c => globalComponents.pageManagementStore,
-            "IPageManagementStore");
+        builder.register(c => globalComponents.pageManagementStore)
+            .as("IPageManagementStore")
+            .in("INeedToKnowAboutReplay[]");
 
-        container.registerInCollection(
-            "INeedToKnowAboutReplay[]",
-            c => globalComponents.pageCommunicationStore,
-            "IPageCommunicationStore");
+        builder.register(c => globalComponents.pageCommunicationStore)
+            .as("IPageCommunicationStore")
+            .in("INeedToKnowAboutReplay[]");
 
-        registerStore(container, "IPageStore", (c, injOpt) => new PageStore(injOpt({
+        registerStore(builder, "IPageStore", (c, injOpt) => new PageStore(injOpt({
             pageUrl: url,
             pageRequest,
             pageCommunicationStore: globalComponents.pageCommunicationStore,
@@ -113,10 +111,12 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
             routerStore: globalComponents.routerStore
         })));
 
-        container.register("IPageRequest", c => pageRequest);
-        container.register("PageUrl", c => url);
+        builder.register(c => pageRequest).as("IPageRequest");
+        builder.register(c => url).as("PageUrl");
 
-        this.registerStores(container, url, routeParameters);
+        this.registerStores(builder, url, routeParameters);
+
+        const container = builder.build();
 
         container.resolve<TimeTraveler>("TimeTraveler");
 
@@ -129,5 +129,5 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
      * @param url The url of the page for which the container is created.
      * @param routeParamters The parameters that were extracted from the route.
      */
-    protected abstract registerStores(container: SimpleContainer, url: URL, routeParameters: Map<string, string>);
+    protected abstract registerStores(builder: IContainerBuilder, url: URL, routeParameters: Map<string, string>);
 }

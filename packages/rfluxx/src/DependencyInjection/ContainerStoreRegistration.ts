@@ -2,6 +2,8 @@ import { IActionFactory, IContainer, IContainerBuilder, IInjectedStoreOptions, I
 import { PrefixActionFactory } from "../ActionFactory/PrefixActionFactory";
 import { IObservableFetcher } from "../Fetch/IObservableFetcher";
 
+import { IContainerRegistration } from "./IContainerRegistration";
+
 /**
  * Register a store in the given container adding all the required interfaces that the store should
  * have to work with the event log and time travel.
@@ -14,7 +16,7 @@ export function registerStore<TState>(
     containerBuilder: IContainerBuilder,
     typeName: string,
     create: (c: IContainer, injectStoreOptions: (o: any) => any) => IStore<TState>,
-    key?: string): void
+    key?: string): IContainerRegistration
 {
     const storeKey = getStoreRegistrationKey(typeName, key);
 
@@ -32,7 +34,9 @@ export function registerStore<TState>(
         return create(c, injectStoreOptions);
     };
 
-    containerBuilder.registerInCollection("IResetMyState[]", injectedCreate, storeKey);
+    return containerBuilder.register(injectedCreate)
+                           .as(storeKey)
+                           .in("IResetMyState[]");
 }
 
 /**

@@ -4,6 +4,7 @@ import { IActionFactory } from "../../src/ActionFactory/IActionFactory";
 import { MiddlewareActionFactory } from "../../src/ActionFactory/MiddlewareActionFactory";
 import { registerStore } from "../../src/DependencyInjection/ContainerStoreRegistration";
 import { SimpleContainer } from "../../src/DependencyInjection/SimpleContainer";
+import { SimpleContainerBuilder } from "../../src/DependencyInjection/SimpleContainerBuilder";
 import { ConsoleLoggingMiddleware } from "../../src/Middleware";
 import { ActionEventLog } from "../../src/Middleware/ActionEventLog/ActionEventLog";
 import { ActionEventLogMiddleware } from "../../src/Middleware/ActionEventLog/ActionEventLogMiddleware";
@@ -52,11 +53,14 @@ class PageStore extends Flux.Store<IPageStoreState> implements IPageStore {
     }
 }
 
-const container = new SimpleContainer();
+const builder = new SimpleContainerBuilder();
 
-container.registerInCollection("IActionMiddleware[]", () => new ConsoleLoggingMiddleware());
-registerTimeTraveler(container, true, "MiddlewareDemo");
-registerStore(container, "IPageStore", (c, injectOptions) => new PageStore(injectOptions({})));
+builder.register(() => new ConsoleLoggingMiddleware())
+    .in("IActionMiddleware[]");
+registerTimeTraveler(builder, true, "MiddlewareDemo");
+registerStore(builder, "IPageStore", (c, injectOptions) => new PageStore(injectOptions({})));
+
+const container = builder.build();
 
 // publish an instance of this store
 // you can do this in a nicer way by using a container

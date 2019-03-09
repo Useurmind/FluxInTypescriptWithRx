@@ -1,4 +1,5 @@
 import { SimpleContainer } from "../../src/DependencyInjection/SimpleContainer";
+import { SimpleContainerBuilder } from "../../src/DependencyInjection/SimpleContainerBuilder";
 
 describe("SimpleContainer", () =>
 {
@@ -7,9 +8,12 @@ describe("SimpleContainer", () =>
 
     it("register and resolve works", () =>
     {
-        const container = new SimpleContainer();
+        const builder = new SimpleContainerBuilder();
         const registeredString = "lkjghflhjkfgljhfgh";
-        container.register(registrationKey1, c => registeredString);
+        builder.register(c => registeredString)
+                 .as(registrationKey1);
+
+        const container = builder.build();
 
         const result = container.resolve(registrationKey1);
 
@@ -18,8 +22,11 @@ describe("SimpleContainer", () =>
 
     it("register and resolve multiple times returns the same object", () =>
     {
-        const container = new SimpleContainer();
-        container.register(registrationKey1, c => ({ a: 1 }));
+        const builder = new SimpleContainerBuilder();
+        builder.register(c => ({ a: 1 }))
+                 .as(registrationKey1);
+
+        const container = builder.build();
 
         const result1 = container.resolve(registrationKey1);
         const result2 = container.resolve(registrationKey1);
@@ -29,8 +36,11 @@ describe("SimpleContainer", () =>
 
     it("register and resolve with instance names returns the same object per name", () =>
     {
-        const container = new SimpleContainer();
-        container.register(registrationKey1, c => ({ a: 1 }));
+        const builder = new SimpleContainerBuilder();
+        builder.register(c => ({ a: 1 }))
+                 .as(registrationKey1);
+
+        const container = builder.build();
 
         const result1 = container.resolve(registrationKey1);
         const result2 = container.resolve(registrationKey1, "instance1");
@@ -46,8 +56,12 @@ describe("SimpleContainer", () =>
 
     it("register and resolve with multiple type names returns the same object per instance name", () =>
     {
-        const container = new SimpleContainer();
-        container.register([registrationKey1, registrationKey2], c => ({ a: 1 }));
+        const builder = new SimpleContainerBuilder();
+        builder.register(c => ({ a: 1 }))
+                 .as(registrationKey1)
+                 .as(registrationKey2);
+
+        const container = builder.build();
 
         const result1 = container.resolve(registrationKey1);
         const result2 = container.resolve(registrationKey1, "instance1");
@@ -73,9 +87,11 @@ describe("SimpleContainer", () =>
 
     it("register collection and resolve with instance names returns the same collection per name", () =>
     {
-        const container = new SimpleContainer();
-        container.registerInCollection(registrationKey1, c => ({ a: 1 }));
-        container.registerInCollection(registrationKey1, c => ({ a: 2 }));
+        const builder = new SimpleContainerBuilder();
+        builder.register(c => ({ a: 1 })).in(registrationKey1);
+        builder.register(c => ({ a: 2 })).in(registrationKey1);
+
+        const container = builder.build();
 
         const result1 = container.resolve<any[]>(registrationKey1);
         const result2 = container.resolve<any[]>(registrationKey1, "instance1");
@@ -96,12 +112,14 @@ describe("SimpleContainer", () =>
 
     it("two registrations resolve their values", () =>
     {
-        const container = new SimpleContainer();
+        const builder = new SimpleContainerBuilder();
         const registeredString1 = "lkjghflhjkfgljhfgh";
         const registeredString2 = "ödlghkjghfölkj";
 
-        container.register(registrationKey1, c => registeredString1);
-        container.register(registrationKey2, c => registeredString2);
+        builder.register(c => registeredString1).as(registrationKey1);
+        builder.register(c => registeredString2).as(registrationKey2);
+
+        const container = builder.build();
 
         const result1 = container.resolve(registrationKey1);
         const result2 = container.resolve(registrationKey2);
@@ -112,11 +130,13 @@ describe("SimpleContainer", () =>
 
     it("register collection and resolve works", () =>
     {
-        const container = new SimpleContainer();
+        const builder = new SimpleContainerBuilder();
         const registeredString1 = "lkjghflhjkfgljhfgh";
         const registeredString2 = "ölkjfgöhlkjfg";
-        container.registerInCollection(registrationKey1, c => registeredString1);
-        container.registerInCollection(registrationKey1, c => registeredString2);
+        builder.register(c => registeredString1).in(registrationKey1);
+        builder.register(c => registeredString2).in(registrationKey1);
+
+        const container = builder.build();
 
         const result = container.resolve<string[]>(registrationKey1);
 
@@ -127,11 +147,13 @@ describe("SimpleContainer", () =>
 
     it("register and resolve with instance names returns different instances", () =>
     {
-        const container = new SimpleContainer();
+        const builder = new SimpleContainerBuilder();
         const registeredString1 = "lkjghflhjkfgljhfgh";
         const registeredString2 = "ölkjfgöhlkjfg";
-        container.registerInCollection(registrationKey1, c => registeredString1);
-        container.registerInCollection(registrationKey1, c => registeredString2);
+        builder.register(c => registeredString1).in(registrationKey1);
+        builder.register(c => registeredString2).in(registrationKey1);
+
+        const container = builder.build();
 
         const result = container.resolve<string[]>(registrationKey1);
 
@@ -142,10 +164,14 @@ describe("SimpleContainer", () =>
 
     it("register and resolve with dependencies works", () =>
     {
-        const container = new SimpleContainer();
+        const builder = new SimpleContainerBuilder();
         const registeredString2 = "ölkjfgöhlkjfg";
-        container.register(registrationKey1, c => ({ dep: c.resolve<string>(registrationKey2) }));
-        container.register(registrationKey2, c => registeredString2);
+        builder.register(c => ({ dep: c.resolve<string>(registrationKey2) }))
+                 .as(registrationKey1);
+        builder.register(c => registeredString2)
+                 .as(registrationKey2);
+
+        const container = builder.build();
 
         const result = container.resolve<any>(registrationKey1);
 

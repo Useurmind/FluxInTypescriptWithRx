@@ -29,7 +29,7 @@ Container usage is a three step process:
 * Build container
 * Resolve instances from container
 
-```ts
+```typescript
 const builder = new SimpleContainerBuilder();
 
 builder.register(...).as(...);
@@ -45,7 +45,7 @@ const instance = container.resolve<...>(...);
 
 Register creation of class without dependencies
 
-```ts
+```typescript
 builder.register(c => new MyClassWithoutDependencies())
 ```
 
@@ -53,7 +53,7 @@ builder.register(c => new MyClassWithoutDependencies())
 
 Register creation of class with dependencies
 
-```ts
+```typescript
 // register atomic dependency
 // ...
 
@@ -66,7 +66,7 @@ builder.register(c => new MyClassWithDependencies(
 
 Register an already existing instance
 
-```ts
+```typescript
 const existingInstance = // ...
 
 builder.register(c => existingInstance)
@@ -76,7 +76,7 @@ builder.register(c => existingInstance)
 
 Register some complex piece of code that creates an instance
 
-```ts
+```typescript
 builder.register(c => {
     // fancy code to create instance
 
@@ -88,7 +88,7 @@ builder.register(c => {
 
 Register a creation rule under one or multiple string keys
 
-```ts
+```typescript
 builder.register(c => /* ... */).as("IMyType");
 ```
 
@@ -98,7 +98,7 @@ By convention the key could be the interface that is implemented by the returned
 
 Register a creation rule into one or several collections
 
-```ts
+```typescript
 builder.register(c => /* ... */).in("IDoStuffInCollection[]");
 ```
 
@@ -108,7 +108,7 @@ By convention the name of a collection should be the type of interface named fol
 
 You can mix and match all of the above techniques:
 
-```ts
+```typescript
 builder.register(c => /* ... */)
        .in("IDoStuffInCollection[]")
        .as("IMyType")
@@ -119,24 +119,24 @@ builder.register(c => /* ... */)
 
 Resolve the default instance from the container
 
-```ts
+```typescript
 container.resolve<IMyType>("IMyType");
 ```
 
 ### Resolve named instance
 
-```ts
+```typescript
 container.resolveNamed<IMyType>("IMyType", "instance1");
 ```
 
 ### Resolve collection of default instances
 
-```ts
+```typescript
 container.resolve<IDoStuffInCollection[]>("IDoStuffInCollection[]");
 ```
 
 ### Resolve collection of named instances
 
-```ts
+```typescript
 container.resolve<IDoStuffInCollection[]>("IDoStuffInCollection[]", "list1");
 ```

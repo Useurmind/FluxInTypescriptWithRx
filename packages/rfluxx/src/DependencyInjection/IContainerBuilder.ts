@@ -1,12 +1,6 @@
 import { IContainer } from "./IContainer";
-
-/**
- * An interface for a function that creates an instance for the container.
- */
-export interface IResolver
-{
-    (c: IContainer): any;
-}
+import { IContainerRegistration } from "./IContainerRegistration";
+import { ICreationRule } from "./ICreationRule";
 
 /**
  * Interface to register stuff in your container.
@@ -17,17 +11,13 @@ export interface IResolver
 export interface IContainerBuilder
 {
     /**
-     * Register a type to be constructed (assumes singleton registration).
-     * @param typeName The name of the (multiple) type(s) to register the component under.
-     * @param create A function that creates the instance with the help of the container.
+     * Register a creation rule.
+     * @param create A creation rule (which is a function) that creates whatever you like.
      */
-    register(typeName: string|string[], create: IResolver): void;
+    register(create: ICreationRule): IContainerRegistration;
 
     /**
-     * Register a type to be constructed and put into a collection with other types of the same name.
-     * @param collectionName The name of the collection (or multiple) in which to register the type.
-     * @param create A function that creates the instance with the help of the container.
-     * @param typeName Optional type name to resolve the type separate from the collection.
+     * Build the container with all currently registered creation rules.
      */
-    registerInCollection(collectionName: string|string[], create: IResolver, typeName?: string): void;
+    build(): IContainer;
 }

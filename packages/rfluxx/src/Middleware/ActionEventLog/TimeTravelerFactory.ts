@@ -37,31 +37,33 @@ export function registerTimeTraveler(
     registerWithWindow?: boolean,
     actionEventLogStorageKey?: string): void
 {
-    containerBuilder.register("IActionRegistry", c => new MapActionRegistry());
+    containerBuilder.register(c => new MapActionRegistry())
+                    .as("IActionRegistry");
     containerBuilder.register(
-        ["DefaultActionFactory", "IActionFactory"],
         c => new DefaultActionFactory(
                 c.resolve<IActionMiddleware[]>("IActionMiddleware[]"),
-                c.resolve<IActionRegistry>("IActionRegistry")));
+                c.resolve<IActionRegistry>("IActionRegistry")))
+                .as("DefaultActionFactory").as("IActionFactory");
 
-    containerBuilder.register("IObservableFetcher", c => new ObservableFetcher());
+    containerBuilder.register(c => new ObservableFetcher())
+                    .as("IObservableFetcher");
 
     if (actionEventLogStorageKey)
     {
         containerBuilder.register(
-            ["ActionEventLogPreserver", "IActionEventLogPreserver"],
-            c => new ActionEventLogPreserver(actionEventLogStorageKey));
+            c => new ActionEventLogPreserver(actionEventLogStorageKey))
+            .as("ActionEventLogPreserver").as("IActionEventLogPreserver");
     }
 
     containerBuilder.register(
-        "IActionEventLog",
-        c => new ActionEventLog(c.resolve<ActionEventLogPreserver>("ActionEventLogPreserver")));
+        c => new ActionEventLog(c.resolve<ActionEventLogPreserver>("ActionEventLogPreserver")))
+        .as("IActionEventLog");
 
-    containerBuilder.registerInCollection(
-        ["IActionMiddleware[]", "INeedToKnowAboutReplay[]", "INeedToKnowIfIAmInThePast[]"],
-        c => new ActionEventLogMiddleware(c.resolve<IActionEventLog>("IActionEventLog")));
+    containerBuilder.register(
+        c => new ActionEventLogMiddleware(c.resolve<IActionEventLog>("IActionEventLog")))
+        .in("IActionMiddleware[]").in("INeedToKnowAboutReplay[]").in("INeedToKnowIfIAmInThePast[]");
 
-    containerBuilder.register("TimeTraveler", c =>
+    containerBuilder.register(c =>
     {
         const eventLog = c.resolve<IActionEventLog>("IActionEventLog");
         const timeTraveler = new TimeTraveler(
@@ -79,5 +81,5 @@ export function registerTimeTraveler(
         }
 
         return timeTraveler;
-    });
+    }).as("TimeTraveler");
 }
