@@ -1,8 +1,10 @@
-import { Subscription } from "rxjs/Subscription";
+import { ISubscription, Subscription } from "rxjs/Subscription";
 
-import { IStore } from "rfluxx";
-import { ISubscription } from "rxjs/Subscription";
+import { IStore } from "./IStore";
 
+/**
+ * Helper to subscribe a store and unsubscribe it.
+ */
 export class StoreSubscription<TStore extends IStore<TStoreState>, TStoreState>
 {
     /**
@@ -15,6 +17,13 @@ export class StoreSubscription<TStore extends IStore<TStoreState>, TStoreState>
      */
     private subscription: Subscription;
 
+    /**
+     * Subscribe the given store.
+     * If it is the same store as before nothing is done.
+     * For a new store the old subscription is cancelled first.
+     * @param store The store to subscribe.
+     * @param nextState Handler for state changes in the given store.
+     */
     public subscribeStore(
         store: TStore,
         nextState: (state: TStoreState) => void)
@@ -34,6 +43,9 @@ export class StoreSubscription<TStore extends IStore<TStoreState>, TStoreState>
         }
     }
 
+    /**
+     * Unsubscribe the current subscription if any.
+     */
     public unsubscribe(): void
     {
         if (this.subscription)

@@ -1,6 +1,6 @@
 import { IAction, IStore, Store } from "rfluxx";
 
-import { IPageRequest } from "../../src/PageCommunicationStore";
+import { IPageRequest } from "../../src/PageCommunication";
 import { IPageStore } from "../../src/PageStore";
 
 export interface ICounterStoreState

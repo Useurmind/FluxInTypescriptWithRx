@@ -1,8 +1,8 @@
 import * as Rfluxx from "rfluxx";
 import { applyMixins, IAction, IActionEventLogPreserver, IInjectedStoreOptions, NeedToKnowAboutReplayMixin } from "rfluxx";
 
-import { IPageContainerFactory } from "./IPageContainerFactory";
-import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore } from "./PageCommunicationStore";
+import { IPageContainerFactory } from "./DependencyInjection/IPageContainerFactory";
+import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore } from "./PageCommunication";
 import { IPageData } from "./Pages/IPageData";
 import { IPageEvictionStrategy } from "./Pages/IPageEvictionStrategy";
 import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
@@ -224,8 +224,14 @@ export class PageManagementStore
         if (page.pageRequest)
         {
             const originId = this.options.pageIdAlgorithm.getPageId(page.pageRequest.origin);
-            const origin = this.getPageOrThrow(originId);
-            origin.openRequests.delete(pageId);
+            const origin = this.tryGetPage(originId);
+            if (origin)
+            {
+                // TODO: think about what the correct handling of this case would be
+                // the origin could be non existent when we return to page opened via page
+                // communication and the origin is not yet created
+                origin.openRequests.delete(pageId);
+            }
         }
 
         // close all requested pages as well
@@ -238,7 +244,7 @@ export class PageManagementStore
             }
         }
 
-        this.evictPage(page);
+        this.evictPage(pageId, page);
 
         this.setState({
             ...this.state,
@@ -335,8 +341,8 @@ export class PageManagementStore
                                  .getEvictionsOnSiteMapNodeHit(siteMapNodeHit, this.pageMap);
         for (const evictedPageId of evictedPages)
         {
-            const evictedPage = this.getPageOrThrow(evictedPageId);
-            this.evictPage(evictedPage);
+            const evictedPage = this.tryGetPage(evictedPageId);
+            this.evictPage(evictedPageId, evictedPage);
         }
 
         this.setState({
@@ -351,19 +357,27 @@ export class PageManagementStore
         const page = this.pageMap.get(pageId);
         if (!page)
         {
-            throw new Error(`Could not find page ${pageId} for closing it properly`);
+            throw new Error(`Could not find page ${pageId}`);
         }
 
         return page;
     }
 
-    private evictPage(page: IPageData): void
+    private tryGetPage(pageId: string): IPageData
     {
-        const eventLogPreserver = page.container.resolve<IActionEventLogPreserver>("IActionEventLogPreserver");
-        eventLogPreserver.clearPersistedEvents();
+        return this.pageMap.get(pageId);
+    }
 
-        this.options.pageEvictionStrategy.onPageClosed(page.pageId);
-        this.pageMap.delete(page.pageId);
+    private evictPage(pageId: string, page: IPageData): void
+    {
+        if (page)
+        {
+            const eventLogPreserver = page.container.resolve<IActionEventLogPreserver>("IActionEventLogPreserver");
+            eventLogPreserver.clearPersistedEvents();
+        }
+
+        this.options.pageEvictionStrategy.onPageClosed(pageId);
+        this.pageMap.delete(pageId);
     }
 }
 

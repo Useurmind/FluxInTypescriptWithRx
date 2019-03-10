@@ -3,6 +3,7 @@ export * from "./IObservableAction";
 export * from "./Action";
 export * from "./IStore";
 export * from "./Store";
+export * from "./StoreSubscription";
 
 export * from "./ActionFactory";
 export * from "./Middleware";

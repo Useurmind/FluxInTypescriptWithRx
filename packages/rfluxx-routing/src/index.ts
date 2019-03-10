@@ -1,12 +1,12 @@
-import { IGlobalComponents, IPageContainerFactory } from "./IPageContainerFactory";
+import { IGlobalComponents, IPageContainerFactory } from "./DependencyInjection";
 import { PageManagementStore } from "./PageManagementStore";
+import { LruPageStateEvictions } from "./Pages/LruPageStateEvictions";
 import { NoPageStateEvictions } from "./Pages/NoPageStateEvictions";
 import { IPathAndSearchPageIdOptions, PathAndSearchPageId } from "./Pages/PathAndSearchPageId";
 import { ComplexRouteMatching } from "./RouteMatching/ComplexRouteMatching";
 import { RegexRouteMatching } from "./RouteMatching/RegexRouteMatching";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./RouterStore";
 import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "./SiteMapStore";
-import { LruPageStateEvictions } from './Pages/LruPageStateEvictions';
 
 /**
  * Options for the { @see init } function.

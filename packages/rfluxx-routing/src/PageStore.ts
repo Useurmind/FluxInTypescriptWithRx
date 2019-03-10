@@ -3,8 +3,8 @@ import { Observable } from "rxjs/Observable";
 import * as Rfluxx from "rfluxx";
 import { IAction, IInjectedStoreOptions } from "rfluxx";
 
-import { IPageContainerFactory } from "./IPageContainerFactory";
-import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore, PageResultStatus } from "./PageCommunicationStore";
+import { IPageContainerFactory } from "./DependencyInjection/IPageContainerFactory";
+import { IPageCommunicationStore, IPageRequest, IPageResponse, IRequestedPageStore, PageCommunicationStore, PageResultStatus } from "./PageCommunication";
 import { IPageManagementStore } from "./PageManagementStore";
 import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
 import { IRouterStore } from "./RouterStore";
@@ -19,12 +19,6 @@ export interface IPageStoreOptions extends IInjectedStoreOptions
      * The urlof the page that this store works on.
      */
     pageUrl: URL;
-
-    /**
-     * The request that lead to this page being openend.
-     * Can be not set.
-     */
-    pageRequest: IPageRequest | null;
 
     /**
      * The store used to communicate with other pages.
@@ -51,12 +45,17 @@ export interface IPageStoreState
      * This is the url of the page this store is for.
      */
     pageUrl: URL;
+
+    /**
+     * The page request by which this page was opened.
+     */
+    pageRequest: IPageRequest | null;
 }
 
 /**
  * Interface to interact with the { @see PageStore }.
  */
-export interface IPageStore extends Rfluxx.IStore<IPageStoreState>
+export interface IPageStore extends Rfluxx.IStore<IPageStoreState>, IRequestedPageStore
 {
     /**
      * Action to turn on/off the edit mode for this page (true = editing, false = read only).
@@ -121,6 +120,11 @@ export class PageStore
     /**
      * @inheritDoc
      */
+    public setPageRequest: IAction<IPageRequest>;
+
+    /**
+     * @inheritDoc
+     */
     public setEditMode: IAction<boolean>;
 
     /**
@@ -143,10 +147,12 @@ export class PageStore
         super({
             ...options,
             initialState: {
-                pageUrl: options.pageUrl
+                pageUrl: options.pageUrl,
+                pageRequest: null
             }
         });
 
+        this.setPageRequest = this.createActionAndSubscribe(x => this.onSetPageRequest(x));
         this.setEditMode = this.createActionAndSubscribe(x => this.onSetEditMode(x));
         this.complete = this.createActionAndSubscribe(x => this.onClosePage(x, PageResultStatus.Completed));
         this.cancel = this.createActionAndSubscribe(x => this.onClosePage(x, PageResultStatus.Canceled));
@@ -169,6 +175,14 @@ export class PageStore
         return this.options.pageCommunicationStore.requestPageWithResult(this.options.pageUrl, urlFragment, data);
     }
 
+    private onSetPageRequest(pageRequest: IPageRequest): void
+    {
+        this.setState({
+            ...this.state,
+            pageRequest
+        });
+    }
+
     private onSetEditMode(params: boolean): void
     {
         this.options.pageManagementStore.setEditMode.trigger({
@@ -179,10 +193,10 @@ export class PageStore
 
     private onClosePage(result: any, pageStatus: PageResultStatus): void
     {
-        if (this.options.pageRequest)
+        if (this.state.pageRequest)
         {
             this.options.pageCommunicationStore.respond.trigger({
-                request: this.options.pageRequest,
+                request: this.state.pageRequest,
                 data: result,
                 status: pageStatus
             });
@@ -190,9 +204,9 @@ export class PageStore
 
         this.options.pageManagementStore.closePage.trigger(this.state.pageUrl);
 
-        if (this.options.pageRequest)
+        if (this.state.pageRequest)
         {
-            this.options.routerStore.navigateToUrl.trigger(this.options.pageRequest.origin);
+            this.options.routerStore.navigateToUrl.trigger(this.state.pageRequest.origin);
         }
     }
 

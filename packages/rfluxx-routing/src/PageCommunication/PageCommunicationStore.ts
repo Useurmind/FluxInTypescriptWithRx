@@ -3,76 +3,12 @@ import { applyMixins, IAction, IInjectedStoreOptions, INeedToKnowAboutReplay, Ne
 import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
 
-import { IPageManagementStore } from "./PageManagementStore";
-import { IRouterStore } from "./RouterStore";
+import { IPageManagementStore } from "../PageManagementStore";
+import { IRouterStore } from "../RouterStore";
 
-/**
- * Result status for a page.
- */
-export enum PageResultStatus
-{
-    /**
-     * The page completed succesfully (with a result).
-     */
-    Completed,
-
-    /**
-     * The page was canceled (nothing should change).
-     */
-    Canceled,
-
-    /**
-     * The page produced an error.
-     */
-    Error
-}
-
-/**
- * Interface for requesting to open a page.
- */
-export interface IPageRequest
-{
-    /**
-     * The url of the page that poses the request.
-     */
-    origin: URL;
-
-    /**
-     * The url of the page to request.
-     */
-    target: URL;
-
-    /**
-     * Data that should be handed to the requested page.
-     * Both requesting page and responding page must be aware
-     * of the correct data transported here.
-     */
-    data: any | null;
-}
-
-export interface IPageResponse
-{
-    /**
-     * The request from which the response results.
-     * The request object stays the same so you can compare with ===
-     * for the correct response to a request.
-     */
-    request: IPageRequest;
-
-    /**
-     * Data that should be handed to the requesting page after
-     * the requested page was commited.
-     * Both requesting page and responding page must be aware
-     * of the correct data transported here.
-     * The page result can be null!
-     */
-    data: any | null;
-
-    /**
-     * The result status of the requested page.
-     */
-    status: PageResultStatus;
-}
+import { IPageRequest } from "./IPageRequest";
+import { IPageResponse } from "./IPageResponse";
+import { PageResultStatus } from "./PageResultStatus";
 
 /**
  * The options to configure the { @see PageCommunicationStore }

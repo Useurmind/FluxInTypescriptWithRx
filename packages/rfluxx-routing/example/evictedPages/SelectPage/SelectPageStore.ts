@@ -1,6 +1,7 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
-import { IPageRequest } from "../../../src/PageCommunicationStore";
+import { IPageRequest } from "../../../src/PageCommunication";
+import { IRequestedPageStore } from "../../../src/PageCommunication/IRequestedPageStore";
 import { IPageStore } from "../../../src/PageStore";
 
 export interface ISelectPageStoreState
@@ -11,7 +12,6 @@ export interface ISelectPageStoreState
 
 export interface ISelectPageStoreOptions extends IInjectedStoreOptions
 {
-    pageRequest: IPageRequest;
     pageStore: IPageStore;
 }
 
@@ -19,7 +19,7 @@ export interface ISelectPageStoreOptions extends IInjectedStoreOptions
  * This is the interface by which the store is available in the components.
  * It offers a command to increment the SelectPage.
  */
-export interface ISelectPageStore extends IStore<ISelectPageStoreState> {
+export interface ISelectPageStore extends IStore<ISelectPageStoreState>, IRequestedPageStore {
     setSelection: IAction<string>;
     cancel: IAction<any>;
     confirm: IAction<any>;
@@ -27,6 +27,7 @@ export interface ISelectPageStore extends IStore<ISelectPageStoreState> {
 
 export class SelectPageStore extends Store<ISelectPageStoreState> implements ISelectPageStore
 {
+    public setPageRequest: IAction<IPageRequest>;
     public setSelection: IAction<string>;
     public cancel: IAction<any>;
     public confirm: IAction<any>;
@@ -36,9 +37,17 @@ export class SelectPageStore extends Store<ISelectPageStoreState> implements ISe
         super({
             ...options,
             initialState: {
-                contextInfo: options.pageRequest.data as string,
+                contextInfo: "",
                 selectedString: ""
             }
+        });
+
+        // subscribe this action defined via IRequestedPageStore to receive the page request object
+        this.setPageRequest = this.createActionAndSubscribe<IPageRequest>(pageRequest => {
+            this.setState({
+                ...this.state,
+                contextInfo: pageRequest.data as string
+            });
         });
 
         // create an action that is observable by the store and subscribe it

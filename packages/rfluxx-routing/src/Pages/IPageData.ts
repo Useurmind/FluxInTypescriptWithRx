@@ -1,6 +1,6 @@
 import * as Rfluxx from "rfluxx";
 
-import { IPageRequest } from "../PageCommunicationStore";
+import { IPageRequest } from "../PageCommunication";
 import { ISiteMapNode } from "../SiteMapStore";
 
 /**

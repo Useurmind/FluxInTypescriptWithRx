@@ -36,7 +36,8 @@ export function registerStore<TState>(
 
     return containerBuilder.register(injectedCreate)
                            .as(storeKey)
-                           .in("IResetMyState[]");
+                           .in("IResetMyState[]")
+                           .in("IStore[]");
 }
 
 /**

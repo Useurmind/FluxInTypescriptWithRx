@@ -1,6 +1,6 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
-import { IPageContainerFactory } from "./IPageContainerFactory";
+import { IPageContainerFactory } from "./DependencyInjection/IPageContainerFactory";
 import { IRoute, IRouteHit, IRouterStoreState } from "./RouterStore";
 
 /**

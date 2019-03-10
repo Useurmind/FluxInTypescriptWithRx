@@ -1,6 +1,6 @@
 import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
 
-import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoryBase } from "../../../src/IPageContainerFactory";
+import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoryBase } from "../../../src/DependencyInjection";
 
 import { SelectPageStore } from "./SelectPageStore";
 

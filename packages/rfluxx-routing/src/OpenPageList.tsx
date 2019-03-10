@@ -3,7 +3,7 @@ import * as React from "react";
 import { IPageContextProps } from "./PageContextProvider";
 import { IPageManagementStore, IPageManagementStoreState } from "./PageManagementStore";
 import { IPageData } from "./Pages/IPageData";
-import { StoreSubscription } from "./StoreSubscription";
+import { StoreSubscription } from "rfluxx";
 
 /**
  * Props for { @see OpenPageList }.
