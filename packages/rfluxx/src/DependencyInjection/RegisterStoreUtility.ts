@@ -22,13 +22,13 @@ export function registerStore<TState>(
 
     const injectedCreate = (c: IContainer) =>
     {
-        const actionFactory = c.resolve<IActionFactory>("IActionFactory");
-        const prefixedActionFactory = new PrefixActionFactory(actionFactory, storeKey);
+        const actionFactory = c.resolveOptional<IActionFactory>("IActionFactory");
+        const prefixedActionFactory = actionFactory ? new PrefixActionFactory(actionFactory, storeKey) : null;
 
         const injectStoreOptions = (o: IInjectedStoreOptions) => ({
             ...o,
             actionFactory: prefixedActionFactory,
-            fetcher: c.resolve<IObservableFetcher>("IObservableFetcher")
+            fetcher: c.resolveOptional<IObservableFetcher>("IObservableFetcher")
         });
 
         return create(c, injectStoreOptions);
@@ -45,15 +45,35 @@ export function registerStore<TState>(
  * @param container The container to resolve the store from.
  * @param typeName The type name (or interface name) or the store that should be resolved.
  * @param key A unique key for this store in this container (for multi instancing stores, optional).
+ * @returns The store instance or throws an error if not registered.
  */
 export function resolveStore<TState>(
     container: IContainer,
     typeName: string,
     key?: string)
+    : IStore<TState>
 {
     const storeKey = getStoreRegistrationKey(typeName, key);
 
-    container.resolve<IStore<TState>>(storeKey);
+    return container.resolve<IStore<TState>>(storeKey);
+}
+
+/**
+ * Resolve a store from the given container (do not throw if not registered).
+ * @param container The container to resolve the store from.
+ * @param typeName The type name (or interface name) or the store that should be resolved.
+ * @param key A unique key for this store in this container (for multi instancing stores, optional).
+ * @returns The store instance or null if not registered.
+ */
+export function resolveStoreOptional<TState>(
+    container: IContainer,
+    typeName: string,
+    key?: string)
+    : IStore<TState>
+{
+    const storeKey = getStoreRegistrationKey(typeName, key);
+
+    return container.resolveOptional<IStore<TState>>(storeKey);
 }
 
 function getStoreRegistrationKey(typeName: string, key?: string): string

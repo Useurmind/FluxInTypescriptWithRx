@@ -4,4 +4,6 @@ export * from "./ICreationRule";
 export * from "./IContainerBuilder";
 export * from "./SimpleContainer";
 export * from "./SimpleContainerBuilder";
-export * from "./ContainerStoreRegistration";
+export * from "./RegisterStoreUtility";
+export * from "./RegisterObservableFetcherUtility";
+export * from "./RegisterActionFactoryUtility";

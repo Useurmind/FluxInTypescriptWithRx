@@ -39,16 +39,46 @@ export class SimpleContainer implements IContainer
     /**
      * @inheritDoc
      */
-    public resolve<T>(typeName: string, instanceName?: string): T
+    public resolve<T>(key: string, instanceName?: string): T
     {
-        let instancesPerTypeName = this.instanceMap.get(typeName);
+        return this.resolveInternal<T>(key, false, instanceName);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public resolveOptional<T>(key: string, instanceName?: string): T
+    {
+        return this.resolveInternal<T>(key, true, instanceName);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public resolveMultiple<T>(key: string, instanceName?: string): T[]
+    {
+        let result = this.resolveInternal<T[]>(key, true, instanceName);
+        if (!result)
+        {
+            result = [];
+        }
+
+        return result;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    private resolveInternal<T>(key: string, optional: boolean, instanceName?: string): T
+    {
+        let instancesPerTypeName = this.instanceMap.get(key);
         if (!instancesPerTypeName)
         {
             instancesPerTypeName = {
                 defaultInstance: null,
                 namedInstances: new Map()
             };
-            this.instanceMap.set(typeName, instancesPerTypeName);
+            this.instanceMap.set(key, instancesPerTypeName);
         }
 
         let instance = instancesPerTypeName.defaultInstance;
@@ -59,10 +89,17 @@ export class SimpleContainer implements IContainer
 
         if (!instance)
         {
-            const create = this.registrationMap.get(typeName);
+            const create = this.registrationMap.get(key);
             if (!create)
             {
-                throw new Error(`Could not find any registrations for typeName '${typeName}' in container`);
+                if (!optional)
+                {
+                    throw new Error(`Could not find any registrations for key '${key}' in container`);
+                }
+                else
+                {
+                    return null;
+                }
             }
 
             if (typeof create === "function")

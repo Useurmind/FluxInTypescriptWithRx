@@ -143,12 +143,12 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
     /**
      * @inheritDoc
      */
-    public navigateToPath: IAction<string>;
+    public readonly navigateToPath: IAction<string>;
 
     /**
      * @inheritDoc
      */
-    public navigateToUrl: IAction<URL>;
+    public readonly navigateToUrl: IAction<URL>;
 
     /**
      * Interval number used to listen to url changes periodically.

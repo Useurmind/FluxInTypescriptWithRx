@@ -2,14 +2,14 @@ import * as Flux from "../../src";
 import { IInjectedStoreOptions } from "../../src";
 import { IActionFactory } from "../../src/ActionFactory/IActionFactory";
 import { MiddlewareActionFactory } from "../../src/ActionFactory/MiddlewareActionFactory";
-import { registerStore } from "../../src/DependencyInjection/ContainerStoreRegistration";
+import { registerStore } from "../../src/DependencyInjection/RegisterStoreUtility";
 import { SimpleContainer } from "../../src/DependencyInjection/SimpleContainer";
 import { SimpleContainerBuilder } from "../../src/DependencyInjection/SimpleContainerBuilder";
 import { ConsoleLoggingMiddleware } from "../../src/Middleware";
 import { ActionEventLog } from "../../src/Middleware/ActionEventLog/ActionEventLog";
 import { ActionEventLogMiddleware } from "../../src/Middleware/ActionEventLog/ActionEventLogMiddleware";
+import { registerTimeTraveler } from "../../src/Middleware/ActionEventLog/RegisterTimeTravelerUtility";
 import { TimeTraveler } from "../../src/Middleware/ActionEventLog/TimeTraveler";
-import { registerTimeTraveler } from "../../src/Middleware/ActionEventLog/TimeTravelerFactory";
 
 export interface IPageStoreState {
     counter: number;

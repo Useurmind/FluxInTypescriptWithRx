@@ -133,19 +133,19 @@ export class PageManagementStore
     /**
      * @inheritDoc
      */
-    public setEditMode: IAction<ISetEditModeArguments>;
+    public readonly setEditMode: IAction<ISetEditModeArguments>;
 
     /**
      * @inheritDoc
      */
-    public closePage: IAction<URL>;
+    public readonly closePage: IAction<URL>;
 
     /**
      * @inheritDoc
      */
-    public openPage: IAction<IPageRequest>;
+    public readonly openPage: IAction<IPageRequest>;
 
-    public pageCommunicationStore: IPageCommunicationStore;
+    private pageCommunicationStore: IPageCommunicationStore;
 
     private siteMapNodeHit: IAction<ISiteMapNodeHit>;
 
@@ -219,10 +219,10 @@ export class PageManagementStore
         const pageId = this.options.pageIdAlgorithm.getPageId(pageUrl);
         const page = this.getPageOrThrow(pageId);
 
-        // if the page was requested we should remove the open request
-        // from the origin page
         if (page.pageRequest)
         {
+            // if the page was requested we should remove the open request
+            // from the origin page
             const originId = this.options.pageIdAlgorithm.getPageId(page.pageRequest.origin);
             const origin = this.tryGetPage(originId);
             if (origin)
@@ -232,6 +232,10 @@ export class PageManagementStore
                 // communication and the origin is not yet created
                 origin.openRequests.delete(pageId);
             }
+
+            // TODO: also when a page was requested and then closed
+            // the user should not be able to navigate back to it
+            // as the "unit of work" was already finished, what to do here?
         }
 
         // close all requested pages as well
@@ -299,8 +303,8 @@ export class PageManagementStore
             // if we have a pending request and state we want to override the state as the page is reopened
             console.warn("Page state is thrown away on page request of page " + siteMapNodeHit.url.href);
             hasPageState = false;
-            this.pendingRequests.delete(siteMapNodeHit.url.href);
         }
+        this.pendingRequests.delete(siteMapNodeHit.url.href);
 
         let openPages = this.state.openPages;
         if (!hasPageState)
@@ -372,8 +376,12 @@ export class PageManagementStore
     {
         if (page)
         {
-            const eventLogPreserver = page.container.resolve<IActionEventLogPreserver>("IActionEventLogPreserver");
-            eventLogPreserver.clearPersistedEvents();
+            const eventLogPreserver = page.container
+                                          .resolveOptional<IActionEventLogPreserver>("IActionEventLogPreserver");
+            if (eventLogPreserver)
+            {
+                eventLogPreserver.clearPersistedEvents();
+            }
         }
 
         this.options.pageEvictionStrategy.onPageClosed(pageId);

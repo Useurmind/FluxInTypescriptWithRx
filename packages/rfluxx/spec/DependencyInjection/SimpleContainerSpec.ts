@@ -6,6 +6,17 @@ describe("SimpleContainer", () =>
     const registrationKey1 = "lksjfkfdjg";
     const registrationKey2 = "sdölgkjfdhlgkfgjkh";
 
+    it("optional resolve without registration returns null", () =>
+    {
+        const builder = new SimpleContainerBuilder();
+
+        const container = builder.build();
+
+        const result = container.resolveOptional(registrationKey1);
+
+        expect(result).toBe(null);
+    });
+
     it("register and resolve works", () =>
     {
         const builder = new SimpleContainerBuilder();
@@ -16,8 +27,10 @@ describe("SimpleContainer", () =>
         const container = builder.build();
 
         const result = container.resolve(registrationKey1);
+        const result2 = container.resolveOptional(registrationKey1);
 
         expect(result).toBe(registeredString);
+        expect(result2).toBe(result);
     });
 
     it("register and resolve multiple times returns the same object", () =>
@@ -176,5 +189,16 @@ describe("SimpleContainer", () =>
         const result = container.resolve<any>(registrationKey1);
 
         expect(result.dep).toBe(registeredString2);
+    });
+
+    it("resolving not registered collection returns empty array", () =>
+    {
+        const builder = new SimpleContainerBuilder();
+        const container = builder.build();
+
+        const result = container.resolveMultiple<any[]>(registrationKey1);
+
+        expect(result).not.toBeNull();
+        expect(result.length).toBe(0);
     });
 });
