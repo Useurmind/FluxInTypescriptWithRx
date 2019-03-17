@@ -85,11 +85,13 @@ export class OpenPageList extends React.Component<IOpenPageListProps, IOpenPageL
      */
     public render(): any
     {
+        const currentPageId = this.state.currentPage ? this.state.currentPage.pageId : null;
+
         return <ul className="list-group">
             {
                 this.state.openPages.map(p =>
                 {
-                    const isActivePage = p.pageId === this.state.currentPage.pageId;
+                    const isActivePage = p.pageId === currentPageId;
                     const className = isActivePage ? "list-group-item active" : "list-group-item";
 
                     return <li className={className} key={p.pageId}>

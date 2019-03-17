@@ -206,7 +206,12 @@ export class PageStore
 
         if (this.state.pageRequest)
         {
-            this.options.routerStore.navigateToUrl.trigger(this.state.pageRequest.origin);
+            // we replace the history entry so that the user
+            // can not navigate back to the page
+            this.options.routerStore.navigate.trigger({
+                url: this.state.pageRequest.origin,
+                replaceHistoryEntry: true
+            });
         }
     }
 

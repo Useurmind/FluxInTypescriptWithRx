@@ -145,7 +145,7 @@ export class PageManagementStore
      */
     public readonly openPage: IAction<IPageRequest>;
 
-    private pageCommunicationStore: IPageCommunicationStore;
+    public readonly pageCommunicationStore: IPageCommunicationStore;
 
     private siteMapNodeHit: IAction<ISiteMapNodeHit>;
 

@@ -56,6 +56,30 @@ export enum RouterMode
 }
 
 /**
+ * Arguments for the navigate action.
+ */
+export interface INavigateActionParams
+{
+    /**
+     * Url to navigate to.
+     * Set this or the path.
+     */
+    url?: URL | string;
+
+    /**
+     * Path to navigate to.
+     * Set this or the url.
+     */
+    path?: string;
+
+    /**
+     * Replace the current history entry with
+     * the new route.
+     */
+    replaceHistoryEntry?: boolean;
+}
+
+/**
  * The options to configure the { @see RouterStore }
  */
 export interface IRouterStoreOptions extends IInjectedStoreOptions
@@ -108,6 +132,11 @@ export interface IRouterStore extends Rfluxx.IStore<IRouterStoreState>
     navigateToUrl: IAction<URL>;
 
     /**
+     * Navigate to a new route.
+     */
+    navigate: IAction<INavigateActionParams>;
+
+    /**
      * Get the href that can be applied to links from a path segment.
      * @param path The path segment. The href can differ from this segment for e.g. hash routing.
      */
@@ -151,6 +180,11 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
     public readonly navigateToUrl: IAction<URL>;
 
     /**
+     * @inheritDoc
+     */
+    public readonly navigate: IAction<INavigateActionParams>;
+
+    /**
      * Interval number used to listen to url changes periodically.
      */
     private interval: number = null;
@@ -175,8 +209,9 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
 
         console.info("root for router store is " + this.options.root);
 
-        this.navigateToPath = this.createActionAndSubscribe(s => this.onNavigateToPath(s));
-        this.navigateToUrl = this.createActionAndSubscribe(s => this.onNavigateToUrl(s));
+        this.navigateToPath = this.createActionAndSubscribe(s => this.onNavigateToPath(s, false));
+        this.navigateToUrl = this.createActionAndSubscribe(s => this.onNavigateToUrl(s, false));
+        this.navigate = this.createActionAndSubscribe(s => this.onNavigate(s));
 
         this.listenToUrlChanges();
     }
@@ -199,13 +234,21 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
         return new URL(window.location.origin + this.options.root + this.clearSlashes(path));
     }
 
-    private onNavigateToPath(path: string): void
+    private onNavigateToPath(path: string, replaceHistoryEntry: boolean): void
     {
         path = path ? path : "";
 
         if (this.options.mode === RouterMode.History)
         {
-            history.pushState(null, null, this.options.root + this.clearSlashes(path));
+            const targetUrl = this.options.root + this.clearSlashes(path);
+            if (replaceHistoryEntry === false)
+            {
+                history.pushState(null, null, targetUrl);
+            }
+            else
+            {
+                history.replaceState({ replaced: this.state.currentHit.url.toString() }, null, targetUrl);
+            }
         }
         else
         {
@@ -213,13 +256,34 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
         }
     }
 
-    private onNavigateToUrl(url: URL): void
+    private onNavigateToUrl(url: URL, replaceHistoryEntry: boolean): void
     {
         let path = url.pathname + url.search + url.hash;
 
         path = path.replace(this.options.root, "/");
 
-        this.onNavigateToPath(path);
+        this.onNavigateToPath(path, replaceHistoryEntry);
+    }
+
+    private onNavigate(params: INavigateActionParams): void
+    {
+        if (params.url)
+        {
+            let url = params.url as any;
+            if (!url.protocol)
+            {
+                url = new URL(url);
+            }
+            this.onNavigateToUrl(url, params.replaceHistoryEntry);
+        }
+        else if (params.path)
+        {
+            this.onNavigateToPath(params.path, params.replaceHistoryEntry);
+        }
+        else
+        {
+            throw new Error(`The navigate action in the router store requires either the url or path to be set.`);
+        }
     }
 
     private listenToUrlChanges(): void
