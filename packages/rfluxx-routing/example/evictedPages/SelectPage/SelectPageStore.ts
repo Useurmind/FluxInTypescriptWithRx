@@ -4,6 +4,16 @@ import { IPageRequest } from "../../../src/PageCommunication";
 import { IRequestedPageStore } from "../../../src/PageCommunication/IRequestedPageStore";
 import { IPageStore } from "../../../src/PageStore";
 
+export interface ISelectPageStoreInput
+{
+    contextInfo: string;
+}
+
+export interface ISelectPageStoreOutput
+{
+    selectedString: string;
+}
+
 export interface ISelectPageStoreState
 {
     contextInfo: string;
@@ -27,10 +37,10 @@ export interface ISelectPageStore extends IStore<ISelectPageStoreState>, IReques
 
 export class SelectPageStore extends Store<ISelectPageStoreState> implements ISelectPageStore
 {
-    public setPageRequest: IAction<IPageRequest>;
-    public setSelection: IAction<string>;
-    public cancel: IAction<any>;
-    public confirm: IAction<any>;
+    public readonly setPageRequest: IAction<IPageRequest>;
+    public readonly setSelection: IAction<string>;
+    public readonly cancel: IAction<any>;
+    public readonly confirm: IAction<any>;
 
     public constructor(private options: ISelectPageStoreOptions)
     {
@@ -44,21 +54,29 @@ export class SelectPageStore extends Store<ISelectPageStoreState> implements ISe
 
         // subscribe this action defined via IRequestedPageStore to receive the page request object
         this.setPageRequest = this.createActionAndSubscribe<IPageRequest>(pageRequest => {
+            const input = pageRequest.data as ISelectPageStoreInput;
             this.setState({
                 ...this.state,
-                contextInfo: pageRequest.data as string
+                contextInfo: input.contextInfo
             });
         });
 
         // create an action that is observable by the store and subscribe it
         this.cancel = this.createActionAndSubscribe<any>(_ =>
         {
-            this.options.pageStore.cancel.trigger(this.state.selectedString);
+            const result: ISelectPageStoreOutput = {
+                selectedString: this.state.selectedString
+            };
+            this.options.pageStore.cancel.trigger(result);
         });
 
         this.confirm = this.createActionAndSubscribe<any>(_ =>
         {
-            this.options.pageStore.complete.trigger(this.state.selectedString);
+            const result: ISelectPageStoreOutput = {
+                selectedString: this.state.selectedString
+            };
+
+            this.options.pageStore.complete.trigger(result);
         });
 
         this.setSelection = this.createActionAndSubscribe<string>(selectedString =>

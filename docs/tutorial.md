@@ -97,8 +97,7 @@ export class ContainerFactory extends SimplePageContainerFactoryBase
         registerStore(
         container,
         c => new HomeStore({
-            pageCommunicationStore: c.resolve("IPageCommunicationStore"),
-            pageRequest: c.resolve("IPageRequest")
+            pageCommunicationStore: c.resolve("IPageCommunicationStore")
         })).as("IHomeStore");
     }
 }
@@ -124,8 +123,7 @@ It provides the following arguments:
 registerStore(
     container,
     c => new HomeStore({
-        pageCommunicationStore: c.resolve("IPageCommunicationStore"),
-        pageRequest: c.resolve("IPageRequest")
+        pageCommunicationStore: c.resolve("IPageCommunicationStore")
     })).as("IHomeStore");
 ```
 
@@ -135,7 +133,6 @@ We use the helper function `registerStore` which ensures injection of common dep
 
 The home store has dependencies on two of the preregistered components in the container:
 
-- `IPageRequest`: if other pages sent a request to this page this object is available in the container.
 - `IPageCommunicationStore`: store used to communicate with other pages 
 
 ## Create app component

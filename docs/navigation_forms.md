@@ -90,34 +90,56 @@ In the store on the requested page you can use the page request object by inject
 export interface IRequestedPageInput 
 {
     // fields for input data
+    someField: string;
 }
 
 export interface IRequestedPageOutput 
 {
     // fields for result data
+    // ...
 }
 
 export interface IRequestedStoreOptions
 {
-    // the request coming from the requesting page.
-    pageRequest: IPageRequest;
-
     // depend on the page store and inject it
     pageStore: IPageStore;
 }
 
-export class RequestedStore extends Store<...>
+// we specify an interface for the store that holds all its actions
+// IRequestedPageStore specifies an action to receive the page request
+export interface IRequestedStore extends IRequestedPageStore
 {
+
+}
+
+export class RequestedStore extends Store<...> implements IRequestedStore
+{
+    // this action is defined in IRequestedPageStore
+    // it will automatically be called on the store after creation
+    public readonly setPageRequest: IAction<IPageRequest>;
+
     //...
     constructor(private options: IRequestedStoreOptions)
     {
         super({
             initialState: {
-                // init state from request
-                someField: options.pageRequest.data.someField 
+                // this should come from the page request
+                someField: null 
                 // ...              
             }
         });
+        
+        // subscribe this action defined via IRequestedPageStore to receive the page request object
+        this.setPageRequest = this.createActionAndSubscribe<IPageRequest>(pageRequest => {
+            var input = pageRequest.data as IRequestedPageInput;
+            this.setState({
+                ...this.state,
+                someField: input.someField
+            });
+        });
+
+        // more actions
+        // ...
     }
 
     private onUserCommit()

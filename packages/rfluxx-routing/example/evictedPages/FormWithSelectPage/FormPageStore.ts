@@ -1,5 +1,7 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
+import { ISelectPageStoreInput, ISelectPageStoreOutput } from "../SelectPage/SelectPageStore";
+
 import { IPageStore } from "../../../src/PageStore";
 
 export interface IFormPageStoreState
@@ -38,12 +40,18 @@ export class FormPageStore extends Store<IFormPageStoreState> implements IFormPa
         // create an action that is observable by the store and subscribe it
         this.selectString = this.createActionAndSubscribe<number>(increment =>
         {
+            const inputData: ISelectPageStoreInput = {
+                contextInfo: "heys its me the form please give me some string"
+            };
+
             this.options
                 .pageStore
-                .requestPageWithResult("/select/page", "heys its me the form please give me some string")
+                .requestPageWithResult("/select/page", inputData)
                 .subscribe(result =>
                 {
-                    this.setSelectedString.trigger(result.data);
+                    const resultData = result.data as ISelectPageStoreOutput;
+
+                    this.setSelectedString.trigger(resultData.selectedString);
                 });
         }, { name: "selectString" });
 
