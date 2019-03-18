@@ -335,11 +335,13 @@
     // 
     {
       "packageName": "rfluxx",
-      "projectFolder": "packages/rfluxx"
+      "projectFolder": "packages/rfluxx",
+      "shouldPublish": true
     },
     {
       "packageName": "rfluxx-routing",
-      "projectFolder": "packages/rfluxx-routing"
+      "projectFolder": "packages/rfluxx-routing",
+      "shouldPublish": true
     }
   ]
 }
