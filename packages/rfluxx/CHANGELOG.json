@@ -2,6 +2,18 @@
   "name": "rfluxx",
   "entries": [
     {
+      "version": "1.0.1",
+      "tag": "rfluxx_v1.0.1",
+      "date": "Mon, 18 Mar 2019 15:46:46 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Included all files in exported index."
+          }
+        ]
+      }
+    },
+    {
       "version": "1.0.0",
       "tag": "rfluxx_v1.0.0",
       "date": "Mon, 18 Mar 2019 15:07:12 GMT",
