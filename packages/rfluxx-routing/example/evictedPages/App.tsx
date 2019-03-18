@@ -1,14 +1,14 @@
 import * as React from "react";
 import { IContainer } from "rfluxx";
 
-import { Breadcrumb } from "../../src/Breadcrumb";
-import { CurrentPage } from "../../src/CurrentPage";
-import { CurrentSiteMapNode } from "../../src/CurrentSiteMapNode";
-import { OpenPageList } from "../../src/OpenPageList";
-import { withPageContext } from "../../src/PageContextProvider";
-import { IPageManagementStore } from "../../src/PageManagementStore";
-import { RouterLink } from "../../src/RouterLink";
-import { ISiteMapNode, ISiteMapStore } from "../../src/SiteMapStore";
+import { Breadcrumb } from "../../src";
+import { CurrentPage } from "../../src";
+import { CurrentSiteMapNode } from "../../src";
+import { OpenPageList } from "../../src";
+import { withPageContext } from "../../src";
+import { IPageManagementStore } from "../../src";
+import { RouterLink } from "../../src";
+import { ISiteMapNode, ISiteMapStore } from "../../src";
 
 export interface IAppProps
 {

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { StoreSubscription } from "rfluxx";
 
-import { IPageContextProps, PageContext } from "../../../src/PageContextProvider";
-import { RouterLink } from "../../../src/RouterLink";
+import { IPageContextProps, PageContext } from "../../../src";
+import { RouterLink } from "../../../src";
 
 import { IEndlessSequencePageStore, IEndlessSequencePageStoreState } from "./EndlessSequencePageStore";
 

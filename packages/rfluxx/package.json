@@ -9,10 +9,10 @@
   "main": "out/src/index.js",
   "types": "out/src/index.d.ts",
   "scripts": {
-    "lint": ".\\node_modules\\.bin\\tslint -p .\\tsconfig.json",
-    "build": ".\\node_modules\\.bin\\tsc",
-    "test": ".\\node_modules\\.bin\\karma start",
-    "start": ".\\node_modules\\.bin\\webpack-dev-server"
+    "lint": "tslint -p .\\tsconfig.json",
+    "build": "tsc",
+    "test": "karma start",
+    "start": "webpack-dev-server"
   },
   "keywords": [
     "flux",
@@ -22,9 +22,14 @@
   ],
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "rxjs": "~5.5.7",
+    "tslib": "~1.9.0"
+  },
   "devDependencies": {
     "@types/jasmine": "^2.8.6",
+    "@types/react": "~16.8.8",
+    "@types/react-dom": "~16.8.2",
     "clean-webpack-plugin": "^0.1.18",
     "html-webpack-plugin": "^3.0.6",
     "jasmine": "^3.1.0",
@@ -35,6 +40,8 @@
     "karma-spec-reporter": "^0.0.32",
     "karma-trx-reporter": "^0.2.9",
     "karma-webpack": "^3.0.0",
+    "react": "~16.8.4",
+    "react-dom": "~16.8.4",
     "ts-loader": "^4.1.0",
     "tslint": "^5.11.0",
     "tslint-eslint-rules": "^5.4.0",

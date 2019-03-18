@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StoreSubscription } from "rfluxx";
 
-import { IPageContextProps, PageContext } from "../../../src/PageContextProvider";
+import { IPageContextProps, PageContext } from "../../../src";
 
 import { ISelectPageStore, ISelectPageStoreState } from "./SelectPageStore";
 

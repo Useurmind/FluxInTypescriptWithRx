@@ -1,8 +1,8 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
-import { IPageRequest } from "../../../src/PageCommunication";
-import { IRequestedPageStore } from "../../../src/PageCommunication/IRequestedPageStore";
-import { IPageStore } from "../../../src/PageStore";
+import { IPageRequest } from "../../../src";
+import { IRequestedPageStore } from "../../../src";
+import { IPageStore } from "../../../src";
 
 export interface ISelectPageStoreInput
 {

@@ -2,7 +2,7 @@ import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
 import { ISelectPageStoreInput, ISelectPageStoreOutput } from "../SelectPage/SelectPageStore";
 
-import { IPageStore } from "../../../src/PageStore";
+import { IPageStore } from "../../../src";
 
 export interface IFormPageStoreState
 {

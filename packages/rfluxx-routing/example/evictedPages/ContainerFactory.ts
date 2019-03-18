@@ -1,6 +1,6 @@
 import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
 
-import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoryBase } from "../../src/DependencyInjection";
+import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoryBase } from "../../src";
 
 import { EndlessSequencePageStore } from "./EndlessSequence/EndlessSequencePageStore";
 import { FormPageStore } from "./FormWithSelectPage/FormPageStore";
