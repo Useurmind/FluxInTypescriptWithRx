@@ -2,6 +2,18 @@
   "name": "rfluxx",
   "entries": [
     {
+      "version": "1.0.2",
+      "tag": "rfluxx_v1.0.2",
+      "date": "Mon, 18 Mar 2019 16:10:08 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixed obserable fromPromise use in ObervableFetcher"
+          }
+        ]
+      }
+    },
+    {
       "version": "1.0.1",
       "tag": "rfluxx_v1.0.1",
       "date": "Mon, 18 Mar 2019 15:46:46 GMT",

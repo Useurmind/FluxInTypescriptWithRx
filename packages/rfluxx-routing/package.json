@@ -22,7 +22,7 @@
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
   "dependencies": {
-    "rfluxx": "^1.0.1",
+    "rfluxx": "^1.0.2",
     "rxjs": "~5.5.7",
     "tslib": "~1.9.0"
   },
