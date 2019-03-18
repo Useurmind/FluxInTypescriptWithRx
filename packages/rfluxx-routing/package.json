@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-routing",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Routing package for rfluxx.",
   "repository": {
     "type": "git",
@@ -22,13 +22,13 @@
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
   "dependencies": {
-    "rfluxx": "^0.1.0",
+    "rfluxx": "^1.0.0",
     "rxjs": "~5.5.7",
     "tslib": "~1.9.0"
   },
   "peerDependencies": {
     "react": "~16.8.4",
-    "react-dom": "~16.8.4"    
+    "react-dom": "~16.8.4"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.6",
