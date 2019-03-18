@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-routing",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Routing package for rfluxx.",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
   "dependencies": {
-    "rfluxx": "^1.0.2",
+    "rfluxx": "^1.0.3",
     "rxjs": "~5.5.7",
     "tslib": "~1.9.0"
   },
@@ -57,4 +57,3 @@
     "webpack-dev-server": "^3.1.10"
   }
 }
-

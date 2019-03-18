@@ -2,6 +2,18 @@
   "name": "rfluxx",
   "entries": [
     {
+      "version": "1.0.3",
+      "tag": "rfluxx_v1.0.3",
+      "date": "Mon, 18 Mar 2019 16:20:57 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Build before publish"
+          }
+        ]
+      }
+    },
+    {
       "version": "1.0.2",
       "tag": "rfluxx_v1.0.2",
       "date": "Mon, 18 Mar 2019 16:10:08 GMT",
