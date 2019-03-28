@@ -8,6 +8,24 @@ import { RegexRouteMatching } from "./RouteMatching/RegexRouteMatching";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./RouterStore";
 import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "./SiteMapStore";
 
+export * from "./DependencyInjection";
+export * from "./PageCommunication";
+export * from "./Pages";
+export * from "./RouteMatching";
+
+export * from "./Breadcrumb";
+export * from "./CurrentPage";
+export * from "./CurrentSiteMapNode";
+export * from "./OpenPageList";
+export * from "./Page";
+export * from "./PageContextProvider";
+export * from "./PageManagementStore";
+export * from "./PageStore";
+export * from "./RouterLink";
+export * from "./RouterStore";
+export * from "./SiteMapNode";
+export * from "./SiteMapStore";
+
 /**
  * Options for the { @see init } function.
  */

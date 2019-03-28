@@ -1,4 +1,5 @@
 import { Observable } from "rxjs/Observable";
+import { fromPromise } from "rxjs/observable/fromPromise";
 
 import { INeedToKnowAboutReplay, NeedToKnowAboutReplayMixin } from "../Middleware/ActionEventLog/INeedToKnowAboutReplay";
 import { applyMixins } from "../Utility/Mixin";
@@ -37,7 +38,7 @@ export class ObservableFetcher implements IObservableFetcher,  INeedToKnowAboutR
             return Observable.empty();
         }
 
-        return Observable.fromPromise(fetch(requestInfo, init));
+        return fromPromise(fetch(requestInfo, init));
     }
 }
 applyMixins(ObservableFetcher, [NeedToKnowAboutReplayMixin]);

@@ -1,0 +1,39 @@
+{
+  "name": "rfluxx-routing",
+  "entries": [
+    {
+      "version": "1.0.1",
+      "tag": "rfluxx-routing_v1.0.1",
+      "date": "Mon, 18 Mar 2019 16:20:57 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Reference fixed version of rfluxx."
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"rfluxx\" from `^1.0.2` to `^1.0.3`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.0.0",
+      "tag": "rfluxx-routing_v1.0.0",
+      "date": "Mon, 18 Mar 2019 15:07:12 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "First stable version"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"rfluxx\" from `^0.1.0` to `^1.0.0`"
+          }
+        ]
+      }
+    }
+  ]
+}

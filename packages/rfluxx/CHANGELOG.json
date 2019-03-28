@@ -1,0 +1,53 @@
+{
+  "name": "rfluxx",
+  "entries": [
+    {
+      "version": "1.0.3",
+      "tag": "rfluxx_v1.0.3",
+      "date": "Mon, 18 Mar 2019 16:20:57 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Build before publish"
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.0.2",
+      "tag": "rfluxx_v1.0.2",
+      "date": "Mon, 18 Mar 2019 16:10:08 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixed obserable fromPromise use in ObervableFetcher"
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.0.1",
+      "tag": "rfluxx_v1.0.1",
+      "date": "Mon, 18 Mar 2019 15:46:46 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Included all files in exported index."
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.0.0",
+      "tag": "rfluxx_v1.0.0",
+      "date": "Mon, 18 Mar 2019 15:07:12 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Integration with first rfluxx-routing versio"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
-import { IPageStore } from "../../../src/PageStore";
+import { IPageStore } from "../../../src";
 
 export interface IEndlessSequencePageStoreState
 {

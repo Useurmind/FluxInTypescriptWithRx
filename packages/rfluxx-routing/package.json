@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-routing",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "Routing package for rfluxx.",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   "types": "out/src/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --https",
     "test": "karma start"
   },
   "keywords": [
@@ -23,11 +23,21 @@
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
   "dependencies": {
-    "rfluxx": "^0.1.0"
+    "rfluxx": "^1.0.3",
+    "rxjs": "~5.5.7",
+    "tslib": "~1.9.0"
+  },
+  "peerDependencies": {
+    "react": "~16.8.4",
+    "react-dom": "~16.8.4"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.6",
+    "@types/react": "~16.8.8",
+    "@types/react-dom": "~16.8.2",
     "clean-webpack-plugin": "^0.1.18",
+    "es5-shim": "~4.5.12",
+    "es6-shim": "~0.35.5",
     "html-webpack-plugin": "^3.0.6",
     "jasmine": "^3.1.0",
     "jasmine-core": "^3.1.0",
@@ -37,6 +47,8 @@
     "karma-spec-reporter": "^0.0.32",
     "karma-trx-reporter": "^0.2.9",
     "karma-webpack": "^3.0.0",
+    "react": "~16.8.4",
+    "react-dom": "~16.8.4",
     "ts-loader": "^4.1.0",
     "tslint": "^5.11.0",
     "tslint-eslint-rules": "^5.4.0",
