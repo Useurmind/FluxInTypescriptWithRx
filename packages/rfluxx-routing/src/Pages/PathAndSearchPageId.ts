@@ -44,10 +44,11 @@ export class PathAndSearchPageId implements IPageIdAlgorithm
                                                     this.options.ignoredParameters.findIndex(y => y === x) === -1)
                                                 .sort();
 
-        const sortedSearchString = sortedAndFilteredKeys.map(x => `${x}=${url.searchParams.get(x)}`).join("&");
+        const sortedSearchString = sortedAndFilteredKeys.map(x => `${x.toLowerCase()}=${url.searchParams.get(x)}`)
+                                                        .join("&");
 
         // use pathname and search as key for a page
         // the hash can be used for intra page navigation
-        return url.pathname + (sortedSearchString ? "?" + sortedSearchString : "");
+        return url.pathname.toLowerCase() + (sortedSearchString ? "?" + sortedSearchString : "");
     }
 }

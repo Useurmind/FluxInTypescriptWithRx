@@ -7,6 +7,7 @@ import { ISiteMapNode } from "../../src/SiteMapStore";
 
 import { App } from "./App";
 import { ContainerFactory } from "./ContainerFactory";
+import { EditPage } from "./EditPage/EditPage";
 import { EndlessSequencePage } from "./EndlessSequence/EndlessSequencePage";
 import { FormPage } from "./FormWithSelectPage/FormPage";
 import { HomePage } from "./HomePage";
@@ -36,6 +37,11 @@ const siteMap: ISiteMapNode = {
             routeExpression: "/select/page",
             containerFactory: new SelectPageContainerFactory(),
             render: p => withPageContext(<SelectPage caption="Default"/>)
+        },
+        {
+            caption: "Edit page",
+            routeExpression: "/edit/page",
+            render: p => withPageContext(<EditPage />)
         },
         {
             caption: "Endless sequence",

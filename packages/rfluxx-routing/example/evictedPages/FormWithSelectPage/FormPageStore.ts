@@ -55,7 +55,8 @@ export class FormPageStore extends Store<IFormPageStoreState> implements IFormPa
                 });
         }, { name: "selectString" });
 
-        this.setSelectedString = this.createActionAndSubscribe<string>(value => {
+        this.setSelectedString = this.createActionAndSubscribe<string>(value =>
+        {
             this.setState({
                 ...this.state,
                 selectedString: value

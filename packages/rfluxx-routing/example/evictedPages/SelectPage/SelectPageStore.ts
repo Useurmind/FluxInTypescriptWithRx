@@ -53,7 +53,8 @@ export class SelectPageStore extends Store<ISelectPageStoreState> implements ISe
         });
 
         // subscribe this action defined via IRequestedPageStore to receive the page request object
-        this.setPageRequest = this.createActionAndSubscribe<IPageRequest>(pageRequest => {
+        this.setPageRequest = this.createActionAndSubscribe<IPageRequest>(pageRequest =>
+        {
             const input = pageRequest.data as ISelectPageStoreInput;
             this.setState({
                 ...this.state,

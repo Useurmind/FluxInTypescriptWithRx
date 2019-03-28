@@ -4,6 +4,32 @@ describe("PathAndSearchPageId", () =>
 {
     const pageIdAlgorithm = new PathAndSearchPageId();
 
+    it("page id does not differ when casing changes of path and parameter changes", () =>
+    {
+        const fragment1 =
+            new URL("https://myserver.com/paTh/to/Stuff?parAmeter1=value1&parametEr2=value2#someSimpleHash");
+        const fragment2 =
+            new URL("https://myserver.com/path/to/stuff?parameter1=value1&parameter2=value2#anotherSimpleHash");
+
+        const pageId1 = pageIdAlgorithm.getPageId(fragment1);
+        const pageId2 = pageIdAlgorithm.getPageId(fragment2);
+
+        expect(pageId1).toBe(pageId2);
+    });
+
+    it("page id does differ when casing changes of parameter values", () =>
+    {
+        const fragment1 =
+            new URL("https://myserver.com/paTh/to/Stuff?parAmeter1=valUe1&parameter2=value2#someSimpleHash");
+        const fragment2 =
+            new URL("https://myserver.com/path/to/stuff?parameter1=value1&parameter2=value2#anotherSimpleHash");
+
+        const pageId1 = pageIdAlgorithm.getPageId(fragment1);
+        const pageId2 = pageIdAlgorithm.getPageId(fragment2);
+
+        expect(pageId1).not.toBe(pageId2);
+    });
+
     it("page id does not differ when hash changes", () =>
     {
         const fragment1 =

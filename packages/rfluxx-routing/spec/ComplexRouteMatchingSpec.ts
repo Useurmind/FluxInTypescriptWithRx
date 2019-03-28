@@ -12,6 +12,16 @@ describe("ComplexRouteMatching", () =>
         expect(result.parameters.size).toBe(0);
     });
 
+    it("simple path without any parameters is matched when cased differently", () =>
+    {
+        const routeMatching = new ComplexRouteMatching();
+
+        const result = routeMatching.matchUrl("/Path/To/stUff", "/path/to/stuff");
+
+        expect(result.isMatch).toBe(true);
+        expect(result.parameters.size).toBe(0);
+    });
+
     it("simple path without any parameters is NOT matched", () =>
     {
         const routeMatching = new ComplexRouteMatching();
@@ -47,6 +57,20 @@ describe("ComplexRouteMatching", () =>
         expect(result.parameters.size).toBe(2);
         expect(result.parameters.get("parameter1")).toBe("value1");
         expect(result.parameters.get("parameter2")).toBe("value2");
+    });
+
+    it("simple path with two parameters is matched when casing differs", () =>
+    {
+        const routeMatching = new ComplexRouteMatching();
+
+        const result = routeMatching.matchUrl(
+            "/patH/Value1/valUe2/MorEPath",
+             "/path/{parameter1}/{parameter2}/morePath");
+
+        expect(result.isMatch).toBe(true);
+        expect(result.parameters.size).toBe(2);
+        expect(result.parameters.get("parameter1")).toBe("Value1");
+        expect(result.parameters.get("parameter2")).toBe("valUe2");
     });
 
     it("simple path with two parameters is NOT matched", () =>

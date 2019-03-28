@@ -50,6 +50,9 @@ export class App extends React.Component<IAppProps, IAppState> {
                             <RouterLink caption="form with select" path="/form/with/select" className="nav-link" />
                         </li>
                         <li className="nav-item">
+                            <RouterLink caption="edit page" path="/edit/page" className="nav-link" />
+                        </li>
+                        <li className="nav-item">
                             <RouterLink caption="endless sequence" path="/endlessSequence/1" className="nav-link" />
                         </li>
                     </ul>

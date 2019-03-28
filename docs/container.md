@@ -123,20 +123,31 @@ Resolve the default instance from the container
 container.resolve<IMyType>("IMyType");
 ```
 
+### Resolve an optional default instance
+
+Resolve the default instance from the container or get null if no instance was registered under the given key.
+
+```typescript
+// returns null if the key IMyType was not registered
+container.resolveOptional<IMyType>("IMyType");
+```
+
 ### Resolve named instance
 
 ```typescript
-container.resolveNamed<IMyType>("IMyType", "instance1");
+container.resolve<IMyType>("IMyType", "instance1");
 ```
 
 ### Resolve collection of default instances
 
 ```typescript
-container.resolve<IDoStuffInCollection[]>("IDoStuffInCollection[]");
+// returns an IDoStuffInCollection[]
+container.resolveMultiple<IDoStuffInCollection>("IDoStuffInCollection[]");
 ```
 
 ### Resolve collection of named instances
 
 ```typescript
-container.resolve<IDoStuffInCollection[]>("IDoStuffInCollection[]", "list1");
+// returns an IDoStuffInCollection[]
+container.resolveMultiple<IDoStuffInCollection>("IDoStuffInCollection[]", "list1");
 ```
