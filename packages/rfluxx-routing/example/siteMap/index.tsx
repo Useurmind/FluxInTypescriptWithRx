@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 
+import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "../../src";
 import { ComplexRouteMatching } from "../../src/RouteMatching/ComplexRouteMatching";
 import { RegexRouteMatching } from "../../src/RouteMatching/RegexRouteMatching";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "../../src/RouterStore";
-import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "../../src/SiteMapStore";
 
 import { App } from "./App";
 

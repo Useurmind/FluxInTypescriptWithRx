@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Subscription } from "rxjs/Subscription";
 
-import { SiteMapNode } from "./SiteMapNode";
-import { ISiteMapNode, ISiteMapStore } from "./SiteMapStore";
+import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
+import { SiteMapNode } from "./SiteMap/SiteMapNode";
+import { ISiteMapStore } from "./SiteMap/SiteMapStore";
 
 /**
  * Props for { @see CurrentSiteMapNode }.

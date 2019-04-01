@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { IPageContextProps, PageContextProvider } from "./PageContextProvider";
 import { IPageData } from "./Pages/IPageData";
-import { SiteMapNode } from "./SiteMapNode";
+import { SiteMapNode } from "./SiteMap/SiteMapNode";
 
 /**
  * Props for { @see Page }.

@@ -6,7 +6,8 @@ import { IPathAndSearchPageIdOptions, PathAndSearchPageId } from "./Pages/PathAn
 import { ComplexRouteMatching } from "./RouteMatching/ComplexRouteMatching";
 import { RegexRouteMatching } from "./RouteMatching/RegexRouteMatching";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./RouterStore";
-import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "./SiteMapStore";
+import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
+import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, SiteMapStore } from "./SiteMap/SiteMapStore";
 
 export * from "./DependencyInjection";
 export * from "./PageCommunication";
@@ -23,8 +24,7 @@ export * from "./PageManagementStore";
 export * from "./PageStore";
 export * from "./RouterLink";
 export * from "./RouterStore";
-export * from "./SiteMapNode";
-export * from "./SiteMapStore";
+export * from "./SiteMap";
 
 /**
  * Options for the { @see init } function.

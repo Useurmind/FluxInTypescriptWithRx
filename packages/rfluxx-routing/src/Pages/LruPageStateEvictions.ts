@@ -1,4 +1,4 @@
-import { ISiteMapNodeHit } from "../SiteMapStore";
+import { ISiteMapNodeHit } from "../SiteMap/SiteMapStore";
 
 import { IPageData } from "./IPageData";
 import { IPageEvictionStrategy } from "./IPageEvictionStrategy";

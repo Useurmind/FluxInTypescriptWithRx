@@ -4,7 +4,7 @@ import { IPageCommunicationStore, IPageRequest } from "../PageCommunication";
 import { IPageManagementStore } from "../PageManagementStore";
 import { PageStore } from "../PageStore";
 import { IRouterStore } from "../RouterStore";
-import { ISiteMapStore } from "../SiteMapStore";
+import { ISiteMapStore } from "../SiteMap/SiteMapStore";
 
 import { IGlobalComponents } from "./IGlobalComponents";
 

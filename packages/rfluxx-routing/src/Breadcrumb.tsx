@@ -2,7 +2,8 @@ import * as React from "react";
 import { Subscription } from "rxjs/Subscription";
 
 import { RouterLink } from "./RouterLink";
-import { ISiteMapNode, ISiteMapStore } from "./SiteMapStore";
+import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
+import { ISiteMapStore } from "./SiteMap/SiteMapStore";
 
 /**
  * Props for { @see Breadcrumb }.
