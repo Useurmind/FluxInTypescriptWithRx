@@ -1,24 +1,31 @@
 import * as React from "react";
+import { StoreSubscription } from "rfluxx";
 import { Subscription } from "rxjs/Subscription";
 
+import { IPageContextProps } from "./PageContextProvider";
 import { RouterLink } from "./RouterLink";
-import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
-import { ISiteMapStore } from "./SiteMap/SiteMapStore";
+import { getSiteMapNodeCaption, ISiteMapNode } from "./SiteMap/ISiteMapNode";
+import { ISiteMapStore, ISiteMapStoreState } from "./SiteMap/SiteMapStore";
 
 /**
  * Props for { @see Breadcrumb }.
  */
-export interface IBreadcrumbProps
+export interface IBreadcrumbProps extends IPageContextProps
 {
     /**
      * CSS Class name to apply to the breadcrumb (default: breadcrumb).
+     * For the items in the breadcrumb the class name is composed of this classname and "item",
+     * e.g. "breadcrumb-item".
+     * The active item gets, in addition to the item class name, the class name "active", e.g.
+     * "breadcrumb-item active"
      */
     className?: string;
 
     /**
      * The site map store that states the currently active site map node.
+     * If the site map store is not given the breadcrumb will try to retrieve it from the container.
      */
-    siteMapStore: ISiteMapStore;
+    siteMapStore?: ISiteMapStore;
 
     /**
      * Render one node of the breadcrumb. By default renders a bootstrap nav entry.
@@ -42,7 +49,8 @@ export interface IBreadcrumbState
  */
 export class Breadcrumb extends React.Component<IBreadcrumbProps, IBreadcrumbState>
 {
-    private subscription: Subscription;
+    private subscription: StoreSubscription<ISiteMapStore, ISiteMapStoreState>
+        = new StoreSubscription();
 
     constructor(props: IBreadcrumbProps)
     {
@@ -58,7 +66,18 @@ export class Breadcrumb extends React.Component<IBreadcrumbProps, IBreadcrumbSta
      */
     public componentDidMount()
     {
-        this.subscription = this.props.siteMapStore.subscribe(
+        const store = this.props.siteMapStore
+                        ? this.props.siteMapStore
+                        : this.props.container.resolve<ISiteMapStore>("ISiteMapStore");
+
+        if (!store)
+        {
+            throw Error("The site map store in the breadcrumb was neither given through the props"
+                        + " nor was a container passed to the props.");
+        }
+
+        this.subscription.subscribeStore(
+            store,
             x => this.setState({
                 ...this.state,
                 siteMapPath:  x.siteMapNodeHit ? x.siteMapNodeHit.siteMapPath : []}));
@@ -69,11 +88,7 @@ export class Breadcrumb extends React.Component<IBreadcrumbProps, IBreadcrumbSta
      */
     public componentWillUnmount()
     {
-        if (this.subscription)
-        {
-            this.subscription.unsubscribe();
-            this.subscription = null;
-        }
+        this.subscription.unsubscribe();
     }
 
     /**
@@ -86,18 +101,21 @@ export class Breadcrumb extends React.Component<IBreadcrumbProps, IBreadcrumbSta
                                 ? this.props.renderPart
                                 : (sn: ISiteMapNode, isLastItem: boolean) =>
                                 {
-                                    let snClassName = "breadcrumb-item";
+                                    let snClassName = `${className}-item`;
                                     if (isLastItem)
                                     {
                                         snClassName += " active";
                                     }
+
+                                    const caption = getSiteMapNodeCaption(sn, this.props.container);
+
                                     return <li className={snClassName} key={sn.routeExpression}>
-                                        <RouterLink caption={sn.caption} path={sn.absoluteRouteExpression} />
+                                        <RouterLink caption={caption} path={sn.absoluteRouteExpression} />
                                     </li>;
                                 };
 
         return <nav aria-label="breadcrumb">
-            <ol className="breadcrumb">
+            <ol className={className}>
             {
                 this.state.siteMapPath.length > 0 &&
                 this.state.siteMapPath.map((sn, index) => renderPart(sn, index === (this.state.siteMapPath.length - 1)))

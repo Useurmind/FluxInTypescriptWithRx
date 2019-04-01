@@ -9,7 +9,7 @@ export interface IRouterLinkProps {
     /**
      * The caption to show for the link.
      */
-    caption?: string;
+    caption?: string | React.ReactNode;
 
     /**
      * The path to which the link should navigate (also include search and hash if required).

@@ -8,12 +8,13 @@ import { IPageData } from "./Pages/IPageData";
 /**
  * Props for { @see OpenPageList }.
  */
-export interface IOpenPageListProps
+export interface IOpenPageListProps extends IPageContextProps
 {
     /**
      * the page management store to get the info about open pages from.
+     * If not specified the component will try to retrieve the store from the container.
      */
-    pageManagementStore: IPageManagementStore;
+    pageManagementStore?: IPageManagementStore;
 }
 
 /**
@@ -68,8 +69,18 @@ export class OpenPageList extends React.Component<IOpenPageListProps, IOpenPageL
 
     public subscribeStore()
     {
+        const store = this.props.pageManagementStore
+                        ? this.props.pageManagementStore
+                        : this.props.container.resolve<IPageManagementStore>("IPageManagementStore");
+
+        if (!store)
+        {
+            throw Error("The site map store in the breadcrumb was neither given through the props"
+                        + " nor was a container passed to the props.");
+        }
+
         this.subscription.subscribeStore(
-            this.props.pageManagementStore,
+            store,
             state =>
             {
                 this.setState({
