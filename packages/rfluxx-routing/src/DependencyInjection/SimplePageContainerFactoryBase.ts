@@ -30,6 +30,9 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
         // registerTimeTraveler(builder, true, pageId);
         registerTimeTraveler(builder, true, null);
 
+        builder.register(c => routeParameters)
+               .as("RouteParameters");
+
         builder.register(c => globalComponents.routerStore)
             .as("IRouterStore")
             .in("INeedToKnowAboutReplay[]");

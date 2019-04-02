@@ -8,7 +8,7 @@ import { IPageCommunicationStore, IPageRequest, IPageResponse, IRequestedPageSto
 import { IPageManagementStore } from "./PageManagementStore";
 import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
 import { IRouterStore } from "./RouterStore";
-import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMapStore";
+import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMap";
 
 /**
  * The options to configure the { @see PageStore }

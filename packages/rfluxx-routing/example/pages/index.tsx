@@ -2,12 +2,12 @@ import * as React from "react";
 import * as ReactDom from "react-dom";
 
 import * as RfluxxRouting from "../../src";
+import { ISiteMapNode } from "../../src";
 import { withPageContext } from "../../src/PageContextProvider";
-import { ISiteMapNode } from "../../src/SiteMapStore";
 
+import { App } from "./App";
 import { ContainerFactory } from "./ContainerFactory";
 import { Counter } from "./Counter";
-import { App } from "./App";
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;

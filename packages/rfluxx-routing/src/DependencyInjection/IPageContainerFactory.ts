@@ -4,7 +4,7 @@ import { IPageCommunicationStore, IPageRequest } from "../PageCommunication";
 import { IPageManagementStore } from "../PageManagementStore";
 import { PageStore } from "../PageStore";
 import { IRouterStore } from "../RouterStore";
-import { ISiteMapStore } from "../SiteMapStore";
+import { ISiteMapStore } from "../SiteMap/SiteMapStore";
 
 import { IGlobalComponents } from "./IGlobalComponents";
 
@@ -25,6 +25,7 @@ export interface IPageContainerFactory
      * - IPageStore: The store that can be used by the page to get easy access to central services.
      * - IPageRequest: The request that lead to the page opening, optional can be null|undefined.
      * - PageUrl: The url (of type URL) that was called for the page to open.
+     * - RouteParameters: The parameters (of type Map<string, string>) that were retrieved from the routes url.
      * @param pageId The page id uniquely identifies the page for which the container is created (computed from the url)
      * @param url The url of the page for which the container is created.
      * @param routeParamters The parameters that were extracted from the route.

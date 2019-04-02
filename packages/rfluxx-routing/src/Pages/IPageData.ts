@@ -1,7 +1,7 @@
 import * as Rfluxx from "rfluxx";
 
 import { IPageRequest } from "../PageCommunication";
-import { ISiteMapNode } from "../SiteMapStore";
+import { ISiteMapNode } from "../SiteMap/ISiteMapNode";
 
 /**
  * A page represents the UI for a single site map node.

@@ -1,19 +1,28 @@
 import * as React from "react";
+import { StoreSubscription } from "rfluxx";
 import { Subscription } from "rxjs/Subscription";
 
-import { Page } from "./Page";
-import { IPageManagementStore } from "./PageManagementStore";
+import { IPageMasterProps, Page } from "./Page";
+import { IPageContextProps } from "./PageContextProvider";
+import { IPageManagementStore, IPageManagementStoreState } from "./PageManagementStore";
 import { IPageData } from "./Pages/IPageData";
 
 /**
  * Props for { @see CurrentPage }.
  */
-export interface ICurrentPageProps
+export interface ICurrentPageProps extends IPageContextProps
 {
     /**
      * The site map store that states the currently active site map node.
+     * If not given the component will try to retrieve the store from the container.
      */
-    pageManagementStore: IPageManagementStore;
+    pageManagementStore?: IPageManagementStore;
+
+    /**
+     * Master template component that is used to defined
+     * the surrounding UI of all pages.
+     */
+    pageMasterTemplate?: React.ReactElement<IPageMasterProps>;
 
     /**
      * Function to render an element when no page is selected.
@@ -37,7 +46,8 @@ export interface ICurrentPageState
  */
 export class CurrentPage extends React.Component<ICurrentPageProps, ICurrentPageState>
 {
-    private subscription: Subscription;
+    private subscription: StoreSubscription<IPageManagementStore, IPageManagementStoreState>
+        = new StoreSubscription();
 
     constructor(props: ICurrentPageProps)
     {
@@ -53,7 +63,18 @@ export class CurrentPage extends React.Component<ICurrentPageProps, ICurrentPage
      */
     public componentDidMount()
     {
-        this.subscription = this.props.pageManagementStore.subscribe(
+        const store = this.props.pageManagementStore
+                        ? this.props.pageManagementStore
+                        : this.props.container.resolve<IPageManagementStore>("IPageManagementStore");
+
+        if (!store)
+        {
+            throw Error("The site map store in the breadcrumb was neither given through the props"
+                        + " nor was a container passed to the props.");
+        }
+
+        this.subscription.subscribeStore(
+            store,
             x => this.setState({
                 ...this.state,
                 currentPage:  x.currentPage
@@ -65,11 +86,7 @@ export class CurrentPage extends React.Component<ICurrentPageProps, ICurrentPage
      */
     public componentWillUnmount()
     {
-        if (this.subscription)
-        {
-            this.subscription.unsubscribe();
-            this.subscription = null;
-        }
+        this.subscription.unsubscribe();
     }
 
     /**
@@ -84,6 +101,7 @@ export class CurrentPage extends React.Component<ICurrentPageProps, ICurrentPage
             return renderNoPage();
         }
 
-        return <Page page={this.state.currentPage} />;
+        return <Page page={this.state.currentPage}
+                     pageMasterTemplate={this.props.pageMasterTemplate} />;
     }
 }

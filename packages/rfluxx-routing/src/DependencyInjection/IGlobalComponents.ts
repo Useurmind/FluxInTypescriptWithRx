@@ -1,7 +1,7 @@
 import { IPageCommunicationStore } from "../PageCommunication";
 import { IPageManagementStore } from "../PageManagementStore";
 import { IRouterStore } from "../RouterStore";
-import { ISiteMapStore } from "../SiteMapStore";
+import { ISiteMapStore } from "../SiteMap/SiteMapStore";
 
 /**
  * Data object to hold the stores that are globally unique in the

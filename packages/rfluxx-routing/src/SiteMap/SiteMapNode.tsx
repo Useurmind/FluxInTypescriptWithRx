@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Subscription } from "rxjs/Subscription";
 
-import { ISiteMapNode } from "./SiteMapStore";
+import { withPageContext } from "../PageContextProvider";
+
+import { ISiteMapNode } from "./ISiteMapNode";
 
 /**
  * Props for { @see SiteMapNode }.
@@ -43,6 +45,6 @@ export class SiteMapNode extends React.Component<ISiteMapNodeProps, ISiteMapNode
      */
     public render(): any
     {
-        return this.props.siteMapNode.render(this.props.routeParameters);
+        return withPageContext(this.props.siteMapNode.render(this.props.routeParameters));
     }
 }

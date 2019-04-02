@@ -7,7 +7,7 @@ import { IPageData } from "./Pages/IPageData";
 import { IPageEvictionStrategy } from "./Pages/IPageEvictionStrategy";
 import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
 import { IRouterStore } from "./RouterStore";
-import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMapStore";
+import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMap";
 
 /**
  * The options to configure the { @see PageManagementStore }

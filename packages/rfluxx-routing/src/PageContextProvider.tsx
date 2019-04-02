@@ -10,7 +10,7 @@ export interface IPageContextProps
     /**
      * The container that holds the state of the page.
      */
-    container?: IContainer;
+    container?: IContainer | null;
 }
 
 /**
@@ -37,6 +37,11 @@ export function withPageContext(pageComponent: React.ReactElement<any>): any
     return <PageContext.Consumer>
         {pageContext => React.cloneElement(pageComponent, pageContext)}
     </PageContext.Consumer>;
+}
+
+export function withPageContextForList(pageComponents: Array<React.ReactElement<any>>): any
+{
+    return pageComponents.map(x => withPageContext(x));
 }
 
 /**

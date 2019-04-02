@@ -1,11 +1,11 @@
 import * as React from "react";
 
+import { ISiteMapNode, ISiteMapStore } from "../../src";
 import { Breadcrumb } from "../../src/Breadcrumb";
 import { CurrentPage } from "../../src/CurrentPage";
 import { CurrentSiteMapNode } from "../../src/CurrentSiteMapNode";
 import { IPageManagementStore } from "../../src/PageManagementStore";
 import { RouterLink } from "../../src/RouterLink";
-import { ISiteMapNode, ISiteMapStore } from "../../src/SiteMapStore";
 
 export interface IAppProps
 {

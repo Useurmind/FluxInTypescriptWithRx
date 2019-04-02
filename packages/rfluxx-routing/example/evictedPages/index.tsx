@@ -7,6 +7,7 @@ import { ISiteMapNode, withPageContext } from "../../src";
 import { App } from "./App";
 import { ContainerFactory } from "./ContainerFactory";
 import { EditPage } from "./EditPage/EditPage";
+import { EditPageCaption } from "./EditPage/EditPageCaption";
 import { EndlessSequencePage } from "./EndlessSequence/EndlessSequencePage";
 import { FormPage } from "./FormWithSelectPage/FormPage";
 import { HomePage } from "./HomePage";
@@ -27,18 +28,18 @@ const siteMap: ISiteMapNode = {
     render: p => <HomePage />,
     children: [
         {
-            caption: "Form with select page",
+            caption: p => <span>Form with select page</span>,
             routeExpression: "/form/with/select",
             render: p => withPageContext(<FormPage />)
         },
         {
-            caption: "Select string",
+            caption: p => <span style={{color : "red"}}>Select string</span>,
             routeExpression: "/select/page",
             containerFactory: new SelectPageContainerFactory(),
             render: p => withPageContext(<SelectPage caption="Default"/>)
         },
         {
-            caption: "Edit page",
+            caption: p => withPageContext(<EditPageCaption />),
             routeExpression: "/edit/page",
             render: p => withPageContext(<EditPage />)
         },

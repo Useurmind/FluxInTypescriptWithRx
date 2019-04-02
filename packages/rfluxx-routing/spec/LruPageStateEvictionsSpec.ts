@@ -1,7 +1,7 @@
 import { IPageData } from "../src/Pages/IPageData";
 import { LruPageStateEvictions } from "../src/Pages/LruPageStateEvictions";
 import { PathAndSearchPageId } from "../src/Pages/PathAndSearchPageId";
-import { ISiteMapNodeHit } from "../src/SiteMapStore";
+import { ISiteMapNodeHit } from "../src/SiteMap";
 
 describe("LruPageStateEvictions", () =>
 {
