@@ -1,7 +1,7 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
 import { IPageContainerFactory } from "../DependencyInjection/IPageContainerFactory";
-import { IRoute, IRouteHit, IRouterStoreState } from "../RouterStore";
+import { IRoute, IRouteHit, IRouterStoreState, RouteParameters } from "../RouterStore";
 
 import { ISiteMapNode } from "./ISiteMapNode";
 
@@ -23,7 +23,7 @@ export interface ISiteMapNodeHit
     /**
      * The paramaters of the route that lead to the hit of the node.
      */
-    parameters: Map<string, string>;
+    parameters: RouteParameters;
 
     /**
      * An array of site map nodes that reflect the path from the root node to

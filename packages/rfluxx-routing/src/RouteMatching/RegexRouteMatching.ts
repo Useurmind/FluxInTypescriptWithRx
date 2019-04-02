@@ -1,3 +1,5 @@
+import { RouteParameters } from "../RouterStore";
+
 import { IRouteMatchResult, IRouteMatchStrategy } from "./IRouteMatchStrategy";
 
 /**
@@ -21,7 +23,7 @@ export class RegexRouteMatching implements IRouteMatchStrategy
 
         if (match)
         {
-            let routeParams: Map<string, string> =  new Map<string, string>();
+            let routeParams: RouteParameters =  new Map<string, string>();
             if ((match as any).groups)
             {
                 routeParams = new Map<string, string>(Object.entries((match as any).groups));

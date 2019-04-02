@@ -1,6 +1,7 @@
 import * as Rfluxx from "rfluxx";
 
 import { IPageRequest } from "../PageCommunication";
+import { RouteParameters } from "../RouterStore";
 import { ISiteMapNode } from "../SiteMap/ISiteMapNode";
 
 /**
@@ -37,7 +38,7 @@ export interface IPageData
     /**
      * The route parameters extracted from the url fragment.
      */
-    routeParameters: Map<string, string>;
+    routeParameters: RouteParameters;
 
     /**
      * The request that lead to the page being opened.

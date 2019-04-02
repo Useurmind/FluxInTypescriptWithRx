@@ -2,6 +2,7 @@ import { IContainer, IContainerBuilder, registerStore, registerTimeTraveler, Sim
 
 import { IPageRequest, IRequestedPageStore, isIRequestedPageStore } from "../PageCommunication";
 import { PageStore } from "../PageStore";
+import { RouteParameters } from "../RouterStore";
 
 import { IGlobalComponents } from "./IGlobalComponents";
 import { IPageContainerFactory } from "./IPageContainerFactory";
@@ -20,7 +21,7 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
     public createContainer(
         pageId: string,
         url: URL,
-        routeParameters: Map<string, string>,
+        routeParameters: RouteParameters,
         globalComponents: IGlobalComponents,
         pageRequest?: IPageRequest | null)
         : IContainer
@@ -85,5 +86,5 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
      * @param url The url of the page for which the container is created.
      * @param routeParamters The parameters that were extracted from the route.
      */
-    protected abstract registerStores(builder: IContainerBuilder, url: URL, routeParameters: Map<string, string>);
+    protected abstract registerStores(builder: IContainerBuilder, url: URL, routeParameters: RouteParameters);
 }

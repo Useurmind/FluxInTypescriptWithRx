@@ -92,7 +92,7 @@ import { HomeStore } from "./stores/HomeStore";
 
 export class ContainerFactory extends SimplePageContainerFactoryBase
 {
-    protected registerStores(container: SimpleContainer, url: URL, routeParameters: Map<string, string>): void
+    protected registerStores(container: SimpleContainer, url: URL, routeParameters: RouteParameters): void
     {
         registerStore(
         container,
@@ -109,7 +109,7 @@ Let's discuss the details here.
 
 We extend the `SimplePageContainerFactoryBase` class which is a base implementation of a container factory that works with the `SimpleContainer` who comes with the rfluxx package.
 
-    protected registerStores(container: SimpleContainer, url: URL, routeParameters: Map<string, string>): void
+    protected registerStores(container: SimpleContainer, url: URL, routeParameters: RouteParameters): void
 
 You need to implement a single function that registers the required stores in the container.
 

@@ -107,7 +107,7 @@ export class Breadcrumb extends React.Component<IBreadcrumbProps, IBreadcrumbSta
                                         snClassName += " active";
                                     }
 
-                                    const caption = getSiteMapNodeCaption(sn, this.props.container);
+                                    const caption = getSiteMapNodeCaption(sn, this.props.routeParameters);
 
                                     return <li className={snClassName} key={sn.routeExpression}>
                                         <RouterLink caption={caption} path={sn.absoluteRouteExpression} />

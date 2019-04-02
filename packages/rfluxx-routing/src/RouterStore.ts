@@ -3,6 +3,8 @@ import { applyMixins, IAction, IInjectedStoreOptions, NeedToKnowAboutReplayMixin
 
 import { IRouteMatchStrategy } from "./RouteMatching/IRouteMatchStrategy";
 
+export type RouteParameters = Map<string, string>;
+
 /**
  * Interface for a route that can be entered.
  */
@@ -36,7 +38,7 @@ export interface IRouteHit
      * A set of parameters that was extracted from the regular expression in the route
      * through named group capturing.
      */
-    parameters: Map<string, string>;
+    parameters: RouteParameters;
 }
 
 /**

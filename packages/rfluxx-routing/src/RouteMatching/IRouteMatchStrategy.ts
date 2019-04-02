@@ -1,3 +1,5 @@
+import { RouteParameters } from "../RouterStore";
+
 /**
  * Describes the result of a url/route matching operation.
  */
@@ -11,7 +13,7 @@ export interface IRouteMatchResult
     /**
      * Any parameters that were extracted from the url, based on the parameters defined in the route.
      */
-    parameters: Map<string, string>;
+    parameters: RouteParameters;
 }
 
 /**

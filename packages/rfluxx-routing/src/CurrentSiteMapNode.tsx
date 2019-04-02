@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Subscription } from "rxjs/Subscription";
 
+import { RouteParameters } from "./RouterStore";
 import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
 import { SiteMapNode } from "./SiteMap/SiteMapNode";
 import { ISiteMapStore } from "./SiteMap/SiteMapStore";
@@ -29,7 +30,7 @@ export interface ICurrentSiteMapNodeState
     /**
      * The parameters coming from the route.
      */
-    routeParameters: Map<string, string>;
+    routeParameters: RouteParameters;
 }
 
 /**
@@ -45,7 +46,7 @@ export class CurrentSiteMapNode extends React.Component<ICurrentSiteMapNodeProps
 
         this.state = {
             currentSiteMapNode: null,
-            routeParameters: new Map<string, string>()
+            routeParameters: new Map()
         };
     }
 
@@ -58,7 +59,7 @@ export class CurrentSiteMapNode extends React.Component<ICurrentSiteMapNodeProps
             x => this.setState({
                 ...this.state,
                 currentSiteMapNode:  x.siteMapNodeHit ? x.siteMapNodeHit.siteMapNode : null,
-                routeParameters: x.siteMapNodeHit ? x.siteMapNodeHit.parameters : new Map<string, string>()
+                routeParameters: x.siteMapNodeHit ? x.siteMapNodeHit.parameters : new Map()
             }));
     }
 

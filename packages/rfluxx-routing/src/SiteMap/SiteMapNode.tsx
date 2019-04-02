@@ -2,6 +2,7 @@ import * as React from "react";
 import { Subscription } from "rxjs/Subscription";
 
 import { withPageContext } from "../PageContextProvider";
+import { RouteParameters } from "../RouterStore";
 
 import { ISiteMapNode } from "./ISiteMapNode";
 
@@ -18,7 +19,7 @@ export interface ISiteMapNodeProps
     /**
      * The parameters from the route.
      */
-    routeParameters: Map<string, string>;
+    routeParameters: RouteParameters;
 }
 
 /**

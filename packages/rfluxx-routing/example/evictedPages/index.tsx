@@ -28,25 +28,30 @@ const siteMap: ISiteMapNode = {
     render: p => <HomePage />,
     children: [
         {
+            caption: p => <span>Some span</span>,
+            routeExpression: "/some/span",
+            render: p => <span>Some text in a span</span>
+        },
+        {
             caption: p => <span>Form with select page</span>,
             routeExpression: "/form/with/select",
-            render: p => withPageContext(<FormPage />)
+            render: p => <FormPage />
         },
         {
             caption: p => <span style={{color : "red"}}>Select string</span>,
             routeExpression: "/select/page",
             containerFactory: new SelectPageContainerFactory(),
-            render: p => withPageContext(<SelectPage caption="Default"/>)
+            render: p => <SelectPage caption="Default"/>
         },
         {
-            caption: p => withPageContext(<EditPageCaption />),
+            caption: p => <EditPageCaption />,
             routeExpression: "/edit/page",
-            render: p => withPageContext(<EditPage />)
+            render: p => <EditPage />
         },
         {
             caption: "Endless sequence",
             routeExpression: "/endlessSequence/{sequenceNumber}",
-            render: p => withPageContext(<EndlessSequencePage />)
+            render: p => <EndlessSequencePage />
         }
     ]
 };

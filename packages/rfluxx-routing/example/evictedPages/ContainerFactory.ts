@@ -1,6 +1,6 @@
 import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
 
-import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoryBase } from "../../src";
+import { IGlobalComponents, IPageContainerFactory, RouteParameters, SimplePageContainerFactoryBase } from "../../src";
 
 import { EditPageStore } from "./EditPage/EditPageStore";
 import { EndlessSequencePageStore } from "./EndlessSequence/EndlessSequencePageStore";
@@ -8,7 +8,7 @@ import { FormPageStore } from "./FormWithSelectPage/FormPageStore";
 
 export class ContainerFactory extends SimplePageContainerFactoryBase
 {
-    protected registerStores(builder: IContainerBuilder, url: URL, routeParameters: Map<string, string>): void
+    protected registerStores(builder: IContainerBuilder, url: URL, routeParameters: RouteParameters): void
     {
         registerStore(builder, "IFormPageStore", (c, injOpt) => new FormPageStore(injOpt({
             pageStore: c.resolve("IPageStore")

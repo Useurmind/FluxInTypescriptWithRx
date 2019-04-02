@@ -1,10 +1,12 @@
+import { RouteParameters } from "../RouterStore";
+
 import { IRouteMatchResult, IRouteMatchStrategy } from "./IRouteMatchStrategy";
 import { UrlFragment } from "./UrlFragment";
 
 interface IPartialMatchResult
 {
     isMatch: boolean;
-    parameters: Map<string, string>;
+    parameters: RouteParameters;
 }
 
 /**
@@ -82,7 +84,7 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
 
         if (pathMatch)
         {
-            let pathParams: Map<string, string> =  new Map<string, string>();
+            let pathParams: RouteParameters =  new Map();
             if ((pathMatch as any).groups)
             {
                 pathParams = new Map<string, string>(Object.entries((pathMatch as any).groups));
@@ -145,7 +147,7 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
 
         if (hashMatch)
         {
-            let hashParams: Map<string, string> =  new Map<string, string>();
+            let hashParams: RouteParameters =  new Map<string, string>();
             if ((hashMatch as any).groups)
             {
                 hashParams = new Map<string, string>(Object.entries((hashMatch as any).groups));

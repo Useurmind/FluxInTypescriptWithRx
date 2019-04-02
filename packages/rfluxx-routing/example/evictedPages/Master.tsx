@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IContainer } from "rfluxx";
 
-import { Breadcrumb, IPageContextProps, IPageMasterProps, withPageContextForList } from "../../src";
+import { Breadcrumb, IPageContextProps, IPageMasterProps } from "../../src";
 import { CurrentPage } from "../../src";
 import { CurrentSiteMapNode } from "../../src";
 import { OpenPageList } from "../../src";
@@ -43,6 +43,9 @@ export class Master extends React.Component<IMasterProps, IMasterState>
                     <ul className="nav flex-column">
                         <li className="nav-item">
                             <RouterLink caption="home" path="/home" className="nav-link" />
+                        </li>
+                        <li className="nav-item">
+                            <RouterLink caption="some span" path="/some/span" className="nav-link" />
                         </li>
                         <li className="nav-item">
                             <RouterLink caption="form with select" path="/form/with/select" className="nav-link" />

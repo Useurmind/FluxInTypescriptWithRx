@@ -66,7 +66,8 @@ export class Page extends React.Component<IPageProps, IPageState>
             renderedElement = withPageContext(React.cloneElement(this.props.pageMasterTemplate, { pageComponent }));
         }
 
-        return <PageContextProvider container={this.props.page.container} >
+        return <PageContextProvider container={this.props.page.container}
+                                    routeParameters={this.props.page.routeParameters} >
             {renderedElement}
         </PageContextProvider>;
     }

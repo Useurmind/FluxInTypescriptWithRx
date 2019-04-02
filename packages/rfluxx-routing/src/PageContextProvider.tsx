@@ -1,6 +1,7 @@
 import * as React from "react";
-
 import { IContainer } from "rfluxx";
+
+import { RouteParameters } from "./RouterStore";
 
 /**
  * The props that are provided by the page context.
@@ -11,6 +12,12 @@ export interface IPageContextProps
      * The container that holds the state of the page.
      */
     container?: IContainer | null;
+
+    /**
+     * The parameters extracted from the root.
+     * Can also be resolved from the container.
+     */
+    routeParameters?: RouteParameters;
 }
 
 /**
@@ -22,6 +29,12 @@ export interface IPageContextProviderProps
      * The container that holds the state of the page.
      */
     container: IContainer;
+
+    /**
+     * The parameters extracted from the root.
+     * Can also be resolved from the container.
+     */
+    routeParameters: RouteParameters;
 }
 
 /**
@@ -29,19 +42,26 @@ export interface IPageContextProviderProps
  * Use this in any component that wants to consume the page context.
  */
 export const PageContext = React.createContext<IPageContextProps>({
-    container: null
+    container: null,
+    routeParameters: null
 });
 
+/**
+ * Use this function to inject the { @ IPageContextProps } into the wrapped element.
+ * @param pageComponent The element that is wrapped and should have the props injected.
+ */
 export function withPageContext(pageComponent: React.ReactElement<any>): any
 {
+    if (typeof(pageComponent.type) === "string")
+    {
+        // if the type is a string it is a simple tag
+        // we should not inject page context in this case
+        return pageComponent;
+    }
+
     return <PageContext.Consumer>
         {pageContext => React.cloneElement(pageComponent, pageContext)}
     </PageContext.Consumer>;
-}
-
-export function withPageContextForList(pageComponents: Array<React.ReactElement<any>>): any
-{
-    return pageComponents.map(x => withPageContext(x));
 }
 
 /**
@@ -92,7 +112,8 @@ export class PageContextProvider extends React.Component<IPageContextProviderPro
         }
 
         const pageProps: IPageContextProps = {
-            container: this.props.container
+            container: this.props.container,
+            routeParameters: this.props.routeParameters
         };
 
         return <PageContext.Provider value={pageProps}>

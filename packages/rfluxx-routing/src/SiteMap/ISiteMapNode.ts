@@ -2,17 +2,13 @@ import * as React from "react";
 import { IContainer } from "rfluxx";
 
 import { IPageContainerFactory } from "../DependencyInjection/IPageContainerFactory";
-import { IPageContextProps } from "../PageContextProvider";
+import { IPageContextProps, withPageContext } from "../PageContextProvider";
+import { RouteParameters } from "../RouterStore";
 
 /**
- * Props for a component that renders the caption of a site map node.
+ * Type used for anything that should render a component in a page, e.g. the caption or sitemapnode itself.
  */
-export interface ISiteMapNodeCaptionProps extends IPageContextProps
-{
-
-}
-
-export type IRenderCaption = (props: ISiteMapNodeCaptionProps) => React.ReactNode;
+export type IRenderPageComponent = (props: RouteParameters) => React.ReactElement<any>;
 
 /**
  * A single site map node.
@@ -22,7 +18,7 @@ export interface ISiteMapNode
     /**
      * The caption of the site map node.
      */
-    caption: string | IRenderCaption;
+    caption: string | IRenderPageComponent;
 
     /**
      * The route that should be matched by the site map node.
@@ -60,7 +56,7 @@ export interface ISiteMapNode
      * Render the site map node.
      * Takes the parameter values of the route.
      */
-    render: (parameters: Map<string, string>) => any;
+    render: IRenderPageComponent;
 }
 
 /**
@@ -70,7 +66,7 @@ export interface ISiteMapNode
  * @returns If the caption of the site map node is not a string and no container is given an error is thrown.
  *          Else a component or string is returned.
  */
-export function getSiteMapNodeCaption(siteMapNode: ISiteMapNode, container: IContainer | null)
+export function getSiteMapNodeCaption(siteMapNode: ISiteMapNode, routeParameters: RouteParameters | null)
     : string | React.ReactNode
 {
     if (typeof(siteMapNode.caption) === "string")
@@ -79,20 +75,13 @@ export function getSiteMapNodeCaption(siteMapNode: ISiteMapNode, container: ICon
     }
     else
     {
-        if (!container)
+        if (!routeParameters)
         {
             throw Error("When using a component for site map node captions, you must place the breadcrumb"
              + " inside the page component of the site map node. Use a master component for all pages to "
              + ` implement a shared layout (site map node ${siteMapNode.routeExpression}).`);
         }
 
-        if (typeof(siteMapNode.caption) === "function")
-        {
-            return siteMapNode.caption({ container });
-        }
-        else
-        {
-            return React.createElement(siteMapNode.caption as any, { container });
-        }
+        return withPageContext(siteMapNode.caption(routeParameters));
     }
 }
