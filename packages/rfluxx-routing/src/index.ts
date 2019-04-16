@@ -9,15 +9,14 @@ import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./Ro
 import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
 import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, SiteMapStore } from "./SiteMap/SiteMapStore";
 
+export * from "./Components";
 export * from "./DependencyInjection";
 export * from "./PageCommunication";
 export * from "./Pages";
 export * from "./RouteMatching";
 
-export * from "./Breadcrumb";
 export * from "./CurrentPage";
 export * from "./CurrentSiteMapNode";
-export * from "./OpenPageList";
 export * from "./Page";
 export * from "./PageContextProvider";
 export * from "./PageManagementStore";

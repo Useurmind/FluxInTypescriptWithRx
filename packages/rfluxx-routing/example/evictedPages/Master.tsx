@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IContainer } from "rfluxx";
 
-import { Breadcrumb, IPageContextProps, IPageMasterProps } from "../../src";
+import { Breadcrumb, IPageContextProps, IPageMasterProps, SideBar } from "../../src";
 import { CurrentPage } from "../../src";
 import { CurrentSiteMapNode } from "../../src";
 import { OpenPageList } from "../../src";
@@ -39,6 +39,8 @@ export class Master extends React.Component<IMasterProps, IMasterState>
             </div>
 
             <div className="row">
+                {withPageContext(<SideBar />)}
+
                 <div className="col-auto">
                     <ul className="nav flex-column">
                         <li className="nav-item">

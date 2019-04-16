@@ -22,14 +22,15 @@
   ],
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
-  "dependencies": {
-    "rfluxx": "^1.0.3",
-    "rxjs": "~5.5.7",
-    "tslib": "~1.9.0"
-  },
   "peerDependencies": {
     "react": "~16.8.4",
     "react-dom": "~16.8.4"
+  },
+  "dependencies": {
+    "rfluxx": "^1.0.3",
+    "rxjs": "~5.5.7",
+    "style-loader": "~0.23.1",
+    "tslib": "~1.9.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.6",

@@ -2,10 +2,10 @@ import * as React from "react";
 import { StoreSubscription } from "rfluxx";
 import { Subscription } from "rxjs/Subscription";
 
-import { IPageContextProps } from "./PageContextProvider";
-import { RouterLink } from "./RouterLink";
-import { getSiteMapNodeCaption, ISiteMapNode } from "./SiteMap/ISiteMapNode";
-import { ISiteMapStore, ISiteMapStoreState } from "./SiteMap/SiteMapStore";
+import { IPageContextProps } from "../PageContextProvider";
+import { RouterLink } from "../RouterLink";
+import { getSiteMapNodeCaption, ISiteMapNode } from "../SiteMap/ISiteMapNode";
+import { ISiteMapStore, ISiteMapStoreState } from "../SiteMap/SiteMapStore";
 
 /**
  * Props for { @see Breadcrumb }.

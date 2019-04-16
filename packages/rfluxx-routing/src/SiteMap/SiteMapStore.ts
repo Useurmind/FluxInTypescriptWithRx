@@ -56,6 +56,11 @@ export interface ISiteMapStoreState
      * Describes which site map node was hit.
      */
     siteMapNodeHit: ISiteMapNodeHit;
+
+    /**
+     * The root node of the site map.
+     */
+    siteMap: ISiteMapNode;
 }
 
 /**
@@ -94,7 +99,8 @@ export class SiteMapStore extends Store<ISiteMapStoreState> implements ISiteMapS
     {
         super({
             initialState: {
-                siteMapNodeHit: null
+                siteMapNodeHit: null,
+                siteMap: options.siteMap
             }
         });
 
@@ -154,13 +160,13 @@ export class SiteMapStore extends Store<ISiteMapStoreState> implements ISiteMapS
                     url: routeHit.url,
                     siteMapPath: this.siteMapNodePathMap.get(node)                    };
 
-                this.setState({ siteMapNodeHit });
+                this.setState({ ...this.state, siteMapNodeHit });
                 return;
             }
         }
         else
         {
-            this.setState({ siteMapNodeHit: null });
+            this.setState({ ...this.state, siteMapNodeHit: null });
         }
     }
 }

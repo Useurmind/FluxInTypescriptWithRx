@@ -1,9 +1,9 @@
 import * as React from "react";
 import { StoreSubscription } from "rfluxx";
 
-import { IPageContextProps } from "./PageContextProvider";
-import { IPageManagementStore, IPageManagementStoreState } from "./PageManagementStore";
-import { IPageData } from "./Pages/IPageData";
+import { IPageContextProps } from "../PageContextProvider";
+import { IPageManagementStore, IPageManagementStoreState } from "../PageManagementStore";
+import { IPageData } from "../Pages/IPageData";
 
 /**
  * Props for { @see OpenPageList }.
