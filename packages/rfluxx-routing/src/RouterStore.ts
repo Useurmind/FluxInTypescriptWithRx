@@ -206,7 +206,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
             this.options.mode = (historyModeChosen && !!(history.pushState)) ? RouterMode.History : RouterMode.Hash;
         }
         this.options.root = this.options.root !== undefined
-                                ? this.clearSlashes("/" + options.root + "/")
+                                ? this.clearSlashes("/" + options.root)
                                 : window.location.pathname;
 
         console.info("root for router store is " + this.options.root);
