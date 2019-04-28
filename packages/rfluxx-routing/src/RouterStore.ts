@@ -206,7 +206,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
             this.options.mode = (historyModeChosen && !!(history.pushState)) ? RouterMode.History : RouterMode.Hash;
         }
         this.options.root = this.options.root !== undefined
-                                ? this.clearSlashes("/" + options.root)
+                                ? this.clearDoubleSlashes("/" + this.clearEndSlashes(options.root))
                                 : window.location.pathname;
 
         console.info("root for router store is " + this.options.root);
@@ -233,7 +233,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
      */
     public getUrl(path: string): URL
     {
-        return new URL(window.location.origin + this.options.root + this.clearSlashes(path));
+        return new URL(this.clearDoubleSlashes(window.location.origin + this.options.root + path));
     }
 
     private onNavigateToPath(path: string, replaceHistoryEntry: boolean): void
@@ -242,7 +242,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
 
         if (this.options.mode === RouterMode.History)
         {
-            const targetUrl = this.clearSlashes(this.options.root + path);
+            const targetUrl = this.clearDoubleSlashes(this.options.root + path);
             if (replaceHistoryEntry === false)
             {
                 history.pushState(null, null, targetUrl);
@@ -309,9 +309,16 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
         this.interval = window.setInterval(applyCurrentRouteHit, 50);
     }
 
-    private clearSlashes(path: string): string
+    private clearDoubleSlashes(path: string): string
     {
         return path.toString().replace(/\/\//, "/");
+    }
+
+    private clearEndSlashes(path: string): string
+    {
+        return path.toString().replace(/\/$/, "")
+                              .replace(/\/\?/, "")
+                              .replace(/\#\?/, "");
     }
 
     /**
@@ -325,7 +332,9 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
 
         for (const route of this.options.routes)
         {
-            const matchResult = this.options.routeMatchStrategy.matchUrl(fragment, route.expression);
+            const matchResult = this.options.routeMatchStrategy.matchUrl(
+                fragment,
+                this.clearEndSlashes(route.expression));
 
             if (matchResult.isMatch === true)
             {
@@ -350,7 +359,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
         let fragment = "";
         if (this.options.mode === RouterMode.History)
         {
-            fragment = this.clearSlashes(decodeURI(location.pathname + location.search + location.hash));
+            fragment = this.clearDoubleSlashes(decodeURI(location.pathname + location.search + location.hash));
             fragment = fragment.replace(/\?(.*)$/, "");
             fragment = this.options.root !== "/" ? fragment.replace(this.options.root, "") : fragment;
         }
@@ -360,7 +369,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
             fragment = match ? match[1] : "";
         }
 
-        return this.clearSlashes(fragment);
+        return this.clearDoubleSlashes(fragment);
     }
 }
 

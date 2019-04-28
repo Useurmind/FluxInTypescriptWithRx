@@ -57,6 +57,15 @@ export interface ISiteMapNode
      * Takes the parameter values of the route.
      */
     render: IRenderPageComponent;
+
+    /**
+     * Should the site map node be shown in the sidebar.
+     * Default is true.
+     * If this value is a string it is the path to use for the site map node.
+     * If this value is a map it tells the parameters to use for the url
+     * in the sidebar.
+     */
+    showInSidebar?: boolean | string | Map<string, string>;
 }
 
 /**
@@ -84,4 +93,51 @@ export function getSiteMapNodeCaption(siteMapNode: ISiteMapNode, routeParameters
 
         return withPageContext(siteMapNode.caption(routeParameters));
     }
+}
+
+/**
+ * Tells you whether a site map node should be rendered in the side bar based
+ * on the value of "showInSidebar" prop.
+ * @param siteMapNode The site map node.
+ */
+export function shouldSiteMapNodeRenderInSideBar(siteMapNode: ISiteMapNode): boolean
+{
+    return siteMapNode.showInSidebar !== false;
+}
+
+/**
+ * Get the url that should be used for the site map node in the sidebar.
+ * @param siteMapNode The sitemap node.
+ */
+export function getSiteMapNodeSideBarUrl(siteMapNode: ISiteMapNode): string
+{
+    if (typeof siteMapNode.showInSidebar === "string")
+    {
+        return siteMapNode.showInSidebar;
+    }
+
+    if (typeof siteMapNode.showInSidebar === "object")
+    {
+        // its a map
+        const parameterMap = siteMapNode.showInSidebar as Map<string, string>;
+        let path = siteMapNode.absoluteRouteExpression.toLowerCase();
+
+        for (const key of parameterMap.keys())
+        {
+            const value = parameterMap.get(key);
+            const lowerKey = key.toLowerCase();
+
+            // replace
+            // - path parameter
+            // - search parameter
+            // - NOT: hash parameters (as these can be anything)
+            // see route_parameters.md
+            path = path.replace(`\{${lowerKey}\}`, value)
+                       .replace(`${lowerKey}={*}`, `${key}=${value}`);
+        }
+
+        return path;
+    }
+
+    return siteMapNode.absoluteRouteExpression;
 }

@@ -1,26 +1,30 @@
+import { createStyles, withStyles, WithStyles } from "@material-ui/styles";
 import * as React from "react";
 import { StoreSubscription } from "rfluxx";
 import { Subscription } from "rxjs/Subscription";
 
 import { IPageContextProps } from "../PageContextProvider";
 import { RouterLink } from "../RouterLink";
-import { getSiteMapNodeCaption, ISiteMapNode } from "../SiteMap/ISiteMapNode";
+import { getSiteMapNodeCaption, getSiteMapNodeSideBarUrl, ISiteMapNode, shouldSiteMapNodeRenderInSideBar } from "../SiteMap/ISiteMapNode";
 import { ISiteMapStore, ISiteMapStoreState } from "../SiteMap/SiteMapStore";
+
+const styles = createStyles({
+    root: {
+        display: "flex",
+        flexDirection: "column",
+        paddingLeft: "15px",
+        paddingRight: "15px",
+    },
+    linkContainer: {
+        paddingTop: "15px"
+    }
+});
 
 /**
  * Props for { @see SideBar }.
  */
-export interface ISideBarProps extends IPageContextProps
+export interface ISideBarProps extends IPageContextProps, WithStyles<typeof styles>
 {
-    /**
-     * CSS Class name to apply to the SideBar (default: SideBar).
-     * For the items in the SideBar the class name is composed of this classname and "item",
-     * e.g. "SideBar-item".
-     * The active item gets, in addition to the item class name, the class name "active", e.g.
-     * "SideBar-item active"
-     */
-    className?: string;
-
     /**
      * The site map store that states the currently active site map node.
      * If the site map store is not given the SideBar will try to retrieve it from the container.
@@ -53,7 +57,8 @@ export interface ISideBarState
 /**
  * The SideBar renders the site map of the site in a side bar like view.
  */
-export class SideBar extends React.Component<ISideBarProps, ISideBarState>
+export const SideBar = withStyles(styles)(
+class extends React.Component<ISideBarProps, ISideBarState>
 {
     private subscription: StoreSubscription<ISiteMapStore, ISiteMapStoreState>
         = new StoreSubscription();
@@ -102,44 +107,44 @@ export class SideBar extends React.Component<ISideBarProps, ISideBarState>
      */
     public render(): any
     {
-        const className = this.props.className ? this.props.className : "SideBar";
         const renderNode = this.props.renderNode
                                 ? this.props.renderNode
                                 : (sn: ISiteMapNode, depth: number) =>
                                 {
-                                    const snClassName = `${className}-item`;
-                                    // if (isLastItem)
-                                    // {
-                                    //     snClassName += " active";
-                                    // }
+                                    if (!shouldSiteMapNodeRenderInSideBar(sn))
+                                    {
+                                        return null;
+                                    }
+
+                                    const urlPath = getSiteMapNodeSideBarUrl(sn);
 
                                     const caption = getSiteMapNodeCaption(sn, this.props.routeParameters);
 
-                                    return <li className={snClassName} key={sn.routeExpression}>
-                                        <RouterLink caption={caption} path={sn.absoluteRouteExpression} />
-                                    </li>;
+                                    return <div className={this.props.classes.linkContainer}>
+                                        <RouterLink caption={caption} path={urlPath} />
+                                    </div>;
                                 };
 
-        return <nav aria-label="SideBar">
-            <ol className={className}>
+        return <nav aria-label="SideBar" className={this.props.classes.root}>
             {
                 this.state.siteMap &&
                 flattenSiteMap(this.state.siteMap).map(node => renderNode(node, 0))
             }
             {
                 !this.state.siteMap &&
-                "Not site map given"
+                "No site map given"
             }
-            </ol>
         </nav>;
     }
 }
+);
 
 function flattenSiteMap(siteMap: ISiteMapNode): ISiteMapNode[]
 {
     let nodeList = [siteMap];
 
-    if (siteMap.children && siteMap.children.length > 0) {
+    if (siteMap.children && siteMap.children.length > 0)
+    {
         for (const child of siteMap.children)
         {
             nodeList = [...nodeList, ...flattenSiteMap(child)];

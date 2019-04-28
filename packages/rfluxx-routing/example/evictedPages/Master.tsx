@@ -41,26 +41,6 @@ export class Master extends React.Component<IMasterProps, IMasterState>
             <div className="row">
                 {withPageContext(<SideBar />)}
 
-                <div className="col-auto">
-                    <ul className="nav flex-column">
-                        <li className="nav-item">
-                            <RouterLink caption="home" path="/home" className="nav-link" />
-                        </li>
-                        <li className="nav-item">
-                            <RouterLink caption="some span" path="/some/span" className="nav-link" />
-                        </li>
-                        <li className="nav-item">
-                            <RouterLink caption="form with select" path="/form/with/select" className="nav-link" />
-                        </li>
-                        <li className="nav-item">
-                            <RouterLink caption="edit page" path="/edit/page" className="nav-link" />
-                        </li>
-                        <li className="nav-item">
-                            <RouterLink caption="endless sequence" path="/endlessSequence/1" className="nav-link" />
-                        </li>
-                    </ul>
-                </div>
-
                 <div className="col">
                     { this.props.pageComponent }
                 </div>

@@ -1,25 +1,44 @@
+import { createStyles, withStyles, WithStyles } from "@material-ui/styles";
+import { ClassKeyOfStyles } from "@material-ui/styles/withStyles";
+import classnames from "classnames";
 import * as React from "react";
 import { StoreSubscription } from "rfluxx";
 import { Subscription } from "rxjs/Subscription";
 
 import { IPageContextProps } from "../PageContextProvider";
 import { RouterLink } from "../RouterLink";
-import { getSiteMapNodeCaption, ISiteMapNode } from "../SiteMap/ISiteMapNode";
+import { getSiteMapNodeCaption, getSiteMapNodeSideBarUrl, ISiteMapNode } from "../SiteMap/ISiteMapNode";
 import { ISiteMapStore, ISiteMapStoreState } from "../SiteMap/SiteMapStore";
+
+const styles = createStyles({
+    root: {
+        display: "flex",
+        flexDirection: "row",
+        padding: "5px"
+    },
+    item: {
+        paddingRight: "5px"
+    },
+    activeItem: {
+    },
+    link: {
+    },
+    separator: {
+        paddingLeft: "5px"
+    }
+});
+
+export type StyleNames = Record<ClassKeyOfStyles<typeof styles>, string>;
 
 /**
  * Props for { @see Breadcrumb }.
  */
-export interface IBreadcrumbProps extends IPageContextProps
+export interface IBreadcrumbProps extends IPageContextProps, WithStyles<typeof styles>
 {
     /**
-     * CSS Class name to apply to the breadcrumb (default: breadcrumb).
-     * For the items in the breadcrumb the class name is composed of this classname and "item",
-     * e.g. "breadcrumb-item".
-     * The active item gets, in addition to the item class name, the class name "active", e.g.
-     * "breadcrumb-item active"
+     * Function to create a separator, by default we take a /.
      */
-    className?: string;
+    createSeparator?: (classes: StyleNames) => any;
 
     /**
      * The site map store that states the currently active site map node.
@@ -28,9 +47,18 @@ export interface IBreadcrumbProps extends IPageContextProps
     siteMapStore?: ISiteMapStore;
 
     /**
-     * Render one node of the breadcrumb. By default renders a bootstrap nav entry.
+     * Render one node of the breadcrumb.
+     * Either set this or renderLink to customize the render behaviour.
+     * renderPart is more complex to implement than renderLink.
      */
-    renderPart?: (node: ISiteMapNode, isLastItem: boolean) => any;
+    renderPart?: (node: ISiteMapNode, isLastItem: boolean, classes: StyleNames) => any;
+
+    /**
+     * Render only the link inside the breadcrumb node. Used in the default implementation of renderPart.
+     * Either set this or renderLink to customize the render behaviour.
+     * renderPart is more complex to implement than renderLink.
+     */
+    renderLink?: (caption: any, urlPath: string, classes: StyleNames) => any;
 }
 
 /**
@@ -47,7 +75,8 @@ export interface IBreadcrumbState
 /**
  * The breadcrumb renders the path to the currently active site map node.
  */
-export class Breadcrumb extends React.Component<IBreadcrumbProps, IBreadcrumbState>
+export const Breadcrumb = withStyles(styles)(
+class extends React.Component<IBreadcrumbProps, IBreadcrumbState>
 {
     private subscription: StoreSubscription<ISiteMapStore, ISiteMapStoreState>
         = new StoreSubscription();
@@ -96,35 +125,53 @@ export class Breadcrumb extends React.Component<IBreadcrumbProps, IBreadcrumbSta
      */
     public render(): any
     {
-        const className = this.props.className ? this.props.className : "breadcrumb";
+        const { classes, ...rest } = this.props;
+
+        const createSeparator = this.props.createSeparator
+                                    ? this.props.createSeparator
+                                    : (classesParam: StyleNames) => <span className={classesParam.separator}>/</span>;
+
+        const renderLink = this.props.renderLink
+                                ? this.props.renderLink
+                                : (caption: any,
+                                   urlPath: string,
+                                   classesParam: StyleNames) =>
+                                {
+                                    return <RouterLink caption={caption}
+                                                       path={urlPath}
+                                                       className={classesParam.link} />;
+                                };
+
         const renderPart = this.props.renderPart
                                 ? this.props.renderPart
                                 : (sn: ISiteMapNode, isLastItem: boolean) =>
                                 {
-                                    let snClassName = `${className}-item`;
-                                    if (isLastItem)
-                                    {
-                                        snClassName += " active";
-                                    }
+                                    const snClassName = classnames(classes.item, {
+                                        [classes.activeItem]: isLastItem
+                                    });
 
+                                    const urlPath = getSiteMapNodeSideBarUrl(sn);
                                     const caption = getSiteMapNodeCaption(sn, this.props.routeParameters);
 
-                                    return <li className={snClassName} key={sn.routeExpression}>
-                                        <RouterLink caption={caption} path={sn.absoluteRouteExpression} />
-                                    </li>;
+                                    return <div className={snClassName} key={sn.routeExpression}>
+                                       { renderLink(caption, urlPath, classes) }
+                                       { !isLastItem && <span className={classes.separator}>/</span> }
+                                    </div>;
                                 };
 
-        return <nav aria-label="breadcrumb">
-            <ol className={className}>
+        return <nav aria-label="breadcrumb" className={classes.root}>
             {
                 this.state.siteMapPath.length > 0 &&
-                this.state.siteMapPath.map((sn, index) => renderPart(sn, index === (this.state.siteMapPath.length - 1)))
+                this.state.siteMapPath.map((sn, index) =>
+                {
+                    return renderPart(sn, index === (this.state.siteMapPath.length - 1), classes);
+                })
             }
             {
                 this.state.siteMapPath.length === 0 &&
                 "404: not found"
             }
-            </ol>
         </nav>;
     }
 }
+);

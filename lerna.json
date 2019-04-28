@@ -1,0 +1,8 @@
+{
+  "version": "2.0.1",
+  "npmClient": "npm",
+  "packages": [
+    "packages/rfluxx",
+    "packages/rfluxx-routing"
+  ]
+}

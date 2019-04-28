@@ -1,3 +1,5 @@
+import "./bootstrap";
+
 import * as React from "react";
 import * as ReactDom from "react-dom";
 
@@ -29,8 +31,9 @@ const siteMap: ISiteMapNode = {
     children: [
         {
             caption: p => <span>Some span</span>,
-            routeExpression: "/some/span",
-            render: p => <span>Some text in a span</span>
+            routeExpression: "some/span",
+            render: p => <span>Some text in a span</span>,
+            showInSidebar: "/home/some/span#fancy"
         },
         {
             caption: p => <span>Form with select page</span>,
@@ -39,19 +42,21 @@ const siteMap: ISiteMapNode = {
         },
         {
             caption: p => <span style={{color : "red"}}>Select string</span>,
-            routeExpression: "/select/page",
+            routeExpression: "/select/page/",
             containerFactory: new SelectPageContainerFactory(),
-            render: p => <SelectPage caption="Default"/>
+            render: p => <SelectPage caption="Default"/>,
+            showInSidebar: false
         },
         {
             caption: p => <EditPageCaption />,
-            routeExpression: "/edit/page",
+            routeExpression: "edit/page/",
             render: p => <EditPage />
         },
         {
             caption: "Endless sequence",
-            routeExpression: "/endlessSequence/{sequenceNumber}",
-            render: p => <EndlessSequencePage />
+            routeExpression: "/endlessSequence/{sequenceNumber}/",
+            render: p => <EndlessSequencePage />,
+            showInSidebar: new Map([["sequenceNumber", "1"]])
         }
     ]
 };
@@ -62,7 +67,7 @@ const globalStores = RfluxxRouting.init({
     siteMap,
     containerFactory,
     targetNumberOpenPages: 5,
-    rootPath: "evictedPages"
+    rootPath: "/evictedPages/"
 });
 
 document.addEventListener("DOMContentLoaded", event =>

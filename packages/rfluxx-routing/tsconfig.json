@@ -10,7 +10,8 @@
         "importHelpers": true,
         //"lib": [ "dom", "es6", "scripthost", "es2017.object" ],
         "jsx": "react",
-        "declaration": true
+        "declaration": true,
+        "experimentalDecorators": true
     },
     "exclude": [
         "out"
