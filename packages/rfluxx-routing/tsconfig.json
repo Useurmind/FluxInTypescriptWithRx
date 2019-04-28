@@ -11,9 +11,10 @@
         //"lib": [ "dom", "es6", "scripthost", "es2017.object" ],
         "jsx": "react",
         "declaration": true,
-        "experimentalDecorators": true
+        "skipLibCheck": true
     },
     "exclude": [
-        "out"
+        "out",
+        "node_modules"
     ]
 }
