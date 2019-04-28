@@ -206,7 +206,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
             this.options.mode = (historyModeChosen && !!(history.pushState)) ? RouterMode.History : RouterMode.Hash;
         }
         this.options.root = this.options.root !== undefined
-                                ? "/" + this.clearSlashes(options.root) + "/"
+                                ? this.clearSlashes("/" + options.root)
                                 : window.location.pathname;
 
         console.info("root for router store is " + this.options.root);
@@ -242,7 +242,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
 
         if (this.options.mode === RouterMode.History)
         {
-            const targetUrl = this.options.root + this.clearSlashes(path);
+            const targetUrl = this.clearSlashes(this.options.root + path);
             if (replaceHistoryEntry === false)
             {
                 history.pushState(null, null, targetUrl);
@@ -311,7 +311,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
 
     private clearSlashes(path: string): string
     {
-        return path.toString().replace(/\/$/, "").replace(/^\//, "");
+        return path.toString().replace(/\/\//, "/");
     }
 
     /**
