@@ -6,9 +6,10 @@
     "type": "git",
     "url": "https://github.com/Useurmind/RFluXX.git"
   },
-  "main": "out/src/index.js",
-  "types": "out/src/index.d.ts",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
+    "lint": "tslint -p .\\tsconfig.json",
     "build": "tsc",
     "start": "webpack-dev-server --https",
     "test": "karma start"

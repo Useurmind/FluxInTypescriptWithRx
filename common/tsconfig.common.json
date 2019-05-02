@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "es2015",
+        "moduleResolution": "node",
+        "watch": false, 
+        "sourceMap": true,
+        "target": "es2017",
+        "importHelpers": true,
+        "jsx": "react",
+        "declaration": true,
+        "skipLibCheck": true
+    },
+    "exclude": [
+        "out",
+        "node_modules"
+    ]
+}

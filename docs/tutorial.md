@@ -21,8 +21,8 @@ The starting point of each react app is usually the index.tsx. To this startup c
 Because the site map tree can become quite large it makes sense to extract it into one or several modules, e.g. `SiteMap.tsx`:
 
 ```typescript
-import { withPageContext } from "rfluxx-routing/PageContextProvider";
-import { ISiteMapNode } from "rfluxx-routing/SiteMapStore";
+import { withPageContext } from "rfluxx-routing";
+import { ISiteMapNode } from "rfluxx-routing";
 
 import { Home } from "./components/home";
 import { Page1 } from "./components/page1";
@@ -86,7 +86,7 @@ The page management needs to know how to create a container for your app if the 
 ```typescript
 import { IContainer, SimpleContainer } from "rfluxx";
 
-import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoyBase } from "rfluxx-routing/IPageContainerFactory";
+import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoyBase } from "rfluxx-routing";
 
 import { HomeStore } from "./stores/HomeStore";
 

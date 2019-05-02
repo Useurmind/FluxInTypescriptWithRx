@@ -1,22 +1,3 @@
 {
-    "compilerOptions": {
-        "outDir": "out",
-        "rootDir": ".",
-        "module": "es2015",
-        "moduleResolution": "node",
-        "watch": false,  // for development specify -w on command line
-        "sourceMap": true,
-        "target": "es5",
-        "importHelpers": true,
-        "lib": [ "dom", "es6", "scripthost" ],
-        "jsx": "react",
-        "declaration": true,
-        "skipLibCheck": true,
-        "types" : ["react", "react-dom", "jasmine"]
-    },
-    "exclude": [
-        "node_modules",
-        "../../node_modules",
-        "out"
-    ]
+    "extends": "../../common/tsconfig.common.json"
 }

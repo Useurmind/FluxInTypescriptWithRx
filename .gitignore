@@ -5,6 +5,22 @@ rewrite.sh
 InstallUtil.InstallLog
 package-lock.json
 
+# any output files of the tsc compiler
+# we put our output directly in source folder
+# source code is in src
+# tests are in spec
+# examples are in example
+**/src/**/*.js
+**/src/**/*.d.ts
+**/src/**/*.js.map
+**/spec/**/*.js
+**/spec/**/*.d.ts
+**/spec/**/*.js.map
+**/example/**/*.js
+**/example/**/*.d.ts
+**/example/**/*.js.map
+
+
 # Logs
 *.log
 npm-debug.log*

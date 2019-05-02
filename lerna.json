@@ -3,6 +3,7 @@
   "npmClient": "npm",
   "packages": [
     "packages/rfluxx",
-    "packages/rfluxx-routing"
+    "packages/rfluxx-routing",
+    "packages/rfluxx-example"
   ]
 }

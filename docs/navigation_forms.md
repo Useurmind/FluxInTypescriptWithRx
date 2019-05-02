@@ -15,7 +15,7 @@ __Example:__
 Here we render a welcome page that has a link pointing to a tutorial page.
 
 ```typescript
-    import { RouterLink } from "rfluxx-routing/RouterLink";
+    import { RouterLink } from "rfluxx-routing";
 
     export class WelcomePage : Component<...>
     {
