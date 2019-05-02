@@ -23,10 +23,19 @@ export abstract class SimplePageContainerFactoryBase implements IPageContainerFa
         url: URL,
         routeParameters: RouteParameters,
         globalComponents: IGlobalComponents,
-        pageRequest?: IPageRequest | null)
+        pageRequest?: IPageRequest | null,
+        parentContainers?: IContainer[])
         : IContainer
     {
         const builder = new SimpleContainerBuilder();
+
+        if (parentContainers)
+        {
+            for (const parent of parentContainers)
+            {
+                builder.addParentContainer(parent);
+            }
+        }
 
         // registerTimeTraveler(builder, true, pageId);
         registerTimeTraveler(builder, true, null);

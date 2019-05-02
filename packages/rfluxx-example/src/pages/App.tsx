@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { ISiteMapNode, ISiteMapStore } from "rfluxx-routing";
 import { Breadcrumb } from "rfluxx-routing";
 import { CurrentPage } from "rfluxx-routing";

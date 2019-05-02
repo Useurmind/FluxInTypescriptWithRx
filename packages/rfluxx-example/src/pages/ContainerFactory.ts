@@ -1,5 +1,4 @@
 import { IContainer, IContainerBuilder } from "rfluxx";
-
 import { RouteParameters } from "rfluxx-routing";
 import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoryBase } from "rfluxx-routing";
 

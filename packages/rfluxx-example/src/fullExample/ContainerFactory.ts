@@ -1,5 +1,4 @@
 import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
-
 import { IGlobalComponents, IPageContainerFactory, RouteParameters, SimplePageContainerFactoryBase } from "rfluxx-routing";
 
 import { EditPageStore } from "./EditPage/EditPageStore";

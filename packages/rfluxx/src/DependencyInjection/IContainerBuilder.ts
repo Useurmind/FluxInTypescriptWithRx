@@ -11,6 +11,13 @@ import { ICreationRule } from "./ICreationRule";
 export interface IContainerBuilder
 {
     /**
+     * Add a parent container to the container being build.
+     * The container that is build will use the parent container to resolve stuff he does not know.
+     * @param parentContainer The parent container.
+     */
+    addParentContainer(parentContainer: IContainer);
+
+    /**
      * Register a creation rule.
      * @param create A creation rule (which is a function) that creates whatever you like.
      */

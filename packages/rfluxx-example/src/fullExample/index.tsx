@@ -1,12 +1,10 @@
-import "./bootstrap";
-
 import * as React from "react";
 import * as ReactDom from "react-dom";
-
 import * as RfluxxRouting from "rfluxx-routing";
 import { ISiteMapNode, withPageContext } from "rfluxx-routing";
 
 import { App } from "./App";
+import "./bootstrap";
 import { ContainerFactory } from "./ContainerFactory";
 import { EditPage } from "./EditPage/EditPage";
 import { EditPageCaption } from "./EditPage/EditPageCaption";
@@ -67,7 +65,7 @@ const globalStores = RfluxxRouting.init({
     siteMap,
     containerFactory,
     targetNumberOpenPages: 5,
-    rootPath: "/evictedPages/"
+    rootPath: "/fullExample/"
 });
 
 document.addEventListener("DOMContentLoaded", event =>

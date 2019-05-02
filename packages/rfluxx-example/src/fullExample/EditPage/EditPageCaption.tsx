@@ -60,6 +60,6 @@ export class EditPageCaption extends React.Component<IEditPageCaptionProps, IEdi
 
     public render(): any
     {
-        return <span>Edit stuff: {this.state.editedText}</span>
+        return <span>Edit stuff: {this.state.editedText}</span>;
     }
 }

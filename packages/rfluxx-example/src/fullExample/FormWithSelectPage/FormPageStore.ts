@@ -1,8 +1,7 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
+import { IPageStore } from "rfluxx-routing";
 
 import { ISelectPageStoreInput, ISelectPageStoreOutput } from "../SelectPage/SelectPageStore";
-
-import { IPageStore } from "rfluxx-routing";
 
 export interface IFormPageStoreState
 {

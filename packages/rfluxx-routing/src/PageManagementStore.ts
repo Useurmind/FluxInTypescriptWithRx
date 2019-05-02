@@ -1,5 +1,5 @@
 import * as Rfluxx from "rfluxx";
-import { applyMixins, IAction, IActionEventLogPreserver, IInjectedStoreOptions, NeedToKnowAboutReplayMixin } from "rfluxx";
+import { applyMixins, IAction, IActionEventLogPreserver, IInjectedStoreOptions, NeedToKnowAboutReplayMixin, IContainer } from "rfluxx";
 
 import { IPageContainerFactory } from "./DependencyInjection/IPageContainerFactory";
 import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore } from "./PageCommunication";
@@ -309,26 +309,40 @@ export class PageManagementStore
         let openPages = this.state.openPages;
         if (!hasPageState)
         {
+            const createContainer =
+            (cf: IPageContainerFactory, parentContainer?: IContainer): IContainer =>
+            {
+                return cf.createContainer(
+                    pageId,
+                        siteMapNodeHit.url,
+                        siteMapNodeHit.parameters,
+                        {
+                            routerStore: this.options.routerStore,
+                            siteMapStore: this.options.siteMapStore,
+                            pageManagementStore: this,
+                            pageCommunicationStore: this.pageCommunicationStore
+                        },
+                        pendingRequest
+                );
+            };
+
             // when the sitemap node specifies an own container factory we
             // will use it instead of the central one
-            const containerFactory = siteMapNodeHit.siteMapNode.containerFactory
-                                        ? siteMapNodeHit.siteMapNode.containerFactory
-                                        : this.options.containerFactory;
+            // the central one will then be a parent container of the page container
+            const globalContainerFactory = this.options.containerFactory;
+            const globalContainer = createContainer(globalContainerFactory);
+
+            const pageContainerFactory = siteMapNodeHit.siteMapNode.containerFactory;
+            let pageContainer = globalContainer;
+            if (pageContainerFactory)
+            {
+                pageContainer = createContainer(pageContainerFactory, globalContainer);
+            }
 
             this.pageMap.set(pageId, {
                 pageId,
                 siteMapNode: siteMapNodeHit.siteMapNode,
-                container: containerFactory.createContainer(
-                    pageId,
-                    siteMapNodeHit.url,
-                    siteMapNodeHit.parameters,
-                    {
-                        routerStore: this.options.routerStore,
-                        siteMapStore: this.options.siteMapStore,
-                        pageManagementStore: this,
-                        pageCommunicationStore: this.pageCommunicationStore
-                    },
-                    pendingRequest),
+                container: pageContainer,
                 url: siteMapNodeHit.url,
                 isInEditMode: false,
                 routeParameters: siteMapNodeHit.parameters,

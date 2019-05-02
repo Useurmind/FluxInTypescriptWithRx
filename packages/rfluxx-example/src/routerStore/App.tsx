@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { RouterLink } from "rfluxx-routing";
 import { routerStore } from "rfluxx-routing";
 

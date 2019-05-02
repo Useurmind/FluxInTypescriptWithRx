@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
-
 import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, ISiteMapNode, SiteMapStore } from "rfluxx-routing";
 import { ComplexRouteMatching } from "rfluxx-routing";
 import { RegexRouteMatching } from "rfluxx-routing";

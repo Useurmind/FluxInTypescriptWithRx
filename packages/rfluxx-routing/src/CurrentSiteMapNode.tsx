@@ -1,10 +1,11 @@
 import * as React from "react";
+import { StoreSubscription } from "rfluxx";
 import { Subscription } from "rxjs/Subscription";
 
 import { RouteParameters } from "./RouterStore";
 import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
 import { SiteMapNode } from "./SiteMap/SiteMapNode";
-import { ISiteMapStore } from "./SiteMap/SiteMapStore";
+import { ISiteMapStore, ISiteMapStoreState } from "./SiteMap/SiteMapStore";
 
 /**
  * Props for { @see CurrentSiteMapNode }.
@@ -38,7 +39,7 @@ export interface ICurrentSiteMapNodeState
  */
 export class CurrentSiteMapNode extends React.Component<ICurrentSiteMapNodeProps, ICurrentSiteMapNodeState>
 {
-    private subscription: Subscription;
+    private subscription: StoreSubscription<ISiteMapStore, ISiteMapStoreState> = new StoreSubscription();
 
     constructor(props: ICurrentSiteMapNodeProps)
     {
@@ -55,7 +56,8 @@ export class CurrentSiteMapNode extends React.Component<ICurrentSiteMapNodeProps
      */
     public componentDidMount()
     {
-        this.subscription = this.props.siteMapStore.subscribe(
+        this.subscription.subscribeStore(
+            this.props.siteMapStore,
             x => this.setState({
                 ...this.state,
                 currentSiteMapNode:  x.siteMapNodeHit ? x.siteMapNodeHit.siteMapNode : null,

@@ -2,6 +2,9 @@
     "extends": [
         "../../common/tslint.common.json"
     ],
+    "rules": {
+        "completed-docs": false
+    },
     "rulesDirectory": [
       "node_modules/tslint-eslint-rules/dist/rules"
     ]

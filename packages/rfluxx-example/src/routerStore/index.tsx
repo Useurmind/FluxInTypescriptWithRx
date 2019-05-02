@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
-
 import { RegexRouteMatching } from "rfluxx-routing";
 import {  configureRouterStore } from "rfluxx-routing";
 

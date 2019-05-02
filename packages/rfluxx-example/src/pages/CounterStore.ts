@@ -1,5 +1,4 @@
 import { IAction, IStore, Store } from "rfluxx";
-
 import { IPageRequest } from "rfluxx-routing";
 import { IPageStore } from "rfluxx-routing";
 

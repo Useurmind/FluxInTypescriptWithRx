@@ -1,6 +1,5 @@
 import * as React from "react";
 import { StoreSubscription } from "rfluxx";
-
 import { IPageContextProps, PageContext } from "rfluxx-routing";
 
 import { IFormPageStore, IFormPageStoreState } from "./FormPageStore";
