@@ -31,6 +31,7 @@ export interface IPageContainerFactory
      * @param routeParamters The parameters that were extracted from the route.
      * @param globalComponents The global stores provided by the framework.
      * @param pageRequest The request that leads to the page. Can be null for pages to which was just navigated.
+     * @param parentContainers Set of parent containers to use for fallback resolution of dependencies.
      * @returns The new container.
      */
     createContainer(
@@ -38,6 +39,7 @@ export interface IPageContainerFactory
         url: URL,
         routeParameters: RouteParameters,
         globalComponents: IGlobalComponents,
-        pageRequest?: IPageRequest)
+        pageRequest?: IPageRequest,
+        parentContainers?: IContainer[])
         : IContainer;
 }

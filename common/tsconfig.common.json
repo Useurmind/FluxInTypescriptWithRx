@@ -8,10 +8,7 @@
         "importHelpers": true,
         "jsx": "react",
         "declaration": true,
-        "skipLibCheck": true
-    },
-    "exclude": [
-        "out",
-        "node_modules"
-    ]
+        "skipLibCheck": true,
+
+    }
 }

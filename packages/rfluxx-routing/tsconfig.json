@@ -1,3 +1,10 @@
 {
-    "extends": "../../common/tsconfig.common.json"
+    "extends": "../../common/tsconfig.common.json",
+    "compilerOptions": {
+        "outDir": "out"
+    },
+    "exclude": [
+        "out",
+        "node_modules"
+    ]
 }

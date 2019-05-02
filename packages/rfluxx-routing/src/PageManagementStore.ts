@@ -322,7 +322,8 @@ export class PageManagementStore
                             pageManagementStore: this,
                             pageCommunicationStore: this.pageCommunicationStore
                         },
-                        pendingRequest
+                        pendingRequest,
+                        parentContainer ? [parentContainer] : null
                 );
             };
 
