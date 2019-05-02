@@ -31,8 +31,10 @@ export class SimpleContainer implements IContainer
     /**
      * Create the container.
      * @param registrationMap The map containing all registrations.
+     * @param parentContainers A list of parent containers that should be tried for resolution
+     *  when dependency is not found locally.
      */
-    constructor(private registrationMap: RegistrationMap)
+    constructor(private registrationMap: RegistrationMap, private parentContainers: IContainer[])
     {
     }
 
@@ -94,6 +96,12 @@ export class SimpleContainer implements IContainer
             {
                 if (!optional)
                 {
+                    instance = this.tryResolveFromParentContainers(key, instanceName);
+                    if (instance)
+                    {
+                        return instance as T;
+                    }
+
                     throw new Error(`Could not find any registrations for key '${key}' in container`);
                 }
                 else
@@ -124,5 +132,17 @@ export class SimpleContainer implements IContainer
         }
 
         return instance as T;
+    }
+
+    private tryResolveFromParentContainers(key: string, instanceName: string): any
+    {
+        for (const parent of this.parentContainers)
+        {
+            const instance = parent.resolveOptional(key, instanceName);
+            if (instance)
+            {
+                return instance;
+            }
+        }
     }
 }

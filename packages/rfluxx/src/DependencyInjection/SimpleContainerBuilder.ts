@@ -22,6 +22,17 @@ export type RegistrationMap = Map<string, IResolveWithInstanceName | IResolveWit
 export class SimpleContainerBuilder implements IContainerBuilder
 {
     private registrationMap: RegistrationMap = new Map();
+    private parentContainers: IContainer[] = [];
+
+    /**
+     * Add a parent container to the container being build.
+     * The container that is build will use the parent container to resolve stuff he does not know.
+     * @param parentContainer The parent container.
+     */
+    public addParentContainer(parentContainer: IContainer)
+    {
+        this.parentContainers.push(parentContainer);
+    }
 
     /**
      * @inheritDoc
@@ -39,7 +50,7 @@ export class SimpleContainerBuilder implements IContainerBuilder
      */
     public build(): IContainer
     {
-        const container = new SimpleContainer(this.registrationMap);
+        const container = new SimpleContainer(this.registrationMap, this.parentContainers);
         this.registrationMap = new Map();
 
         return container;

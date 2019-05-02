@@ -201,4 +201,21 @@ describe("SimpleContainer", () =>
         expect(result).not.toBeNull();
         expect(result.length).toBe(0);
     });
+
+    it("can resolve instance from parent container", () =>
+    {
+        const registeredStringInParent = "ölkjfgöhlkjfg";
+        const builderParent = new SimpleContainerBuilder();
+        builderParent.register(c => registeredStringInParent)
+                     .as(registrationKey1);
+        const parent = builderParent.build();
+
+        const builder = new SimpleContainerBuilder();
+        builder.addParentContainer(parent);
+        const container = builder.build();
+
+        const result = container.resolve<string>(registrationKey1);
+
+        expect(result).toBe(registeredStringInParent);
+    });
 });
