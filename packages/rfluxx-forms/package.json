@@ -1,32 +1,56 @@
 {
-  "name": "rfluxx-routing-dipper",
-  "version": "0.1.0",
-  "description": "Integration of rfluxx-routing with the dependency injection container dipper.",
+  "name": "rfluxx-forms",
+  "version": "2.1.0",
+  "description": "Rfluxx based forms framework.",
   "repository": {
     "type": "git",
     "url": "https://github.com/Useurmind/RFluXX.git"
   },
-  "main": "out/src/index.js",
-  "types": "out/src/index.d.ts",
+  "main": "out/index.js",
+  "types": "out/index.d.ts",
   "scripts": {
-    "build": ".\\node_modules\\.bin\\tsc"
+    "lint": "tslint -p .\\tsconfig.json",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "karma start"
   },
   "keywords": [
     "flux",
     "rx",
     "rxjs",
     "typescript",
-    "dependency injection"
+    "forms"
   ],
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
+  "peerDependencies": {
+    "react": "~16.8.4",
+    "react-dom": "~16.8.4"
+  },
   "dependencies": {
-    "dipperts": "^0.3.0",
-    "rfluxx": "^0.1.0",
-    "rfluxx-dipper": "^0.1.0",
-    "rfluxx-routing": "^0.1.0"
+    "@material-ui/core": "^3.9.3",
+    "classnames": "^2.2.6",
+    "rfluxx": "2.1.0",
+    "rxjs": "~5.5.7",
+    "tslib": "~1.9.0"
   },
   "devDependencies": {
-    "typescript": "^2.7.2"
+    "@types/classnames": "^2.2.7",
+    "@types/jasmine": "^2.8.6",
+    "@types/react": "~16.8.8",
+    "@types/react-dom": "~16.8.2",
+    "jasmine": "^3.1.0",
+    "jasmine-core": "^3.1.0",
+    "karma": "^3.1.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
+    "karma-spec-reporter": "^0.0.32",
+    "karma-trx-reporter": "^0.2.9",
+    "karma-webpack": "^3.0.0",
+    "react": "~16.8.4",
+    "react-dom": "~16.8.4",
+    "tslint": "^5.11.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.4.5"
   }
 }

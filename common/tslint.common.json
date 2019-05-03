@@ -13,6 +13,20 @@
             }
         ],
         "arrow-parens": [ true, "ban-single-arg-parens" ],
+        "member-ordering": [
+            true,
+            {
+              "order": [
+                "public-static-field",
+                "public-instance-field",
+                "private-static-field",
+                "private-instance-field",
+                "public-constructor",
+                "private-constructor"
+              ],
+              "alphabetize": false
+            }
+        ],
         "trailing-comma": [
             true,
             {

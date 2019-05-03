@@ -1,15 +1,10 @@
 {
+    "extends": "../../common/tsconfig.common.json",
     "compilerOptions": {
-        "outDir": "out",
-        "rootDir": ".",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "watch": false,  // for development specify -w on command line
-        "sourceMap": true,
-        "target": "es5",
-        "importHelpers": true,
-        "lib": [ "dom", "es6", "scripthost" ],
-        "jsx": "react",
-        "declaration": true
-    }
+        "outDir": "out"
+    },
+    "exclude": [
+        "out",
+        "node_modules"
+    ]
 }

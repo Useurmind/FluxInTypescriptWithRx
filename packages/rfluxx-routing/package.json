@@ -11,6 +11,7 @@
   "scripts": {
     "lint": "tslint -p .\\tsconfig.json",
     "build": "tsc",
+    "watch": "tsc -w",
     "start": "webpack-dev-server --https",
     "test": "karma start"
   },

@@ -1,5 +1,7 @@
 import * as Rfluxx from "rfluxx";
 
+import { ValidateDataObject, ValidationErrors, Validator } from "./Validation";
+
 /**
  * Type for a function to set a data field.
  */
@@ -11,22 +13,6 @@ type SetDataField = (data: any, value: any) => void;
  * the validation error object for a given data field.
  */
 type GetDataField = (data: any) => any;
-
-/**
- * Type for a function to validate a data field.
- */
-type ValidateDataObject<TData> = (data: TData) => ValidationErrors<TData>;
-
-/**
- * Type for validation errors on 
- */
-type ValidationErrors<T> = T extends string ? string[] : 
-                          T extends number ? string[] : 
-                          T extends boolean ? string[] : 
-                          {
-                              [P in keyof T]: 
-                                T[P] extends Array<infer D> ? Array<ValidationErrors<D>> : ValidationErrors<T[P]>;
-                          };
 
 /**
  * Parameters for the action that updates a data field in the 
@@ -46,6 +32,9 @@ export interface IUpdateDataFieldParams
     value: any;
 }
 
+/**
+ * State for { @see IFormStore }
+ */
 export interface IFormStoreState<TData>
 {
     /**
@@ -60,6 +49,9 @@ export interface IFormStoreState<TData>
     validationErrors: ValidationErrors<TData>;
 }
 
+/**
+ * Interface for any form store that should be used with the form components.
+ */
 export interface IFormStore<TData> extends Rfluxx.IStore<IFormStoreState<TData>>
 {
     /**
@@ -68,7 +60,13 @@ export interface IFormStore<TData> extends Rfluxx.IStore<IFormStoreState<TData>>
     updateDataField: Rfluxx.IAction<IUpdateDataFieldParams>;
 }
 
-export function updataDataField<TData>(state: IFormStoreState<TData>, setDataField: SetDataField, value: any): IFormStoreState<TData>
+/**
+ * Update a data field in the state of the store.
+ * @returns The new state object for the store.
+ */
+export function updataDataField<TData>(
+    state: IFormStoreState<TData>, setDataField: SetDataField, value: any)
+    : IFormStoreState<TData>
 {
     const newData = { ...(state.data as any) };
 
@@ -80,37 +78,18 @@ export function updataDataField<TData>(state: IFormStoreState<TData>, setDataFie
     };
 }
 
-export function validate<TData>(state: IFormStoreState<TData>, validateDataObject: ValidateDataObject<TData>): IFormStoreState<TData>
+/**
+ * Validate the data object.
+ * @returns The new state object for the store.
+ */
+export function validate<TData>(
+    state: IFormStoreState<TData>, validateDataObject: ValidateDataObject<TData>)
+    : IFormStoreState<TData>
 {
-    const validationErrors = validateDataObject(state.data);
+    const validationErrors = validateDataObject(state.data, new Validator<TData>());
 
     return {
         ...state,
         validationErrors
     };
 }
-
-// code to test the validation errors type
-// interface IData1 {
-//     stringValue: string;
-//     numberValue?: number;
-//     enumValue: Enum1;
-//     data2: IData2;
-//     data2Array: IData2[];
-// }
-
-// interface IData2 {
-//     stringValue2: string | null;
-//     numberValue2: number;
-// }
-
-// enum Enum1 {
-
-// }
-
-// const valError: ValidationErrors<IData1>;
-
-// valError.numberValue
-// valError.stringValue
-// valError.data2.numberValue2
-// valError.data2Array[0].numberValue2

@@ -9,6 +9,8 @@ import { ContainerFactory } from "./ContainerFactory";
 import { EditPage } from "./EditPage/EditPage";
 import { EditPageCaption } from "./EditPage/EditPageCaption";
 import { EndlessSequencePage } from "./EndlessSequence/EndlessSequencePage";
+import { ContainerFactory as FormDemoPageContainerFactory } from "./FormDemo/ContainerFactory";
+import { FormDemoPage } from "./FormDemo/FormDemoPage";
 import { FormPage } from "./FormWithSelectPage/FormPage";
 import { HomePage } from "./HomePage";
 import { ContainerFactory as SelectPageContainerFactory } from "./SelectPage/ContainerFactory";
@@ -49,6 +51,12 @@ const siteMap: ISiteMapNode = {
             caption: p => <EditPageCaption />,
             routeExpression: "edit/page/",
             render: p => <EditPage />
+        },
+        {
+            caption: "Form Demo",
+            routeExpression: "form/demo/",
+            containerFactory: new FormDemoPageContainerFactory(),
+            render: p => <FormDemoPage />
         },
         {
             caption: "Endless sequence",

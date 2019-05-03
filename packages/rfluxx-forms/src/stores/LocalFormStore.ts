@@ -1,6 +1,8 @@
-import { Observable } from "rxjs/Observable";
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
-import { IFormStore, IUpdateDataFieldParams, IFormStoreState, updataDataField } from "./IFormStore";
+import { Observable } from "rxjs/Observable";
+
+import { IFormStore, IFormStoreState, IUpdateDataFieldParams, updataDataField, validate } from "./IFormStore";
+import { ValidateDataObject, ValidationErrors } from "./Validation";
 
 /**
  * The options to configure the { @see LocalFormStore }
@@ -11,6 +13,11 @@ export interface ILocalFormStoreOptions<TData> extends IInjectedStoreOptions
      * Initial data object to use for the form.
      */
     initialData: TData;
+
+    /**
+     * A function that validates the input fields.
+     */
+    validateData: ValidateDataObject<TData>;
 }
 
 /**
@@ -34,6 +41,9 @@ export class LocalFormStore<TData>
     extends Store<ILocalFormStoreState<TData>>
     implements ILocalFormStore<TData>
 {
+    /**
+     * inherited
+     */
     public readonly updateDataField: IAction<IUpdateDataFieldParams>;
 
     constructor(private options: ILocalFormStoreOptions<TData>)
@@ -41,8 +51,8 @@ export class LocalFormStore<TData>
         super({
             ...options,
             initialState: {
-                data: options.initialData,
-                validationErrors: null as any,
+                data: options.initialData ? options.initialData : {} as TData,
+                validationErrors: {} as ValidationErrors<TData>
             }
         });
 
@@ -51,7 +61,8 @@ export class LocalFormStore<TData>
 
     private onUpdateDataField(params: IUpdateDataFieldParams): void
     {
-        const newState = updataDataField(this.state, params.setDataField, params.value);
+        let newState = updataDataField(this.state, params.setDataField, params.value);
+        newState = validate(newState, this.options.validateData);
 
         this.setState(newState);
     }

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { IFormStore } from "./IFormStore";
+
+import { IFormStore } from "./stores/IFormStore";
 
 /**
  * Props to implement by component that wants to consume a form
@@ -7,6 +8,9 @@ import { IFormStore } from "./IFormStore";
  */
 export interface IFormContextConsumerProps
 {
+    /**
+     * The form context.
+     */
     formContext: IFormContext;
 }
 
@@ -15,7 +19,24 @@ export interface IFormContextConsumerProps
  */
 export interface IFormContext
 {
+    /**
+     * The store to use for the form.
+     */
     formStore: IFormStore<any>;
+
+    /**
+     * The current data object.
+     */
+    data: any;
+
+    /**
+     * The current validation errors object.
+     */
+    validationErrors: any;
 }
 
-export const FormContext = React.createContext<IFormContext>({ formStore: null as any });
+export const FormContext = React.createContext<IFormContext>({
+    formStore: null as any,
+    data: null,
+    validationErrors: null
+});

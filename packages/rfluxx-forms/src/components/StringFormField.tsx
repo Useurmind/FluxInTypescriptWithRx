@@ -1,59 +1,75 @@
-import * as React from "react";
-import { createStyles, WithStyles, withStyles, Theme, TextField } from "@material-ui/core";
+import { createStyles, FormControl, FormControlLabel, FormHelperText, InputLabel, TextField, Theme, WithStyles, withStyles, Input } from "@material-ui/core";
 import * as classNames from "classnames";
-import { FormContext } from "../FormContext";
-import { IFormFieldProps } from "./IFormFieldProps";
-import { IFormStore, IFormStoreState } from "../IFormStore";
+import * as React from "react";
 import { StoreSubscription } from "rfluxx";
+
+import { FormContext } from "../FormContext";
+import { IFormStore, IFormStoreState } from "../stores/IFormStore";
+import { RenderError } from "../stores/Validation";
+
+import { IFormFieldProps } from "./IFormFieldProps";
 
 type TData = any;
 
 const styles = (theme: Theme) => createStyles({
     root: {
     },
+    label: {
+    },
+    input: {
+    },
+    error: {
+    },
+    description: {
+    }
 });
 
+/**
+ * State for { @see StringFormField }.
+ */
 export interface IStringFormFieldState
 {
-    value: string;
 }
 
+/**
+ * Props for { @see StringFormField }.
+ */
 export interface IStringFormFieldProps extends WithStyles<typeof styles>, IFormFieldProps<TData, string>
 {
+    /**
+     * Label for the text field.
+     */
+    label?: string;
+
+    /**
+     * Is this input field required.
+     */
+    required?: boolean;
+
+    /**
+     * A helpfull text that describes the text field.
+     */
+    description?: string;
 }
 
 export const StringFormField = withStyles(styles)(
     class extends React.Component<IStringFormFieldProps, IStringFormFieldState>
     {
-        private storeSubscription: StoreSubscription<IFormStore<TData>, IFormStoreState<TData>> = new StoreSubscription();
 
         constructor(props: IStringFormFieldProps)
         {
             super(props);
 
             this.state = {
-                value: ""
+                value: "",
+                renderError: null,
+                hasError: false
             };
         }
 
-        private setAndSubscribeFormStore(formStore: IFormStore<TData>)
+        private onTextFieldChange(formStore: IFormStore<TData>, e: any): void
         {
-            if (this.storeSubscription.store != formStore)
-            {
-                this.storeSubscription.unsubscribe();
-                this.storeSubscription.subscribeStore(formStore, s =>
-                {
-                    this.setState({
-                        ...this.state,
-                        value: this.props.getValue(s.data)
-                    })
-                });
-            }
-        }
-
-        private onTextFieldChange(e: any): void
-        {
-            this.storeSubscription.store.updateDataField.trigger({
+            formStore.updateDataField.trigger({
                 setDataField: this.props.setValue,
                 value: e.target.value
             });
@@ -65,9 +81,30 @@ export const StringFormField = withStyles(styles)(
 
             return <FormContext.Consumer>{context =>
             {
-                this.setAndSubscribeFormStore(context.formStore);
+                if (!context.data)
+                {
+                    return null;
+                }
 
-                return <TextField value={this.state.value} onChange={e => this.onTextFieldChange(e)}/>
+                const value = this.props.getValue(context.data);
+                const renderError = this.props.getValue(context.validationErrors) as any;
+                const hasError = renderError != null;
+
+                return <FormControl className={classes.root}>
+                    { this.props.label &&
+                        <InputLabel error={hasError}
+                                    className={classes.label}
+                                    required={this.props.required}>{this.props.label}</InputLabel>}
+                    <Input value={value}
+                           error={hasError}
+                           onChange={e => this.onTextFieldChange(context.formStore, e)}
+                           className={classes.input}
+                           required={this.props.required} />
+                    { hasError && <FormHelperText className={classes.error}
+                                                  error={true}>{renderError()}</FormHelperText>}
+                    { this.props.description && <FormHelperText className={classes.description}
+                                                                error={false}>{this.props.description}</FormHelperText>}
+                </FormControl>;
             }}
             </FormContext.Consumer>;
         }
