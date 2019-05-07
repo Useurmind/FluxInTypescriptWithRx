@@ -40,13 +40,23 @@ export interface IFormStoreState<TData>
     /**
      * The data object that is shown and edited in the form.
      */
-    data: TData;
+    data: TData | null;
+
+    /**
+     * Is the store currently loading/storing data.
+     */
+    isLoading: boolean;
+
+    /**
+     * Error messages that do not belong to a specific form field.
+     */
+    globalErrors: string | string[] | null;
 
     /**
      * This is an object that has the same structure as the original data object.
      * Only that each property is a string array containing the validation errors.
      */
-    validationErrors: ValidationErrors<TData>;
+    validationErrors: ValidationErrors<TData> | null;
 }
 
 /**
@@ -58,6 +68,12 @@ export interface IFormStore<TData> extends Rfluxx.IStore<IFormStoreState<TData>>
      * Action to update a data field in the data object.
      */
     updateDataField: Rfluxx.IAction<IUpdateDataFieldParams>;
+
+    /**
+     * Save the data currently in the form.
+     * No argument required.
+     */
+    saveData: Rfluxx.IAction<any>;
 }
 
 /**
