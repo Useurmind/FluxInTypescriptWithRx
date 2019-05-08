@@ -52,6 +52,7 @@ export class StoreSubscription<TStore extends IStore<TStoreState>, TStoreState>
         {
             this.subscription.unsubscribe();
             this.subscription = null;
+            this.store = null;
         }
     }
 }
