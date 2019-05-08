@@ -1,4 +1,4 @@
-import { RouteParameters } from "../RouterStore";
+import { RouteParameters } from "../Routing/RouterStore";
 
 import { IRouteMatchResult, IRouteMatchStrategy } from "./IRouteMatchStrategy";
 

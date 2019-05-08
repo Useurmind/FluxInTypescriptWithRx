@@ -2,7 +2,7 @@ import * as React from "react";
 import { Subscription } from "rxjs/Subscription";
 
 import { withPageContext } from "../PageContextProvider";
-import { RouteParameters } from "../RouterStore";
+import { RouteParameters } from "../Routing/RouterStore";
 
 import { ISiteMapNode } from "./ISiteMapNode";
 

@@ -2,7 +2,7 @@ import { IContainer, IContainerBuilder, registerStore, registerTimeTraveler, Sim
 
 import { IPageRequest, IRequestedPageStore, isIRequestedPageStore } from "../PageCommunication";
 import { PageStore } from "../PageStore";
-import { RouteParameters } from "../RouterStore";
+import { RouteParameters } from "../Routing/RouterStore";
 
 import { IGlobalComponents } from "./IGlobalComponents";
 import { IPageContainerFactory } from "./IPageContainerFactory";

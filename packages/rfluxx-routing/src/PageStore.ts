@@ -7,7 +7,7 @@ import { IPageContainerFactory } from "./DependencyInjection/IPageContainerFacto
 import { IPageCommunicationStore, IPageRequest, IPageResponse, IRequestedPageStore, PageCommunicationStore, PageResultStatus } from "./PageCommunication";
 import { IPageManagementStore } from "./PageManagementStore";
 import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
-import { IRouterStore } from "./RouterStore";
+import { IRouterStore } from "./Routing/RouterStore";
 import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMap";
 
 /**

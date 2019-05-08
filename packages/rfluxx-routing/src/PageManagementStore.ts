@@ -1,12 +1,12 @@
 import * as Rfluxx from "rfluxx";
-import { applyMixins, IAction, IActionEventLogPreserver, IInjectedStoreOptions, NeedToKnowAboutReplayMixin, IContainer } from "rfluxx";
+import { applyMixins, IAction, IActionEventLogPreserver, IContainer, IInjectedStoreOptions, NeedToKnowAboutReplayMixin } from "rfluxx";
 
 import { IPageContainerFactory } from "./DependencyInjection/IPageContainerFactory";
 import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore } from "./PageCommunication";
 import { IPageData } from "./Pages/IPageData";
 import { IPageEvictionStrategy } from "./Pages/IPageEvictionStrategy";
 import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
-import { IRouterStore } from "./RouterStore";
+import { IRouterStore } from "./Routing/RouterStore";
 import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMap";
 
 /**

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IContainer } from "rfluxx";
 
-import { RouteParameters } from "./RouterStore";
+import { RouteParameters } from "./Routing/RouterStore";
 
 /**
  * The props that are provided by the page context.

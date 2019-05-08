@@ -1,7 +1,7 @@
 import * as Rfluxx from "rfluxx";
 
 import { IPageRequest } from "../PageCommunication";
-import { RouteParameters } from "../RouterStore";
+import { RouteParameters } from "../Routing/RouterStore";
 import { ISiteMapNode } from "../SiteMap/ISiteMapNode";
 
 /**

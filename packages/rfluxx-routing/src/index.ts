@@ -5,7 +5,7 @@ import { NoPageStateEvictions } from "./Pages/NoPageStateEvictions";
 import { IPathAndSearchPageIdOptions, PathAndSearchPageId } from "./Pages/PathAndSearchPageId";
 import { ComplexRouteMatching } from "./RouteMatching/ComplexRouteMatching";
 import { RegexRouteMatching } from "./RouteMatching/RegexRouteMatching";
-import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./RouterStore";
+import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./Routing/RouterStore";
 import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
 import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, SiteMapStore } from "./SiteMap/SiteMapStore";
 
@@ -22,7 +22,7 @@ export * from "./PageContextProvider";
 export * from "./PageManagementStore";
 export * from "./PageStore";
 export * from "./RouterLink";
-export * from "./RouterStore";
+export * from "./Routing/RouterStore";
 export * from "./SiteMap";
 
 /**

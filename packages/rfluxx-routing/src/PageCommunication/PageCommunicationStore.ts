@@ -4,7 +4,7 @@ import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
 
 import { IPageManagementStore } from "../PageManagementStore";
-import { IRouterStore } from "../RouterStore";
+import { IRouterStore } from "../Routing/RouterStore";
 
 import { IPageRequest } from "./IPageRequest";
 import { IPageResponse } from "./IPageResponse";

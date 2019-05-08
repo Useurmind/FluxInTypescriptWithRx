@@ -1,6 +1,6 @@
 import { IPageCommunicationStore } from "../PageCommunication";
 import { IPageManagementStore } from "../PageManagementStore";
-import { IRouterStore } from "../RouterStore";
+import { IRouterStore } from "../Routing/RouterStore";
 import { ISiteMapStore } from "../SiteMap/SiteMapStore";
 
 /**

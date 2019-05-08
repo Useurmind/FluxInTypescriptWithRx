@@ -2,7 +2,7 @@ import * as React from "react";
 import { StoreSubscription } from "rfluxx";
 import { Subscription } from "rxjs/Subscription";
 
-import { RouteParameters } from "./RouterStore";
+import { RouteParameters } from "./Routing/RouterStore";
 import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
 import { SiteMapNode } from "./SiteMap/SiteMapNode";
 import { ISiteMapStore, ISiteMapStoreState } from "./SiteMap/SiteMapStore";

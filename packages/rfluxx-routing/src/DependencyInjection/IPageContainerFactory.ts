@@ -3,7 +3,7 @@ import { IContainer, IContainerBuilder, registerStore, registerTimeTraveler, Sim
 import { IPageCommunicationStore, IPageRequest } from "../PageCommunication";
 import { IPageManagementStore } from "../PageManagementStore";
 import { PageStore } from "../PageStore";
-import { IRouterStore, RouteParameters } from "../RouterStore";
+import { IRouterStore, RouteParameters } from "../Routing/RouterStore";
 import { ISiteMapStore } from "../SiteMap/SiteMapStore";
 
 import { IGlobalComponents } from "./IGlobalComponents";

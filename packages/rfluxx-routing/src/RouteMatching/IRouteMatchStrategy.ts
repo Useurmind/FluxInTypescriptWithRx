@@ -1,4 +1,4 @@
-import { RouteParameters } from "../RouterStore";
+import { RouteParameters } from "../Routing/RouterStore";
 
 /**
  * Describes the result of a url/route matching operation.

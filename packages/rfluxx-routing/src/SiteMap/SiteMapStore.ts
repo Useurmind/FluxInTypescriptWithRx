@@ -1,7 +1,7 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
 import { IPageContainerFactory } from "../DependencyInjection/IPageContainerFactory";
-import { IRoute, IRouteHit, IRouterStoreState, RouteParameters } from "../RouterStore";
+import { IRoute, IRouteHit, IRouterStoreState, RouteParameters } from "../Routing/RouterStore";
 
 import { ISiteMapNode } from "./ISiteMapNode";
 

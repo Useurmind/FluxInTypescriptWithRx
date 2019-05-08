@@ -3,7 +3,7 @@ import { IContainer } from "rfluxx";
 
 import { IPageContainerFactory } from "../DependencyInjection/IPageContainerFactory";
 import { IPageContextProps, withPageContext } from "../PageContextProvider";
-import { RouteParameters } from "../RouterStore";
+import { RouteParameters } from "../Routing/RouterStore";
 
 /**
  * Type used for anything that should render a component in a page, e.g. the caption or sitemapnode itself.

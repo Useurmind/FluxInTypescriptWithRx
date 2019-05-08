@@ -1,7 +1,9 @@
 import * as Rfluxx from "rfluxx";
 import { applyMixins, IAction, IInjectedStoreOptions, NeedToKnowAboutReplayMixin } from "rfluxx";
 
-import { IRouteMatchStrategy } from "./RouteMatching/IRouteMatchStrategy";
+import { IRouteMatchStrategy } from "../RouteMatching/IRouteMatchStrategy";
+import { ILocator } from './ILocator';
+import { BrowserLocator } from './BrowserLocator';
 
 export type RouteParameters = Map<string, string>;
 
@@ -105,6 +107,12 @@ export interface IRouterStoreOptions extends IInjectedStoreOptions
      * The strategy used to match urls against routes.
      */
     routeMatchStrategy: IRouteMatchStrategy;
+
+    /**
+     * A locator to use.
+     * By default the { @see BrowserLocator } is used.
+     */
+    locator?: ILocator;
 }
 
 /**
@@ -199,15 +207,20 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
             }
         });
 
+        if (!this.options.locator)
+        {
+            this.options.locator = new BrowserLocator();
+        }
+
         const historyModeChosen: boolean = this.options.mode !== undefined;
 
         if (!historyModeChosen)
         {
-            this.options.mode = (historyModeChosen && !!(history.pushState)) ? RouterMode.History : RouterMode.Hash;
+            this.options.mode = this.options.locator.isHistoryAvailable ? RouterMode.History : RouterMode.Hash;
         }
         this.options.root = this.options.root !== undefined
                                 ? this.clearDoubleSlashes("/" + this.clearEndSlashes(options.root))
-                                : window.location.pathname;
+                                : this.options.locator.location.pathname;
 
         console.info("root for router store is " + this.options.root);
 
@@ -233,7 +246,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
      */
     public getUrl(path: string): URL
     {
-        return new URL(this.clearDoubleSlashes(window.location.origin + this.options.root + path));
+        return new URL(this.clearDoubleSlashes(this.options.locator.location.origin + this.options.root + path));
     }
 
     private onNavigateToPath(path: string, replaceHistoryEntry: boolean): void
@@ -245,16 +258,18 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
             const targetUrl = this.clearDoubleSlashes(this.options.root + path);
             if (replaceHistoryEntry === false)
             {
-                history.pushState(null, null, targetUrl);
+                this.options.locator.pushHistoryState(null, null, targetUrl);
             }
             else
             {
-                history.replaceState({ replaced: this.state.currentHit.url.toString() }, null, targetUrl);
+                const state = { replaced: this.state.currentHit.url.toString() };
+                this.options.locator.replaceHistoryState(state, null, targetUrl);
             }
         }
         else
         {
-            window.location.href = window.location.href.replace(/#(.*)$/, "") + "#" + path;
+            const newHref = this.options.locator.location.href.replace(/#(.*)$/, "") + "#" + path;
+            this.options.locator.location = new URL(newHref);
         }
     }
 
@@ -298,7 +313,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
             {
                 current = this.getFragment();
 
-                const currentRouteHit = this.getRouteHit(current, window.location.href);
+                const currentRouteHit = this.getRouteHit(current, this.options.locator.location.href);
                 this.setState({ currentHit: currentRouteHit });
             }
         };
@@ -365,7 +380,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
         }
         else
         {
-            const match = window.location.href.match(/#(.*)$/);
+            const match = this.options.locator.location.href.match(/#(.*)$/);
             fragment = match ? match[1] : "";
         }
 
