@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-forms",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Rfluxx based forms framework.",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "classnames": "^2.2.6",
-    "rfluxx": "2.1.0",
+    "rfluxx": "^2.2.0",
     "rxjs": "~5.5.7",
     "tslib": "~1.9.0"
   },

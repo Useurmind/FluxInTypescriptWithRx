@@ -1,10 +1,10 @@
 {
-  "version": "2.1.0",
+  "version": "2.2.0",
   "npmClient": "npm",
   "packages": [
     "packages/rfluxx",
+    "packages/rfluxx-example",
     "packages/rfluxx-forms",
-    "packages/rfluxx-routing",
-    "packages/rfluxx-example"
+    "packages/rfluxx-routing"
   ]
 }
