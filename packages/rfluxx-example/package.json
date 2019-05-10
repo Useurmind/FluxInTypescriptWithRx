@@ -2,6 +2,7 @@
   "name": "rfluxx-example",
   "version": "2.2.0",
   "description": "Example apps with the rfluxx framework.",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/Useurmind/RFluXX.git"
