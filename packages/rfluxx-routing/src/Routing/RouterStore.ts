@@ -113,6 +113,12 @@ export interface IRouterStoreOptions extends IInjectedStoreOptions
      * By default the { @see BrowserLocator } is used.
      */
     locator?: ILocator;
+
+    /**
+     * By default the store does automatically start listening to url changes.
+     * Use this option to avoid this.
+     */
+    doNotAutoConnect?: boolean;
 }
 
 /**
@@ -124,6 +130,11 @@ export interface IRouterStoreState
      * The route that was hit last and should be active at the moment.
      */
     currentHit: IRouteHit;
+
+    /**
+     * Is the router store currently connected and parsing routes.
+     */
+    isConnected: boolean;
 }
 
 /**
@@ -145,6 +156,16 @@ export interface IRouterStore extends Rfluxx.IStore<IRouterStoreState>
      * Navigate to a new route.
      */
     navigate: IAction<INavigateActionParams>;
+
+    /**
+     * Start parsing the url for routes.
+     */
+    connect: IAction<any>;
+
+    /**
+     * Stop parsing the url for routes.
+     */
+    disconnect: IAction<any>;
 
     /**
      * Get the href that can be applied to links from a path segment.
@@ -192,6 +213,16 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
     /**
      * @inheritDoc
      */
+    public readonly connect: IAction<any>;
+
+    /**
+     * @inheritDoc
+     */
+    public readonly disconnect: IAction<AnalyserOptions>;
+
+    /**
+     * @inheritDoc
+     */
     public readonly navigate: IAction<INavigateActionParams>;
 
     /**
@@ -203,7 +234,8 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
     {
         super({
             initialState: {
-                currentHit: null
+                currentHit: null,
+                isConnected: false
             }
         });
 
@@ -227,8 +259,13 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
         this.navigateToPath = this.createActionAndSubscribe(s => this.onNavigateToPath(s, false));
         this.navigateToUrl = this.createActionAndSubscribe(s => this.onNavigateToUrl(s, false));
         this.navigate = this.createActionAndSubscribe(s => this.onNavigate(s));
+        this.connect = this.createActionAndSubscribe(_ => this.onConnect());
+        this.disconnect = this.createActionAndSubscribe(_ => this.onDisconnect());
 
-        this.listenToUrlChanges();
+        if(!this.options.doNotAutoConnect)
+        {
+            this.connect.trigger(null);
+        }
     }
 
     /**
@@ -247,6 +284,21 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
     public getUrl(path: string): URL
     {
         return new URL(this.clearDoubleSlashes(this.options.locator.location.origin + this.options.root + path));
+    }
+
+    private onConnect(): void 
+    {
+        this.listenToUrlChanges();
+
+        this.setState({ ...this.state, isConnected: true });
+    }
+
+    private onDisconnect(): void
+    {
+        window.clearInterval(this.interval);
+        this.interval = null;
+
+        this.setState({ ...this.state, isConnected: false });
     }
 
     private onNavigateToPath(path: string, replaceHistoryEntry: boolean): void
@@ -314,7 +366,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
                 current = this.getFragment();
 
                 const currentRouteHit = this.getRouteHit(current, this.options.locator.location.href);
-                this.setState({ currentHit: currentRouteHit });
+                this.setState({ ...this.state, currentHit: currentRouteHit });
             }
         };
 
