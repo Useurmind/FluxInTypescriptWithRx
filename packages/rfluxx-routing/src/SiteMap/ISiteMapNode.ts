@@ -16,6 +16,12 @@ export type IRenderPageComponent = (props: RouteParameters) => React.ReactElemen
 export interface ISiteMapNode
 {
     /**
+     * An id for the site map node.
+     * Purely optional. Required only for specific use case, e.g. sharing state to a stranger.
+     */
+    id?: string | symbol;
+
+    /**
      * The caption of the site map node.
      */
     caption: string | IRenderPageComponent;

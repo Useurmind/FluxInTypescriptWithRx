@@ -1,0 +1,38 @@
+import { IContainerRegistration } from "rfluxx";
+/**
+ * The default container registration interface extend by several page awareness methods.
+ */
+export interface ISiteMapNodeContainerRegistration extends IContainerRegistration {
+    /**
+     * Share the instances created from this registration between all pages of this site map node.
+     */
+    shareBetweenOwnPages(): ISiteMapNodeContainerRegistration;
+    /**
+     * Share the instances created from this registration with all pages of the children site map nodes.
+     * It also shares the instances between all of the pages of this site map node.
+     */
+    shareToChildrenPages(): ISiteMapNodeContainerRegistration;
+    /**
+     * Share the instances created from this registration with all pages who have the same parent
+     * site map node.
+     * It also shares the instances between all of the pages of this site map node.
+     */
+    shareToSiblingPages(): ISiteMapNodeContainerRegistration;
+    /**
+     * Share the instances created from this registration with all pages of the parent site map node.
+     * It also shares the instances between all of the pages of this site map node.
+     */
+    shareToParentPages(): ISiteMapNodeContainerRegistration;
+    /**
+     * Share the instances created from this registration with all pages whose site map nodes are
+     * somewhere below this site map node in the sitemap tree.
+     * It also shares the instances between all of the pages of this site map node.
+     */
+    shareToDescendantsPages(): ISiteMapNodeContainerRegistration;
+    /**
+     * Share the instances created from this registration with all pages who have the same parent
+     * site map node.
+     * It also shares the instances between all of the pages of this site map node.
+     */
+    shareToStranger(siteMapNodeId: string): ISiteMapNodeContainerRegistration;
+}
