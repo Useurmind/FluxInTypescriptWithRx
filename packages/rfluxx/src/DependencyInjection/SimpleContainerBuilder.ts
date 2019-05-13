@@ -1,3 +1,4 @@
+import { getSingletonCreator } from "./getSingletonCreator";
 import { IContainer } from "./IContainer";
 import { IContainerBuilder } from "./IContainerBuilder";
 import { IContainerRegistration } from "./IContainerRegistration";
@@ -40,7 +41,7 @@ export class SimpleContainerBuilder implements IContainerBuilder
     public register(create: ICreationRule): IContainerRegistration
     {
         // we want singleton behaviour for multiple names here
-        const createSingleton = this.getSingletonCreator(create);
+        const createSingleton = getSingletonCreator(create);
 
         return new SimpleContainerRegistration(this.registrationMap, createSingleton);
     }
@@ -54,46 +55,5 @@ export class SimpleContainerBuilder implements IContainerBuilder
         this.registrationMap = new Map();
 
         return container;
-    }
-
-    private getSingletonCreator(create: ICreationRule): IResolveWithInstanceName
-    {
-        const createSingleton = ((() =>
-        {
-            let defaultInstance: any = null;
-            const namedInstances = new Map<string, any>();
-            const createSingletonInner = (container: IContainer, instanceName: string) =>
-            {
-                let instance = null;
-                if (!instanceName)
-                {
-                    instance = defaultInstance;
-                }
-                else
-                {
-                    instance = namedInstances.get(instanceName);
-                }
-
-                if (!instance)
-                {
-                    instance = create(container);
-                }
-
-                if (!instanceName)
-                {
-                    defaultInstance = instance;
-                }
-                else
-                {
-                    namedInstances.set(instanceName, instance);
-                }
-
-                return instance;
-            };
-
-            return createSingletonInner;
-        })());
-
-        return createSingleton;
     }
 }
