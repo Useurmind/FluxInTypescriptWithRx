@@ -35,16 +35,6 @@ export interface ISiteMapNode
     routeExpression: string;
 
     /**
-     * DONT SET THIS.
-     * The absolute route expression is calculated from
-     * the routeExpression and the hierarchie of the
-     * site map nodes.
-     * Relative paths are prefixed with the absolute route
-     * expression of their parents.
-     */
-    absoluteRouteExpression?: string;
-
-    /**
      * The child site map nodes of this node.
      */
     children?: ISiteMapNode[];
@@ -72,6 +62,24 @@ export interface ISiteMapNode
      * in the sidebar.
      */
     showInSidebar?: boolean | string | Map<string, string>;
+
+    /**
+     * DONT SET THIS.
+     * The parent node of this site map node.
+     * This value is automatically derived when initializing
+     * rfluxx.
+     */
+    parent?: ISiteMapNode;
+
+    /**
+     * DONT SET THIS.
+     * The absolute route expression is calculated from
+     * the routeExpression and the hierarchie of the
+     * site map nodes.
+     * Relative paths are prefixed with the absolute route
+     * expression of their parents.
+     */
+    absoluteRouteExpression?: string;
 }
 
 /**

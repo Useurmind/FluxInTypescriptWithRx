@@ -213,8 +213,10 @@ export function computeSiteMapRoutesAndSetAbsoluteRouteExpressions(root: ISiteMa
         (sn, snPath, parentValue: string) =>
         {
             const absoluteRouteExpression: string = getAbsoluteRouteExpression(sn, parentValue);
+            const parentSiteMapNode = snPath.length > 0 ? snPath[snPath.length - 1] : null;
 
             sn.absoluteRouteExpression = absoluteRouteExpression;
+            sn.parent = parentSiteMapNode;
             routeExpressions.push(absoluteRouteExpression);
 
             return absoluteRouteExpression;

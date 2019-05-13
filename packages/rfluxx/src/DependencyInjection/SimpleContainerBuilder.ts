@@ -3,6 +3,7 @@ import { IContainer } from "./IContainer";
 import { IContainerBuilder } from "./IContainerBuilder";
 import { IContainerRegistration } from "./IContainerRegistration";
 import { ICreationRule } from "./ICreationRule";
+import { RegistrationMap } from "./RegistrationMap";
 import { SimpleContainer } from "./SimpleContainer";
 import { SimpleContainerRegistration } from "./SimpleContainerRegistration";
 
@@ -15,14 +16,12 @@ export interface IResolveWithInstanceName
     (container: IContainer, instanceName: string): any;
 }
 
-export type RegistrationMap = Map<string, IResolveWithInstanceName | IResolveWithInstanceName[]>;
-
 /**
  * Container builder for { @see SimpleContainer }
  */
 export class SimpleContainerBuilder implements IContainerBuilder
 {
-    private registrationMap: RegistrationMap = new Map();
+    private registrationMap: RegistrationMap = new RegistrationMap();
     private parentContainers: IContainer[] = [];
 
     /**
@@ -52,7 +51,7 @@ export class SimpleContainerBuilder implements IContainerBuilder
     public build(): IContainer
     {
         const container = new SimpleContainer(this.registrationMap, this.parentContainers);
-        this.registrationMap = new Map();
+        this.registrationMap = new RegistrationMap();
 
         return container;
     }
