@@ -85,4 +85,28 @@ describe("PageAwareContainerBuilder", () =>
         expect(childResult).not.toBe(null);
         expect(childResult).toBe(rootResult);
     });
+
+    it("local registration available in self", () =>
+    {
+        const builder = new PageAwareContainerBuilder();
+
+        builder.registerLocally(siteMap, c => new Something()).as(key1);
+
+        const rootContainer = builder.createContainer(siteMap);
+
+        const rootResult = rootContainer.resolve(key1);
+
+        expect(rootResult).not.toBe(null);
+    });
+
+    it("local registration are not available in child", () =>
+    {
+        const builder = new PageAwareContainerBuilder();
+
+        builder.registerLocally(siteMap, c => new Something()).as(key1);
+
+        const childContainer = builder.createContainer(siteMap.children[0]);
+
+        expect(() => childContainer.resolve(key1)).toThrow();
+    });
 });
