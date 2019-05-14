@@ -2,12 +2,13 @@ import { getSingletonCreator, IContainer, ICreationRule, RegistrationMap, Simple
 
 import { ISiteMapNode } from "../SiteMap/ISiteMapNode";
 
+import { IGlobalContainerBuilder } from "./GlobalContainerBuilder";
 import { GlobalContainerRegistration } from "./GlobalContainerRegistration";
-import { IGlobalContainerBuilder } from "./IGlobalContainerBuilder";
 import { IGlobalContainerRegistration } from "./IGlobalContainerRegistration";
+import { IPageAwareContainerBuilder } from "./IPageAwareContainerBuilder";
+import { ISiteMapNodeContainerRegistration } from "./ISiteMapNodeContainerRegistration";
 import { IPageAwareContainerRegistration, registerInRegistrationMap } from "./PageAwareContainerRegistration";
-import { ISiteMapNodeContainerRegistration } from './ISiteMapNodeContainerRegistration';
-import { SiteMapNodeContainerRegistration } from './SiteMapNodeContainerRegistration';
+import { SiteMapNodeContainerRegistration } from "./SiteMapNodeContainerRegistration";
 
 /**
  * This is the container builder that provides the capability to share
@@ -80,6 +81,48 @@ export class PageAwareContainerBuilder
         this.registerLocalRegistrations(siteMapNode, registrationMap);
 
         return new SimpleContainer(registrationMap, []);
+    }
+
+    /**
+     * Derive a clone from this builder that already contains all registrations
+     * but can be extended independent of the original builder.
+     */
+    public derive(): IPageAwareContainerBuilder
+    {
+        const derivedBuilder = new PageAwareContainerBuilder();
+
+        // we shallow clone on intend, resolvers should be kept
+        // TODO: changes should not be allowed to existing registrations
+
+        const globalRegistrations = [...this.globalRegistrations];
+        derivedBuilder.setGlobalRegistrations(globalRegistrations);
+
+        const localRegistrations = new Map();
+        for (const entry of this.localRegistrations.entries())
+        {
+            localRegistrations.set(entry[0], [...entry[1]]);
+        }
+        derivedBuilder.setLocalRegistrations(localRegistrations);
+
+        return derivedBuilder;
+    }
+
+    /**
+     * Set the global registrations of this container.
+     * @param globalRegistrations The global registrations to apply.
+     */
+    protected setGlobalRegistrations(globalRegistrations: IPageAwareContainerRegistration[]): void
+    {
+        this.globalRegistrations = globalRegistrations;
+    }
+
+    /**
+     * Set the local registrations of this container.
+     * @param localRegistrations The local registrations to apply.
+     */
+    protected setLocalRegistrations(localRegistrations: Map<ISiteMapNode, IPageAwareContainerRegistration[]>)
+    {
+        this.localRegistrations = localRegistrations;
     }
 
     private registerLocalRegistrations(siteMapNode: ISiteMapNode, registrationMap: RegistrationMap)

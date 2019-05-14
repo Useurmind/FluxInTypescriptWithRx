@@ -1,7 +1,10 @@
 import * as Rfluxx from "rfluxx";
 import { applyMixins, IAction, IActionEventLogPreserver, IContainer, IInjectedStoreOptions, NeedToKnowAboutReplayMixin } from "rfluxx";
 
-import { IPageContainerFactory } from "./DependencyInjection/IPageContainerFactory";
+import { IPageAwareContainerBuilder } from "./DependencyInjection/IPageAwareContainerBuilder";
+import { ISiteMapNodeContainerFactory } from "./DependencyInjection/ISiteMapNodeContainerFactory";
+import { SiteMapNodeContainerBuilder } from "./DependencyInjection/SiteMapNodeContainerBuilder";
+import { initAfterContainerCreation, registerBasePageServices } from "./DependencyInjection/SiteMapNodeContainerFactoryBase";
 import { IPageCommunicationStore, IPageRequest, IPageResponse, PageCommunicationStore } from "./PageCommunication";
 import { IPageData } from "./Pages/IPageData";
 import { IPageEvictionStrategy } from "./Pages/IPageEvictionStrategy";
@@ -26,11 +29,6 @@ export interface IPageManagementStoreOptions extends IInjectedStoreOptions
     siteMapStore: ISiteMapStore;
 
     /**
-     * The container factory to create a container for a page.
-     */
-    containerFactory: IPageContainerFactory;
-
-    /**
      * The algorithm used to compute the page id which in turn determines
      * which parts of a url lead to distinctive state aka. different pages.
      */
@@ -40,6 +38,11 @@ export interface IPageManagementStoreOptions extends IInjectedStoreOptions
      * This strategy determines how the state of the pages is evicted over time.
      */
     pageEvictionStrategy: IPageEvictionStrategy;
+
+    /**
+     * The container builder used to build new containers for the pages.
+     */
+    containerBuilder: IPageAwareContainerBuilder;
 }
 
 /**
@@ -309,36 +312,21 @@ export class PageManagementStore
         let openPages = this.state.openPages;
         if (!hasPageState)
         {
-            const createContainer =
-            (cf: IPageContainerFactory, parentContainer?: IContainer): IContainer =>
-            {
-                return cf.createContainer(
-                    pageId,
-                        siteMapNodeHit.url,
-                        siteMapNodeHit.parameters,
-                        {
-                            routerStore: this.options.routerStore,
-                            siteMapStore: this.options.siteMapStore,
-                            pageManagementStore: this,
-                            pageCommunicationStore: this.pageCommunicationStore
-                        },
-                        pendingRequest,
-                        parentContainer ? [parentContainer] : null
-                );
-            };
+            const pageContainerBuilder = this.options.containerBuilder.derive();
+            const siteMapNodeContainerBuilder = new SiteMapNodeContainerBuilder(
+                pageContainerBuilder,
+                siteMapNodeHit.siteMapNode);
 
-            // when the sitemap node specifies an own container factory we
-            // will use it instead of the central one
-            // the central one will then be a parent container of the page container
-            const globalContainerFactory = this.options.containerFactory;
-            const globalContainer = createContainer(globalContainerFactory);
+            registerBasePageServices(
+                siteMapNodeContainerBuilder,
+                pageId,
+                siteMapNodeHit.url,
+                siteMapNodeHit.parameters,
+                pendingRequest);
 
-            const pageContainerFactory = siteMapNodeHit.siteMapNode.containerFactory;
-            let pageContainer = globalContainer;
-            if (pageContainerFactory)
-            {
-                pageContainer = createContainer(pageContainerFactory, globalContainer);
-            }
+            const pageContainer = pageContainerBuilder.createContainer(siteMapNodeHit.siteMapNode);
+
+            initAfterContainerCreation(pageContainer);
 
             this.pageMap.set(pageId, {
                 pageId,

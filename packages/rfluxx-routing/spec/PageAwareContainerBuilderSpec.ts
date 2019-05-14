@@ -24,6 +24,7 @@ describe("PageAwareContainerBuilder", () =>
     };
 
     const key1 = "fklögjdlg";
+    const key2 = "ölghkjhgl";
     const registeredString1 = "flgökjhdföklg";
 
     it("can resolve global registration in root node", () =>
@@ -89,11 +90,9 @@ describe("PageAwareContainerBuilder", () =>
     it("local registration available in self", () =>
     {
         const builder = new PageAwareContainerBuilder();
-
         builder.registerLocally(siteMap, c => new Something()).as(key1);
 
         const rootContainer = builder.createContainer(siteMap);
-
         const rootResult = rootContainer.resolve(key1);
 
         expect(rootResult).not.toBe(null);
@@ -102,11 +101,62 @@ describe("PageAwareContainerBuilder", () =>
     it("local registration are not available in child", () =>
     {
         const builder = new PageAwareContainerBuilder();
-
         builder.registerLocally(siteMap, c => new Something()).as(key1);
 
         const childContainer = builder.createContainer(siteMap.children[0]);
 
         expect(() => childContainer.resolve(key1)).toThrow();
+    });
+
+    it("derived container builder get existing global registration", () =>
+    {
+        const builder = new PageAwareContainerBuilder();
+        builder.registerGlobally(c => new Something()).as(key1);
+
+        const derivedBuilder = builder.derive();
+        const container = derivedBuilder.createContainer(siteMap);
+
+        const result = container.resolve(key1);
+
+        expect(result).not.toBe(null);
+    });
+
+    it("derived container builder get existing local registration", () =>
+    {
+        const builder = new PageAwareContainerBuilder();
+        builder.registerLocally(siteMap, c => new Something()).as(key1);
+
+        const derivedBuilder = builder.derive();
+        const container = derivedBuilder.createContainer(siteMap);
+
+        const result = container.resolve(key1);
+
+        expect(result).not.toBe(null);
+    });
+
+    it("extending derived container builder with global registration does not change original", () =>
+    {
+        const builder = new PageAwareContainerBuilder();
+        builder.registerLocally(siteMap, c => new Something()).as(key1);
+
+        const derivedBuilder = builder.derive();
+        derivedBuilder.registerGlobally(c => new Something()).as(key2);
+
+        const originalContainer = builder.createContainer(siteMap);
+
+        expect(() => originalContainer.resolve(key2)).toThrow();
+    });
+
+    it("extending derived container builder with local registration does not change original", () =>
+    {
+        const builder = new PageAwareContainerBuilder();
+        builder.registerLocally(siteMap, c => new Something()).as(key1);
+
+        const derivedBuilder = builder.derive();
+        derivedBuilder.registerLocally(siteMap, c => new Something()).as(key2);
+
+        const originalContainer = builder.createContainer(siteMap);
+
+        expect(() => originalContainer.resolve(key2)).toThrow();
     });
 });

@@ -4,7 +4,7 @@ import { DefaultActionFactory } from "../../ActionFactory/DefaultActionFactory";
 import { IActionRegistry } from "../../ActionFactory/IActionRegistry";
 import { MapActionRegistry } from "../../ActionFactory/MapActionRegistry";
 import { IContainer } from "../../DependencyInjection/IContainer";
-import { IContainerBuilder } from "../../DependencyInjection/IContainerBuilder";
+import { IContainerBuilder, IContainerBuilderEssential } from "../../DependencyInjection/IContainerBuilder";
 import { registerDefaultActionFactory } from "../../DependencyInjection/RegisterActionFactoryUtility";
 import { registerObservableFetcher } from "../../DependencyInjection/RegisterObservableFetcherUtility";
 import { ObservableFetcher } from "../../Fetch/ObservableFetcher";
@@ -35,7 +35,7 @@ import { TimeTraveler } from "./TimeTraveler";
  * window.timeTraveler and window.eventLog.
  */
 export function registerTimeTraveler(
-    builder: IContainerBuilder,
+    builder: IContainerBuilderEssential,
     registerWithWindow?: boolean,
     actionEventLogStorageKey?: string): void
 {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IContainer } from "rfluxx";
 
-import { IPageContainerFactory } from "../DependencyInjection/IPageContainerFactory";
+import { ISiteMapNodeContainerFactory } from "../DependencyInjection/ISiteMapNodeContainerFactory";
 import { IPageContextProps, withPageContext } from "../PageContextProvider";
 import { RouteParameters } from "../Routing/RouterStore";
 
@@ -46,7 +46,7 @@ export interface ISiteMapNode
      * Specifying one container per page will split their registrations
      * properly and reduce interference between different pages.
      */
-    containerFactory?: IPageContainerFactory;
+    containerFactory?: ISiteMapNodeContainerFactory;
 
     /**
      * Render the site map node.

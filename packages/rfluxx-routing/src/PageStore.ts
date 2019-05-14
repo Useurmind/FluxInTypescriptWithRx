@@ -1,9 +1,8 @@
-import { Observable } from "rxjs/Observable";
-
 import * as Rfluxx from "rfluxx";
 import { IAction, IInjectedStoreOptions } from "rfluxx";
+import { Observable } from "rxjs/Observable";
 
-import { IPageContainerFactory } from "./DependencyInjection/IPageContainerFactory";
+import { ISiteMapNodeContainerFactory } from "./DependencyInjection/ISiteMapNodeContainerFactory";
 import { IPageCommunicationStore, IPageRequest, IPageResponse, IRequestedPageStore, PageCommunicationStore, PageResultStatus } from "./PageCommunication";
 import { IPageManagementStore } from "./PageManagementStore";
 import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
