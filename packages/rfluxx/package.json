@@ -23,8 +23,10 @@
   ],
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
+  "peerDependencies": {
+    "rxjs": "~5.5.7"
+  },
   "dependencies": {
-    "rxjs": "~5.5.7",
     "tslib": "~1.9.0"
   },
   "devDependencies": {
@@ -49,6 +51,7 @@
     "typescript": "^3.4.5",
     "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.1.10",
+    "rxjs": "~5.5.7"
   }
 }
