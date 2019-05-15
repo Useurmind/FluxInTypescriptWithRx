@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-routing",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "Routing package for rfluxx.",
   "repository": {
     "type": "git",
@@ -25,17 +25,18 @@
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
   "peerDependencies": {
+    "@material-ui/styles": "^3.0.0-alpha.10",
     "react": "~16.8.4",
     "react-dom": "~16.8.4",
-    "@material-ui/styles": "^3.0.0-alpha.10",
     "rxjs": "~5.5.7"
   },
   "dependencies": {
     "classnames": "^2.2.6",
-    "rfluxx": "^2.2.0",
+    "rfluxx": "^3.0.0",
     "tslib": "~1.9.0"
   },
   "devDependencies": {
+    "@material-ui/styles": "^3.0.0-alpha.10",
     "@types/classnames": "^2.2.7",
     "@types/jasmine": "^2.8.6",
     "@types/react": "~16.8.8",
@@ -54,15 +55,14 @@
     "karma-webpack": "^3.0.0",
     "react": "~16.8.4",
     "react-dom": "~16.8.4",
-    "ts-loader": "^4.1.0",
+    "rxjs": "~5.5.7",
     "style-loader": "~0.23.1",
+    "ts-loader": "^4.1.0",
     "tslint": "^5.11.0",
     "tslint-eslint-rules": "^5.4.0",
     "typescript": "^3.4.5",
     "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
-    "@material-ui/styles": "^3.0.0-alpha.10",
-    "rxjs": "~5.5.7"
+    "webpack-dev-server": "^3.1.10"
   }
 }
