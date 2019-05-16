@@ -1,6 +1,6 @@
 {
   "name": "rfluxx",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "Framework that implements flux using rxjs.",
   "repository": {
     "type": "git",
@@ -23,8 +23,10 @@
   ],
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
+  "peerDependencies": {
+    "rxjs": "~5.5.7"
+  },
   "dependencies": {
-    "rxjs": "~5.5.7",
     "tslib": "~1.9.0"
   },
   "devDependencies": {
@@ -43,6 +45,7 @@
     "karma-webpack": "^3.0.0",
     "react": "~16.8.4",
     "react-dom": "~16.8.4",
+    "rxjs": "~5.5.7",
     "ts-loader": "^4.1.0",
     "tslint": "^5.11.0",
     "tslint-eslint-rules": "^5.4.0",

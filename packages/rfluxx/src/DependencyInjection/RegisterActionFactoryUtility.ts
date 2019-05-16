@@ -3,7 +3,7 @@ import { IActionRegistry } from "../ActionFactory/IActionRegistry";
 import { MapActionRegistry } from "../ActionFactory/MapActionRegistry";
 import { IActionMiddleware } from "../Middleware/IActionMiddleware";
 
-import { IContainerBuilder } from "./IContainerBuilder";
+import { IContainerBuilderEssential } from "./IContainerBuilder";
 
 /**
  * Register the action factory and action registry.
@@ -11,7 +11,7 @@ import { IContainerBuilder } from "./IContainerBuilder";
  * - Registers { @see MapActionRegistry } as 'IActionRegistry'
  * @param builder The container builder to register the factory and registry into.
  */
-export function registerDefaultActionFactory(builder: IContainerBuilder)
+export function registerDefaultActionFactory(builder: IContainerBuilderEssential)
 {
     builder.register(c => new MapActionRegistry())
         .as("IActionRegistry");

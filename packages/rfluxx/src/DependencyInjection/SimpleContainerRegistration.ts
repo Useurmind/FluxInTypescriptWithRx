@@ -1,6 +1,7 @@
 import { IContainer } from "./IContainer";
 import { IContainerRegistration } from "./IContainerRegistration";
-import { IResolveWithInstanceName, RegistrationMap } from "./SimpleContainerBuilder";
+import { RegistrationMap } from "./RegistrationMap";
+import { IResolveWithInstanceName } from "./SimpleContainerBuilder";
 
 /**
  * Implementation of IContainerRegistration for the SimpleContainer.
@@ -17,9 +18,7 @@ export class SimpleContainerRegistration implements IContainerRegistration
      */
     public as(key: string): IContainerRegistration
     {
-        this.registrationMap.set(
-            key,
-            (c: IContainer, instanceName?: string) => this.createSingleton(c, instanceName));
+        this.registrationMap.registerAs(this.createSingleton, key);
 
         return this;
     }
@@ -29,12 +28,7 @@ export class SimpleContainerRegistration implements IContainerRegistration
      */
     public in(collectionKey: string): IContainerRegistration
     {
-        if (!this.registrationMap.get(collectionKey))
-        {
-            this.registrationMap.set(collectionKey, []);
-        }
-        const resolvers = this.registrationMap.get(collectionKey) as IResolveWithInstanceName[];
-        resolvers.push(this.createSingleton);
+        this.registrationMap.registerIn(this.createSingleton, collectionKey);
 
         return this;
     }

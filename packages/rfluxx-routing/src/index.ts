@@ -1,4 +1,4 @@
-import { IGlobalComponents, IPageContainerFactory } from "./DependencyInjection";
+import { IGlobalComponents, ISiteMapNodeContainerFactory } from "./DependencyInjection";
 import { PageManagementStore } from "./PageManagementStore";
 import { LruPageStateEvictions } from "./Pages/LruPageStateEvictions";
 import { NoPageStateEvictions } from "./Pages/NoPageStateEvictions";
@@ -7,7 +7,11 @@ import { ComplexRouteMatching } from "./RouteMatching/ComplexRouteMatching";
 import { RegexRouteMatching } from "./RouteMatching/RegexRouteMatching";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./Routing/RouterStore";
 import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
-import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, SiteMapStore } from "./SiteMap/SiteMapStore";
+import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, SiteMapStore, forEachSiteMapNode } from "./SiteMap/SiteMapStore";
+import { PageAwareContainerBuilder } from './DependencyInjection/PageAwareContainerBuilder';
+import { SiteMapNodeContainerBuilder } from './DependencyInjection/SiteMapNodeContainerBuilder';
+import { GlobalContainerBuilder } from './DependencyInjection/GlobalContainerBuilder';
+import { IGlobalContainerFactory } from './DependencyInjection/IGlobalContainerFactory';
 
 export * from "./Components";
 export * from "./DependencyInjection";
@@ -40,7 +44,7 @@ export interface IRfluxxOptions
      * Container factory that contains all registrations for
      * stores and other classes you need.
      */
-    containerFactory: IPageContainerFactory;
+    containerFactory: IGlobalContainerFactory;
 
     /**
      * Options to configure the page id computation.
@@ -79,8 +83,11 @@ export function init(options: IRfluxxOptions)
         mode: RouterMode.History,
         root: options.rootPath,
         routes,
-        routeMatchStrategy: new ComplexRouteMatching()
+        routeMatchStrategy: new ComplexRouteMatching(),
+        doNotAutoConnect: true
     });
+
+    const containerBuilder = new PageAwareContainerBuilder();
 
     const siteMapStore = new SiteMapStore({
         routerStore,
@@ -90,15 +97,32 @@ export function init(options: IRfluxxOptions)
     const pageManagementStore = new PageManagementStore({
         routerStore,
         siteMapStore,
-        containerFactory: options.containerFactory,
+        containerBuilder,
         pageIdAlgorithm,
         pageEvictionStrategy
     });
 
-    return {
+    const globalComponents: IGlobalComponents = {
         routerStore,
         siteMapStore,
         pageManagementStore,
         pageCommunicationStore: pageManagementStore.pageCommunicationStore
     };
+
+    // init the app container builder
+    options.containerFactory.register(new GlobalContainerBuilder(containerBuilder), globalComponents);
+    forEachSiteMapNode(
+        options.siteMap,
+        (sn: ISiteMapNode, snPath, parentValue: string) =>
+        {
+            if (sn.containerFactory)
+            {
+                sn.containerFactory.register(new SiteMapNodeContainerBuilder(containerBuilder, sn));
+            }
+        });
+
+    // connect only when container builder is complete
+    routerStore.connect.trigger(null);
+
+    return globalComponents;
 }

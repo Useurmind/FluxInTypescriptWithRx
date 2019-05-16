@@ -1,7 +1,9 @@
+import { getSingletonCreator } from "./getSingletonCreator";
 import { IContainer } from "./IContainer";
 import { IContainerBuilder } from "./IContainerBuilder";
 import { IContainerRegistration } from "./IContainerRegistration";
 import { ICreationRule } from "./ICreationRule";
+import { RegistrationMap } from "./RegistrationMap";
 import { SimpleContainer } from "./SimpleContainer";
 import { SimpleContainerRegistration } from "./SimpleContainerRegistration";
 
@@ -14,14 +16,12 @@ export interface IResolveWithInstanceName
     (container: IContainer, instanceName: string): any;
 }
 
-export type RegistrationMap = Map<string, IResolveWithInstanceName | IResolveWithInstanceName[]>;
-
 /**
  * Container builder for { @see SimpleContainer }
  */
 export class SimpleContainerBuilder implements IContainerBuilder
 {
-    private registrationMap: RegistrationMap = new Map();
+    private registrationMap: RegistrationMap = new RegistrationMap();
     private parentContainers: IContainer[] = [];
 
     /**
@@ -40,7 +40,7 @@ export class SimpleContainerBuilder implements IContainerBuilder
     public register(create: ICreationRule): IContainerRegistration
     {
         // we want singleton behaviour for multiple names here
-        const createSingleton = this.getSingletonCreator(create);
+        const createSingleton = getSingletonCreator(create);
 
         return new SimpleContainerRegistration(this.registrationMap, createSingleton);
     }
@@ -51,49 +51,8 @@ export class SimpleContainerBuilder implements IContainerBuilder
     public build(): IContainer
     {
         const container = new SimpleContainer(this.registrationMap, this.parentContainers);
-        this.registrationMap = new Map();
+        this.registrationMap = new RegistrationMap();
 
         return container;
-    }
-
-    private getSingletonCreator(create: ICreationRule): IResolveWithInstanceName
-    {
-        const createSingleton = ((() =>
-        {
-            let defaultInstance: any = null;
-            const namedInstances = new Map<string, any>();
-            const createSingletonInner = (container: IContainer, instanceName: string) =>
-            {
-                let instance = null;
-                if (!instanceName)
-                {
-                    instance = defaultInstance;
-                }
-                else
-                {
-                    instance = namedInstances.get(instanceName);
-                }
-
-                if (!instance)
-                {
-                    instance = create(container);
-                }
-
-                if (!instanceName)
-                {
-                    defaultInstance = instance;
-                }
-                else
-                {
-                    namedInstances.set(instanceName, instance);
-                }
-
-                return instance;
-            };
-
-            return createSingletonInner;
-        })());
-
-        return createSingleton;
     }
 }

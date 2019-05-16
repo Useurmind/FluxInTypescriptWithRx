@@ -1,11 +1,11 @@
 import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
-import { IGlobalComponents, IPageContainerFactory, RouteParameters, SimplePageContainerFactoryBase } from "rfluxx-routing";
+import { IGlobalComponents, IPageContainerFactory, ISiteMapNodeContainerBuilder, RouteParameters, SiteMapNodeContainerFactoryBase } from "rfluxx-routing";
 
 import { SelectPageStore } from "./SelectPageStore";
 
-export class ContainerFactory extends SimplePageContainerFactoryBase
+export class ContainerFactory extends SiteMapNodeContainerFactoryBase
 {
-    protected registerStores(builder: IContainerBuilder, url: URL, routeParameters: RouteParameters): void
+    protected registerStores(builder: ISiteMapNodeContainerBuilder): void
     {
         registerStore(builder, "ISelectPageStore", (c, injOpt) => new SelectPageStore(injOpt({
             pageStore: c.resolve("IPageStore"),

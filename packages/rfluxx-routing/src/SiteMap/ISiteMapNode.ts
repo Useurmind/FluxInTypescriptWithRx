@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IContainer } from "rfluxx";
 
-import { IPageContainerFactory } from "../DependencyInjection/IPageContainerFactory";
+import { ISiteMapNodeContainerFactory } from "../DependencyInjection/ISiteMapNodeContainerFactory";
 import { IPageContextProps, withPageContext } from "../PageContextProvider";
 import { RouteParameters } from "../Routing/RouterStore";
 
@@ -16,6 +16,12 @@ export type IRenderPageComponent = (props: RouteParameters) => React.ReactElemen
 export interface ISiteMapNode
 {
     /**
+     * An id for the site map node.
+     * Purely optional. Required only for specific use case, e.g. sharing state to a stranger.
+     */
+    id?: string | symbol;
+
+    /**
      * The caption of the site map node.
      */
     caption: string | IRenderPageComponent;
@@ -29,16 +35,6 @@ export interface ISiteMapNode
     routeExpression: string;
 
     /**
-     * DONT SET THIS.
-     * The absolute route expression is calculated from
-     * the routeExpression and the hierarchie of the
-     * site map nodes.
-     * Relative paths are prefixed with the absolute route
-     * expression of their parents.
-     */
-    absoluteRouteExpression?: string;
-
-    /**
      * The child site map nodes of this node.
      */
     children?: ISiteMapNode[];
@@ -50,7 +46,7 @@ export interface ISiteMapNode
      * Specifying one container per page will split their registrations
      * properly and reduce interference between different pages.
      */
-    containerFactory?: IPageContainerFactory;
+    containerFactory?: ISiteMapNodeContainerFactory;
 
     /**
      * Render the site map node.
@@ -66,6 +62,24 @@ export interface ISiteMapNode
      * in the sidebar.
      */
     showInSidebar?: boolean | string | Map<string, string>;
+
+    /**
+     * DONT SET THIS.
+     * The parent node of this site map node.
+     * This value is automatically derived when initializing
+     * rfluxx.
+     */
+    parent?: ISiteMapNode;
+
+    /**
+     * DONT SET THIS.
+     * The absolute route expression is calculated from
+     * the routeExpression and the hierarchie of the
+     * site map nodes.
+     * Relative paths are prefixed with the absolute route
+     * expression of their parents.
+     */
+    absoluteRouteExpression?: string;
 }
 
 /**

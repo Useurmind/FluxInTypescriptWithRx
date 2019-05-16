@@ -1,4 +1,4 @@
-import { IActionFactory, IContainer, IContainerBuilder, IInjectedStoreOptions, IStore } from "..";
+import { IActionFactory, IContainer, IContainerBuilderEssential, IInjectedStoreOptions, IStore } from "..";
 import { PrefixActionFactory } from "../ActionFactory/PrefixActionFactory";
 import { IObservableFetcher } from "../Fetch/IObservableFetcher";
 
@@ -13,7 +13,7 @@ import { IContainerRegistration } from "./IContainerRegistration";
  * @param key A string key unique for this store in this container (for using a store type multiple times, optional).
  */
 export function registerStore<TState>(
-    containerBuilder: IContainerBuilder,
+    containerBuilder: IContainerBuilderEssential,
     typeName: string,
     create: (c: IContainer, injectStoreOptions: (o: any) => any) => IStore<TState>,
     key?: string): IContainerRegistration

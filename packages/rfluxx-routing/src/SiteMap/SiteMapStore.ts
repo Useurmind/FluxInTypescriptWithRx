@@ -1,6 +1,6 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 
-import { IPageContainerFactory } from "../DependencyInjection/IPageContainerFactory";
+import { ISiteMapNodeContainerFactory } from "../DependencyInjection/ISiteMapNodeContainerFactory";
 import { IRoute, IRouteHit, IRouterStoreState, RouteParameters } from "../Routing/RouterStore";
 
 import { ISiteMapNode } from "./ISiteMapNode";
@@ -177,7 +177,7 @@ export class SiteMapStore extends Store<ISiteMapStoreState> implements ISiteMapS
  * @param action An action to execute for each node.
  * @param path The path of site map nodes until before the current root node (excluding the root node).
  */
-function forEachSiteMapNode<T>(
+export function forEachSiteMapNode<T>(
     root: ISiteMapNode,
     action: (s: ISiteMapNode, sPath: ISiteMapNode[], parentValue?: T) => void | T,
     path: ISiteMapNode[] = [],
@@ -213,8 +213,10 @@ export function computeSiteMapRoutesAndSetAbsoluteRouteExpressions(root: ISiteMa
         (sn, snPath, parentValue: string) =>
         {
             const absoluteRouteExpression: string = getAbsoluteRouteExpression(sn, parentValue);
+            const parentSiteMapNode = snPath.length > 0 ? snPath[snPath.length - 1] : null;
 
             sn.absoluteRouteExpression = absoluteRouteExpression;
+            sn.parent = parentSiteMapNode;
             routeExpressions.push(absoluteRouteExpression);
 
             return absoluteRouteExpression;

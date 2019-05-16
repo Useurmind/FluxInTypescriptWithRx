@@ -8,7 +8,7 @@ import { ICreationRule } from "./ICreationRule";
  * You can implement this interface with the container of your choice to be able to use the
  * integrated registration logic.
  */
-export interface IContainerBuilder
+export interface IContainerBuilder extends IContainerBuilderEssential
 {
     /**
      * Add a parent container to the container being build.
@@ -18,13 +18,19 @@ export interface IContainerBuilder
     addParentContainer(parentContainer: IContainer);
 
     /**
+     * Build the container with all currently registered creation rules.
+     */
+    build(): IContainer;
+}
+
+/**
+ * Minimal interface only for registration
+ */
+export interface IContainerBuilderEssential
+{
+    /**
      * Register a creation rule.
      * @param create A creation rule (which is a function) that creates whatever you like.
      */
     register(create: ICreationRule): IContainerRegistration;
-
-    /**
-     * Build the container with all currently registered creation rules.
-     */
-    build(): IContainer;
 }

@@ -2,7 +2,8 @@ import { IContainer } from "./IContainer";
 import { IContainerBuilder } from "./IContainerBuilder";
 import { IContainerRegistration } from "./IContainerRegistration";
 import { ICreationRule } from "./ICreationRule";
-import { IResolveWithInstanceName, RegistrationMap } from "./SimpleContainerBuilder";
+import { RegistrationMap } from "./RegistrationMap";
+import { IResolveWithInstanceName } from "./SimpleContainerBuilder";
 import { SimpleContainerRegistration } from "./SimpleContainerRegistration";
 
 /**

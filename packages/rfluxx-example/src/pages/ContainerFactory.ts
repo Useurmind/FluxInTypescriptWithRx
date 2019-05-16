@@ -1,12 +1,12 @@
 import { IContainer, IContainerBuilder } from "rfluxx";
-import { RouteParameters } from "rfluxx-routing";
-import { IGlobalComponents, IPageContainerFactory, SimplePageContainerFactoryBase } from "rfluxx-routing";
+import { IGlobalContainerBuilder, RouteParameters } from "rfluxx-routing";
+import { GlobalContainerFactoryBase, IGlobalComponents, IPageContainerFactory } from "rfluxx-routing";
 
 import { CounterStore } from "./CounterStore";
 
-export class ContainerFactory extends SimplePageContainerFactoryBase
+export class ContainerFactory extends GlobalContainerFactoryBase
 {
-    protected registerStores(builder: IContainerBuilder, url: URL, routeParameters: RouteParameters): void
+    protected registerStores(builder: IGlobalContainerBuilder): void
     {
         builder.register(c => new CounterStore({
             pageStore: c.resolve("IPageStore"),
