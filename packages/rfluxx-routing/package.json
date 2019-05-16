@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-routing",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Routing package for rfluxx.",
   "repository": {
     "type": "git",
