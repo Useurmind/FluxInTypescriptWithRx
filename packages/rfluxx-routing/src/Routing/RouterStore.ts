@@ -230,6 +230,11 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
      */
     private interval: number = null;
 
+    /**
+     * The last fragment that was read from the locator.
+     */
+    private currentFragemt: string = null;
+
     constructor(private options: IRouterStoreOptions)
     {
         super({
@@ -323,6 +328,8 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
             const newHref = this.options.locator.location.href.replace(/#(.*)$/, "") + "#" + path;
             this.options.locator.location = new URL(newHref);
         }
+
+        this.applyCurrentRouteHit();
     }
 
     private onNavigateToUrl(url: URL, replaceHistoryEntry: boolean): void
@@ -355,25 +362,23 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
         }
     }
 
+    private applyCurrentRouteHit(): void
+    {
+        if (this.currentFragemt !== this.getFragment())
+        {
+            this.currentFragemt = this.getFragment();
+
+            const currentRouteHit = this.getRouteHit(this.currentFragemt, this.options.locator.location.href);
+            this.setState({ ...this.state, currentHit: currentRouteHit });
+        }
+    }
+
     private listenToUrlChanges(): void
     {
-        let current = null;
-
-        const applyCurrentRouteHit = () =>
-        {
-            if (current !== this.getFragment())
-            {
-                current = this.getFragment();
-
-                const currentRouteHit = this.getRouteHit(current, this.options.locator.location.href);
-                this.setState({ ...this.state, currentHit: currentRouteHit });
-            }
-        };
-
-        applyCurrentRouteHit();
+        this.applyCurrentRouteHit();
 
         window.clearInterval(this.interval);
-        this.interval = window.setInterval(applyCurrentRouteHit, 50);
+        this.interval = window.setInterval(() => this.applyCurrentRouteHit(), 50);
     }
 
     private clearDoubleSlashes(path: string): string
@@ -424,15 +429,16 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
     private getFragment(): string
     {
         let fragment = "";
+        const location = this.options.locator.location;
         if (this.options.mode === RouterMode.History)
         {
             fragment = this.clearDoubleSlashes(decodeURI(location.pathname + location.search + location.hash));
-            fragment = fragment.replace(/\?(.*)$/, "");
+            // fragment = fragment.replace(/\?(.*)$/, "");
             fragment = this.options.root !== "/" ? fragment.replace(this.options.root, "") : fragment;
         }
         else
         {
-            const match = this.options.locator.location.href.match(/#(.*)$/);
+            const match = location.href.match(/#(.*)$/);
             fragment = match ? match[1] : "";
         }
 
