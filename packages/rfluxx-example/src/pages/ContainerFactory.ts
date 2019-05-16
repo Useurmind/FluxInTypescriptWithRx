@@ -1,6 +1,6 @@
 import { IContainer, IContainerBuilder } from "rfluxx";
 import { IGlobalContainerBuilder, RouteParameters } from "rfluxx-routing";
-import { GlobalContainerFactoryBase, IGlobalComponents, IPageContainerFactory } from "rfluxx-routing";
+import { GlobalContainerFactoryBase, IGlobalComponents } from "rfluxx-routing";
 
 import { CounterStore } from "./CounterStore";
 

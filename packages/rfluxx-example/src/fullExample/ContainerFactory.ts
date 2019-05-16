@@ -1,5 +1,5 @@
 import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
-import { GlobalContainerFactoryBase, IGlobalComponents, IGlobalContainerBuilder, IPageContainerFactory, RouteParameters } from "rfluxx-routing";
+import { GlobalContainerFactoryBase, IGlobalComponents, IGlobalContainerBuilder, RouteParameters } from "rfluxx-routing";
 
 import { EditPageStore } from "./EditPage/EditPageStore";
 import { EndlessSequencePageStore } from "./EndlessSequence/EndlessSequencePageStore";

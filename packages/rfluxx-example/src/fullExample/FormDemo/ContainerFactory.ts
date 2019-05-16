@@ -1,6 +1,6 @@
 import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
 import { IValidator, LocalFormStore } from "rfluxx-forms";
-import { IGlobalComponents, IPageContainerFactory, ISiteMapNodeContainerBuilder, RouteParameters, SiteMapNodeContainerFactoryBase } from "rfluxx-routing";
+import { IGlobalComponents, ISiteMapNodeContainerBuilder, RouteParameters, SiteMapNodeContainerFactoryBase } from "rfluxx-routing";
 
 import { IFormData } from "./IFormData";
 

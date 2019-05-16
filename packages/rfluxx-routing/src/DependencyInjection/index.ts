@@ -1,5 +1,4 @@
 export * from "./IGlobalComponents";
-export * from "./IPageContainerFactory";
 export * from "./GlobalContainerBuilder";
 export * from "./GlobalContainerFactoryBase";
 export * from "./GlobalContainerRegistration";

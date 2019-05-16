@@ -1,5 +1,5 @@
 import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
-import { IGlobalComponents, IPageContainerFactory, ISiteMapNodeContainerBuilder, RouteParameters, SiteMapNodeContainerFactoryBase } from "rfluxx-routing";
+import { IGlobalComponents, ISiteMapNodeContainerBuilder, RouteParameters, SiteMapNodeContainerFactoryBase } from "rfluxx-routing";
 
 import { SelectPageStore } from "./SelectPageStore";
 
