@@ -390,8 +390,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
     private clearEndSlashes(path: string): string
     {
         return path.toString().replace(/\/$/, "")
-                              .replace(/\/\?/, "")
-                              .replace(/\#\?/, "");
+                              .replace(/\/\?/, "?");
     }
 
     /**
