@@ -26,6 +26,9 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
         const urlFrag = new UrlFragment(urlFragment);
         const routeFrag = new UrlFragment(route);
 
+        routeFrag.cleanSleashes();
+        urlFrag.cleanSleashes();
+
         const result: IRouteMatchResult = {
             isMatch: true,
             parameters: new Map()

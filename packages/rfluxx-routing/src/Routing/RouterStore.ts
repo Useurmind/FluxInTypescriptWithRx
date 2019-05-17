@@ -4,6 +4,7 @@ import { applyMixins, IAction, IInjectedStoreOptions, NeedToKnowAboutReplayMixin
 import { IRouteMatchStrategy } from "../RouteMatching/IRouteMatchStrategy";
 import { ILocator } from './ILocator';
 import { BrowserLocator } from './BrowserLocator';
+import { clearMultiSlashes } from '../RouteMatching/UrlUtils';
 
 export type RouteParameters = Map<string, string>;
 
@@ -383,7 +384,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
 
     private clearDoubleSlashes(path: string): string
     {
-        return path.toString().replace(/\/\//, "/");
+        return clearMultiSlashes(path);
     }
 
     private clearEndSlashes(path: string): string

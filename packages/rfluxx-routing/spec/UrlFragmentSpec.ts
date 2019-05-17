@@ -78,6 +78,48 @@ describe("UrlFragment", () =>
         expect(urlFragment.searchParameters.get("parameter2")).toBe("value2");
         expect(urlFragment.hash).toBe("someSimpleHash#secondHash");
     });
+    
+    it("url fragment with only parameters and hash is correctly splitted", () =>
+    {
+        const fragment = "?parameter1=value1#someSimpleHash";
+        const urlFragment = new UrlFragment(fragment);
+
+        expect(urlFragment.path).toBe("");
+        expect(urlFragment.searchParameters.size).toBe(1);
+        expect(urlFragment.searchParameters.get("parameter1")).toBe("value1");
+        expect(urlFragment.hash).toBe("someSimpleHash");
+    });
+    
+    it("url fragment with only parameters and hash (including leading slash) is correctly splitted", () =>
+    {
+        const fragment = "/?parameter1=value1#someSimpleHash";
+        const urlFragment = new UrlFragment(fragment);
+
+        expect(urlFragment.path).toBe("/");
+        expect(urlFragment.searchParameters.size).toBe(1);
+        expect(urlFragment.searchParameters.get("parameter1")).toBe("value1");
+        expect(urlFragment.hash).toBe("someSimpleHash");
+    });
+    
+    it("url fragment with only parameters is correctly splitted", () =>
+    {
+        const fragment = "?parameter1=value1";
+        const urlFragment = new UrlFragment(fragment);
+
+        expect(urlFragment.path).toBe("");
+        expect(urlFragment.searchParameters.size).toBe(1);
+        expect(urlFragment.searchParameters.get("parameter1")).toBe("value1");
+    });
+    
+    it("url fragment with only parameters (including leading slash) is correctly splitted", () =>
+    {
+        const fragment = "/?parameter1=value1";
+        const urlFragment = new UrlFragment(fragment);
+
+        expect(urlFragment.path).toBe("/");
+        expect(urlFragment.searchParameters.size).toBe(1);
+        expect(urlFragment.searchParameters.get("parameter1")).toBe("value1");
+    });
 
     it("route with parameters and hash is correctly splitted", () =>
     {
@@ -129,5 +171,22 @@ describe("UrlFragment", () =>
         expect(urlFragment.searchParameters.get("url")).toBe(otherUrlEncoded);
         expect(urlFragment.searchParameters.get("parameter3")).toBe("value3");
         expect(urlFragment.hash).toBe("parameter4=(?<parameter4>[A-Za-z0-9]+)");
+    });
+
+    [
+        { fragment: "/path/to/something?param1=value1&param2=3#somehash", path: "path/to/something", hash: "somehash"},
+        { fragment: "/path///to//////something?param1=value1&param2=3#somehash", path: "path/to/something", hash: "somehash"},
+        { fragment: "/path///to//////something?param1=value1&param2=3#somehash///with///slashes", path: "path/to/something", hash: "somehash///with///slashes"}
+    ].forEach(x => {
+        it("clean slashes works " + JSON.stringify(x), () => {
+            const urlFragment = new UrlFragment(x.fragment);
+
+            urlFragment.cleanSleashes();
+
+            expect(urlFragment.path).toBe(x.path);
+            if(x.hash) {
+                expect(urlFragment.hash).toBe(x.hash);
+            }
+        });
     });
 });

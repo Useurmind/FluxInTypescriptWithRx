@@ -1,3 +1,5 @@
+import { clearMultiSlashes } from './UrlUtils';
+
 /**
  * Helper class to split up urls and routes into the different parts that are important.
  */
@@ -71,5 +73,10 @@ export class UrlFragment
         {
             this.hash = fragment.slice(indexOfHash + 1);
         }
+    }
+
+    public cleanSleashes()
+    {
+        this.path = clearMultiSlashes(this.path.replace(/^\/+/, ""));;
     }
 }
