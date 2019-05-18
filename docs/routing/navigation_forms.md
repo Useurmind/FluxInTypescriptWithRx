@@ -34,6 +34,12 @@ Here we render a welcome page that has a link pointing to a tutorial page.
 
 When you click on the link the url will be changed to `<baseUrl>/tutorial`. If a site map node was defined for that url fragment it will be opened. The user can still navigate back as he is used to as rfluxx uses the history of the browser to perform navigation.
 
+### Dynamic linking
+
+Sometimes you want to create your links dynamically e.g. in a store and navigate on button presses from an action.
+
+For these cases you
+
 ## Communication based navigation
 
 In some cases you need more than just redirecting to another page by way of a link. Sometimes you want to transmit additional information to another page that does not very well fit into a url. And in some cases you even want to get information back from the page once the user has finished it. 
