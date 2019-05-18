@@ -21,18 +21,25 @@ The variable `username` would have the values `johndoe`, and `elizabethshawn` re
 
 The parameters of the search part of the URL are extracted automatically.
 
-But you will need to define wildcards for variable values that should not influence the routing decision. 
+But you will need to define patterns for the parameters you expect. 
 
-    /myapp/users?username={*}&details={*}
+- {*}: The parameter will be extracted and respected for the routing decision. Yet it is not required for the route to match.
+- {+}: The parameter will be extracted and respected for the routing decision. If the parameter is not available the route will not match.
+
+Look at this route:
+
+    /myapp/users?username={+}&details={*}
 
 This route will match any URL with parameters `username` and `details` and extract their values.
+
+Yet the details parameter is not required for the route to match. Only if the username is not available the route will not match.
 
 Also the order of variables in the search does not matter. A route with search parameters will match any route that includes those search parameters, irrespective of their order.
 
 These routes are equivalent:
 
-    /myapp/users?username={*}&details={*}
-    /myapp/users?details={*}&username={*}
+    /myapp/users?username={+}&details={*}
+    /myapp/users?details={*}&username={+}
 
 ## Hash parameters
 
