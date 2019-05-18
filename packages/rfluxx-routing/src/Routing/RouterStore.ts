@@ -260,7 +260,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
                                 ? this.clearDoubleSlashes("/" + this.clearEndSlashes(options.root))
                                 : this.options.locator.location.pathname;
 
-        console.info("root for router store is " + this.options.root);
+        // console.info("root for router store is " + this.options.root);
 
         this.navigateToPath = this.createActionAndSubscribe(s => this.onNavigateToPath(s, false));
         this.navigateToUrl = this.createActionAndSubscribe(s => this.onNavigateToUrl(s, false));

@@ -62,7 +62,7 @@ export class UrlFragment
             {
                 const nameAndValue = searchParameter.split("=");
                 const paramName = nameAndValue[0].toLowerCase();
-                const paramValue = nameAndValue[1];
+                const paramValue = nameAndValue[1].trim();
 
                 this.searchParameters.set(paramName, paramValue);
             }

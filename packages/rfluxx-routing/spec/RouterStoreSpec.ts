@@ -2,7 +2,7 @@ import { routerStore, RouterStore, ComplexRouteMatching } from "../src";
 import { SpecLocator } from '../src/Routing/SpecLocator';
 
 const routeRoot = "";
-const routeRootWithParams = "/?param1={*}";
+const routeRootWithParams = "/?param1={+}";  // this parameter must be required or this route will shadow the root route
 const route1 = "route1";
 const route2 = "route2";
 const route1_1 = "route1/route11";

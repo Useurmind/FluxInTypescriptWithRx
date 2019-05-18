@@ -124,7 +124,7 @@ describe("ComplexRouteMatching", () =>
 
         const result = routeMatching.matchUrl(
             "/path/value1/value2/morePath?parameter3=value3",
-             "/path/{parameter1}/{parameter2}/morePath?parameter4={*}&parameter3=value3");
+             "/path/{parameter1}/{parameter2}/morePath?parameter4={+}&parameter3=value3");
 
         expect(result.isMatch).toBe(false);
         expect(result.parameters.size).toBe(0);
@@ -175,6 +175,65 @@ describe("ComplexRouteMatching", () =>
         expect(result.parameters.get("parameter2")).toBe("value2");
         expect(result.parameters.get("parameter3")).toBe("value3");
         expect(result.parameters.get("parameter4")).toBe("value4");
+    });
+
+    it("path with present optional parameters is matched", () =>
+    {
+        const routeMatching = new ComplexRouteMatching();
+
+        const result = routeMatching.matchUrl(
+            "/path/value1/value2/morePath?parameter3=value3&parameter4=value4",
+             "/patH/{parameter1}/{parameter2}/morePaTH?parameteR3={*}&parameter4={+}");
+
+        expect(result.isMatch).toBe(true);
+        expect(result.parameters.size).toBe(4);
+        expect(result.parameters.get("parameter1")).toBe("value1");
+        expect(result.parameters.get("parameter2")).toBe("value2");
+        expect(result.parameters.get("parameter3")).toBe("value3");
+        expect(result.parameters.get("parameter4")).toBe("value4");
+    });
+
+    it("path with missing optional parameters is matched", () =>
+    {
+        const routeMatching = new ComplexRouteMatching();
+
+        const result = routeMatching.matchUrl(
+            "/path/value1/value2/morePath?parameter4=value4",
+             "/patH/{parameter1}/{parameter2}/morePaTH?parameteR3={*}&parameter4={+}");
+
+        expect(result.isMatch).toBe(true);
+        expect(result.parameters.size).toBe(4);
+        expect(result.parameters.get("parameter1")).toBe("value1");
+        expect(result.parameters.get("parameter2")).toBe("value2");
+        expect(result.parameters.get("parameter3")).toBe(null);
+        expect(result.parameters.get("parameter4")).toBe("value4");
+    });
+
+    it("path with present required parameters is matched", () =>
+    {
+        const routeMatching = new ComplexRouteMatching();
+
+        const result = routeMatching.matchUrl(
+            "/path/value1/value2/morePath?parameter3=value3&parameter4=value4",
+             "/patH/{parameter1}/{parameter2}/morePaTH?parameteR3={+}&parameter4={*}");
+
+        expect(result.isMatch).toBe(true);
+        expect(result.parameters.size).toBe(4);
+        expect(result.parameters.get("parameter1")).toBe("value1");
+        expect(result.parameters.get("parameter2")).toBe("value2");
+        expect(result.parameters.get("parameter3")).toBe("value3");
+        expect(result.parameters.get("parameter4")).toBe("value4");
+    });
+
+    it("path with missing required parameters is not matched", () =>
+    {
+        const routeMatching = new ComplexRouteMatching();
+
+        const result = routeMatching.matchUrl(
+            "/path/value1/value2/morePath?parameter4=value4",
+             "/patH/{parameter1}/{parameter2}/morePaTH?parameteR3={+}&parameter4={*}");
+
+        expect(result.isMatch).toBe(false);
     });
 
     [

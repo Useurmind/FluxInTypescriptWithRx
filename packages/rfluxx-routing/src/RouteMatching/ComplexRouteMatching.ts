@@ -108,19 +108,29 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
     private matchSearch(urlFragment: UrlFragment, routeFragment: UrlFragment): IPartialMatchResult
     {
         let allParametersMatch = true;
+        const parameters: Map<string, string> = urlFragment.searchParameters;
 
         for (const parameterName of Array.from(routeFragment.searchParameters.keys()))
         {
             const urlParameterValue = urlFragment.searchParameters.get(parameterName);
             const routeParameterValue = routeFragment.searchParameters.get(parameterName);
 
-            if (!urlParameterValue)
+            if(routeParameterValue === "{+}")
             {
-                allParametersMatch = false;
+                // if the parameter is required we need a value here
+                allParametersMatch = !urlParameterValue ? false : true;
             }
-            else if (routeParameterValue.trim() !== "{*}")
+            else if (routeParameterValue === "{*}")
             {
-                // values must be the same if the parameter is not wildcarded in the route
+                // if the parameter is optional we do not need a value here
+                if(!urlParameterValue) 
+                {
+                    parameters.set(parameterName, null);
+                }
+            }
+            else
+            {
+                // values must be the same if the parameter has a fixed value in the route
                 allParametersMatch = allParametersMatch && urlParameterValue === routeParameterValue;
             }
 
@@ -134,7 +144,7 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
         {
             return {
                 isMatch: true,
-                parameters: urlFragment.searchParameters
+                parameters: parameters
             };
         }
 
