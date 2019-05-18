@@ -10,7 +10,7 @@ The simple container that is provided by the rfluxx core framework does not acco
 
 Here are some very basic points about state sharing
 
-- State is held by store, so sharing stores, means sharing state
+- State is held by stores, so sharing stores, means sharing state
 - State could be shared globally (not recommended, or lets say only do this rarely)
 - State could be shared between a set of pages 
 - State could be only available in one page
@@ -24,7 +24,7 @@ There are currently two container factories that a developer can specify
 - A global container factory
 - A site map node specific container factory
 
-By default the classes/stores registered in those factories will be only available to specific page for which the container was created. The only difference between the global and site map node specific factory is that you can put common registrations in the global factory once. In the end they will be page specific nevertheless.
+By default the classes/stores registered in those factories will be only available to specific page for which the container was created. The only difference between the global and site map node specific factory is that you can put common registrations in the global factory once. In the end the created instances will be page specific nevertheless.
 
 Extending on these concepts we want to introduce intentional sharing of state between pages.
 
@@ -62,4 +62,20 @@ builder.register(...).as(...)
        .shareGlobally()  // share between all pages on all site map nodes
 ```
 
+## State management
 
+The main goal of such a container is state management. Being in control of which state is kept and which is thrown away. For large apps this can effectively reduce your memory footprint.
+
+For NON shared registrations we throw away the instances together with the rest of the page. If the page is marked for trashing the complete container holding all of the instances is deleted.
+
+## State management vs state sharing
+
+The main problem with State sharing is: when can a state can be thrown away.
+
+The simple answer: when nobody depends on it anymore.
+
+This is quite a complex thing to achieve because you need to track who is using which state.
+
+Also by sharing instances between many pages the state management could be rendered useless. This can become the case when there is always at least one page using a shared instance.
+
+Therefore, for the time being state management is not applied to shared instances. They will be in memory forever once created.
