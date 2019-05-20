@@ -1,6 +1,9 @@
 param(
+    [Parameter(Mandatory=$True)]
     [string]$version
 )
+
+$ErrorActionPreference = "Stop"
 
 lerna run testonce
 lerna run build
