@@ -1,4 +1,4 @@
-import { IGlobalComponents, ISiteMapNodeContainerFactory } from "./DependencyInjection";
+import { IGlobalComponents, ISiteMapNodeContainerFactory, IPageAwareContainerBuilder } from "./DependencyInjection";
 import { PageManagementStore } from "./PageManagementStore";
 import { LruPageStateEvictions } from "./Pages/LruPageStateEvictions";
 import { NoPageStateEvictions } from "./Pages/NoPageStateEvictions";
@@ -64,6 +64,19 @@ export interface IRfluxxOptions
 }
 
 /**
+ * This is the result of the init function.
+ */
+export interface IRfluxxConfigurationResult extends IGlobalComponents
+{
+    /**
+     * The container build that can be used to build containers.
+     * It contains the registrations of all site map nodes as well as the global
+     * container factory.
+     */
+    containerBuilder: IPageAwareContainerBuilder;
+}
+
+/**
  * Initialize the rfluxx routing framework.
  * @param options Options to configure rfluxx routing framework.
  */
@@ -102,15 +115,16 @@ export function init(options: IRfluxxOptions)
         pageEvictionStrategy
     });
 
-    const globalComponents: IGlobalComponents = {
+    const configurationResult: IRfluxxConfigurationResult = {
         routerStore,
         siteMapStore,
         pageManagementStore,
-        pageCommunicationStore: pageManagementStore.pageCommunicationStore
+        pageCommunicationStore: pageManagementStore.pageCommunicationStore,
+        containerBuilder
     };
 
     // init the app container builder
-    options.containerFactory.register(new GlobalContainerBuilder(containerBuilder), globalComponents);
+    options.containerFactory.register(new GlobalContainerBuilder(containerBuilder), configurationResult);
     forEachSiteMapNode(
         options.siteMap,
         (sn: ISiteMapNode, snPath, parentValue: string) =>
@@ -124,5 +138,5 @@ export function init(options: IRfluxxOptions)
     // connect only when container builder is complete
     routerStore.connect.trigger(null);
 
-    return globalComponents;
+    return configurationResult;
 }

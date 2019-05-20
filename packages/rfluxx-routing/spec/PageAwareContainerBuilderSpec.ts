@@ -159,4 +159,56 @@ describe("PageAwareContainerBuilder", () =>
 
         expect(() => originalContainer.resolve(key2)).toThrow();
     });
+
+    it("global container contains global registration", () =>
+    {
+        const builder = new PageAwareContainerBuilder();
+        builder.registerGlobally(c => new Something()).as(key1);
+
+        const container = builder.createGlobalContainer();
+
+        const instance = container.resolve(key1);
+
+        expect(instance).not.toBeNull();
+    });
+
+    it("global container does not contain local registration", () =>
+    {
+        const builder = new PageAwareContainerBuilder();
+        builder.registerLocally(siteMap, c => new Something()).as(key1);
+
+        const container = builder.createGlobalContainer();
+
+        expect(() => container.resolve(key1)).toThrow();
+    });
+
+    it("two global containers return different instance for global registration", () =>
+    {
+        const builder = new PageAwareContainerBuilder();
+        builder.registerGlobally(c => new Something()).as(key1);
+
+        const container1 = builder.createGlobalContainer();
+        const container2 = builder.createGlobalContainer();
+
+        const instance1 = container1.resolve(key1);
+        const instance2 = container2.resolve(key1);
+
+        expect(instance1).not.toBeNull();
+        expect(instance1).not.toBe(instance2);
+    });
+
+    it("two global containers return same instance for globally shared registration", () =>
+    {
+        const builder = new PageAwareContainerBuilder();
+        builder.registerGlobally(c => new Something()).as(key1).shareGlobally();
+
+        const container1 = builder.createGlobalContainer();
+        const container2 = builder.createGlobalContainer();
+
+        const instance1 = container1.resolve(key1);
+        const instance2 = container2.resolve(key1);
+
+        expect(instance1).not.toBeNull();
+        expect(instance1).toBe(instance2);
+    });
 });

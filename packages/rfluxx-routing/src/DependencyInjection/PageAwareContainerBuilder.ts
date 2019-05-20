@@ -14,7 +14,7 @@ import { SiteMapNodeContainerRegistration } from "./SiteMapNodeContainerRegistra
  * This is the container builder that provides the capability to share
  * registered stores/modules between different pages.
  */
-export class PageAwareContainerBuilder
+export class PageAwareContainerBuilder implements IPageAwareContainerBuilder
 {
     private globalRegistrations: IPageAwareContainerRegistration[] = [];
     private localRegistrations: Map<ISiteMapNode, IPageAwareContainerRegistration[]> = new Map();
@@ -66,6 +66,19 @@ export class PageAwareContainerBuilder
         localRegistrations.push(registration);
 
         return new SiteMapNodeContainerRegistration(registration);
+    }
+
+    /**
+     * Create a container for a global context.
+     * Per container created non shared instances will be different.
+     */
+    public createGlobalContainer(): IContainer
+    {
+        const registrationMap: RegistrationMap = new RegistrationMap();
+
+        this.registerGlobalRegistrations(registrationMap);
+
+        return new SimpleContainer(registrationMap, []);
     }
 
     /**

@@ -28,6 +28,12 @@ export interface IPageAwareContainerBuilder
     registerLocally(siteMapNode: ISiteMapNode, create: ICreationRule): ISiteMapNodeContainerRegistration;
 
     /**
+     * Create a container for a global context.
+     * Per container created non shared instances will be different.
+     */
+    createGlobalContainer(): IContainer;
+
+    /**
      * Create a container for the given site map node.
      * @param siteMapNode The site map node for which to create a container.
      */

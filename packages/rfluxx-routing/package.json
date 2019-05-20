@@ -13,7 +13,8 @@
     "build": "tsc",
     "watch": "tsc -w",
     "start": "webpack-dev-server --https",
-    "test": "karma start"
+    "test": "karma start",
+    "testonce": "karma start --single-run"
   },
   "keywords": [
     "flux",

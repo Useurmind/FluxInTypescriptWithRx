@@ -12,7 +12,8 @@
     "lint": "tslint -p .\\tsconfig.json",
     "build": "tsc",
     "watch": "tsc -w",
-    "test": "karma start"
+    "test": "karma start",
+    "testonce": "karma start --single-run"
   },
   "keywords": [
     "flux",
