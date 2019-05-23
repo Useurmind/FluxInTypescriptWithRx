@@ -19,7 +19,7 @@ export class ContainerFactory extends GlobalContainerFactoryBase
 
         registerStore(builder, "IEndlessSequencePageStore", (c, injOpt) => new EndlessSequencePageStore(injOpt({
             pageStore: c.resolve("IPageStore"),
-            sequenceNumber: Number.parseInt(c.resolve<RouteParameters>("RouteParameters").get("sequenceNumber"))
+            sequenceNumber: c.resolve<RouteParameters>("RouteParameters").getAsInt("sequenceNumber")
         })));
     }
 }

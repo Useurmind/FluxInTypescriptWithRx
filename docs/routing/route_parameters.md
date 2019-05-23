@@ -52,3 +52,16 @@ Rfluxx therefore provides the possibility to use regex with named capture groups
     /myapp/users/{username}?details={*}#show_address=(?<show_address>(true|false))
 
 This route will extract the parameters `username`, `details` and `show_address` (which can be either true or false).
+
+## Working with route parameters
+
+The routing frameworks stores the routing parameters in a special data structure that should make the work with the parameters easier.
+
+```ts
+const routeParameters: RouteParameters = // you get them from somewhere
+
+routeParameters.get("MyParaMETER");  // returns the value of myparameter independent of its casing in the url
+routeParameters.getAsInt("MyInt");  // returns the value of MyInt parameter as a number
+routeParameters.getAsFloat("MyFloat");  // returns the value of MyFloat parameter as a number
+routeParameters.getAsBool("MyBool");  // returns the value of MyBool parameter as a boolean (true, false, yes, no, 1, 0 are known, casing is irrelevant)
+```
