@@ -25,7 +25,8 @@ describe("RouteParameters", () =>
         { inputParameterValue: "47856", expectedParameterValue: 47856 },
         { inputParameterValue: "-564", expectedParameterValue: -564 },
         { inputParameterValue: "ldfjg", expectedParameterValue: null },
-        { inputParameterValue: "4354lökjlkj", expectedParameterValue: 4354 }
+        { inputParameterValue: "4354lökjlkj", expectedParameterValue: 4354 },
+        { inputParameterValue: null, expectedParameterValue: null }
     ].forEach(x =>
     {
         it("parameter can be retrieved as integer " + JSON.stringify(x), () =>
@@ -46,7 +47,8 @@ describe("RouteParameters", () =>
         { inputParameterValue: "ldfjg", expectedParameterValue: null },
         { inputParameterValue: "4354lökjlkj", expectedParameterValue: 4354 },
         { inputParameterValue: "1.2345", expectedParameterValue: 1.2345 },
-        { inputParameterValue: "3.14367", expectedParameterValue: 3.14367 }
+        { inputParameterValue: "3.14367", expectedParameterValue: 3.14367 },
+        { inputParameterValue: null, expectedParameterValue: null }
     ].forEach(x =>
     {
         it("parameter can be retrieved as float " + JSON.stringify(x), () =>
@@ -69,7 +71,8 @@ describe("RouteParameters", () =>
         { inputParameterValue: "FaLSE", expectedParameterValue: false },
         { inputParameterValue: "yes", expectedParameterValue: true },
         { inputParameterValue: "no", expectedParameterValue: false },
-        { inputParameterValue: "dhlökfgjh", expectedParameterValue: null }
+        { inputParameterValue: "dhlökfgjh", expectedParameterValue: null },
+        { inputParameterValue: null, expectedParameterValue: null }
     ].forEach(x =>
     {
         it("parameter can be retrieved as boolean " + JSON.stringify(x), () =>

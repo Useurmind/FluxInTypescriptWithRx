@@ -15,6 +15,7 @@ import { FormPage } from "./FormWithSelectPage/FormPage";
 import { HomePage } from "./HomePage";
 import { ContainerFactory as SelectPageContainerFactory } from "./SelectPage/ContainerFactory";
 import { SelectPage } from "./SelectPage/SelectPage";
+import { IntraRoutingPage } from "./IntraPageRouting/IntraRoutingPage";
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -34,6 +35,12 @@ const siteMap: ISiteMapNode = {
             routeExpression: "some/span",
             render: p => <span>Some text in a span</span>,
             showInSidebar: "/home/some/span#fancy"
+        },
+        {
+            caption: p => <span>Intra page routing</span>,
+            routeExpression: "/intraPageRouting?moreStuff={*}&moreDifferentStuff={*}",
+            render: p => <IntraRoutingPage />,
+            showInSidebar: new Map([["moreStuff", "false"], ["moreDifferentStuff", "false"]])
         },
         {
             caption: p => <span>Form with select page</span>,

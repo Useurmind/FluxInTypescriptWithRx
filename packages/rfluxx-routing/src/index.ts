@@ -1,4 +1,8 @@
-import { IGlobalComponents, ISiteMapNodeContainerFactory, IPageAwareContainerBuilder } from "./DependencyInjection";
+import { IGlobalComponents, IPageAwareContainerBuilder, ISiteMapNodeContainerFactory } from "./DependencyInjection";
+import { GlobalContainerBuilder } from "./DependencyInjection/GlobalContainerBuilder";
+import { IGlobalContainerFactory } from "./DependencyInjection/IGlobalContainerFactory";
+import { PageAwareContainerBuilder } from "./DependencyInjection/PageAwareContainerBuilder";
+import { SiteMapNodeContainerBuilder } from "./DependencyInjection/SiteMapNodeContainerBuilder";
 import { PageManagementStore } from "./PageManagementStore";
 import { LruPageStateEvictions } from "./Pages/LruPageStateEvictions";
 import { NoPageStateEvictions } from "./Pages/NoPageStateEvictions";
@@ -7,12 +11,9 @@ import { ComplexRouteMatching } from "./RouteMatching/ComplexRouteMatching";
 import { RegexRouteMatching } from "./RouteMatching/RegexRouteMatching";
 import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./Routing/RouterStore";
 import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
-import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, SiteMapStore, forEachSiteMapNode } from "./SiteMap/SiteMapStore";
-import { PageAwareContainerBuilder } from './DependencyInjection/PageAwareContainerBuilder';
-import { SiteMapNodeContainerBuilder } from './DependencyInjection/SiteMapNodeContainerBuilder';
-import { GlobalContainerBuilder } from './DependencyInjection/GlobalContainerBuilder';
-import { IGlobalContainerFactory } from './DependencyInjection/IGlobalContainerFactory';
+import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, forEachSiteMapNode, SiteMapStore } from "./SiteMap/SiteMapStore";
 
+export * from "./ConditionalRouteComponent";
 export * from "./Components";
 export * from "./DependencyInjection";
 export * from "./PageCommunication";

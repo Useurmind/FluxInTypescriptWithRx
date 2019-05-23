@@ -3,10 +3,10 @@ import { StoreSubscription } from "rfluxx";
 import { Subscription } from "rxjs/Subscription";
 
 import { IPageMasterProps, Page } from "./Page";
-import { IPageContextProps } from "./PageContextProvider";
+import { IPageContextProps, PageContext } from "./PageContextProvider";
 import { IPageManagementStore, IPageManagementStoreState } from "./PageManagementStore";
 import { IPageData } from "./Pages/IPageData";
-import { RouteParameters } from './Routing/RouterStore';
+import { RouteParameters } from "./Routing/RouteParameters";
 
 /**
  * Props for { @see ConditionalRouteComponent }.
@@ -52,7 +52,7 @@ export class ConditionalRouteComponent
         };
     }
 
-    /** 
+    /**
      * check if the condition is true
      */
     private isConditionTrue(pageContextProps: IPageContextProps): boolean
@@ -68,7 +68,13 @@ export class ConditionalRouteComponent
             "when no condition is given");
         }
 
-        return pageContextProps.routeParameters.get(this.props.parameterName.toLowerCase())
+        let actualParameterValue = pageContextProps.routeParameters.get(this.props.parameterName);
+        if (actualParameterValue)
+        {
+            actualParameterValue = actualParameterValue.toLowerCase();
+        }
+
+        return actualParameterValue === this.props.parameterValue.toLowerCase();
     }
 
     /**
@@ -76,6 +82,16 @@ export class ConditionalRouteComponent
      */
     public render(): any
     {
-        
+        return <PageContext.Consumer>
+            {pageContext =>
+            {
+                if (!this.isConditionTrue(pageContext))
+                {
+                    return null;
+                }
+
+                return this.props.children;
+            }}
+        </PageContext.Consumer>;
     }
 }

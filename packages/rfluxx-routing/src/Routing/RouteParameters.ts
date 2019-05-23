@@ -102,6 +102,11 @@ export class RouteParameters
     {
         const parameterValue = this.get(parameterName);
 
+        if (!parameterValue)
+        {
+            return null;
+        }
+
         if (parameterValue.match(/^(true|yes|1)$/i))
         {
             return true;
