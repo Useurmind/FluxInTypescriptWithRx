@@ -18,15 +18,15 @@ export class RegexRouteMatching implements IRouteMatchStrategy
 
         const result: IRouteMatchResult = {
             isMatch: false,
-            parameters: new Map()
+            parameters: new RouteParameters()
         };
 
         if (match)
         {
-            let routeParams: RouteParameters =  new Map<string, string>();
+            let routeParams: RouteParameters =  new RouteParameters();
             if ((match as any).groups)
             {
-                routeParams = new Map<string, string>(Object.entries((match as any).groups));
+                routeParams = new RouteParameters(new Map<string, string>(Object.entries((match as any).groups)));
             }
 
             result.isMatch = true;

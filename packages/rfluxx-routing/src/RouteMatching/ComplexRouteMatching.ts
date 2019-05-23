@@ -31,7 +31,7 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
 
         const result: IRouteMatchResult = {
             isMatch: true,
-            parameters: new Map()
+            parameters: new RouteParameters()
         };
 
         const pathMatchResult = this.matchPath(urlFrag, routeFrag);
@@ -47,7 +47,7 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
         {
             return {
                 isMatch: false,
-                parameters: new Map()
+                parameters: new RouteParameters()
             };
         }
 
@@ -56,11 +56,19 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
 
     private joinResults(aggregatedResult: IRouteMatchResult, partialResult: IPartialMatchResult)
     {
+        const aggregatedParams = new Map();
+
+        for (const parameterName of Array.from(aggregatedResult.parameters.keys()))
+        {
+            aggregatedParams.set(parameterName, aggregatedResult.parameters.get(parameterName));
+        }
+
         for (const parameterName of Array.from(partialResult.parameters.keys()))
         {
-            aggregatedResult.parameters.set(parameterName, partialResult.parameters.get(parameterName));
+            aggregatedParams.set(parameterName, partialResult.parameters.get(parameterName));
         }
         aggregatedResult.isMatch = aggregatedResult.isMatch && partialResult.isMatch;
+        aggregatedResult.parameters = new RouteParameters(aggregatedParams);
     }
 
     private matchPath(urlFragment: UrlFragment, routeFragment: UrlFragment): IPartialMatchResult
@@ -87,10 +95,10 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
 
         if (pathMatch)
         {
-            let pathParams: RouteParameters =  new Map();
+            let pathParams: RouteParameters = new RouteParameters();
             if ((pathMatch as any).groups)
             {
-                pathParams = new Map<string, string>(Object.entries((pathMatch as any).groups));
+                pathParams = new RouteParameters(new Map<string, string>(Object.entries((pathMatch as any).groups)));
             }
 
             return {
@@ -101,7 +109,7 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
 
         return {
             isMatch: false,
-            parameters: new Map()
+            parameters: new RouteParameters()
         };
     }
 
@@ -115,7 +123,7 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
             const urlParameterValue = urlFragment.searchParameters.get(parameterName);
             const routeParameterValue = routeFragment.searchParameters.get(parameterName);
 
-            if(routeParameterValue === "{+}")
+            if (routeParameterValue === "{+}")
             {
                 // if the parameter is required we need a value here
                 allParametersMatch = !urlParameterValue ? false : true;
@@ -123,7 +131,7 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
             else if (routeParameterValue === "{*}")
             {
                 // if the parameter is optional we do not need a value here
-                if(!urlParameterValue) 
+                if (!urlParameterValue)
                 {
                     parameters.set(parameterName, null);
                 }
@@ -144,13 +152,13 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
         {
             return {
                 isMatch: true,
-                parameters: parameters
+                parameters: new RouteParameters(parameters)
             };
         }
 
         return {
             isMatch: false,
-            parameters: new Map()
+            parameters: new RouteParameters()
         };
     }
 
@@ -160,10 +168,10 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
 
         if (hashMatch)
         {
-            let hashParams: RouteParameters =  new Map<string, string>();
+            let hashParams: RouteParameters = new RouteParameters();
             if ((hashMatch as any).groups)
             {
-                hashParams = new Map<string, string>(Object.entries((hashMatch as any).groups));
+                hashParams = new RouteParameters(new Map<string, string>(Object.entries((hashMatch as any).groups)));
             }
 
             return {
@@ -174,7 +182,7 @@ export class ComplexRouteMatching implements IRouteMatchStrategy
 
         return {
             isMatch: false,
-            parameters: new Map()
+            parameters: new RouteParameters()
         };
     }
 }

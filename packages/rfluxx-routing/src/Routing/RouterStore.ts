@@ -2,11 +2,13 @@ import * as Rfluxx from "rfluxx";
 import { applyMixins, IAction, IInjectedStoreOptions, NeedToKnowAboutReplayMixin } from "rfluxx";
 
 import { IRouteMatchStrategy } from "../RouteMatching/IRouteMatchStrategy";
-import { ILocator } from './ILocator';
-import { BrowserLocator } from './BrowserLocator';
-import { clearMultiSlashes } from '../RouteMatching/UrlUtils';
+import { clearMultiSlashes } from "../RouteMatching/UrlUtils";
 
-export type RouteParameters = Map<string, string>;
+import { BrowserLocator } from "./BrowserLocator";
+import { ILocator } from "./ILocator";
+import { RouteParameters } from "./RouteParameters";
+
+export { RouteParameters } from "./RouteParameters";
 
 /**
  * Interface for a route that can be entered.

@@ -2,6 +2,7 @@ import { IPageData } from "../src/Pages/IPageData";
 import { LruPageStateEvictions } from "../src/Pages/LruPageStateEvictions";
 import { PathAndSearchPageId } from "../src/Pages/PathAndSearchPageId";
 import { ISiteMapNodeHit } from "../src/SiteMap";
+import { RouteParameters } from '../src';
 
 describe("LruPageStateEvictions", () =>
 {
@@ -12,43 +13,43 @@ describe("LruPageStateEvictions", () =>
         {
             siteMapNode: null,
             siteMapPath: null,
-            parameters: new Map(),
+            parameters: new RouteParameters(),
             url: new URL(baseUrl + "my/path/0")
         },
         {
             siteMapNode: null,
             siteMapPath: null,
-            parameters: new Map(),
+            parameters: new RouteParameters(),
             url: new URL(baseUrl + "my/path/1")
         },
         {
             siteMapNode: null,
             siteMapPath: null,
-            parameters: new Map(),
+            parameters: new RouteParameters(),
             url: new URL(baseUrl + "my/path/2")
         },
         {
             siteMapNode: null,
             siteMapPath: null,
-            parameters: new Map(),
+            parameters: new RouteParameters(),
             url: new URL(baseUrl + "my/path/3")
         },
         {
             siteMapNode: null,
             siteMapPath: null,
-            parameters: new Map(),
+            parameters: new RouteParameters(),
             url: new URL(baseUrl + "my/path/4")
         },
         {
             siteMapNode: null,
             siteMapPath: null,
-            parameters: new Map(),
+            parameters: new RouteParameters(),
             url: new URL(baseUrl + "my/path/5")
         },
         {
             siteMapNode: null,
             siteMapPath: null,
-            parameters: new Map(),
+            parameters: new RouteParameters(),
             url: new URL(baseUrl + "my/path/6")
         }
     ];

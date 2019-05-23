@@ -47,7 +47,7 @@ export class CurrentSiteMapNode extends React.Component<ICurrentSiteMapNodeProps
 
         this.state = {
             currentSiteMapNode: null,
-            routeParameters: new Map()
+            routeParameters: new RouteParameters()
         };
     }
 
@@ -61,7 +61,7 @@ export class CurrentSiteMapNode extends React.Component<ICurrentSiteMapNodeProps
             x => this.setState({
                 ...this.state,
                 currentSiteMapNode:  x.siteMapNodeHit ? x.siteMapNodeHit.siteMapNode : null,
-                routeParameters: x.siteMapNodeHit ? x.siteMapNodeHit.parameters : new Map()
+                routeParameters: x.siteMapNodeHit ? x.siteMapNodeHit.parameters : new RouteParameters()
             }));
     }
 
