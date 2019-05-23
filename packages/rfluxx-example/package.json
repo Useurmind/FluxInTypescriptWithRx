@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-example",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Example apps with the rfluxx framework.",
   "private": true,
   "repository": {
@@ -31,7 +31,7 @@
     "classnames": "^2.2.6",
     "rfluxx": "^3.2.0",
     "rfluxx-forms": "^3.2.0",
-    "rfluxx-routing": "^3.2.0",
+    "rfluxx-routing": "^3.3.0",
     "rxjs": "~5.5.7",
     "style-loader": "~0.23.1",
     "tslib": "~1.9.0"
