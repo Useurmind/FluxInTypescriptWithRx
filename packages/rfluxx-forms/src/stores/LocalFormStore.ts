@@ -1,34 +1,10 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 import { Observable } from "rxjs/Observable";
 
+import { IFetchResult, SaveError, SimpleError } from "./ErrorHandling";
+import { FormFieldDataObject } from "./FormFieldData";
 import { IFormStore, IFormStoreState, IUpdateDataFieldParams, updataDataField, validate } from "./IFormStore";
 import { ValidateDataObject, ValidationErrors } from "./Validation";
-
-/**
- * Type of error that should be delivered when loading of the initial data fails.
- */
-export type LoadErrorResult = string | string[];
-
-/**
- * When data is saved to the backend deliver this type of object when an error occurs.
- */
-export type SaveErrorResult<TData> = string | string[] | ValidationErrors<TData> | IComplexSaveErrorResult<TData>;
-
-/**
- * Interface for more complex save errors.
- */
-export interface IComplexSaveErrorResult<TData>
-{
-    /**
-     * Global form errors not specific to a single form field.
-     */
-    globalErrors: string | string[] | null;
-
-    /**
-     * Validation errors for possibly each field.
-     */
-    validationErrors: ValidationErrors<TData>;
-}
 
 /**
  * The options to configure the { @see LocalFormStore }
@@ -38,22 +14,29 @@ export interface ILocalFormStoreOptions<TData> extends IInjectedStoreOptions
     /**
      * Load the data from the server.
      * Also used for refreshing the data in the form.
-     * On error you should return qan { @see LoadErrorResult }.
+     * The next operation of this observable can also return errors in the data object.
      */
-    loadData: () => Observable<TData>;
+    loadData: () => Observable<IFetchResult<TData, SimpleError>>;
 
     /**
      * Save the given data object to the backend.
      * On success the callback should deliver the updated object
      * or null.
-     * On error you should return an { @see ErrorResult<TData> } type.
+     * The next operation of this observable can also return errors in the data object.
      */
-    saveData: (data: TData) => Observable<TData | null>;
+    saveData: (data: TData) => Observable<IFetchResult<TData, SaveError<TData>>>;
 
     /**
      * A function that validates the input fields.
      */
     validateData: ValidateDataObject<TData>;
+
+    /**
+     * If this is set to true, whenever a field is updated and a save fiel function is
+     * provided, the store will try to save the field directly.
+     * TODO: implement this.
+     */
+    enableAutomaticFieldSaving?: boolean;
 }
 
 /**
@@ -93,9 +76,11 @@ export class LocalFormStore<TData>
             ...options,
             initialState: {
                 data: {} as TData,
+                saveProblem: null,
                 isLoading: false,
                 globalErrors: null,
-                validationErrors: {} as ValidationErrors<TData>
+                validationErrors: {} as ValidationErrors<TData>,
+                formFieldData: {} as FormFieldDataObject<TData>
             }
         });
 
@@ -125,11 +110,11 @@ export class LocalFormStore<TData>
         this.subscribeServerCall(this.options.saveData(this.state.data));
     }
 
-    private subscribeServerCall(serverCall: Observable<TData>): void
+    private subscribeServerCall(serverCall: Observable<IFetchResult<TData, SimpleError | SaveError<TData>>>): void
     {
         serverCall.subscribe(
-            data => this.setState(this.clearErrors(this.updateData(this.state, data))),
-            (error: LoadErrorResult) => this.setState(this.clearData(this.applyError(this.state, error))),
+            result => this.setState(this.clearErrors(this.applyResult(this.state, result))),
+            (error: any) => this.setState(this.clearData(this.applyError(this.state, error))),
             () => this.setState(this.finishLoading(this.state))
         );
     }
@@ -144,7 +129,21 @@ export class LocalFormStore<TData>
         return { ...state, isLoading: false };
     }
 
-    private applyError(state: ILocalFormStoreState<TData>, error: LoadErrorResult | SaveErrorResult<TData>)
+    private applyResult(state: ILocalFormStoreState<TData>, result: IFetchResult<TData, SimpleError | SaveError<TData>>)
+        : ILocalFormStoreState<TData>
+    {
+        if (result.error)
+        {
+            // we have an error, failure
+            return this.applyError(state, result.error);
+        }
+        else
+        {
+            return this.updateData(state, result.data);
+        }
+    }
+
+    private applyError(state: ILocalFormStoreState<TData>, error: SimpleError | SaveError<TData> | Error)
         : ILocalFormStoreState<TData>
     {
         if (typeof error === "string" || Array.isArray(error))
@@ -156,6 +155,11 @@ export class LocalFormStore<TData>
         {
             // complex error has same type as state
             return { ...state, ...error};
+        }
+        else if ("message" in error)
+        {
+            // Error object
+            return { ...state, saveProblem: error.message};
         }
 
         // last remaining case is validation errors object
@@ -173,7 +177,7 @@ export class LocalFormStore<TData>
     {
         if (!data)
         {
-            // this means we were successfull but no updated 
+            // this means we were successfull but no updated
             // data object was given
             return state;
         }

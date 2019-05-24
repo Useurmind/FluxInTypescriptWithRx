@@ -27,6 +27,11 @@ export interface IFormState
      * The current validation errors.
      */
     validationErrors: ValidationErrors<TData>;
+
+    /**
+     * Additional data for each form field.
+     */
+    formFieldData: FormFieldDataObject<TData>;
 }
 
 /**
@@ -100,7 +105,8 @@ class extends React.Component<IFormProps, IFormState>
             <FormContext.Provider value={{
                 formStore: this.props.formStore,
                 data: this.state.data,
-                validationErrors: this.state.validationErrors
+                validationErrors: this.state.validationErrors,
+                formFieldData: this.state.formFieldData
             }}>
                 {this.props.children}
             </FormContext.Provider>
