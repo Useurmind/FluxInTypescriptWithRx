@@ -5,6 +5,7 @@ import { StoreSubscription } from "rfluxx";
 
 import { FormContext, IFormContext } from "./FormContext";
 import { IFormStore, IFormStoreState, ValidationErrors } from "./stores";
+import { FormFieldDataObject } from "./stores/FormFieldData";
 
 type TData = any;
 
@@ -63,7 +64,8 @@ class extends React.Component<IFormProps, IFormState>
 
         this.state = {
             data: null,
-            validationErrors: null
+            validationErrors: null,
+            formFieldData: null
         };
     }
 
