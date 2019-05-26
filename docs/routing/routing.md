@@ -81,7 +81,15 @@ Pages are an layer on top of the site map node system that introduces state mana
 
 ### Page Id
 
-The mapping of site map nodes to pages is based on a page id algorithm that computes which urls belong to one page. The default page id algorithm computes the page id as the path and search of the url that was navigated to. This means that the path and all search parameters influence the page id. If you want to you can create your own page id algorithm that. You can also ignore certain search parameters from the page id.
+The mapping of site map nodes to pages is based on a page id algorithm that computes which urls belong to one page. 
+
+#### Default page id algorithm
+
+The default page id algorithm computes the page id as the path and search of the url that was navigated to. 
+
+This means that the path and all search parameters influence the page id. 
+
+You can also ignore certain search parameters from the page id.
 
 `index.tsx`
 ```typescript
@@ -99,6 +107,10 @@ const globalStores = RfluxxRouting.init({
 
 //...
 ```
+
+#### Custom page id algorithm
+
+If you want to you can create your own page id algorithm. 
 
 ### Page state
 

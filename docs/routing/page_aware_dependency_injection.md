@@ -44,6 +44,8 @@ Requirements:
 
 The following could be an interface for the builder used in the site map specific container factory.
 
+**Attention: not all of the following methods are imported yet.**
+
 ```typescript
 // same registration interface as for simple container
 builder.register(...).as(...)

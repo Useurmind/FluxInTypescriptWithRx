@@ -1,5 +1,11 @@
 # Designing stores for time travel
 
+## Disclaimer
+
+Time travel does currently not work with the routing framework...
+
+## Intro
+
 There are some advanced but nevertheless crucial information that you should follow when creating stores that should allow time travel. Not following these guidelines will render correct time travel impossible.
 
 Correct time travel relies on two important facts:
@@ -21,4 +27,4 @@ During time travel the observable fetcher will not make any actual fetches. In f
 
 Simply speaking, when fetching stuff via `IObservableFetcher` call an action in the subscribe call. 
 
-More completely, whenever an action is performed outside your current time travel context (your app or in case of rfluxx-routing your page) you need to capture the result with an action call which in turn updates your store state.
+More completely, whenever an action is performed outside your current time travel context (your app) you need to capture the result with an action call which in turn updates your store state.

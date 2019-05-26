@@ -17,14 +17,16 @@ Urls can be:
 
 Each site map node renders a page when it is hit via a matching url.
 
-It will create a container (either from it's own container factory or from the global one) and use it to setup a page. 
+It will create a container and use it to setup a page. This container will contain global registrations from the global factory and local registrations from the local factory.
 
 You can configure any react component to be rendered as the page of the site map node.
 
-# Breadcrumb
+# Navigation UI
 
-The one reason to have a site map is to efficiently create a breadcrumb from it when a page is opened.
+One reason to have a site map is to efficiently create a navigation UI like a breadcrumb or a side bar from it when a page is opened.
 
 That allows the user to easily find out where he is on the page.
 
-To make this feature useful the text of the breadcrumb must be dynamically computable. Usually static texts are not enough to find out where you are on a page.
+To make this feature useful the text of the navigation UI must be dynamically computable. Usually static texts are not enough to find out where you are on a page.
+
+Therefore, you can add any react component to be used as a kind of caption for the site map node in the navigation UI.

@@ -17,6 +17,8 @@ This route would match e.g. the following URLs:
 
 The variable `username` would have the values `johndoe`, and `elizabethshawn` respectively. 
 
+There is currently no way to make a path parameter optional.
+
 ## Search parameters
 
 The parameters of the search part of the URL are extracted automatically.
