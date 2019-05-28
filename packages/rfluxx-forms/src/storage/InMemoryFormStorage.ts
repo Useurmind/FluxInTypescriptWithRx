@@ -5,6 +5,32 @@ import { IFetchResult, SaveError, SimpleError } from "../stores/ErrorHandling";
 import { IFormStorage } from "./IFormStorage";
 
 /**
+ * Options that the @see InMemoryFormStorage takes.
+ */
+export interface IInMemoryFormStorageOptions<TData>
+{
+    /**
+     * Function that sets the id of a data object.
+     */
+    setDataObjectId: (data: TData, id: any) => void;
+
+    /**
+     * Function that returns the id of a data object.
+     */
+    getDataObjectId: (data: TData) => any;
+
+    /**
+     * Get a new id for an object.
+     */
+    getNextId: () => any;
+
+    /**
+     * Get an empty data object.
+     */
+    getEmptyDataObject: () => TData;
+}
+
+/**
  * This form storage stores a data object directly in memory.
  */
 export class InMemoryFormStorage<TData> implements IFormStorage<TData>
@@ -13,16 +39,9 @@ export class InMemoryFormStorage<TData> implements IFormStorage<TData>
 
     /**
      * Create an instance of this class.
-     * @param setDataObjectId Set the id of a new data object.
-     * @param getDataObjectId Get the id of the data object to identify it.
-     * @param getNextId Get the next id for a data object.
-     * @param getEmptyDataObject A function to create empty data objects (including their id, if you want).
+     * @param options Options for the form storage.
      */
-    constructor(
-        private setDataObjectId: (data: TData, id: any) => void,
-        private getDataObjectId: (data: TData) => any,
-        private getNextId: () => any,
-        private getEmptyDataObject: () => TData)
+    constructor(private options: IInMemoryFormStorageOptions<TData>)
     {
     }
 
@@ -31,32 +50,28 @@ export class InMemoryFormStorage<TData> implements IFormStorage<TData>
      */
     public loadDataObject(id?: any): Observable<IFetchResult<TData, SimpleError>>
     {
-        return Observable.create((observer: Observer<IFetchResult<TData, SimpleError>>) =>
+        if (id !== null && id !== undefined)
         {
-            if (id)
+            const foundDataObject = this.dataObjects.get(id);
+            if (foundDataObject)
             {
-                const foundDataObject = this.dataObjects.get(id);
-                if (foundDataObject)
-                {
-                    observer.next({
-                        data: { ...foundDataObject }
-                    });
-                }
-                else
-                {
-                    observer.next({
-                        error: `Could not find data object with id ${id}`
-                    });
-                }
+                return Observable.of({
+                    data: { ...foundDataObject }
+                });
             }
             else
             {
-                observer.next({
-                    data: { ...this.getEmptyDataObject() }
+                return Observable.of({
+                    error: `Could not find data object with id ${id}`
                 });
             }
-            observer.complete();
-        });
+        }
+        else
+        {
+            return Observable.of({
+                data: { ...this.options.getEmptyDataObject() }
+            });
+        }
     }
 
     /**
@@ -64,35 +79,37 @@ export class InMemoryFormStorage<TData> implements IFormStorage<TData>
      */
     public storeDataObject(data: TData): Observable<IFetchResult<TData, SaveError<TData>>>
     {
-        return Observable.create((observer: Observer<IFetchResult<TData, SaveError<TData>>>) =>
+        // copy the data object to not risk changes from the outside
+        const dataCopy = { ...data };
+        let id = this.options.getDataObjectId(dataCopy);
+        if (id === null || id === undefined)
         {
-            // copy the data object to not risk changes from the outside
-            const dataCopy = { ...data };
-            let id = this.getDataObjectId(data);
-            if (!id)
+            // object is new, create an id for it
+            id = this.options.getNextId();
+            this.options.setDataObjectId(dataCopy, id);
+        }
+        else
+        {
+            if (!this.dataObjects.has(id))
             {
-                // object is new, create an id for it
-                id = this.getNextId();
-                this.setDataObjectId(dataCopy, id);
+                return Observable.of({
+                    error: `Could not update object with id ${id} because it does not exist yet`
+                });
             }
-            else
-            {
-                if (!this.dataObjects.has(id))
-                {
-                    observer.next({
-                        error: `Could not update object with id ${id} because it does not exist yet`
-                    });
-                    observer.complete();
-                    return;
-                }
-            }
+        }
 
-            this.dataObjects.set(id, dataCopy);
-            // return the same data object
-            observer.next({
-                data: { ...dataCopy }
-            });
-            observer.complete();
+        this.dataObjects.set(id, dataCopy);
+        // return the same data object
+        return Observable.of({
+            data: { ...dataCopy }
         });
+    }
+
+    /**
+     * Get all objects saved in the storage.
+     */
+    public getAllObjects(): TData[]
+    {
+        return Array.from(this.dataObjects.values());
     }
 }
