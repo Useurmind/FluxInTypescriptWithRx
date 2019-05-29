@@ -1,6 +1,8 @@
 import { IAction, IInjectedStoreOptions, IStore, Store } from "rfluxx";
 import { Observable } from "rxjs/Observable";
 
+import { IFormStorage } from "../storage";
+
 import { IFetchResult, SaveError, SimpleError } from "./ErrorHandling";
 import { FormFieldDataObject } from "./FormFieldData";
 import { IFormStore, IFormStoreState, IUpdateDataFieldParams, updataDataField, validate } from "./IFormStore";
@@ -15,16 +17,24 @@ export interface ILocalFormStoreOptions<TData> extends IInjectedStoreOptions
      * Load the data from the server.
      * Also used for refreshing the data in the form.
      * The next operation of this observable can also return errors in the data object.
+     * Set either @see loadData and @see saveData or set @see formStorage.
      */
-    loadData: () => Observable<IFetchResult<TData, SimpleError>>;
+    loadData?: () => Observable<IFetchResult<TData, SimpleError>>;
 
     /**
      * Save the given data object to the backend.
      * On success the callback should deliver the updated object
      * or null.
      * The next operation of this observable can also return errors in the data object.
+     * Set either @see loadData and @see saveData or set @see formStorage.
      */
-    saveData: (data: TData) => Observable<IFetchResult<TData, SaveError<TData>>>;
+    saveData?: (data: TData) => Observable<IFetchResult<TData, SaveError<TData>>>;
+
+    /**
+     * Form storage used to save and load data.
+     * Set either @see loadData and @see saveData or set @see formStorage.
+     */
+    formStorage?: IFormStorage<TData>;
 
     /**
      * A function that validates the input fields.
@@ -70,6 +80,11 @@ export class LocalFormStore<TData>
      */
     public readonly saveData: IAction<any>;
 
+    /**
+     * inherited
+     */
+    public readonly resetData: IAction<any>;
+
     constructor(private options: ILocalFormStoreOptions<TData>)
     {
         super({
@@ -86,6 +101,7 @@ export class LocalFormStore<TData>
 
         this.updateDataField = this.createActionAndSubscribe(p => this.onUpdateDataField(p));
         this.saveData = this.createActionAndSubscribe(_ => this.onSaveData());
+        this.resetData = this.createActionAndSubscribe(_ => this.onResetData());
     }
 
     private onUpdateDataField(params: IUpdateDataFieldParams): void
@@ -100,14 +116,25 @@ export class LocalFormStore<TData>
     {
         this.setState(this.startLoading(this.state));
 
-        this.subscribeServerCall(this.options.loadData());
+        const loadDataFunc = this.options.loadData ? this.options.loadData
+                                                   : () => this.options.formStorage.loadDataObject();
+
+        this.subscribeServerCall(loadDataFunc());
+    }
+
+    private onResetData(): void
+    {
+        this.loadInitialData();
     }
 
     private onSaveData(): void
     {
         this.setState(this.startLoading(this.state));
 
-        this.subscribeServerCall(this.options.saveData(this.state.data));
+        const saveDataFunc = this.options.saveData ? this.options.saveData
+                                                   : (d: TData) => this.options.formStorage.storeDataObject(d);
+
+        this.subscribeServerCall(saveDataFunc(this.state.data));
     }
 
     private subscribeServerCall(serverCall: Observable<IFetchResult<TData, SimpleError | SaveError<TData>>>): void
@@ -149,7 +176,10 @@ export class LocalFormStore<TData>
         if (typeof error === "string" || Array.isArray(error))
         {
             // simple string or string []
-            return { ...state, globalErrors: error };
+            return {
+                ...state,
+                globalErrors: error
+            };
         }
         else if ("globalErrors" in error)
         {
@@ -159,17 +189,23 @@ export class LocalFormStore<TData>
         else if ("message" in error)
         {
             // Error object
-            return { ...state, saveProblem: error.message};
+            return {
+                ...state,
+                saveProblem: error.message
+            };
         }
 
         // last remaining case is validation errors object
-        return { ...state, validationErrors: error };
+        return {
+            ...state,
+            validationErrors: error ? error : {} as ValidationErrors<TData>
+         };
     }
 
     private clearErrors(state: ILocalFormStoreState<TData>)
         : ILocalFormStoreState<TData>
     {
-        return { ...state, globalErrors: null, validationErrors: null };
+        return { ...state, saveProblem: null, globalErrors: null, validationErrors: {} as ValidationErrors<TData> };
     }
 
     private updateData(state: ILocalFormStoreState<TData>, data: TData)

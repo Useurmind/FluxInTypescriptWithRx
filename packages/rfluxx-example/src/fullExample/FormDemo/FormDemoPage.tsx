@@ -1,7 +1,7 @@
-import { Snackbar, Typography, Grid } from "@material-ui/core";
+import { Grid, Snackbar, Typography, Button } from "@material-ui/core";
 import { createStyles, WithStyles, withStyles } from "@material-ui/styles";
 import * as React from "react";
-import { StoreSubscription } from "rfluxx";
+import { IPullingStore, IStore, StoreSubscription } from "rfluxx";
 import { Form, IFormStore, IFormStoreState, StringFormField } from "rfluxx-forms";
 import { IPageContextProps, PageContext } from "rfluxx-routing";
 
@@ -28,6 +28,7 @@ export interface IFormDemoPageProps extends IPageContextProps, WithStyles<typeof
 
 export interface IFormDemoPageState {
     formData: IFormData;
+    databaseData: IFormData[];
 }
 
 export const FormDemoPage = withStyles(styles)(
@@ -35,13 +36,16 @@ export const FormDemoPage = withStyles(styles)(
     {
         private subscription: StoreSubscription<IFormStore<IFormData>, IFormStoreState<IFormData>>
             = new StoreSubscription();
+        private subscriptionDatabase: StoreSubscription<IStore<IFormData[]>, IFormData[]>
+            = new StoreSubscription();
 
         constructor(props: any)
         {
             super(props);
 
             this.state = {
-                formData: null
+                formData: null,
+                databaseData: []
             };
         }
 
@@ -52,11 +56,27 @@ export const FormDemoPage = withStyles(styles)(
             {
                 this.setState({ ...this.state, formData: s.data});
             });
+
+            const databaseStore = this.props.container.resolve<IStore<IFormData[]>>("IStore<IFormData[]>");
+            this.subscriptionDatabase.subscribeStore(databaseStore, s =>
+            {
+                this.setState({ ...this.state, databaseData: s});
+            });
         }
 
         public componentWillUnmount(): void
         {
             this.subscription.unsubscribe();
+        }
+
+        private onSaveClick(): void
+        {
+            this.subscription.store.saveData.trigger(null);
+        }
+
+        private onNewClick(): void
+        {
+            this.subscription.store.resetData.trigger(null);
         }
 
         public render(): any
@@ -88,17 +108,43 @@ export const FormDemoPage = withStyles(styles)(
                     </Grid>
                 </Form>
 
-                <div className={classes.formData}>
-                    <Typography>
-                        Here is the data you entered:
-                    </Typography>
-                    <Typography>
-                        { this.state.formData &&
-                            <pre>
-                                {JSON.stringify(this.state.formData, null, 2)}
-                            </pre> }
-                    </Typography>
-                </div>
+                <Grid container spacing={16}>
+                    <Grid item>
+                        <Button variant="text" onClick={_ => this.onNewClick()}>New</Button>
+                    </Grid>
+                    <Grid item>
+                        <Button variant="contained" onClick={_ => this.onSaveClick()}>Save</Button>
+                    </Grid>
+                </Grid>
+
+                <Grid container spacing={16}>
+                    <Grid item xs={6}>
+                        <div className={classes.formData}>
+                            <Typography>
+                                Here is the data you entered:
+                            </Typography>
+                            <Typography>
+                                { this.state.formData &&
+                                    <pre>
+                                        {JSON.stringify(this.state.formData, null, 2)}
+                                    </pre> }
+                            </Typography>
+                        </div>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <div className={classes.formData}>
+                            <Typography>
+                                Here is the data stored in the 'database':
+                            </Typography>
+                            <Typography>
+                                { this.state.databaseData &&
+                                    <pre>
+                                        {JSON.stringify(this.state.databaseData, null, 2)}
+                                    </pre> }
+                            </Typography>
+                        </div>
+                    </Grid>
+                </Grid>
             </div>;
         }
     }

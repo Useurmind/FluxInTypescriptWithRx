@@ -3,6 +3,7 @@
  */
 export interface IFormData
 {
+    id: number;
     firstName: string;
     lastName: string;
 }

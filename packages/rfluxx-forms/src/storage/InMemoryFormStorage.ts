@@ -2,6 +2,7 @@ import { Observable, Observer } from "rxjs";
 
 import { IFetchResult, SaveError, SimpleError } from "../stores/ErrorHandling";
 
+import { createIntIdentityFunction } from "./createIntIdentityFunction";
 import { IFormStorage } from "./IFormStorage";
 
 /**
@@ -21,13 +22,15 @@ export interface IInMemoryFormStorageOptions<TData>
 
     /**
      * Get a new id for an object.
+     * Default is to create a new Identity function with @see createIntIdentityFunction.
      */
-    getNextId: () => any;
+    getNextId?: () => any;
 
     /**
      * Get an empty data object.
+     * Default is an empty object.
      */
-    getEmptyDataObject: () => TData;
+    getEmptyDataObject?: () => TData;
 }
 
 /**
@@ -43,6 +46,15 @@ export class InMemoryFormStorage<TData> implements IFormStorage<TData>
      */
     constructor(private options: IInMemoryFormStorageOptions<TData>)
     {
+        if (!options.getNextId)
+        {
+            options.getNextId = createIntIdentityFunction();
+        }
+
+        if (!options.getEmptyDataObject)
+        {
+            options.getEmptyDataObject = () => ({} as TData);
+        }
     }
 
     /**

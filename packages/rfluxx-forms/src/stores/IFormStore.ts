@@ -97,6 +97,11 @@ export interface IFormStore<TData> extends Rfluxx.IStore<IFormStoreState<TData>>
      * No argument required.
      */
     saveData: Rfluxx.IAction<any>;
+
+    /**
+     * Reset the data object to an empty object.
+     */
+    resetData: Rfluxx.IAction<any>;
 }
 
 /**

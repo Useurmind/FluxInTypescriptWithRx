@@ -221,7 +221,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
     /**
      * @inheritDoc
      */
-    public readonly disconnect: IAction<AnalyserOptions>;
+    public readonly disconnect: IAction<any>;
 
     /**
      * @inheritDoc
@@ -294,7 +294,7 @@ export class RouterStore extends Rfluxx.Store<IRouterStoreState> implements Need
         return new URL(this.clearDoubleSlashes(this.options.locator.location.origin + this.options.root + path));
     }
 
-    private onConnect(): void 
+    private onConnect(): void
     {
         this.listenToUrlChanges();
 

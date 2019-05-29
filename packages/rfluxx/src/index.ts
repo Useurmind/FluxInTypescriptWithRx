@@ -11,3 +11,4 @@ export * from "./Middleware";
 export * from "./Utility";
 export * from "./DependencyInjection";
 export * from "./Fetch";
+export * from "./Stores";

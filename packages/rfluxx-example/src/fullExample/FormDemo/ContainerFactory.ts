@@ -1,5 +1,5 @@
-import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
-import { IValidator, LocalFormStore } from "rfluxx-forms";
+import { IContainer, IContainerBuilder, PullingStore, registerStore, resolveStore } from "rfluxx";
+import { IFormStorage, InMemoryFormStorage, IValidator, LocalFormStore } from "rfluxx-forms";
 import { IGlobalComponents, ISiteMapNodeContainerBuilder, RouteParameters, SiteMapNodeContainerFactoryBase } from "rfluxx-routing";
 
 import { IFormData } from "./IFormData";
@@ -8,6 +8,17 @@ export class ContainerFactory extends SiteMapNodeContainerFactoryBase
 {
     protected registerStores(builder: ISiteMapNodeContainerBuilder): void
     {
+        builder.register(c => new InMemoryFormStorage<IFormData>({
+            setDataObjectId: (d: IFormData, id: number) => d.id = id,
+            getDataObjectId: (d: IFormData) => d.id
+        }))
+        .as("IFormStorage<IFormData>")
+        .as("InMemoryFormStorage<IFormData>");
+
+        registerStore(builder, "IStore<IFormData[]>", (c, injOpt) => new PullingStore<IFormData[]>(injOpt({
+            pullState: () => c.resolve<InMemoryFormStorage<IFormData>>("InMemoryFormStorage<IFormData>").getAllObjects()
+        })));
+
         registerStore(builder, "IFormStore<IFormData>", (c, injOpt) => new LocalFormStore<IFormData>(injOpt({
             validateData: (data: IFormData, validator: IValidator<IFormData>) =>
             {
@@ -17,7 +28,8 @@ export class ContainerFactory extends SiteMapNodeContainerFactoryBase
                     (e, re) => e.firstName = re);
 
                 return validator.getErrors(data);
-            }
+            },
+            formStorage: c.resolve<IFormStorage<IFormData>>("IFormStorage<IFormData>")
         })));
     }
 }
