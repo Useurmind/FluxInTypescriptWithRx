@@ -19,20 +19,6 @@ const styles = (theme: Theme) => createStyles({
  */
 export interface IFormState
 {
-    /**
-     * The current data.
-     */
-    data: TData;
-
-    /**
-     * The current validation errors.
-     */
-    validationErrors: ValidationErrors<TData>;
-
-    /**
-     * Additional data for each form field.
-     */
-    formFieldData: FormFieldDataObject<TData>;
 }
 
 /**
@@ -53,66 +39,27 @@ export interface IFormProps
  * loads, validates and saves the data presented and edited in the form.
  */
 export const Form = withStyles(styles)(
-class extends React.Component<IFormProps, IFormState>
-{
-    private subscription: StoreSubscription<IFormStore<TData>, IFormStoreState<TData>>
-        = new StoreSubscription();
-
-    constructor(props: IFormProps)
+    class extends React.Component<IFormProps, IFormState>
     {
-        super(props);
+        constructor(props: IFormProps)
+        {
+            super(props);
 
-        this.state = {
-            data: null,
-            validationErrors: null,
-            formFieldData: null
-        };
+            this.state = {
+            };
+        }
+
+        public render(): any
+        {
+            const { classes, ...rest} = this.props;
+
+            return <div className={classes.root}>
+                <FormContext.Provider value={{
+                    formStore: this.props.formStore
+                }}>
+                    {this.props.children}
+                </FormContext.Provider>
+            </div>;
+        }
     }
-
-    public componentDidMount()
-    {
-        this.subscribeStore();
-    }
-
-    public componentDidUpdate(): void
-    {
-        this.subscribeStore();
-    }
-
-    public componentWillUnmount()
-    {
-        // unsubscribe if component is unmounted
-        this.subscription.unsubscribe();
-    }
-
-    private subscribeStore()
-    {
-        this.subscription.subscribeStore(
-            this.props.formStore,
-            state =>
-            {
-                this.setState({
-                    ...this.state,
-                    data: state.data,
-                    validationErrors: state.validationErrors
-                });
-            });
-    }
-
-    public render(): any
-    {
-        const { classes, ...rest} = this.props;
-
-        return <div className={classes.root}>
-            <FormContext.Provider value={{
-                formStore: this.props.formStore,
-                data: this.state.data,
-                validationErrors: this.state.validationErrors,
-                formFieldData: this.state.formFieldData
-            }}>
-                {this.props.children}
-            </FormContext.Provider>
-        </div>;
-    }
-}
 );

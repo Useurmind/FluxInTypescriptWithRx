@@ -10,7 +10,12 @@ export class ContainerFactory extends SiteMapNodeContainerFactoryBase
     {
         builder.register(c => new InMemoryFormStorage<IFormData>({
             setDataObjectId: (d: IFormData, id: number) => d.id = id,
-            getDataObjectId: (d: IFormData) => d.id
+            getDataObjectId: (d: IFormData) => d.id,
+            getEmptyDataObject: () => ({
+                id: null,
+                firstName: "",
+                lastName: ""
+            })
         }))
         .as("IFormStorage<IFormData>")
         .as("InMemoryFormStorage<IFormData>");

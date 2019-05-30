@@ -23,20 +23,8 @@ export interface IFormContext
      * The store to use for the form.
      */
     formStore: IFormStore<any>;
-
-    /**
-     * The current data object.
-     */
-    data: any;
-
-    /**
-     * The current validation errors object.
-     */
-    validationErrors: any;
 }
 
 export const FormContext = React.createContext<IFormContext>({
-    formStore: null as any,
-    data: null,
-    validationErrors: null
+    formStore: null as any
 });

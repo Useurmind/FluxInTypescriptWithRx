@@ -29,9 +29,9 @@ export interface IFormFieldData<TData>
 export type FormFieldDataObject<TData> = InternalFormFieldDataObject<TData, TData>;
 
 type InternalFormFieldDataObject<TData, T> =
-    T extends string ? () => IFormFieldData<TData> | null :
-    T extends number ? () => IFormFieldData<TData> | null :
-    T extends boolean ? () => IFormFieldData<TData> | null :
+    T extends string ? () => IFormFieldData<T> | null :
+    T extends number ? () => IFormFieldData<T> | null :
+    T extends boolean ? () => IFormFieldData<T> | null :
     {
         [P in keyof T]:
             T[P] extends Array<infer D>

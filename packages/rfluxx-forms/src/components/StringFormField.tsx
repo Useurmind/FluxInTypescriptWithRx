@@ -7,7 +7,8 @@ import { FormContext } from "../FormContext";
 import { IFormStore, IFormStoreState } from "../stores/IFormStore";
 import { RenderError } from "../stores/Validation";
 
-import { IFormFieldProps } from "./IFormFieldProps";
+import { FormFieldAdapter } from "./FormFieldAdapter";
+import { IFormFieldBindingProps } from "./IFormFieldProps";
 
 type TData = any;
 
@@ -34,7 +35,7 @@ export interface IStringFormFieldState
 /**
  * Props for { @see StringFormField }.
  */
-export interface IStringFormFieldProps extends WithStyles<typeof styles>, IFormFieldProps<TData, string>
+export interface IStringFormFieldProps extends WithStyles<typeof styles>, IFormFieldBindingProps<TData, string>
 {
     /**
      * Label for the text field.
@@ -61,52 +62,34 @@ export const StringFormField = withStyles(styles)(
             super(props);
 
             this.state = {
-                value: "",
-                renderError: null,
-                hasError: false
             };
-        }
-
-        private onTextFieldChange(formStore: IFormStore<TData>, e: any): void
-        {
-            formStore.updateDataField.trigger({
-                setDataField: this.props.setValue,
-                value: e.target.value
-            });
         }
 
         public render(): any
         {
             const { classes, ...rest } = this.props;
 
-            return <FormContext.Consumer>{context =>
-            {
-                if (!context.data)
-                {
-                    return null;
-                }
-
-                const value = this.props.getValue(context.data);
-                const renderError = this.props.getValue(context.validationErrors) as any;
-                const hasError = renderError != null;
-
-                return <FormControl className={classes.root}>
-                    { this.props.label &&
-                        <InputLabel error={hasError}
-                                    className={classes.label}
-                                    required={this.props.required}>{this.props.label}</InputLabel>}
-                    <Input value={value}
-                           error={hasError}
-                           onChange={e => this.onTextFieldChange(context.formStore, e)}
-                           className={classes.input}
-                           required={this.props.required} />
-                    { hasError && <FormHelperText className={classes.error}
-                                                  error={true}>{renderError()}</FormHelperText>}
-                    { this.props.description && <FormHelperText className={classes.description}
-                                                                error={false}>{this.props.description}</FormHelperText>}
-                </FormControl>;
-            }}
-            </FormContext.Consumer>;
+            return <FormFieldAdapter setValue={this.props.setValue}
+                                     getValue={this.props.getValue}>
+                    {formFieldProps =>
+                    {
+                        return <FormControl className={classes.root}>
+                            { this.props.label &&
+                                <InputLabel error={formFieldProps.hasError}
+                                            className={classes.label}
+                                            required={this.props.required}>{this.props.label}</InputLabel>}
+                            <Input value={formFieldProps.value}
+                                error={formFieldProps.hasError}
+                                onChange={e => formFieldProps.onValueChanged(e.target.value)}
+                                className={classes.input}
+                                required={this.props.required} />
+                            { formFieldProps.hasError && <FormHelperText className={classes.error}
+                                                                         error={true}>{formFieldProps.renderError()}</FormHelperText>}
+                            { this.props.description && <FormHelperText className={classes.description}
+                                                                        error={false}>{this.props.description}</FormHelperText>}
+                        </FormControl>;
+                    }}
+            </FormFieldAdapter>;
         }
     }
 );

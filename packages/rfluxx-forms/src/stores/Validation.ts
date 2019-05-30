@@ -13,7 +13,7 @@ export type RenderError<TData> = (data: TData) => ReactNode;
 /**
  * Type for validation errors on the data object.
  * Contains a property for each field in the object.
- * The field can contain a string or any other react element.
+ * The fields can contain a function that returns a react node.
  */
 export type ValidationErrors<T> =
     T extends string ? () => ReactNode | null :
