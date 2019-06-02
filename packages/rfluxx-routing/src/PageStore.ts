@@ -86,6 +86,17 @@ export interface IPageStore extends Rfluxx.IStore<IPageStoreState>, IRequestedPa
     fail: IAction<any>;
 
     /**
+     * Navigate to the path given as an argument to the action.
+     * The path should be the target url excluding the root of the page (this can include a part of the url path).
+     */
+    navigateToPath: IAction<string>;
+
+    /**
+     * Navigate to the given URL.
+     */
+    navigateToUrl: IAction<URL>;
+
+    /**
      * This function is only sending a request to a page (and not expecting a result).
      * @param urlFragment The url fragment for the requested page withouth origin (protocol and host/port),
      *                    starting from path.
@@ -119,27 +130,37 @@ export class PageStore
     /**
      * @inheritDoc
      */
-    public setPageRequest: IAction<IPageRequest>;
+    public readonly  setPageRequest: IAction<IPageRequest>;
 
     /**
      * @inheritDoc
      */
-    public setEditMode: IAction<boolean>;
+    public readonly  setEditMode: IAction<boolean>;
 
     /**
      * @inheritDoc
      */
-    public complete: IAction<any>;
+    public readonly  complete: IAction<any>;
 
     /**
      * @inheritDoc
      */
-    public cancel: IAction<any>;
+    public readonly  cancel: IAction<any>;
 
     /**
      * @inheritDoc
      */
-    public fail: IAction<any>;
+    public readonly  fail: IAction<any>;
+
+    /**
+     * @inheritDoc
+     */
+    public readonly navigateToPath: IAction<string>;
+
+    /**
+     * @inheritDoc
+     */
+    public readonly navigateToUrl: IAction<URL>;
 
     constructor(private options: IPageStoreOptions)
     {
@@ -156,6 +177,8 @@ export class PageStore
         this.complete = this.createActionAndSubscribe(x => this.onClosePage(x, PageResultStatus.Completed));
         this.cancel = this.createActionAndSubscribe(x => this.onClosePage(x, PageResultStatus.Canceled));
         this.fail = this.createActionAndSubscribe(x => this.onClosePage(x, PageResultStatus.Error));
+        this.navigateToPath = this.createActionAndSubscribe(x => this.onNavigateToPath(x));
+        this.navigateToUrl = this.createActionAndSubscribe(x => this.onNavigateToUrl(x));
     }
 
     /**
@@ -214,4 +237,13 @@ export class PageStore
         }
     }
 
+    private onNavigateToPath(path: string): void
+    {
+        this.options.routerStore.navigateToPath.trigger(path);
+    }
+
+    private onNavigateToUrl(url: URL): void
+    {
+        this.options.routerStore.navigateToUrl.trigger(url);
+    }
 }

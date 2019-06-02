@@ -147,6 +147,7 @@ export interface IRouterStore extends Rfluxx.IStore<IRouterStoreState>
 {
     /**
      * Navigate to the path given as an argument to the action.
+     * The path should be the target url excluding the root of the page (this can include a part of the url path).
      */
     navigateToPath: IAction<string>;
 
