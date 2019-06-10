@@ -14,7 +14,9 @@ export class ContainerFactory extends SiteMapNodeContainerFactoryBase
             getEmptyDataObject: () => ({
                 id: null,
                 firstName: "",
-                lastName: ""
+                lastName: "",
+                selectableSubobject: null,
+                someSelectableString: ""
             })
         }))
         .as("IFormStorage<IFormData>")

@@ -74,12 +74,14 @@ export const FormFieldInnerAdapter = withStyles(styles)(
 
         public componentDidMount(): void
         {
+            console.info("form field adapter mounted");
             this.subscription.subscribeStore(this.props.formStore, s =>
             {
                 const value = this.props.getValue(s.data);
                 const renderError = this.props.getValue(s.validationErrors) as any as ((() => React.ReactNode) | null);
                 const hasError = renderError != null;
 
+                console.info("form field adapter set state");
                 this.setState({
                     ...this.state,
                     value,
@@ -91,6 +93,7 @@ export const FormFieldInnerAdapter = withStyles(styles)(
 
         public componentWillUnmount(): void
         {
+            console.info("form field adapter unmounted");
             this.subscription.unsubscribe();
         }
 

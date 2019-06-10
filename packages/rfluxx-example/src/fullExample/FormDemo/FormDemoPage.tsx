@@ -1,11 +1,11 @@
-import { Grid, Snackbar, Typography, Button } from "@material-ui/core";
+import { Button, Grid, Snackbar, Typography } from "@material-ui/core";
 import { createStyles, WithStyles, withStyles } from "@material-ui/styles";
 import * as React from "react";
 import { IPullingStore, IStore, StoreSubscription } from "rfluxx";
-import { Form, IFormStore, IFormStoreState, StringFormField } from "rfluxx-forms";
+import { Form, IFormStore, IFormStoreState, SelectFormField, StringFormField } from "rfluxx-forms";
 import { IPageContextProps, PageContext } from "rfluxx-routing";
 
-import { IFormData } from "./IFormData";
+import { IFormData, ISubobject } from "./IFormData";
 
 export const styles = createStyles({
     root: {
@@ -105,6 +105,34 @@ export const FormDemoPage = withStyles(styles)(
                                             description="Please enter your last name"
                                             required></StringFormField>
                         </Grid>
+                        {/* <Grid item>
+                            <SelectFormField getValue={(d: IFormData) => d.someSelectableString}
+                                            setValue={(d: IFormData, value: string) => d.someSelectableString = value}
+                                            label="Some selectable String"
+                                            description="Please choose the selectable string"
+                                            values={[
+                                                "String 1",
+                                                "String 2",
+                                                "String 3",
+                                                "String 4",
+                                                "String 5"
+                                            ]}
+                                            required></SelectFormField>
+                        </Grid>
+                        <Grid item>
+                            <SelectFormField getValue={(d: IFormData) => d.selectableSubobject}
+                                            setValue={(d: IFormData, value: ISubobject) => d.selectableSubobject = value}
+                                            label="Some selectable subobject"
+                                            description="Please choose the selectable subobject"
+                                            values={[
+                                                { id: 101, caption: "Object 1" },
+                                                { id: 102, caption: "Object 2" },
+                                                { id: 103, caption: "Object 3" },
+                                                { id: 104, caption: "Object 4" },
+                                                { id: 105, caption: "Object 5" }
+                                            ]}
+                                            required></SelectFormField>
+                        </Grid> */}
                     </Grid>
                 </Form>
 
