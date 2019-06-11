@@ -55,14 +55,14 @@ export interface IFormFieldFrameProps extends WithStyles<typeof styles>, IFormFi
     /**
      * Function to get the props for the input element from the form field props.
      */
-    getInputProps: (formFieldProps: IFormFieldProps<any, any>) => any;
+    children: (formFieldProps: IFormFieldProps<any, any>, inputId: string) => any;
 }
 
 /**
  * This is a common frame used for most form fields.
  */
 export const FormFieldFrame = withStyles(styles)(
-    class extends React.Component<IFormFieldFrameProps, IFormFieldFrameState>
+    class extends React.PureComponent<IFormFieldFrameProps, IFormFieldFrameState>
     {
 
         constructor(props: IFormFieldFrameProps)
@@ -75,22 +75,22 @@ export const FormFieldFrame = withStyles(styles)(
 
         public render(): any
         {
-            const { classes, getInputProps, ...rest } = this.props;
+            const { classes, ...rest } = this.props;
 
             return <FormFieldAdapter setValue={this.props.setValue}
                                      getValue={this.props.getValue}>
                     {formFieldProps =>
                     {
+                        const inputId = this.props.label;
+
                         return <FormControl className={classes.root}>
                             { this.props.label &&
                                 <InputLabel error={formFieldProps.hasError}
                                             className={classes.label}
                                             required={this.props.required}
+                                            htmlFor={inputId}
                                             key="label">{this.props.label}</InputLabel>}
-                            { React.Children.map(this.props.children, c =>
-                             {
-                                return React.cloneElement(c as React.ReactElement<any>, getInputProps(formFieldProps));
-                             }) }
+                            { this.props.children(formFieldProps, inputId) }
                             { formFieldProps.hasError &&
                              <FormHelperText className={classes.error}
                                              error={true}

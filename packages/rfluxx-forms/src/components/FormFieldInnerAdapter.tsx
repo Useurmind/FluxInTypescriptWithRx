@@ -55,7 +55,7 @@ export interface IFormFieldInnerAdapterProps extends WithStyles<typeof styles>, 
 }
 
 export const FormFieldInnerAdapter = withStyles(styles)(
-    class extends React.Component<IFormFieldInnerAdapterProps, IFormFieldInnerAdapterState>
+    class extends React.PureComponent<IFormFieldInnerAdapterProps, IFormFieldInnerAdapterState>
     {
         private subscription: StoreSubscription<IFormStore<TData>, IFormStoreState<TData>> = new StoreSubscription();
 

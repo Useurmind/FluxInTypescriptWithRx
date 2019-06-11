@@ -105,7 +105,7 @@ export const FormDemoPage = withStyles(styles)(
                                             description="Please enter your last name"
                                             required></StringFormField>
                         </Grid>
-                        {/* <Grid item>
+                        <Grid item>
                             <SelectFormField getValue={(d: IFormData) => d.someSelectableString}
                                             setValue={(d: IFormData, value: string) => d.someSelectableString = value}
                                             label="Some selectable String"
@@ -132,7 +132,7 @@ export const FormDemoPage = withStyles(styles)(
                                                 { id: 105, caption: "Object 5" }
                                             ]}
                                             required></SelectFormField>
-                        </Grid> */}
+                        </Grid>
                     </Grid>
                 </Form>
 

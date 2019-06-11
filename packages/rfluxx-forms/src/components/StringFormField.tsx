@@ -65,9 +65,16 @@ export const StringFormField = withStyles(styles)(
             const { classes, ...rest } = this.props;
 
 
-            return <FormFieldFrame {...this.props} getInputProps={getInputProps}>
-                <Input className={classes.input}
-                        required={this.props.required} />;
+            return <FormFieldFrame {...this.props}>
+                { (formFieldProps, inputKey) =>
+                {
+                    return <Input className={classes.input}
+                                  required={this.props.required}
+                                  value={formFieldProps.value}
+                                  onChange={e => formFieldProps.onValueChanged(e.target.value)}
+                                  error={formFieldProps.hasError}
+                                  id={inputKey} />;
+                }}
             </FormFieldFrame>;
         }
     }

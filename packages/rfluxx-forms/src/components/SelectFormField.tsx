@@ -85,26 +85,56 @@ export const SelectFormField = withStyles(styles)(
             };
         }
 
+        private onValueSelected(onChange: (value: any) => void, e: any): void
+        {
+            const value = e.target.value;
+            if (typeof this.props.values[0] !== "string")
+            {
+                const id = Number.parseInt(value, 10);
+                const selectedObject = this.props.values.find((x: ISelectableObject) => x.id === id);
+                onChange(selectedObject);
+            }
+            else
+            {
+                onChange(value);
+            }
+        }
+
         public render(): any
         {
             const { classes, ...rest } = this.props;
 
-            return <FormFieldFrame {...this.props} getInputProps={getInputProps}>
-                <Select className={classes.input}
-                        required={this.props.required}>
-                    { this.props.values.map(val =>
-                        {
-                            let caption: string = val as string;
-                            let id: any = val;
-                            if (typeof val !== "string")
-                            {
-                                caption = val.caption;
-                                id = val.id;
-                            }
+            return <FormFieldFrame {...this.props}>
+                { (formFieldProps, inputKey) =>
+                {
+                    let selectedValue = "";
+                    if (formFieldProps.value)
+                    {
+                         selectedValue =  typeof formFieldProps.value !== "string"
+                                                 ? formFieldProps.value.id
+                                                 : formFieldProps.value;
+                    }
 
-                            return <MenuItem key={id} value={id}>{caption}</MenuItem>;
-                        })}
-                </Select>;
+                    return <Select className={classes.input}
+                                    required={this.props.required}
+                                    value={selectedValue}
+                                    onChange={e => this.onValueSelected(formFieldProps.onValueChanged, e)}
+                                    error={formFieldProps.hasError}
+                                    inputProps={{ id: inputKey }} >
+                        { this.props.values.map(val =>
+                            {
+                                let caption: string = val as string;
+                                let id: any = val;
+                                if (typeof val !== "string")
+                                {
+                                    caption = val.caption;
+                                    id = val.id;
+                                }
+
+                                return <MenuItem key={id} value={id}>{caption}</MenuItem>;
+                            })}
+                    </Select>;
+                }}
             </FormFieldFrame>;
         }
     }

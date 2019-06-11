@@ -1,3 +1,4 @@
+import { createMuiTheme } from "@material-ui/core";
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import * as RfluxxRouting from "rfluxx-routing";
@@ -13,9 +14,9 @@ import { ContainerFactory as FormDemoPageContainerFactory } from "./FormDemo/Con
 import { FormDemoPage } from "./FormDemo/FormDemoPage";
 import { FormPage } from "./FormWithSelectPage/FormPage";
 import { HomePage } from "./HomePage";
+import { IntraRoutingPage } from "./IntraPageRouting/IntraRoutingPage";
 import { ContainerFactory as SelectPageContainerFactory } from "./SelectPage/ContainerFactory";
 import { SelectPage } from "./SelectPage/SelectPage";
-import { IntraRoutingPage } from "./IntraPageRouting/IntraRoutingPage";
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -83,11 +84,14 @@ const globalStores = RfluxxRouting.init({
     rootPath: "/fullExample/"
 });
 
+const theme = createMuiTheme();
+
 document.addEventListener("DOMContentLoaded", event =>
 {
     const root = document.getElementById("root");
     ReactDom.render(
         <App siteMapStore={globalStores.siteMapStore}
-             pageManagementStore={globalStores.pageManagementStore} />,
+             pageManagementStore={globalStores.pageManagementStore}
+             theme={theme} />,
         root);
 });
