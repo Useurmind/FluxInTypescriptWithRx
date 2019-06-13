@@ -3,7 +3,8 @@ import { SelectProps } from "@material-ui/core/Select";
 import * as React from "react";
 
 import { FormFieldFrame } from "./FormFieldFrame";
-import { IFormFieldBindingProps, IFormFieldProps } from "./IFormFieldProps";
+import { IFormFieldBindingProps, IFormFieldContextProps } from "./IFormFieldContextProps";
+import { IFormFieldProps } from './IFormFieldProps';
 
 type TData = any;
 
@@ -50,23 +51,9 @@ export interface ISelectFormFieldState
 /**
  * Props for { @see SelectFormField }.
  */
-export interface ISelectFormFieldProps extends WithStyles<typeof styles>, IFormFieldBindingProps<TData, any>
+export interface ISelectFormFieldProps
+    extends WithStyles<typeof styles>, IFormFieldProps, IFormFieldBindingProps<TData, any>
 {
-    /**
-     * Label for the select field.
-     */
-    label?: string;
-
-    /**
-     * Is this input field required.
-     */
-    required?: boolean;
-
-    /**
-     * A helpfull text that describes the field.
-     */
-    description?: string;
-
     /**
      * The values that can be seleceted.
      */
@@ -139,12 +126,3 @@ export const SelectFormField = withStyles(styles)(
         }
     }
 );
-
-function getInputProps(formFieldProps: IFormFieldProps<any, any>): SelectProps
-{
-    return {
-        value: formFieldProps.value,
-        error: formFieldProps.hasError,
-        onChange: e => formFieldProps.onValueChanged(e.target.value)
-    };
-}

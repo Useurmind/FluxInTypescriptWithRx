@@ -8,6 +8,12 @@ export interface IFormData
     lastName: string;
     someSelectableString: string;
     selectableSubobject: ISubobject;
+
+    /**
+     * In Json dates are represented as strings.
+     * we want to introduce the least amount of data conversion need.
+     */
+    birthdate: string;
 }
 
 export interface ISubobject

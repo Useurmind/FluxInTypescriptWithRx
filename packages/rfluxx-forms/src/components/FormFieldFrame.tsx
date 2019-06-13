@@ -8,7 +8,8 @@ import { IFormStore, IFormStoreState } from "../stores/IFormStore";
 import { RenderError } from "../stores/Validation";
 
 import { FormFieldAdapter } from "./FormFieldAdapter";
-import { IFormFieldBindingProps, IFormFieldProps } from "./IFormFieldProps";
+import { IFormFieldBindingProps, IFormFieldContextProps } from "./IFormFieldContextProps";
+import { IFormFieldProps } from './IFormFieldProps';
 
 type TData = any;
 
@@ -35,27 +36,13 @@ export interface IFormFieldFrameState
 /**
  * Props for { @see FormFieldFrame }.
  */
-export interface IFormFieldFrameProps extends WithStyles<typeof styles>, IFormFieldBindingProps<TData, any>
+export interface IFormFieldFrameProps
+    extends WithStyles<typeof styles>, IFormFieldProps, IFormFieldBindingProps<TData, any>
 {
-    /**
-     * Label for the select field.
-     */
-    label?: string;
-
-    /**
-     * Is this input field required.
-     */
-    required?: boolean;
-
-    /**
-     * A helpfull text that describes the field.
-     */
-    description?: string;
-
     /**
      * Function to get the props for the input element from the form field props.
      */
-    children: (formFieldProps: IFormFieldProps<any, any>, inputId: string) => any;
+    children: (formFieldProps: IFormFieldContextProps<any, any>, inputId: string) => any;
 }
 
 /**

@@ -1,5 +1,5 @@
 import { createStyles, FormControl, FormControlLabel, FormHelperText, Input, InputLabel, TextField, Theme, WithStyles, withStyles } from "@material-ui/core";
-import { InputProps } from "@material-ui/core/Input";
+import { DatePicker } from "@material-ui/pickers";
 import * as React from "react";
 
 import { FormFieldFrame } from "./FormFieldFrame";
@@ -22,25 +22,25 @@ const styles = (theme: Theme) => createStyles({
 });
 
 /**
- * State for { @see StringFormField }.
+ * State for { @see DateFormField }.
  */
-export interface IStringFormFieldState
+export interface IDateFormFieldState
 {
 }
 
 /**
- * Props for { @see StringFormField }.
+ * Props for { @see DateFormField }.
  */
-export interface IStringFormFieldProps
+export interface IDateFormFieldProps
     extends WithStyles<typeof styles>, IFormFieldProps, IFormFieldBindingProps<TData, string>
 {
 }
 
-export const StringFormField = withStyles(styles)(
-    class extends React.Component<IStringFormFieldProps, IStringFormFieldState>
+export const DateFormField = withStyles(styles)(
+    class extends React.Component<IDateFormFieldProps, IDateFormFieldState>
     {
 
-        constructor(props: IStringFormFieldProps)
+        constructor(props: IDateFormFieldProps)
         {
             super(props);
 
@@ -51,17 +51,19 @@ export const StringFormField = withStyles(styles)(
         public render(): any
         {
             const { classes, ...rest } = this.props;
+            const { label, ...frameProps} = this.props;
 
 
-            return <FormFieldFrame {...this.props}>
+            return <FormFieldFrame {...frameProps}>
                 { (formFieldProps, inputKey) =>
                 {
-                    return <Input className={classes.input}
-                                  required={this.props.required}
-                                  value={formFieldProps.value}
-                                  onChange={e => formFieldProps.onValueChanged(e.target.value)}
-                                  error={formFieldProps.hasError}
-                                  id={inputKey} />;
+                    return <DatePicker className={classes.input}
+                                       label={label}
+                                       required={this.props.required}
+                                       value={new Date(formFieldProps.value)}
+                                       onChange={date => formFieldProps.onValueChanged(date.toJSON())}
+                                       error={formFieldProps.hasError}
+                                       id={inputKey} />;
                 }}
             </FormFieldFrame>;
         }

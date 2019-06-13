@@ -15,6 +15,7 @@ export class ContainerFactory extends SiteMapNodeContainerFactoryBase
                 id: null,
                 firstName: "",
                 lastName: "",
+                birthdate: null,
                 selectableSubobject: null,
                 someSelectableString: ""
             })

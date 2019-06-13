@@ -5,7 +5,6 @@ import * as RfluxxRouting from "rfluxx-routing";
 import { ISiteMapNode, withPageContext } from "rfluxx-routing";
 
 import { App } from "./App";
-import "./bootstrap";
 import { ContainerFactory } from "./ContainerFactory";
 import { EditPage } from "./EditPage/EditPage";
 import { EditPageCaption } from "./EditPage/EditPageCaption";

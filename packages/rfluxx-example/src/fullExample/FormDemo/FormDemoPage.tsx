@@ -2,7 +2,7 @@ import { Button, Grid, Snackbar, Typography } from "@material-ui/core";
 import { createStyles, WithStyles, withStyles } from "@material-ui/styles";
 import * as React from "react";
 import { IPullingStore, IStore, StoreSubscription } from "rfluxx";
-import { Form, IFormStore, IFormStoreState, SelectFormField, StringFormField } from "rfluxx-forms";
+import { Form, IFormStore, IFormStoreState, SelectFormField, StringFormField, DateFormField } from "rfluxx-forms";
 import { IPageContextProps, PageContext } from "rfluxx-routing";
 
 import { IFormData, ISubobject } from "./IFormData";
@@ -90,7 +90,7 @@ export const FormDemoPage = withStyles(styles)(
                 </p>
 
                 <Form formStore={this.subscription.store}>
-                    <Grid container direction="column" spacing={8}>
+                    <Grid container direction="column" spacing={1}>
                         <Grid item>
                             <StringFormField getValue={(d: IFormData) => d.firstName}
                                             setValue={(d: IFormData, value: string) => d.firstName = value}
@@ -104,6 +104,13 @@ export const FormDemoPage = withStyles(styles)(
                                             label="Last Name"
                                             description="Please enter your last name"
                                             required></StringFormField>
+                        </Grid>
+                        <Grid item>
+                            <DateFormField getValue={(d: IFormData) => d.birthdate}
+                                           setValue={(d: IFormData, value: string) => d.birthdate = value}
+                                           label="Birthdate"
+                                           description="Please enter your birthdate"
+                                           required></DateFormField>
                         </Grid>
                         <Grid item>
                             <SelectFormField getValue={(d: IFormData) => d.someSelectableString}
@@ -136,7 +143,7 @@ export const FormDemoPage = withStyles(styles)(
                     </Grid>
                 </Form>
 
-                <Grid container spacing={16}>
+                <Grid container spacing={2}>
                     <Grid item>
                         <Button variant="text" onClick={_ => this.onNewClick()}>New</Button>
                     </Grid>
@@ -145,7 +152,7 @@ export const FormDemoPage = withStyles(styles)(
                     </Grid>
                 </Grid>
 
-                <Grid container spacing={16}>
+                <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <div className={classes.formData}>
                             <Typography>

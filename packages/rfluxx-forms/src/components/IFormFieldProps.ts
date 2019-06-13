@@ -1,61 +1,20 @@
-import { RenderError } from "../stores";
-
 /**
- * Interface with all properties that are provided for form field implementation
- * inside a form field adapter.
+ * Common props for a form field component applied when setting up a form.
  */
-export interface IFormFieldProps<TData, TValue>
-    extends IFormFieldBindingProps<TData, TValue>, IFormFieldValueProps<TValue>, IFormFieldAdditionalProps<TData>
-{
-
-}
-
-/**
- * .
- */
-export interface IFormFieldBindingProps<TData, TValue>
+export interface IFormFieldProps
 {
     /**
-     * Get the value of the field from the data of the form store.
+     * Label for the form field.
      */
-    getValue: (data: TData) => TValue;
+    label?: string;
 
     /**
-     * Apply the value to the data in the form store.
+     * Is this form field required to be filled out.
      */
-    setValue: (data: TData, value: TValue) => void;
-}
-
-/**
- * 
- */
-export interface IFormFieldValueProps<TValue>
-{
-    /**
-     * The value the form field should show.
-     */
-    value: TValue;
+    required?: boolean;
 
     /**
-     * The new value that was chosen in the form field.
+     * A helpfull text that describes the form field.
      */
-    onValueChanged: (newValue: any) => void;
-}
-
-export interface IFormFieldAdditionalProps<TData>
-{
-    /**
-     * Should the form field be read only and not be editable.
-     */
-    isReadOnly: boolean;
-
-    /**
-     * A method that will render an error
-     */
-    renderError: (() => React.ReactNode) | null;
-
-    /**
-     * Indicates whether the form field has an error.
-     */
-    hasError: boolean;
+    description?: string;
 }

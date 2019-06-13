@@ -4,7 +4,7 @@ import * as React from "react";
 import { FormContext } from "../FormContext";
 
 import { FormFieldInnerAdapter } from "./FormFieldInnerAdapter";
-import { IFormFieldBindingProps, IFormFieldProps } from "./IFormFieldProps";
+import { IFormFieldBindingProps, IFormFieldContextProps } from "./IFormFieldContextProps";
 
 type TData = any;
 type TValue = any;
@@ -29,7 +29,7 @@ export interface IFormFieldAdapterProps extends WithStyles<typeof styles>, IForm
     /**
      * The children of this component must be a function that takes all the form field props as input.
      */
-    children: (formFieldProps: IFormFieldProps<TData, TValue>) => React.ReactNode;
+    children: (formFieldProps: IFormFieldContextProps<TData, TValue>) => React.ReactNode;
 }
 
 export const FormFieldAdapter = withStyles(styles)(
