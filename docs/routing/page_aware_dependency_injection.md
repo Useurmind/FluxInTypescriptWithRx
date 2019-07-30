@@ -24,7 +24,13 @@ There are currently two container factories that a developer can specify
 - A global container factory
 - A site map node specific container factory
 
-By default the classes/stores registered in those factories will be only available to specific page for which the container was created. The only difference between the global and site map node specific factory is that you can put common registrations in the global factory once. In the end the created instances will be page specific nevertheless.
+![ContainerCreation](page_aware_di_container.svg)
+
+Depending on what url is entered in the browser a route and site map node are computed. From the site map node the correct site map node specific container factory is determined. Finally the container instance is created that can then be used by the components of the page.
+
+As you can see the container instance is created from both the registrations in the global container factory as well as the site map node specific container factory.
+
+By default the classes/stores registered in those factories will be only available to the page for which the container was created. The only difference between the global and site map node specific factory is that you can put common registrations in the global factory once. In the end the created instances will be page specific nevertheless.
 
 Extending on these concepts we want to introduce intentional sharing of state between pages.
 
