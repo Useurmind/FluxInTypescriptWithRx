@@ -8,6 +8,20 @@ RFluXX offers a ready made routing solution that comes with the following featur
 - let your pages state be managed by the integrated state manager
 - let your pages communicate by exchanging arbitrary data
     
+## Overview
+
+The following image shows the main data structures and computation steps during routing and page navigation.
+
+![RoutingOverview](pages_and_state.svg)
+
+The trigger for a navigation is always the change of the selected browser url. From the set of available routes and the url the current route hit is computed. For this route hit the parameters in the route expression are extracted from the url.
+
+The next step is to find the matching site map node. The purpose of the site map nodes is to decide how to render a page. They have two properties namely the `caption` and `render` properties that can be used to render a title/short info and the full site map node.
+
+Finally the page data is retrieved based on the url browser url. For this the page id is computed that uniquely identifies a page data object. From the page id a lookup of the page data is attempted. If not available a new page data object is created. It contains the full state of the page e.g. the dependency injection container and url parameters.
+
+The site map node and page data is then used to render the page. The `render` property of the site map node renders the root component of the page and the page container can be used by components of the page to resolve stores for managing page state.
+
 ## Routes
 
 Every page that a user can open in your app should have a URL that can be remembered or added to the favorites for later access.
