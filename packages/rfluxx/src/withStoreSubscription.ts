@@ -1,8 +1,7 @@
 import * as React from "react";
 import { IStore, StoreSubscription } from "rfluxx";
 import { IPageContextProps } from "rfluxx-routing";
-
-import { Subtract } from "./mapped-types";
+import { Subtract } from "utility-types";
 
 /**
  * State for { @see WithStoreSubscription }.
