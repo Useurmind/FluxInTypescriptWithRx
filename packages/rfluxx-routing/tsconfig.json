@@ -6,5 +6,10 @@
     "exclude": [
         "out",
         "node_modules"
+    ],
+    "references": [
+        {
+            "path": "../rfluxx"
+        }
     ]
 }

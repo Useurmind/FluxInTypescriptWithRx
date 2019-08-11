@@ -28,7 +28,8 @@
     "rxjs": "~5.5.7"
   },
   "dependencies": {
-    "tslib": "~1.9.0"
+    "tslib": "~1.9.0",
+    "utility-types": "^3.7.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.6",
@@ -53,7 +54,6 @@
     "typescript": "^3.4.5",
     "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
-    "utility-types": "^3.7.0"
+    "webpack-dev-server": "^3.1.10"    
   }
 }

@@ -1,8 +1,9 @@
 import * as React from "react";
-import { IStore, StoreSubscription } from "rfluxx";
-import { IPageContextProps } from "rfluxx-routing";
+import { Subtract } from "utility-types";
 
-import { Subtract } from "./mapped-types";
+import { IContainer } from "./DependencyInjection";
+import { IStore } from "./IStore";
+import { StoreSubscription } from "./StoreSubscription";
 
 /**
  * State for { @see WithStoreSubscription }.
@@ -17,7 +18,8 @@ export interface IWithStoreSubscriptionState<TInjectedProps extends object> {
 /**
  * Interface that describes how to directly inject a store via props.
  */
-export interface IInjectStoreProps<TStore extends IStore<TStoreState>, TStoreState> {
+export interface IInjectStoreProps<TStore extends IStore<TStoreState>, TStoreState>
+{
     /**
      * The store to subscribe.
      * Set either this or the @see storeRegistrationKey.
@@ -28,7 +30,8 @@ export interface IInjectStoreProps<TStore extends IStore<TStoreState>, TStoreSta
 /**
  * Interface that describes how to resolve a store from a container.
  */
-export interface IResolveStoreFromContainerProps<TStore extends IStore<TStoreState>, TStoreState> extends IPageContextProps {
+export interface IResolveStoreFromContainerProps<TStore extends IStore<TStoreState>, TStoreState>
+{
     /**
      * The name of the registered store in the container.
      * Ensure that the page context is available if you use this option.
@@ -40,18 +43,30 @@ export interface IResolveStoreFromContainerProps<TStore extends IStore<TStoreSta
      * Optionally you can specify an instance name to resolve different instances of the same store.
      */
     storeInstanceName?: string;
+
+    /**
+     * The container to resolve the store from.
+     */
+    container?: IContainer;
 }
 
-function isStoreInjected<TStore extends IStore<TStoreState>, TStoreState>(props: IWithStoreSubscriptionProps<TStore, TStoreState>): props is IInjectStoreProps<TStore, TStoreState> {
-    if ((props as IInjectStoreProps<TStore, TStoreState>).store) {
+function isStoreInjected<TStore extends IStore<TStoreState>, TStoreState>(
+    props: IWithStoreSubscriptionProps<TStore, TStoreState>): props is IInjectStoreProps<TStore, TStoreState>
+{
+    if ((props as IInjectStoreProps<TStore, TStoreState>).store)
+    {
         return true;
     }
 
     return false;
 }
 
-function isStoreResolvedFromCotainer<TStore extends IStore<TStoreState>, TStoreState>(props: IWithStoreSubscriptionProps<TStore, TStoreState>): props is IResolveStoreFromContainerProps<TStore, TStoreState> {
-    if ((props as IResolveStoreFromContainerProps<TStore, TStoreState>).storeRegistrationKey) {
+function isStoreResolvedFromCotainer<TStore extends IStore<TStoreState>, TStoreState>(
+    props: IWithStoreSubscriptionProps<TStore, TStoreState>)
+    : props is IResolveStoreFromContainerProps<TStore, TStoreState>
+{
+    if ((props as IResolveStoreFromContainerProps<TStore, TStoreState>).storeRegistrationKey)
+    {
         return true;
     }
 
@@ -61,7 +76,8 @@ function isStoreResolvedFromCotainer<TStore extends IStore<TStoreState>, TStoreS
 /**
  * Props for { @see WithStoreSubscription }
  */
-export type IWithStoreSubscriptionProps<TStore extends IStore<TStoreState>, TStoreState> = IInjectStoreProps<TStore, TStoreState> | IResolveStoreFromContainerProps<TStore, TStoreState>;
+export type IWithStoreSubscriptionProps<TStore extends IStore<TStoreState>, TStoreState> =
+    IInjectStoreProps<TStore, TStoreState> | IResolveStoreFromContainerProps<TStore, TStoreState>;
 
 /**
  * Higher Order Component (HOC) to subscribe a component to a store.
@@ -87,14 +103,30 @@ export const subscribeStoreSelect = <TStore extends IStore<TStoreState>, TStoreS
 /**
  * internal part of @subscribeStore
  */
-export const subscribeStoreInternal = <TStore extends IStore<TStoreState>, TStoreState extends object, TProps extends TStoreState>(
-    wrappedComponent: React.ComponentType<TProps>
-) => subscribeStoreSelectInternal<TStore, TStoreState, TProps, TStoreState>(wrappedComponent, s => s);
+export const subscribeStoreInternal =
+    <TStore extends IStore<TStoreState>, TStoreState extends object, TProps extends TStoreState>(
+        wrappedComponent: React.ComponentType<TProps>
+    ) => subscribeStoreSelectInternal<TStore, TStoreState, TProps, TStoreState>(wrappedComponent, s => s);
+
+/**
+ * Return type for @subscribeStore
+ */
+export type SubscribeStoreReturnType = ReturnType<typeof subscribeStore>;
+
+/**
+ * Return type for @subscribeStoreSelect
+ */
+export type SubscribeStoreSelectReturnType =
+    ReturnType<typeof subscribeStoreSelect>;
 
 /**
  * internal part of @subscribeStoreSelect
  */
-export const subscribeStoreSelectInternal = <TStore extends IStore<TStoreState>, TStoreState extends object, TProps extends TInjectedProps, TInjectedProps extends object>(
+export const subscribeStoreSelectInternal =
+    <TStore extends IStore<TStoreState>,
+     TStoreState extends object,
+     TProps extends TInjectedProps,
+     TInjectedProps extends object>(
         wrappedComponent: React.ComponentType<TProps>,
         selectProps: (state: TStoreState, store: TStore) => TInjectedProps
     ) =>
@@ -106,7 +138,8 @@ export const subscribeStoreSelectInternal = <TStore extends IStore<TStoreState>,
          */
         public subscription: StoreSubscription<TStore, TStoreState> = new StoreSubscription();
 
-        constructor(props: Subtract<TProps, TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>) {
+        constructor(props: Subtract<TProps, TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>)
+        {
             super(props);
             this.handleState = this.handleState.bind(this);
             this.state = {
@@ -114,25 +147,51 @@ export const subscribeStoreSelectInternal = <TStore extends IStore<TStoreState>,
             };
         }
 
-        public componentDidMount() {
+        public componentDidMount()
+        {
             this.subscribe();
         }
 
-        public componentWillUnmount() {
+        public componentDidUpdate(
+            oldProps: Subtract<TProps, TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>)
+        {
+            if (isStoreInjected(this.props) && isStoreInjected(oldProps) && oldProps.store !== this.props.store)
+            {
+                this.subscribe();
+            }
+            else if (isStoreResolvedFromCotainer(this.props) &&
+                     isStoreResolvedFromCotainer(oldProps) &&
+                     oldProps.container !== this.props.container)
+            {
+                this.subscribe();
+            }
+        }
+
+        public componentWillUnmount()
+        {
             this.subscription.unsubscribe();
         }
 
         /**
          * Subscribe the store.
          */
-        public subscribe() {
+        public subscribe()
+        {
             let store: TStore = null;
-            if (isStoreInjected(this.props)) {
+            if (isStoreInjected(this.props))
+            {
                 store = this.props.store;
-            } else if (isStoreResolvedFromCotainer(this.props)) {
-                store = this.props.container.resolve<TStore>(this.props.storeRegistrationKey, this.props.storeInstanceName);
-            } else {
-                throw new Error("Either store or storeRegistrationKey must be set when using subscribeStore wrapper component");
+            }
+            else if (isStoreResolvedFromCotainer(this.props))
+            {
+                store = this.props
+                            .container
+                            .resolve<TStore>(this.props.storeRegistrationKey, this.props.storeInstanceName);
+            }
+            else
+            {
+                throw new Error("Either store or storeRegistrationKey/container" +
+                 " must be set when using subscribeStore wrapper component");
             }
 
             this.subscription.subscribeStore(store, state => this.handleState(state, store));
@@ -142,7 +201,8 @@ export const subscribeStoreSelectInternal = <TStore extends IStore<TStoreState>,
          * Update the injected props from the store state.
          * @param state The state from the store.
          */
-        public handleState(state: TStoreState, store: TStore): void {
+        public handleState(state: TStoreState, store: TStore): void
+        {
             this.setState({
                 selectedProps: selectProps(state, store)
             });
@@ -151,7 +211,8 @@ export const subscribeStoreSelectInternal = <TStore extends IStore<TStoreState>,
         /**
          * Render the component.
          */
-        public render() {
+        public render()
+        {
             // ... and renders the wrapped component with the fresh data!
             // Notice that we pass through any additional props
 
