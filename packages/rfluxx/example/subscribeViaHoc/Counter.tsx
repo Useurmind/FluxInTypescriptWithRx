@@ -3,7 +3,7 @@ import { Subscription } from "rxjs/Subscription";
 
 import { subscribeStoreSelect } from "../../src/withStoreSubscription";
 
-import { IPageStore, IPageStoreState } from "./PageStore";
+import { ICounterStore, ICounterStoreState } from "./CounterStore";
 
 export interface ICounterProps {
     counter: number;
@@ -23,7 +23,7 @@ export class Counter extends React.Component<ICounterProps>
 
 // this code binds the component Page to the PageStore
 // the actual instance of the page store is not yet given
-export const BoundCounter = subscribeStoreSelect<IPageStore, IPageStoreState>()(
+export const BoundCounter = subscribeStoreSelect<ICounterStore, ICounterStoreState>()(
     Counter,
     (storeState, store) => ({
         // bind the counter state to this components props

@@ -5,8 +5,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-lerna run testonce
 lerna run build
+lerna run testonce
 
 lerna version $version --no-push
 
