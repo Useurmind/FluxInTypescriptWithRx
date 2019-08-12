@@ -39,13 +39,11 @@ Start [here](/docs/index.md)
 
 Prerequisites:
 
-    npm install -g @microsoft/rush
-
-See also https://rushjs.io/pages/developer/new_developer/
+    npm install -g lerna
 
 In root:
 
-    rush update
+    lerna bootstrap
 
 In packages/rfluxx:
 
