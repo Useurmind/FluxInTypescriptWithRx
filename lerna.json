@@ -1,11 +1,11 @@
 {
-  "version": "3.4.0",
+  "version": "3.4.1",
   "npmClient": "npm",
   "packages": [
+    "packages/generator-rfluxx",
     "packages/rfluxx",
     "packages/rfluxx-example",
     "packages/rfluxx-forms",
-    "packages/rfluxx-routing",
-    "packages/generator-rfluxx"
+    "packages/rfluxx-routing"
   ]
 }

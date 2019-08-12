@@ -1,6 +1,6 @@
 {
   "name": "rfluxx",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "description": "Framework that implements flux using rxjs.",
   "repository": {
     "type": "git",
