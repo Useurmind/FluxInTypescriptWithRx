@@ -1,0 +1,25 @@
+site_name: RFluXX Documentation
+theme: readthedocs
+nav:
+  - Home: index.md
+  - Tutorial: tutorial.md
+  - RFluXX-Core: 
+    - Home: core/index.md
+    - Stores: core/stores.md
+    - Actions: core/actions.md
+    - Container: core/container.md
+    - Binding Stores: core/binding_stores_to_components.md
+    - Time Travel: core/designing_stores_for_timetravel.md
+    - Functional Stores (Alpha): core/functional_stores.md
+    - Reducers (TODO): core/reducers.md
+  - RFluXX-Routing: 
+    - Home: routing/index.md
+    - Urls: routing/urls.md
+    - Routing: routing/routing.md
+    - Route parameters: routing/route_parameters.md
+    - Sitemaps: routing/sitemaps.md
+    - State eviction: routing/state_eviction.md
+    - Forms of Navigation: routing/navigation_forms.md
+    - Intra Page Routing: routing/intra_page_routing.md
+    - Master Component: routing/master_component.md
+    - Page Dependency Injection: routing/page_aware_dependency_injection.md

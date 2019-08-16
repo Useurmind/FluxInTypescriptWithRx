@@ -1,6 +1,10 @@
 RFluxx - Flux in Typescript with RxJS
 ============================
 
+## Docs
+
+See the docs at https://rfluxx.readthedocs.io
+
 Framework that implements the Flux pattern applied in many React apps using RxJS.
 
 This framework basically provides two classes:
@@ -30,10 +34,6 @@ Usage by importing:
 ```typescript
 import { /* ... */ } from "rfluxx-routing";
 ```
-
-## Docs
-
-Start [here](/docs/index.md)
 
 ## Build and Run
 

@@ -2,23 +2,27 @@
 
 ## Setup an app
 
-This tutorial assumes that you are comfortable with setting up a react app.
+This tutorial assumes that you are comfortable with the basics of a react app.
 
-Once you have a react app setup you can start with this tutorial. See for example [this tutorial](https://levelup.gitconnected.com/typescript-and-react-using-create-react-app-a-step-by-step-guide-to-setting-up-your-first-app-6deda70843a4) for quickly setting up react with typescript.
+To setup an initial app you can use the [YEOMAN](https://yeoman.io/) rfluxx generator.
 
-We also have several examples for the different packages that can help to understand a working setup.
+First install yeoman and the rfluxx generator:
 
-Once you have your app running you can add the rfluxx packages via:
+    npm i -g yo generator-rfluxx
 
-    npm i --save rfluxx rfluxx-routing
+Then you can create a directory for your app and execute:
 
-## Integrating RFluXX routing
+    yo rfluxx
+
+Enter a technical and user readable name for your app and you got a ready made skelleton for your rfluxx app.
+
+## Understanding the app skelleton
 
 ### Define the site map tree
 
-The starting point of each react app is usually the index.tsx. To this startup code we will add the creation of the site map tree and the initialization of the rfluxx routing package.
+The starting point of each react app is usually the `index.tsx`. To this startup code we will add the creation of the site map tree and the initialization of the rfluxx routing package.
 
-Because the site map tree can become quite large it makes sense to extract it into one or several modules, e.g. `SiteMap.tsx`:
+Because the site map tree can become quite large it makes sense to extract it into one or several modules, e.g. `SiteMap.tsx`, but in the app skelleton it is located in the `index.tsx`:
 
 ```typescript
 import { withPageContext } from "rfluxx-routing";

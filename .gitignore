@@ -90,3 +90,5 @@ packages/rfluxx-exampledist/rfluxx.pages.bundle.js
 packages/rfluxx-exampledist/rfluxx.routerStore.bundle.js
 packages/rfluxx-exampledist/index.html
 packages/rfluxx-example/stats.json
+
+docs/_build
