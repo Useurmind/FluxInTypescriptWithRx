@@ -102,6 +102,8 @@ Register a creation rule into one or several collections
 builder.register(c => /* ... */).in("IDoStuffInCollection[]");
 ```
 
+If you resolve such a collection you will get back one instance of all registrations in the collection.
+
 By convention the name of a collection should be the type of interface named followed by an array, e.g. `IDoStuffInCollection[]`.
 
 ### Mix and match registration
@@ -115,6 +117,8 @@ builder.register(c => /* ... */)
        .as("ISecondInterface");
 ```
 
+The above registration can be resolved by the names `IMyType` or `ISecondInterface`. Additonally when the collection `IDoStuffInCollection[]` is resolved the same instance resolved through `IMyType` or `ISecondInterface` will be part of the collection.
+
 ### Resolve a default instance
 
 Resolve the default instance from the container
@@ -122,6 +126,8 @@ Resolve the default instance from the container
 ```typescript
 container.resolve<IMyType>("IMyType");
 ```
+
+The returned instance is always the same and you will get an exception if it was not registered.
 
 ### Resolve an optional default instance
 
@@ -132,11 +138,15 @@ Resolve the default instance from the container or get null if no instance was r
 container.resolveOptional<IMyType>("IMyType");
 ```
 
+The returned instance is always the same and you will get null if it was not registered.
+
 ### Resolve named instance
 
 ```typescript
 container.resolve<IMyType>("IMyType", "instance1");
 ```
+
+The returned instance for one instance name, in this case `instance1` is always the same and you will get an exception if `IMyType` was not registered.
 
 ### Resolve collection of default instances
 

@@ -8,10 +8,11 @@ nav:
     - Stores: core/stores.md
     - Actions: core/actions.md
     - Container: core/container.md
+    - Stores & Infrastructure: core/injecting_infrastructure_into_stores.md
     - Binding Stores: core/binding_stores_to_components.md
     - Time Travel: core/designing_stores_for_timetravel.md
     - Functional Stores (Alpha): core/functional_stores.md
-    - Reducers (TODO): core/reducers.md
+    - Reducers (TODO): core/reducer.md
   - RFluXX-Routing: 
     - Home: routing/index.md
     - Urls: routing/urls.md

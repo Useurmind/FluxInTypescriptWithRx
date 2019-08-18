@@ -3,7 +3,7 @@ import { Subscription } from "rxjs/Subscription";
 
 import { subscribeStoreSelect } from "../../src/withStoreSubscription";
 
-import { BoundCounter } from "./Counter";
+import { CounterBound } from "./Counter";
 import { createCounterStore, ICounterStore } from "./CounterStore";
 
 export interface IPageState {
@@ -35,7 +35,7 @@ export class Page extends React.Component<{}, IPageState>
     {
         return <div>
             <button onClick={this.onResetCounterStore}>Reset counter store</button>
-            <BoundCounter store={this.state.counterStore} />
+            <CounterBound store={this.state.counterStore} />
         </div>;
     }
 }

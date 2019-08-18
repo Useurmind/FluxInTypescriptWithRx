@@ -5,11 +5,25 @@ import { subscribeStoreSelect } from "../../src/withStoreSubscription";
 
 import { ICounterStore, ICounterStoreState } from "./CounterStore";
 
+/**
+ * These are the props that are provided by the binding via the HOC.
+ */
 export interface ICounterProps {
+    /**
+     * A counter that is shown.
+     */
     counter: number;
+
+    /**
+     * A handler for when the increment button is pressed.
+     */
     increment: () => void;
 }
 
+/**
+ * The component itself is rather simple and just implements rendering some
+ * UI with its props.
+ */
 export class Counter extends React.Component<ICounterProps>
 {
     public render(): any
@@ -21,13 +35,13 @@ export class Counter extends React.Component<ICounterProps>
     }
 }
 
-// this code binds the component Page to the PageStore
-// the actual instance of the page store is not yet given
-export const BoundCounter = subscribeStoreSelect<ICounterStore, ICounterStoreState>()(
+// this code binds the component Counter to the CounterStore
+// the actual instance of the counter store is not yet given
+export const CounterBound = subscribeStoreSelect<ICounterStore, ICounterStoreState>()(
     Counter,
     (storeState, store) => ({
-        // bind the counter state to this components props
+        // bind the counter state property to the counter props
         counter: storeState.counter,
-        // bind a call to an action to a handler in this components props
+        // bind a call to an action to a handler in the counter props
         increment: () => store.increment.trigger(1)
     }));
