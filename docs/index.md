@@ -11,9 +11,9 @@ I wrote some blog posts that should cover the idea and motivation behind the fra
 
 The core concepts that you need to understand to work with the framework are the following:
 
-- __Stores__: Stores keep track of the state of a part of the UI of your app. They are implemented as an observable that can be subscribed by components to be updated when the state changes.
-- __Actions__: Actions are usually provided by stores (but they can also stand for themselves) to allow components to communicate with them. Actions should trigger all state changes in the stores and can be handed an argument to describe details of the action.
-- **Action Event**: An action is an object that can be triggered. When an action is triggered we call this an action event.
+- __Stores__: Stores keep track of the state of the UI of your app. They are implemented as an observable and can be subscribed by your components. This subscription allows for up to date state being available in the components all the time.
+- __Actions__: Actions are to be triggered by components whenever a state change is required. They are usually provided by stores but can also stand for themselves. When triggered an action event object must be provided.
+- **Action Event**: Whenever an action is triggered we call this an action event. An action event is also the object that is provided as parameter when triggering an action. It transports information from components to the stores. 
 
 ## Advanced concepts
 
