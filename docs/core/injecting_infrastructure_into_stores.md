@@ -7,25 +7,38 @@ Most stores will need to create actions and fetch data from a backend. For this 
 **NOTE: This is valid for the core library. For the routing library this differs slightly! **
 
 Without giving any details we will first show the correct example. This is a short form of everything that follows below.
-
-First register the middleware you want and the store in the container:
+We are applying the rfluxx initialization api here. It provides an entrypoint into rfluxx to completely configure it.
 
 ```typescript
-// register the infrastructure of rfluxx
-// the true makes the time traveler available 
-// on the window as property "timeTraveler"
-// and the event log as property "eventLog"
-registerTimeTraveler(builder, true);
+import { init as rfluxx_init } from "rfluxx";
 
-// register your middleware in the container
-builder.register<IMyMiddleware>(c => new MyMiddleware({
-    // ... options
-})).in("IActionMiddleware[]");
+const container = rfluxx_init()
+    // here we are telling rfluxx to provide a container
+    .useContainer(builder =>
+    {
+        // this function should contain all your registration logic
 
-// register your store
-registerStore(builder, "IMyStore", (c, injOpt) => new MyStore(injOpt({
-    someOption: // ...
-})))
+        // register your middleware in the container
+        builder.register<IMyMiddleware>(c => new MyMiddleware({
+            // ... options
+        })).in("IActionMiddleware[]");
+
+        // register your store
+        registerStore(builder, "IMyStore", (c, injOpt) => new MyStore(injOpt({
+            someOption: // ...
+        })));
+    })
+    // the following calls register the infrastructure of rfluxx
+    //.useFetcher()        // optional as useTimeTravel will automatically include this
+    //.useActionFactory()  // optional as useTimeTravel will automatically include this
+    .useTimeTravel({        
+        // the true makes the time traveler available 
+        // on the window as property "timeTraveler"
+        // and the event log as property "eventLog"
+        registerInWindow: true
+    })
+    // build the container from the previously configured content
+    .build();
 ```
 
 You can see a very small call to `injOpt` which is a short form for inject options. This function will take care to inject the action factory and observable fetcher into your stores options.
