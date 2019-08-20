@@ -17,7 +17,7 @@ Correct time travel relies on two important facts:
 
 When time traveling you will replay action events multiple times. Therefore, it is important that the actions do not execute backend calls during a replay. 
 
-First, the repeated backend calls would turn be results and change the timeline. Second you would induce changes into the backend database during time travel if any backend calls were made.
+First, the repeated backend calls would turn into results and change the timeline. Second you would induce changes into the backend database during time travel if any backend calls were made.
 
 To avoid this we offer an `IObservableFetcher` interface that lets you do backend calls in a fetch manner. Only that you can subscribe these calls as any other rx observable.
 
@@ -27,4 +27,8 @@ During time travel the observable fetcher will not make any actual fetches. In f
 
 Simply speaking, when fetching stuff via `IObservableFetcher` call an action in the subscribe call. 
 
-More completely, whenever an action is performed outside your current time travel context (your app) you need to capture the result with an action call which in turn updates your store state.
+This is necessary because during time travel the fetcher will not do anything. Your subscribe handler will not be called.
+
+Instead when the subscribe call triggers an action it will be recorded in the event log. During time travel this action will be replaced accordingly.
+
+This effectively captures the result from the backend call in an action event and preserves it for time travel.
