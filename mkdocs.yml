@@ -2,6 +2,7 @@ site_name: RFluXX Documentation
 theme: readthedocs
 nav:
   - Home: index.md
+  - Code examples: code_examples.md
   - Tutorial: tutorial.md
   - RFluXX-Core: 
     - Home: core/index.md
