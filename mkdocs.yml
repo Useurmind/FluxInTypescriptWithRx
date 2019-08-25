@@ -3,7 +3,8 @@ theme: readthedocs
 nav:
   - Home: index.md
   - Code examples: code_examples.md
-  - Tutorial: tutorial.md
+  - Getting started: getting_started.md
+  - Tooling: tooling.md
   - RFluXX-Core: 
     - Home: core/index.md
     - Stores: core/stores.md

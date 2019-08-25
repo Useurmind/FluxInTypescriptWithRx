@@ -1,10 +1,10 @@
-# Tutorial
+# Getting started
 
 ## Setup an app
 
 This tutorial assumes that you are comfortable with the basics of a react app.
 
-To setup an initial app you can use the [YEOMAN](https://yeoman.io/) rfluxx generator.
+To setup an initial rfluxx app with routing you can use the [YEOMAN](https://yeoman.io/) rfluxx generator.
 
 First install yeoman and the rfluxx generator:
 
@@ -18,6 +18,18 @@ Enter a technical and user readable name for your app and you got a ready made s
 
 ## Understanding the app skelleton
 
+### Notes about dependencies
+
+The app skeleton takes an opinionated approach to which frameworks you should use.
+
+This is a completely personal choice. But the frameworks that are included have proven to work together. Feel free to replace them as you see fit.
+
+The app skeleton (and also the code snippets for [vs code](https://code.visualstudio.com/)) provide integration with [material-ui](https://material-ui.com/).
+
+If you don't understand the setup of react components take a look at the [typescript guide of material-ui](https://material-ui.com/guides/typescript/).
+
+It is also preconfigured to be build with webpack. It uses karma and Jasmine for running unit tests.
+
 ### Define the site map tree
 
 The starting point of each react app is usually the `index.tsx`. To this startup code we will add the creation of the site map tree and the initialization of the rfluxx routing package.
@@ -25,25 +37,10 @@ The starting point of each react app is usually the `index.tsx`. To this startup
 Because the site map tree can become quite large it makes sense to extract it into one or several modules, e.g. `SiteMap.tsx`, but in the app skelleton it is located in the `index.tsx`:
 
 ```typescript
-import { withPageContext } from "rfluxx-routing";
-import { ISiteMapNode } from "rfluxx-routing";
-
-import { Home } from "./components/home";
-import { Page1 } from "./components/page1";
-
-export const siteMap: ISiteMapNode = {
+const siteMap: ISiteMapNode = {
     caption: "Home",
-    routeExpression: "/home",
-    render: p => withPageContext(<Home />),
-    children: [
-        {
-            caption: "Page 1",
-            routeExpression: "page1",
-            containerFactory: new MyPage1ContainerFactory(),
-            render: p => withPageContext(<Page1 />)
-        },
-        // ...
-    ]
+    routeExpression: "home",
+    render: p => <HomePage />
 };
 ```
 
