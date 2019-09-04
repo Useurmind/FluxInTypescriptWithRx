@@ -24,10 +24,11 @@ export * from "./CurrentPage";
 export * from "./CurrentSiteMapNode";
 export * from "./Page";
 export * from "./PageContextProvider";
+export * from "./usePageContext";
 export * from "./PageManagementStore";
 export * from "./PageStore";
 export * from "./RouterLink";
-export * from "./Routing/RouterStore";
+export * from "./Routing";
 export * from "./SiteMap";
 
 /**

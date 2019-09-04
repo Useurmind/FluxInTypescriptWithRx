@@ -15,7 +15,9 @@ import { FormPage } from "./FormWithSelectPage/FormPage";
 import { HomePage } from "./HomePage";
 import { IntraRoutingPage } from "./IntraPageRouting/IntraRoutingPage";
 import { ContainerFactory as SelectPageContainerFactory } from "./SelectPage/ContainerFactory";
+import { ContainerFactory as BoundPageContainerFactory} from "./BoundPage/ContainerFactory";
 import { SelectPage } from "./SelectPage/SelectPage";
+import { BoundPageBound } from './BoundPage/BoundPage';
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -70,6 +72,12 @@ const siteMap: ISiteMapNode = {
             routeExpression: "/endlessSequence/{sequenceNumber}/",
             render: p => <EndlessSequencePage />,
             showInSidebar: new Map([["sequenceNumber", "1"]])
+        },
+        {
+            caption: "Bound page",
+            routeExpression: "/boundPage",
+            containerFactory: new BoundPageContainerFactory(),
+            render: p => <BoundPageBound storeRegistrationKey="IBoundPageStore" />
         }
     ]
 };

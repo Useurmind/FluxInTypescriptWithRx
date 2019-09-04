@@ -5,6 +5,26 @@ import { IObservableFetcher } from "../Fetch/IObservableFetcher";
 import { IContainerRegistration } from "./IContainerRegistration";
 
 /**
+ * Inject the action factory and fetcher into the store props.
+ * @param container The container to use.
+ * @param props The props the store should get and that should be extended with action factory and fetcher.
+ * @param storePrefix A prefix used to mark actions for easier identifiability.
+ */
+export function injectStoreOptions<TProps extends IInjectedStoreOptions>(container: IContainer, props: TProps, storePrefix?: string) : TProps
+{
+    const actionFactory = container.resolveOptional<IActionFactory>("IActionFactory");
+    const prefixedActionFactory = actionFactory 
+        ? (storePrefix ? new PrefixActionFactory(actionFactory, storePrefix) : actionFactory)
+        : null;
+
+    return {
+        ...props,
+        actionFactory: prefixedActionFactory,
+        fetcher: container.resolveOptional<IObservableFetcher>("IObservableFetcher")
+    };
+}
+
+/**
  * Register a store in the given container adding all the required interfaces that the store should
  * have to work with the event log and time travel.
  * @param container The container to add the store to.
@@ -22,16 +42,9 @@ export function registerStore<TState>(
 
     const injectedCreate = (c: IContainer) =>
     {
-        const actionFactory = c.resolveOptional<IActionFactory>("IActionFactory");
-        const prefixedActionFactory = actionFactory ? new PrefixActionFactory(actionFactory, storeKey) : null;
+        const injectStoreOptions2 = (o: IInjectedStoreOptions) => injectStoreOptions(c, o, storeKey);
 
-        const injectStoreOptions = (o: IInjectedStoreOptions) => ({
-            ...o,
-            actionFactory: prefixedActionFactory,
-            fetcher: c.resolveOptional<IObservableFetcher>("IObservableFetcher")
-        });
-
-        return create(c, injectStoreOptions);
+        return create(c, injectStoreOptions2);
     };
 
     return containerBuilder.register(injectedCreate)

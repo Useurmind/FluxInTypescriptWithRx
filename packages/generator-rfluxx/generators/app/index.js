@@ -73,6 +73,7 @@ module.exports = class extends Generator {
 
         // webpack and build stuff
         this.npmInstall("webpack", { "save-dev": true });
+        this.npmInstall("webpack-merge", { "save-dev": true });
         this.npmInstall("webpack-cli", { "save-dev": true });
         this.npmInstall("webpack-dev-server", { "save-dev": true });
         this.npmInstall("clean-webpack-plugin", { "save-dev": true });

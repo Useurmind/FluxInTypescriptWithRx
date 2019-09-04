@@ -6,6 +6,7 @@
     "packages/rfluxx",
     "packages/rfluxx-example",
     "packages/rfluxx-forms",
-    "packages/rfluxx-routing"
+    "packages/rfluxx-routing",
+    "packages/rfluxx-i18n"
   ]
 }

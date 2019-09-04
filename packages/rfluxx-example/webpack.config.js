@@ -16,11 +16,11 @@ module.exports = {
     resolve: {
         // Example files are only in ts form, libraries should be loaded from js form
         extensions: [".js", ".ts", ".tsx"],
-        alias: {
-            "react$": path.resolve(__dirname, "node_modules/react"),
-            "react-dom$": path.resolve(__dirname, "node_modules/react-dom"),
-            "@material-ui": path.resolve(__dirname, "node_modules/@material-ui")
-        }
+        // alias: {
+        //     "react$": path.resolve(__dirname, "node_modules/react"),
+        //     "react-dom$": path.resolve(__dirname, "node_modules/react-dom"),
+        //     "@material-ui": path.resolve(__dirname, "node_modules/@material-ui")
+        // }
     },
     module: {
         rules: [
