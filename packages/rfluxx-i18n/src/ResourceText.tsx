@@ -5,7 +5,6 @@ import { subscribeStoreSelect, StoreSubscription } from "rfluxx";
 
 import { IResourceStore, IResourceStoreState } from "./ResourceStore";
 import { IPageContextProps, withPageContext, usePageContext } from 'rfluxx-routing';
-import { ResourceTexts } from './resources.en';
 
 export const styles = (theme: Theme) => createStyles({
     root: {
