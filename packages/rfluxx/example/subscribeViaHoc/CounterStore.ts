@@ -13,7 +13,7 @@ export interface ICounterStore extends Flux.IStore<ICounterStoreState>
     increment: Flux.IAction<number>;
 }
 
-class CounterStore extends Flux.Store<ICounterStoreState> implements ICounterStore
+export class CounterStore extends Flux.Store<ICounterStoreState> implements ICounterStore
 {
     public readonly increment: Flux.IAction<number>;
 
@@ -36,9 +36,4 @@ class CounterStore extends Flux.Store<ICounterStoreState> implements ICounterSto
             }));
         });
     }
-}
-
-export function createCounterStore(): ICounterStore
-{
-    return new CounterStore();
 }

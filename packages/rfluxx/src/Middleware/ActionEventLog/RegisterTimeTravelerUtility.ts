@@ -37,10 +37,15 @@ import { TimeTraveler } from "./TimeTraveler";
 export function registerTimeTraveler(
     builder: IContainerBuilderEssential,
     registerWithWindow?: boolean,
-    actionEventLogStorageKey?: string): void
+    actionEventLogStorageKey?: string,
+    doNotRegisterOtherDependencies?: boolean): void
 {
-    registerDefaultActionFactory(builder);
-    registerObservableFetcher(builder);
+    // TODO: remove in next major update
+    if (doNotRegisterOtherDependencies === true)
+    {
+        registerDefaultActionFactory(builder);
+        registerObservableFetcher(builder);
+    }
 
     if (actionEventLogStorageKey)
     {
@@ -62,9 +67,9 @@ export function registerTimeTraveler(
         const eventLog = c.resolve<IActionEventLog>("IActionEventLog");
         const timeTraveler = new TimeTraveler(
             eventLog,
-            () => c.resolve<INeedToKnowAboutReplay[]>("INeedToKnowAboutReplay[]"),
-            () => c.resolve<IResetMyState[]>("IResetMyState[]"),
-            () => c.resolve<INeedToKnowIfIAmInThePast[]>("INeedToKnowIfIAmInThePast[]"),
+            () => c.resolveMultiple<INeedToKnowAboutReplay>("INeedToKnowAboutReplay[]"),
+            () => c.resolveMultiple<IResetMyState>("IResetMyState[]"),
+            () => c.resolveMultiple<INeedToKnowIfIAmInThePast>("INeedToKnowIfIAmInThePast[]"),
             c.resolve<IActionRegistry>("IActionRegistry")
         );
 

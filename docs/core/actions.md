@@ -6,19 +6,21 @@ Actions are implemented as simple RX subjects. Triggering them requires as a par
 
 In the simplest case an action is created and therefore owned by a store. This usually means that nobody else is expected to require a subscription to the action (except for perhaps middleware).
 
-Such actions are published by store as a property. They provide the limited `IAction` interface that can only be triggered. This is done by giving them an action event of the property type.
+Such actions are published by the store as a property. They provide the limited `IAction<T>` interface that can only be triggered. This is done by giving them an action event of the property type.
 
-__MyStore.ts__
+__MyNumberStore.ts__
 ```typescript
-export class MyStore // ...
+export class MyNumberStore // ...
 {
     // this action is only provided with the limited IAction interface
     public readonly setNumber: IAction<number>;
 
-    constructor(private options: IMyStoreOptions)
+    constructor(private options: IMyNumberStoreOptions)
     {
         // ...
 
+        // Because you cannot subscribe an IAction we use helper functions
+        // to make creation and subscription easy
         this.setNumber = this.createActionAndSubscribe<number>(someNumber => this.onSetNumber(someNumber));
 
         // ...
@@ -28,16 +30,16 @@ export class MyStore // ...
 }
 ```
 
-__MyComponent.tsx__
+__MyNumberComponent.tsx__
 ```typescript
-export class MyComponent // ...
+export class MyNumberComponent // ...
 {
     // ...
 
     private onButtonPress()
     {
         // call the owned action retrieved from the store
-        const store = this.props.container.resolve<ISelectPageStore>("ISelectPageStore");
+        const store = this.props.container.resolve<IMyNumberStore>("IMyNumberStore");
         store.setNumber.trigger(3);
     }
 
@@ -51,9 +53,9 @@ In some cases actions need to be available in multiple stores. This can be impor
 
 Its recommended to create these actions outside of any store and inject them through the dependency injection container. Anyone interested in triggering/subscribing the action can resolve it from the container or get it injected into its constructor options.
 
-__MyStore.ts__
+__MyNumberStoreWithOption.ts__
 ```typescript
-export interface IMyStoreOptions
+export interface IMyNumberStoreOptions
 {
     // ...
 
@@ -64,9 +66,9 @@ export interface IMyStoreOptions
     // ...
 }
 
-export class MyStore // ...
+export class MyNumberStoreWithOptions // ...
 {
-    constructor(private options: IMyStoreOptions)
+    constructor(private options: IMyNumberStoreOptions)
     {
         // ...
 
@@ -79,9 +81,9 @@ export class MyStore // ...
 }
 ```
 
-__MyComponent.tsx__
+__MyActionCallingComponent.tsx__
 ```typescript
-export class MyComponent // ...
+export class MyActionCallingComponent // ...
 {
     // ...
 

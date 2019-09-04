@@ -1,10 +1,12 @@
-# Tutorial
+# Getting started
+
+**NOTE**: Work in Progress.
 
 ## Setup an app
 
 This tutorial assumes that you are comfortable with the basics of a react app.
 
-To setup an initial app you can use the [YEOMAN](https://yeoman.io/) rfluxx generator.
+To setup an initial rfluxx app with routing you can use the [YEOMAN](https://yeoman.io/) rfluxx generator.
 
 First install yeoman and the rfluxx generator:
 
@@ -18,32 +20,29 @@ Enter a technical and user readable name for your app and you got a ready made s
 
 ## Understanding the app skelleton
 
+### Notes about dependencies
+
+The app skeleton takes an opinionated approach to which frameworks you should use.
+
+This is a completely personal choice. But the frameworks that are included have proven to work together. Feel free to replace them as you see fit.
+
+The app skeleton (and also the code snippets for [vs code](https://code.visualstudio.com/)) provide integration with [material-ui](https://material-ui.com/).
+
+If you don't understand the setup of react components take a look at the [typescript guide of material-ui](https://material-ui.com/guides/typescript/).
+
+It is also preconfigured to be build with webpack. It uses karma and Jasmine for running unit tests.
+
 ### Define the site map tree
 
 The starting point of each react app is usually the `index.tsx`. To this startup code we will add the creation of the site map tree and the initialization of the rfluxx routing package.
 
-Because the site map tree can become quite large it makes sense to extract it into one or several modules, e.g. `SiteMap.tsx`, but in the app skelleton it is located in the `index.tsx`:
+Because the site map tree can become quite large it makes sense to extract it into one or several modules, e.g. `SiteMap.tsx`. But in the app skelleton it is located in the `index.tsx`:
 
 ```typescript
-import { withPageContext } from "rfluxx-routing";
-import { ISiteMapNode } from "rfluxx-routing";
-
-import { Home } from "./components/home";
-import { Page1 } from "./components/page1";
-
-export const siteMap: ISiteMapNode = {
+const siteMap: ISiteMapNode = {
     caption: "Home",
-    routeExpression: "/home",
-    render: p => withPageContext(<Home />),
-    children: [
-        {
-            caption: "Page 1",
-            routeExpression: "page1",
-            containerFactory: new MyPage1ContainerFactory(),
-            render: p => withPageContext(<Page1 />)
-        },
-        // ...
-    ]
+    routeExpression: "home",
+    render: p => <HomePage />
 };
 ```
 
@@ -51,13 +50,13 @@ Let's examine the home site map node in more detail.
 
     caption: "Home",
 
-Each node has a caption that is down in different places in the UI to the user, e.g. the breadcrumb. You could also use it as the title of your pages.
+Each node has a caption that is shown in different places in the UI to the user, e.g. the breadcrumb. You could also use it as the title of your pages.
 
     routeExpression: "/home",
 
-Every node also needs a route expression that defines which URLs should show this node. Routes starting with a slash e.g. `/home` are absolute and interpreted with regard to the base url of the app. Routes without a starting slash e.g. `page1` are combined with the route of the parent. In this case to get `/home/page1`.
+Every node also needs a route expression that defines which URLs should show this node. Routes starting with a slash e.g. `/home` are absolute and interpreted with regard to the base url of the app. Routes without a starting slash e.g. `page1` are combined with the route of the parent. In this case to get `/home/page1`. Here none of these cases apply as home is the root node and its route expression is always absolute.
 
-The default initialization code of rfluxx assumes that the routes of nodes further down the tree are more specific ("longer") than the routes at the top of the tree. The routes further down the tree are matched before the routes at the top of the tree.
+The default initialization code of rfluxx assumes that the routes of nodes further down the tree are more specific ("longer") than the routes at the top of the tree. Therefore the routes further down the tree are matched before the routes at the top of the tree.
 
     containerFactory: new MyPage1ContainerFactory(),
 
@@ -231,4 +230,4 @@ Afterwards we start up the react app as usual.
 
 ## Disclaimer
 
-I try to keep this up to date. But the code of the examples will always be more up to date.
+I try to keep this up to date. But the [code examples](code_examples.md) will always be more up to date.

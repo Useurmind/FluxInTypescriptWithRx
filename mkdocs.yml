@@ -2,16 +2,20 @@ site_name: RFluXX Documentation
 theme: readthedocs
 nav:
   - Home: index.md
-  - Tutorial: tutorial.md
+  - Code examples: code_examples.md
+  - Getting started: getting_started.md
+  - Tooling: tooling.md
   - RFluXX-Core: 
     - Home: core/index.md
     - Stores: core/stores.md
     - Actions: core/actions.md
     - Container: core/container.md
+    - Stores & Infrastructure: core/injecting_infrastructure_into_stores.md
     - Binding Stores: core/binding_stores_to_components.md
     - Time Travel: core/designing_stores_for_timetravel.md
     - Functional Stores (Alpha): core/functional_stores.md
-    - Reducers (TODO): core/reducers.md
+    - Reducers (TODO): core/reducer.md
+    - Unit Testing: core/testing_stores.md
   - RFluXX-Routing: 
     - Home: routing/index.md
     - Urls: routing/urls.md

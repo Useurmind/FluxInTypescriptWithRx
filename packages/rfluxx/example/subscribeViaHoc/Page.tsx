@@ -1,25 +1,31 @@
 import * as React from "react";
 import { Subscription } from "rxjs/Subscription";
 
+import { IContainer } from "../../src";
+import { IRfluxxInitializerWithContainer } from "../../src/Initialization";
 import { subscribeStoreSelect } from "../../src/withStoreSubscription";
 
-import { BoundCounter } from "./Counter";
-import { createCounterStore, ICounterStore } from "./CounterStore";
+import { CounterBound } from "./Counter";
+import { ICounterStore } from "./CounterStore";
 
-export interface IPageState {
-    counterStore: ICounterStore;
+export interface IPageProps {
+    containerFactory: IRfluxxInitializerWithContainer;
 }
 
-export class Page extends React.Component<{}, IPageState>
+export interface IPageState {
+    container: IContainer;
+}
+
+export class Page extends React.Component<IPageProps, IPageState>
 {
-    constructor(props: {})
+    constructor(props: IPageProps)
     {
         super(props);
 
         this.onResetCounterStore = this.onResetCounterStore.bind(this);
 
         this.state = {
-            counterStore: createCounterStore()
+            container: props.containerFactory.build()
         };
     }
 
@@ -27,7 +33,7 @@ export class Page extends React.Component<{}, IPageState>
     {
         this.setState({
             ...this.state,
-            counterStore: createCounterStore()
+            container: this.props.containerFactory.build()
         });
     }
 
@@ -35,7 +41,7 @@ export class Page extends React.Component<{}, IPageState>
     {
         return <div>
             <button onClick={this.onResetCounterStore}>Reset counter store</button>
-            <BoundCounter store={this.state.counterStore} />
+            <CounterBound container={this.state.container} storeRegistrationKey="ICounterStore" />
         </div>;
     }
 }
