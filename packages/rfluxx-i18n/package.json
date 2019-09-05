@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-i18n",
-  "version": "3.4.1",
+  "version": "3.5.0",
   "description": "Multilanguage support for rfluxx.",
   "repository": {
     "type": "git",
@@ -31,8 +31,8 @@
     "rxjs": "~5.5.7"
   },
   "dependencies": {
-    "rfluxx": "^3.4.1",
-    "rfluxx-routing": "^3.4.1",
+    "rfluxx": "^3.5.0",
+    "rfluxx-routing": "^3.5.0",
     "tslib": "~1.9.0"
   },
   "devDependencies": {

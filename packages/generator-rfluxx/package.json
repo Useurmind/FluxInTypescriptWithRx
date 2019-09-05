@@ -1,6 +1,6 @@
 {
   "name": "generator-rfluxx",
-  "version": "3.4.1",
+  "version": "3.5.0",
   "description": "A generator for an rfluxx project applying the rfluxx and rfluxx-routing packages.",
   "repository": {
     "type": "git",
