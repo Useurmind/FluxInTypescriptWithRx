@@ -48,7 +48,7 @@ module.exports = class extends Generator {
             this._copyFile('src/i18n/Languages.ts');
             this._copyFile('src/i18n/Resources.en.ts');
             this._copyFile('src/i18n/Resources.de.ts');
-            this._copyFile('src/i18n/LanguageChooser.ts');
+            this._copyFile('src/i18n/LanguageChooser.tsx');
         }
     }
 
