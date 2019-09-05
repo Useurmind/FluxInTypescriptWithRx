@@ -20,6 +20,11 @@ module.exports = class extends Generator {
                 type    : 'input',
                 name    : 'title',
                 message : 'Your projects title',
+            },
+            {
+                type    : 'confirm',
+                name    : 'includeInternationalization',
+                message : 'Do you want to include internationalization support?',
             }
         ]);
     }
@@ -37,6 +42,14 @@ module.exports = class extends Generator {
         this._copyFile('src/HomePage.tsx');
         this._copyFile('src/index.tsx');
         this._copyFile('src/Master.tsx');
+
+        if(this.answers.includeInternationalization)
+        {
+            this._copyFile('src/i18n/Languages.ts');
+            this._copyFile('src/i18n/Resources.en.ts');
+            this._copyFile('src/i18n/Resources.de.ts');
+            this._copyFile('src/i18n/LanguageChooser.ts');
+        }
     }
 
     _copyFile(filePath)  {
@@ -62,7 +75,11 @@ module.exports = class extends Generator {
 
         // rfluxx
         this.npmInstall("rfluxx", { "save": true });
-        this.npmInstall("rfluxx-routing", { "save": true });
+        this.npmInstall("rfluxx-routing", { "save": true });        
+        if(this.answers.includeInternationalization)
+        {
+            this.npmInstall("rfluxx-i18n", { "save": true });
+        }
 
         // material-ui
         this.npmInstall("@material-ui/core", { "save": true });

@@ -25,6 +25,25 @@
             "script": "build",
             "path": "packages/rfluxx-routing/",
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "build",
+            "path": "packages/rfluxx-i18n/",
+            "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "start",
+            "path": "packages/rfluxx-example/",
+            "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "build",
+            "path": "packages/rfluxx-example/",
+            "group": "build",
+            "problemMatcher": []
         }
     ]
 }

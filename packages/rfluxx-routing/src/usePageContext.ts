@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Subtract } from "utility-types";
 
 import { IPageContextProps, PageContext } from ".";
 
@@ -9,9 +8,9 @@ import { IPageContextProps, PageContext } from ".";
  * @param wrappedComponent The component type that should use the page context.
  */
 export const usePageContext = <TProps extends IPageContextProps>(wrappedComponent: React.ComponentType<TProps>)
-    : React.ComponentType<Subtract<TProps, IPageContextProps>> =>
+    : React.ComponentType<Omit<TProps, keyof IPageContextProps>> =>
     class UsePageContext
-    extends React.Component<Subtract<TProps, IPageContextProps>, {}>
+    extends React.Component<Omit<TProps, keyof IPageContextProps>, {}>
     {
         /**
          * render the component
@@ -24,3 +23,18 @@ export const usePageContext = <TProps extends IPageContextProps>(wrappedComponen
                 pageContext => React.createElement(wrappedComponent, { ...this.props, ...pageContext }));
         }
     };
+
+
+// interface testProps extends IPageContextProps
+// {
+//     asd: string
+// }
+
+// class testComp extends React.Component<testProps, {}>
+// {
+
+// }
+
+// usePageContext(testComp)
+
+// type testType = Omit<testProps, keyof IPageContextProps>;

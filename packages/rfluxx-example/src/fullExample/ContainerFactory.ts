@@ -4,11 +4,15 @@ import { GlobalContainerFactoryBase, IGlobalComponents, IGlobalContainerBuilder,
 import { EditPageStore } from "./EditPage/EditPageStore";
 import { EndlessSequencePageStore } from "./EndlessSequence/EndlessSequencePageStore";
 import { FormPageStore } from "./FormWithSelectPage/FormPageStore";
+import { registerResourcesGlobally } from 'rfluxx-i18n';
+import { languages } from './Internationalization/Languages';
 
 export class ContainerFactory extends GlobalContainerFactoryBase
 {
     protected registerStores(builder: IGlobalContainerBuilder): void
     {
+        registerResourcesGlobally(builder, languages);
+
         registerStore(builder, "IFormPageStore", (c, injOpt) => new FormPageStore(injOpt({
             pageStore: c.resolve("IPageStore")
         })));

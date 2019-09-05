@@ -1,5 +1,5 @@
 {
-	"Rfluxx Class Store": {
+  "Rfluxx Class Store": {
 		"prefix": "rfluxx_store",
 		"body": [
 			"import { IAction, IInjectedStoreOptions, IStore, Store } from \"rfluxx\";",
@@ -19,7 +19,7 @@
             " * The options to configure the store { @see $1Store }.",
             " */",
             "export interface I$1StoreOptions",
-            "    extends IInjectedStoreOptions"
+            "    extends IInjectedStoreOptions",
             "{",
             "}",
             "",
@@ -68,5 +68,55 @@
 
 		],
 		"description": "A full rfluxx store including state, options etc."
-    }
+  },
+  "Rfluxx Default Language": {
+		"prefix": "rfluxx_i18n_deflang",
+		"body": [
+			"export type ResourceTexts = typeof resources;",
+      "",
+      "export const resources = {",
+      "    text1: \"The first resource text\",",
+      "};",
+      ""
+		],
+		"description": "The default language for your internationalization."
+  },
+  "Rfluxx Language": {
+		"prefix": "rfluxx_i18n_lang",
+		"body": [
+			"import { ResourceTexts } from \"./${1:Resources.en}\";",
+      "",
+      "export const resources: ResourceTexts = {",
+      "    text1: \"The first resource text in this language\",",
+      "};",
+      ""
+		],
+		"description": "Another language for your internationalization."
+  },
+  "Rfluxx I18N Setup": {
+		"prefix": "rfluxx_i18n_setup",
+		"body": [
+      "import { ILanguage, CreateResourceTextComponent } from \"rfluxx-i18n\";",
+      "import { ResourceTexts, resources as resourcesEn } from \"./${1:Resources.en}\";",
+      "import { resources as resourcesDe } from \"./${2:Resources.de}\";",
+      "",
+      "export const ResourceText = CreateResourceTextComponent<ResourceTexts>();",
+      "",
+      "export type Language = ILanguage<ResourceTexts>;",
+      "",
+      "export const languages: Language[] = [",
+      "    {",
+      "        key: \"en\",",
+      "        caption: \"English\",",
+      "        resources: resourcesEn",
+      "    },",
+      "    {",
+      "        key: \"de\",",
+      "        caption: \"Deutsch\",",
+      "        resources: resourcesDe",
+      "    }",
+      "];"
+    ],
+		"description": "Configuration for your internationalization."
+  }
 }

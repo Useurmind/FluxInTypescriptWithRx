@@ -1,15 +1,8 @@
-import { createStyles, Theme, WithStyles } from "@material-ui/core";
-import withStyles from "@material-ui/core/styles/withStyles";
 import * as React from "react";
-import { subscribeStoreSelect, StoreSubscription } from "rfluxx";
+import { StoreSubscription } from "rfluxx";
 
 import { IResourceStore, IResourceStoreState } from "./ResourceStore";
-import { IPageContextProps, withPageContext, usePageContext } from 'rfluxx-routing';
-
-export const styles = (theme: Theme) => createStyles({
-    root: {
-    }
-});
+import { IPageContextProps, usePageContext } from "rfluxx-routing";
 
 /**
  * State for { @ResourceText }
@@ -37,8 +30,7 @@ export interface IResourceTextProps<TResourceText>
 /**
  * Component that shows a resource text.
  */
-const ResourceTextInt = withStyles(styles)(
-    class <TResourceText> extends React.Component<IResourceTextProps<TResourceText>, IResourceTextState>
+const ResourceTextInt = class <TResourceText> extends React.Component<IResourceTextProps<TResourceText>, IResourceTextState>
     {
         /**
          * The subscription to the store.
@@ -63,7 +55,7 @@ const ResourceTextInt = withStyles(styles)(
 
         public componentDidUpdate(oldProps: IResourceTextProps<TResourceText>)
         {
-            if(oldProps.getText !== this.props.getText)
+            if (oldProps.getText !== this.props.getText)
             {
                 this.subscribe();
             }
@@ -77,10 +69,19 @@ const ResourceTextInt = withStyles(styles)(
         public subscribe() {
             const resourceStore = this.props.container.resolve<IResourceStore<TResourceText>>("IResourceStore");
 
-            this.subscription.subscribeStore(resourceStore, state => {
+            // force unsubscribe to get current text
+            this.subscription.unsubscribe();
+            this.subscription.subscribeStore(resourceStore, state =>
+            {
                 const newText = this.props.getText(state.activeResources);
 
-                if(this.state.text !== newText) {
+                if(this.state.text !== newText)
+                {
+                    if (!newText)
+                    {
+                        throw new Error(`The resource text ${this.props.getText} was not defined in the language ${state.activeLanguage.key}`);
+                    }
+
                     this.setState({
                         ...this.state,
                         text: newText
@@ -97,9 +98,13 @@ const ResourceTextInt = withStyles(styles)(
             return this.state.text;
         }
     }
-);
 
-export const ResourceText = function<TResourceText>()
+/**
+ * This function can be used to create your own resource text class.
+ * @example
+ * const MyResourceText: React.ComponentType<IResourceTextProps<MyResourceTexts>> = ResourceText<MyResourceTexts>();
+ */
+export const CreateResourceTextComponent = function<TResourceText>(): React.ComponentType<IResourceTextProps<TResourceText>>
 {
-    return usePageContext(ResourceTextInt<TResourceText>);
+    return usePageContext(ResourceTextInt);
 };

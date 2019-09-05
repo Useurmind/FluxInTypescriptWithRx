@@ -3,6 +3,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { subscribeStoreSelect } from "rfluxx";
 
+<% if (includeInternationalization) { %>
+import { ResourceText } from "./i18n/Languages";
+<% } %>
+
+
 export const styles = (theme: Theme) => createStyles({
     root: {
     }
@@ -37,7 +42,13 @@ export const HomePage = withStyles(styles)(
         {
             const { classes, ...rest } = this.props;
 
-            return <div className={classes.root}>Welcome Home!</div>;
+            return <div className={classes.root}>
+                <% if (includeInternationalization) { %>
+                <ResourceText getText={ x => x.welcome_home } />
+                <% } else { %>
+                Welcome Home!
+                <% } %>
+            </div>;
         }
     }
 );

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Subtract } from "utility-types";
 
 import { IContainer } from "./DependencyInjection";
 import { IStore } from "./IStore";
@@ -129,16 +128,18 @@ export const subscribeStoreSelectInternal =
      TInjectedProps extends object>(
         wrappedComponent: React.ComponentType<TProps>,
         selectProps: (state: TStoreState, store: TStore) => TInjectedProps
-    ) =>
+    )
+    : React.ComponentType<Omit<TProps, keyof TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>> =>
     class WithStoreSubscription
-        extends React.Component<Subtract<TProps, TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>,
-                                IWithStoreSubscriptionState<TInjectedProps>> {
+        extends React.Component<Omit<TProps, keyof TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>,
+                                IWithStoreSubscriptionState<TInjectedProps>>
+    {
         /**
          * The subscription to the store.
          */
         public subscription: StoreSubscription<TStore, TStoreState> = new StoreSubscription();
 
-        constructor(props: Subtract<TProps, TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>)
+        constructor(props: Omit<TProps, keyof TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>)
         {
             super(props);
             this.handleState = this.handleState.bind(this);
@@ -153,7 +154,7 @@ export const subscribeStoreSelectInternal =
         }
 
         public componentDidUpdate(
-            oldProps: Subtract<TProps, TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>)
+            oldProps: Omit<TProps, keyof TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>)
         {
             if (isStoreInjected(this.props) && isStoreInjected(oldProps) && oldProps.store !== this.props.store)
             {

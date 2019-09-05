@@ -56,7 +56,17 @@ export interface IResourceStoreOptions<TResourceTexts>
      */
     languages: ILanguage<TResourceTexts>[];
 
+    /**
+     * The router store to which the resource store will connect for 
+     * setting the language in the url.
+     */
     routerStore: IRouterStore;
+
+    /**
+     * The name of the url search parameter that will be used to store the language key.
+     * By default this is "lang".
+     */
+    languageParameterName?: string;
 }
 
 /**
@@ -77,10 +87,13 @@ export class ResourceStore<TResourceTexts>
     extends Store<IResourceStoreState<TResourceTexts>> implements IResourceStore<TResourceTexts>
 {
     public readonly setLanguage: IAction<string>;
+    
+    private readonly langParamName: string;
 
     constructor(private options: IResourceStoreOptions<TResourceTexts>)
     {
         super({
+            ...options,
             initialState: {
                 availableLanguages: options.languages,
                 activeLanguage: options.languages[0],
@@ -88,13 +101,15 @@ export class ResourceStore<TResourceTexts>
             }
         });
 
+        this.langParamName = this.options.languageParameterName ? this.options.languageParameterName : "lang";
+
         this.setLanguage = this.createActionAndSubscribe(langKey => this.onSetLanguage(langKey));
 
         const lastRouterStoreState = this.options.routerStore.observe();
         lastRouterStoreState.subscribe(routerStoreState =>
         {
             const currentLanguage = this.state.activeLanguage.key;
-            const currentRouteLanguage = routerStoreState.currentHit.parameters.get("lang");
+            const currentRouteLanguage = routerStoreState.currentHit.parameters.get(this.langParamName);
 
             if (!currentRouteLanguage)
             {
@@ -122,13 +137,13 @@ export class ResourceStore<TResourceTexts>
     private applyLanguageToRoute(routerStoreState: IRouterStoreState)
     {
         const currentLanguage = this.state.activeLanguage.key;
-        const currentRouteLanguage = routerStoreState.currentHit.parameters.get("lang");
+        const currentRouteLanguage = routerStoreState.currentHit.parameters.get(this.langParamName);
 
         if (!currentRouteLanguage || currentLanguage.toLowerCase() !== currentRouteLanguage.toLowerCase())
         {
             const currentUrl = new URL(routerStoreState.currentHit.url.href);
 
-            currentUrl.searchParams.set("lang", currentLanguage);
+            currentUrl.searchParams.set(this.langParamName, currentLanguage);
 
             this.options.routerStore.navigate.trigger({
                 url: currentUrl,

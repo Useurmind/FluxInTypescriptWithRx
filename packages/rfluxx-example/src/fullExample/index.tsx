@@ -18,6 +18,7 @@ import { ContainerFactory as SelectPageContainerFactory } from "./SelectPage/Con
 import { ContainerFactory as BoundPageContainerFactory} from "./BoundPage/ContainerFactory";
 import { SelectPage } from "./SelectPage/SelectPage";
 import { BoundPageBound } from './BoundPage/BoundPage';
+import { MultiLanguagePage } from './Internationalization/MultiLanguagePage';
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -78,6 +79,11 @@ const siteMap: ISiteMapNode = {
             routeExpression: "/boundPage",
             containerFactory: new BoundPageContainerFactory(),
             render: p => <BoundPageBound storeRegistrationKey="IBoundPageStore" />
+        },
+        {
+            caption: "Internationalization",
+            routeExpression: "/internationalization",
+            render: p => <MultiLanguagePage />
         }
     ]
 };
