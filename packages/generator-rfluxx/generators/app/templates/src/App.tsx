@@ -2,7 +2,7 @@ import { Theme } from "@material-ui/core";
 import * as styles from "@material-ui/styles";
 import * as React from "react";
 <% if (includeTheming) { %>
-import { ThemedMaster } from "rfluxx-mui-theming";
+import { ThemedMasterBound } from "rfluxx-mui-theming";
 <% } %>
 import { ISiteMapStore } from "rfluxx-routing";
 import { IPageManagementStore } from "rfluxx-routing";

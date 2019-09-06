@@ -5,7 +5,7 @@ import { subscribeStoreSelect } from "rfluxx";
 <% if (includeTheming) { %>
 import { ThemeChooserBound } from "rfluxx-mui-theming";
 <% } %>
-import { IPageMasterProps } from "rfluxx-routing";
+import { IPageMasterProps, withPageContext } from "rfluxx-routing";
 
 <% if (includeInternationalization) { %>
 import { LanguageChooser } from "./i18n/LanguageChooser";

@@ -14,7 +14,7 @@ export class GlobalContainerFactory extends GlobalContainerFactoryBase
     protected registerStores(builder: IGlobalContainerBuilder): void
     {
         <% if (includeTheming) { %>
-        registerThemesGlobally(builder, "Default");
+        registerThemesGlobally(builder, [ "Default" ]);
         <% } %>
 
         <% if (includeInternationalization) { %>
