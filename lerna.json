@@ -1,5 +1,5 @@
 {
-  "version": "3.5.2",
+  "version": "3.6.0",
   "npmClient": "npm",
   "packages": [
     "packages/generator-rfluxx",
@@ -7,7 +7,7 @@
     "packages/rfluxx-example",
     "packages/rfluxx-forms",
     "packages/rfluxx-i18n",
-    "packages/rfluxx-routing",
-    "packages/rfluxx-mui-theming"
+    "packages/rfluxx-mui-theming",
+    "packages/rfluxx-routing"
   ]
 }

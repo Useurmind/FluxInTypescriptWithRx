@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-mui-theming",
-  "version": "3.5.2",
+  "version": "3.6.0",
   "description": "Material-UI.com theme support for rfluxx.",
   "repository": {
     "type": "git",
@@ -27,11 +27,11 @@
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
   "peerDependencies": {
+    "@material-ui/core": "^4.3.2",
+    "@material-ui/styles": "^4.3.0",
     "react": "~16.8.4",
     "react-dom": "~16.8.4",
-    "rxjs": "~5.5.7",
-    "@material-ui/core": "^4.3.2",
-    "@material-ui/styles": "^4.3.0"
+    "rxjs": "~5.5.7"
   },
   "dependencies": {
     "rfluxx": "^3.5.2",
