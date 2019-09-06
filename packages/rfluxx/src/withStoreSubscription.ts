@@ -96,7 +96,7 @@ export const subscribeStore = <TStoreState extends object>() =>
 export const subscribeStoreSelect = <TStore extends IStore<TStoreState>, TStoreState extends object>() =>
         <TProps extends TInjectedProps, TInjectedProps extends object>(
             wrappedComponent: React.ComponentType<TProps>,
-            selectProps: (state: TStoreState, store: TStore) => TInjectedProps) =>
+            selectProps: (state: TStoreState, store: TStore, outerProps: SubscribeStoreSelectProps<TProps, TInjectedProps, TStore, TStoreState>) => TInjectedProps) =>
         subscribeStoreSelectInternal<TStore, TStoreState, TProps, TInjectedProps>(wrappedComponent, selectProps);
 
 /**
@@ -118,6 +118,9 @@ export type SubscribeStoreReturnType = ReturnType<typeof subscribeStore>;
 export type SubscribeStoreSelectReturnType =
     ReturnType<typeof subscribeStoreSelect>;
 
+export type SubscribeStoreSelectProps<TWrappedProps, TInjectedProps, TStore extends IStore<TStoreState>, TStoreState> =
+    Omit<TWrappedProps, keyof TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>;
+
 /**
  * internal part of @subscribeStoreSelect
  */
@@ -127,11 +130,11 @@ export const subscribeStoreSelectInternal =
      TProps extends TInjectedProps,
      TInjectedProps extends object>(
         wrappedComponent: React.ComponentType<TProps>,
-        selectProps: (state: TStoreState, store: TStore) => TInjectedProps
+        selectProps: (state: TStoreState, store: TStore, outerProps: SubscribeStoreSelectProps<TProps, TInjectedProps, TStore, TStoreState>) => TInjectedProps
     )
     : React.ComponentType<Omit<TProps, keyof TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>> =>
     class WithStoreSubscription
-        extends React.Component<Omit<TProps, keyof TInjectedProps> & IWithStoreSubscriptionProps<TStore, TStoreState>,
+        extends React.Component<SubscribeStoreSelectProps<TProps, TInjectedProps, TStore, TStoreState>,
                                 IWithStoreSubscriptionState<TInjectedProps>>
     {
         /**
@@ -205,7 +208,7 @@ export const subscribeStoreSelectInternal =
         public handleState(state: TStoreState, store: TStore): void
         {
             this.setState({
-                selectedProps: selectProps(state, store)
+                selectedProps: selectProps(state, store, this.props as SubscribeStoreSelectProps<TProps, TInjectedProps, TStore, TStoreState>)
             });
         }
 
