@@ -25,6 +25,11 @@ module.exports = class extends Generator {
                 type    : 'confirm',
                 name    : 'includeInternationalization',
                 message : 'Do you want to include internationalization support?',
+            },
+            {
+                type    : 'confirm',
+                name    : 'includeTheming',
+                message : 'Do you want to include theming support?',
             }
         ]);
     }
@@ -49,6 +54,11 @@ module.exports = class extends Generator {
             this._copyFile('src/i18n/Resources.en.ts');
             this._copyFile('src/i18n/Resources.de.ts');
             this._copyFile('src/i18n/LanguageChooser.tsx');
+        }
+
+        if(this.answers.includeTheming)
+        {
+            this._copyFile('src/theming/Theme.ts');
         }
     }
 
@@ -79,6 +89,10 @@ module.exports = class extends Generator {
         if(this.answers.includeInternationalization)
         {
             this.npmInstall("rfluxx-i18n", { "save": true });
+        }
+        if(this.answers.includeTheming)
+        {
+            this.npmInstall("rfluxx-mui-theming", { "save": true });
         }
 
         // material-ui

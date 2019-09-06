@@ -1,4 +1,6 @@
+<% if (!includeTheming) { %>
 import { createMuiTheme } from "@material-ui/core";
+<% } %>
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import * as RfluxxRouting from "rfluxx-routing";
@@ -23,7 +25,9 @@ const globalStores = RfluxxRouting.init({
     rootPath: ""
 });
 
+<% if (!includeTheming) { %>
 const theme = createMuiTheme();
+<% } %>
 
 document.addEventListener("DOMContentLoaded", event =>
 {
@@ -31,6 +35,9 @@ document.addEventListener("DOMContentLoaded", event =>
     ReactDom.render(
         <App siteMapStore={globalStores.siteMapStore}
              pageManagementStore={globalStores.pageManagementStore}
-             theme={theme} />,
+             <% if (!includeTheming) { %>
+             theme={theme} 
+             <% } %>
+             />,
         root);
 });

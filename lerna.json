@@ -7,6 +7,7 @@
     "packages/rfluxx-example",
     "packages/rfluxx-forms",
     "packages/rfluxx-i18n",
-    "packages/rfluxx-routing"
+    "packages/rfluxx-routing",
+    "packages/rfluxx-mui-theming"
   ]
 }

@@ -2,7 +2,14 @@ import { createStyles, Grid, Theme, WithStyles } from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { subscribeStoreSelect } from "rfluxx";
+<% if (includeTheming) { %>
+import { ThemeChooserBound } from "rfluxx-mui-theming";
+<% } %>
 import { IPageMasterProps } from "rfluxx-routing";
+
+<% if (includeInternationalization) { %>
+import { LanguageChooser } from "./i18n/LanguageChooser";
+<% } %>
 
 export const styles = (theme: Theme) => createStyles({
     root: {
@@ -47,6 +54,12 @@ export const Master = withStyles(styles)(
                 <div className={classes.pageContainer}>
                     { this.props.pageComponent }
                 </div>
+                <% if (includeTheming) { %>
+                { withPageContext(<ThemeChooserBound storeRegistrationKey="IThemeStore" />) }
+                <% } %>
+                <% if (includeInternationalization) { %>
+                <LanguageChooser storeRegistrationKey="IResourceStore" />
+                <% } %>                                
             </div>;
         }
     }

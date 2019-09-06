@@ -44,6 +44,13 @@
             "path": "packages/rfluxx-example/",
             "group": "build",
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "build",
+            "path": "packages/rfluxx-mui-theming/",
+            "group": "build",
+            "problemMatcher": []
         }
     ]
 }
