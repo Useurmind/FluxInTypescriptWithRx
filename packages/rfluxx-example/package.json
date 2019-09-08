@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-example",
-  "version": "3.5.2",
+  "version": "3.6.2",
   "description": "Example apps with the rfluxx framework.",
   "private": true,
   "repository": {
@@ -34,10 +34,10 @@
     "@material-ui/styles": "^4.1.1",
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.27",
-    "rfluxx": "^3.5.2",
-    "rfluxx-forms": "^3.5.2",
-    "rfluxx-i18n": "^3.5.2",
-    "rfluxx-routing": "^3.5.2",
+    "rfluxx": "^3.6.2",
+    "rfluxx-forms": "^3.6.2",
+    "rfluxx-i18n": "^3.6.2",
+    "rfluxx-routing": "^3.6.2",
     "rxjs": "~5.5.7",
     "style-loader": "~0.23.1",
     "tslib": "~1.9.0"

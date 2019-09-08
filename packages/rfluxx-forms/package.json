@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-forms",
-  "version": "3.5.2",
+  "version": "3.6.2",
   "description": "Rfluxx based forms framework.",
   "private": true,
   "repository": {
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
-    "rfluxx": "^3.5.2",
+    "rfluxx": "^3.6.2",
     "tslib": "~1.9.0"
   },
   "devDependencies": {
