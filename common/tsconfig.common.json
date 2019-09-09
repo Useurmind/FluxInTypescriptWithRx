@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "es2015",
+        "module": "esnext",
         "moduleResolution": "node",
         "watch": false, 
         "sourceMap": true,

@@ -21,7 +21,12 @@ export interface ILanguage<TResourceTexts>
     /**
      * The resources in form of multi level dictionaries/objects.
      */
-    resources: TResourceTexts;
+    resources?: TResourceTexts;
+
+    /**
+     * A function to load the resource from somewhere.
+     */
+    resolve?: () => Promise<TResourceTexts>;
 }
 
 /**
@@ -110,10 +115,19 @@ export class ResourceStore<TResourceTexts>
         {
             const currentLanguage = this.state.activeLanguage.key;
             const currentRouteLanguage = routerStoreState.currentHit.parameters.get(this.langParamName);
+            const currentStoreLanguage = window && window.localStorage ? window.localStorage.getItem(this.langParamName) : null;
 
             if (!currentRouteLanguage)
             {
-                this.applyLanguageToRoute(routerStoreState);
+                if (currentStoreLanguage)
+                {
+                    // if a language is stored in the local storage use that
+                    this.setLanguage.trigger(currentStoreLanguage);
+                } 
+                else
+                {
+                    this.applyLanguageToRouteAndCookie(routerStoreState);
+                }                
             }
             else if (currentLanguage.toLowerCase() !== currentRouteLanguage.toLowerCase())
             {
@@ -125,16 +139,20 @@ export class ResourceStore<TResourceTexts>
     private onSetLanguage(langKey: string): void
     {
         const activeLanguage = this.state.availableLanguages.find(x => x.key === langKey);
-        this.setState({
-            ...this.state,
-            activeLanguage,
-            activeResources: activeLanguage.resources
-        });
 
-        this.options.routerStore.observe().pipe(take(1)).subscribe(x => this.applyLanguageToRoute(x));
+        this.getLanguageResources(activeLanguage)
+            .then(_ => {
+                this.setState({
+                    ...this.state,
+                    activeLanguage,
+                    activeResources: activeLanguage.resources
+                });
+
+                this.options.routerStore.observe().pipe(take(1)).subscribe(x => this.applyLanguageToRouteAndCookie(x));
+            });
     }
 
-    private applyLanguageToRoute(routerStoreState: IRouterStoreState)
+    private applyLanguageToRouteAndCookie(routerStoreState: IRouterStoreState)
     {
         const currentLanguage = this.state.activeLanguage.key;
         const currentRouteLanguage = routerStoreState.currentHit.parameters.get(this.langParamName);
@@ -150,5 +168,28 @@ export class ResourceStore<TResourceTexts>
                 replaceHistoryEntry: true
             });
         }
+
+        if (window && window.localStorage)
+        {
+            window.localStorage.setItem(this.langParamName, currentLanguage);
+        }
+    }
+
+    private getLanguageResources(language: ILanguage<TResourceTexts>): Promise<TResourceTexts>
+    {
+        if (language.resources)
+        {
+            return new Promise((resolve, reject) => {
+                resolve(language.resources);
+            });
+        }
+
+        if (!language.resolve)
+        {
+            throw new Error(`Language ${language.key} has no resources and no resolve function set.`)
+        }
+
+        return language.resolve()
+                       .then(rt => language.resources = rt);
     }
 }

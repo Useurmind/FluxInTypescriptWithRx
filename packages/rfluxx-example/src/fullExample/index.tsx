@@ -94,7 +94,7 @@ const globalStores = RfluxxRouting.init({
     siteMap,
     containerFactory,
     targetNumberOpenPages: 5,
-    rootPath: "/fullExample/"
+    rootPath: "/"
 });
 
 const theme = createMuiTheme();

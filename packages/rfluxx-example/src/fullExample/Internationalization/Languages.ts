@@ -15,6 +15,7 @@ export const languages: Language[] = [
     {
         key: "de",
         caption: "Deutsch",
-        resources: resourcesDe
+        //resources: resourcesDe,
+        resolve: () => import(/* webpackChunkName: "Resources.de" */"./Resources.de").then(x => x.resources)
     }
 ];

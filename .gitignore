@@ -84,6 +84,7 @@ temp
 # Rush files
 common/temp/**
 package-deps.json
+packages/rfluxx-exampledist
 packages/rfluxx-exampledist/rfluxx.siteMap.bundle.js
 packages/rfluxx-exampledist/rfluxx.fullExample.bundle.js
 packages/rfluxx-exampledist/rfluxx.pages.bundle.js

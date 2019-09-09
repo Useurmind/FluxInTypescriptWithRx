@@ -4,8 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "type": "npm",
-            "script": "bootstrap",
+            "label": "lerna bootstrap",
+            "type": "shell",
+            "command": "./lerna-bootstrap.ps1",
             "problemMatcher": []
         },
         {

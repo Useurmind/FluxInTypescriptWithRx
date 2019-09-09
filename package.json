@@ -1,7 +1,6 @@
 {
 	"name": "rfluxx",
 	"scripts": {
-		"lerna_bootstrap": "./lerna-bootstrap.ps1"
 	},
 	"dependencies": {
 		"@date-io/date-fns": "^1.3.6",

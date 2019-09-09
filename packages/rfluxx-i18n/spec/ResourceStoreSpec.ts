@@ -95,11 +95,12 @@ describe("ResourceStore", () =>
     })
 });
 
-function getResourceStore(routerStore?: RouterStore)
+function getResourceStore(routerStore?: RouterStore, langParam?: string)
 {
     return new ResourceStore({
         routerStore: routerStore ? routerStore : getRouterStore("https://test.com/my/route/1", "https://test.com"),
-        languages
+        languages,
+        languageParameterName: langParam
     });
 }
 

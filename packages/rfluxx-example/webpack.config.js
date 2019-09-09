@@ -2,15 +2,16 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     // entryPoint.js is the main file of your application
     // from there all required parts of the application are imported
     // wepack will start to traverse imports starting from this file
     entry: {
-        routerStore: "./src/routerStore/index.tsx",
-        siteMap: "./src/siteMap/index.tsx",
-        pages: "./src/pages/index.tsx",
+        // routerStore: "./src/routerStore/index.tsx",
+        // siteMap: "./src/siteMap/index.tsx",
+        // pages: "./src/pages/index.tsx",
         fullExample: "./src/fullExample/index.tsx"
     },
     resolve: {
@@ -45,24 +46,33 @@ module.exports = {
             es5: 'es5-shim',
             es6: 'es6-shim'
         }),
-        new HtmlWebpackPlugin({
-            title: 'RFluxx Routing Examples'
-        }),    
+        new CopyPlugin([
+            {
+                from: "src/fullExample/index.html",
+                to: "index.html"
+            }
+        ]),
+        // new HtmlWebpackPlugin({
+        //     title: 'RFluxx Routing Examples'
+        // }),    
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-        contentBase: path.resolve(__dirname, 'src'),
+        contentBase: path.resolve(__dirname, 'dist'),
+        // publicPath: "fullExample",
         hot: true,
         historyApiFallback: {
-            index: "fullExample/index.html"
+            index: "/index.html"
         }
     },
     devtool: 'inline-source-map',
     mode: "development",
     output: {
+        // spublicPath: '',
         libraryTarget: "umd",
         filename: 'rfluxx.[name].bundle.js',
-        path: __dirname + 'dist'
+        chunkFilename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'dist')
     }
 };
