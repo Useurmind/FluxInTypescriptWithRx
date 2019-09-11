@@ -7,6 +7,7 @@ import { subscribeStoreSelect } from "../../src/withStoreSubscription";
 
 import { CounterBound } from "./Counter";
 import { ICounterStore } from "./CounterStore";
+import { FuncCounter } from './FuncCounter';
 
 export interface IPageProps {
     containerFactory: IRfluxxInitializerWithContainer;
@@ -42,6 +43,8 @@ export class Page extends React.Component<IPageProps, IPageState>
         return <div>
             <button onClick={this.onResetCounterStore}>Reset counter store</button>
             <CounterBound container={this.state.container} storeRegistrationKey="ICounterStore" />
+
+            <FuncCounter container={this.state.container} storeRegistrationKey="ICounterStore" storeInstanceName="FuncCounterStore" /> 
         </div>;
     }
 }

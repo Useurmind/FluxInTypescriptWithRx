@@ -11,7 +11,7 @@ module.exports = {
         counter: "./example/counter/index.tsx",
         asyncAction: "./example/asyncAction/index.tsx",
         middleware: "./example/middleware/index.tsx",
-        subscribeViaHoc: "./example/subscribeViaHoc/index.tsx"
+        subscribe: "./example/subscribe/index.tsx"
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.

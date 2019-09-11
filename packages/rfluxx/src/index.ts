@@ -6,6 +6,7 @@ export * from "./Store";
 export * from "./StoreSubscription";
 export * from "./IResetMyState";
 
+export * from "./Hooks";
 export * from "./ActionFactory";
 export * from "./Middleware";
 export * from "./Utility";
