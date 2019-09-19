@@ -43,7 +43,7 @@ export interface IResolveStoreFromContainerProps<TStore extends IStore<TStoreSta
     /**
      * The container to resolve the store from.
      */
-    container: IContainer;
+    container?: IContainer;
 }
 
 function isStoreInjected<TStore extends IStore<TStoreState>, TStoreState>(

@@ -4,7 +4,6 @@ import { Subscription } from "rxjs/Subscription";
 import { subscribeStoreSelect } from "../../src/subscription/withStoreSubscription";
 
 import { ICounterStore, ICounterStoreState } from "./CounterStore";
-import { useContainer } from '../../src/context/ContainerContext';
 
 /**
  * These are the props that are provided by the binding via the HOC.
