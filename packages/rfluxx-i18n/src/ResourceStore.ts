@@ -179,9 +179,7 @@ export class ResourceStore<TResourceTexts>
     {
         if (language.resources)
         {
-            return new Promise((resolve, reject) => {
-                resolve(language.resources);
-            });
+            return Promise.resolve(language.resources);
         }
 
         if (!language.resolve)

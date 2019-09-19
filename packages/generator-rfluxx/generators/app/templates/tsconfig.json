@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "outDir": "out",
-        "module": "es2015",
+        "module": "esnext",
         "moduleResolution": "node",
         "watch": false, 
         "sourceMap": true,
@@ -9,7 +9,7 @@
         "importHelpers": true,
         "jsx": "react",
         "declaration": true,
-        "skipLibCheck": true,
+        "skipLibCheck": true
     },
     "exclude": [
         "out",

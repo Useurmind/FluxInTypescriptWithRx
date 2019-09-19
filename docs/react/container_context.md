@@ -7,7 +7,7 @@ This package provides a react context for a dependency injection container. It h
 First you need to add the container provider to the outer most place starting from which the container should be available. This could be your app component.
 
 ```typescriptreact
-import { ContainerContextProvider } from '../../src/context/ContainerContext';
+import { ContainerContextProvider } from "rfluxx-react";
 
 // ....
 

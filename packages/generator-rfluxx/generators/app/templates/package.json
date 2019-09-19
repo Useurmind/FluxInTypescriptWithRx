@@ -4,9 +4,11 @@
   "description": "",
   "scripts": {
     "lint": "tslint -p .\\tsconfig.json",
-    "build": "webpack-cli",
     "test": "karma start",
-    "start": "webpack-dev-server --https"
+    "testonce": "karma start --single-run",
+    "build": "webpack-cli --config webpack.debug.js",
+    "build_production": "webpack-cli --config webpack.release.js",
+    "start": "webpack-dev-server --https --config webpack.debug.js"
   },
   "keywords": [
     

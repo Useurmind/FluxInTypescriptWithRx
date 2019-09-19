@@ -7,7 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const appName = "<%= name %>";
 const appTitle = "<%= title %>";
 
-module.exports = {
+module.exports = (params) => ({
     // entryPoint.js is the main file of your application
     // from there all required parts of the application are imported
     // wepack will start to traverse imports starting from this file
@@ -41,7 +41,10 @@ module.exports = {
         }),
         new HtmlWebpackRootPlugin(),
         new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),        
+        new webpack.DefinePlugin({
+            PRODUCTION: JSON.stringify(params.isProduction)
+        })
     ],
     devServer: {
         contentBase: path.resolve(__dirname, 'src'),
@@ -56,4 +59,4 @@ module.exports = {
         path: __dirname + 'dist',
         publicPath: "/"
     }
-};
+});

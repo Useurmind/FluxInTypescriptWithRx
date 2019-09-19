@@ -7,11 +7,15 @@ Unit testing is a key area for every modern application framework. In RFluXX uni
 Testing store initialization is pretty simple. You create your store and assert it's state.
 
 ```typescript
+import { currentStoreState } from "rfluxx";
+
 const store = new CounterStore({
   initialCount: 5
 });
 
-store.subscribe(state => {
+// currentStoreState limits the observable on the next element that is delivered
+// it is a pipe with take(1)
+currentStoreState(store).subscribe(state => {
   assert(state.counter).toBe(5);
 });
 ```
@@ -29,10 +33,25 @@ const store = new CounterStore({
 
 store.increment.trigger(1);
 
-store.subscribe(state => {
+currentStoreState(store).subscribe(state => {
   assert(state.counter).toBe(6);
 });
 ```
+
+## Testing actions with delay
+
+Sometimes the state of the store is not directly computed and not available after the call to the action. In such cases you need to add a small delay before evaluating the stores state.
+
+```typescript
+import { delay } from "rxjs/operators";
+
+store.actionWithDelay.trigger(/* ... */);
+
+currentStoreState(store)pipe(delay(10)).subscribe(state => {
+  // ...
+});
+```
+
 
 ## Testing actions with backend calls
 
@@ -54,7 +73,7 @@ const store = new CounterStore({
 // this action should call the backend to save the count
 store.saveCount.trigger(null);
 
-store.subscribe(state => {
+currentStoreState(store).subscribe(state => {
   assert(state.isSaved).toBe(true);
 });
 ```
