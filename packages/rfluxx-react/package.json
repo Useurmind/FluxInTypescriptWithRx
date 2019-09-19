@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-react",
-  "version": "3.6.2",
+  "version": "4.0.0",
   "description": "Some integration logic for integration of Rfluxx with react.",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
     "rxjs": "~5.5.7"
   },
   "dependencies": {
-    "rfluxx": "^3.6.2",
+    "rfluxx": "^4.0.0",
     "tslib": "~1.9.0",
     "utility-types": "^3.7.0"
   },
