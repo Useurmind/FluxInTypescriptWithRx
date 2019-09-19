@@ -9,7 +9,7 @@ export interface IContainerContextProviderProps
     /**
      * The container is provided.
      */
-    container: IContainer;
+    container?: IContainer;
 }
 
 /**

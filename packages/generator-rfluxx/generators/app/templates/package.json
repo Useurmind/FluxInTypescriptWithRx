@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "lint": "tslint -p .\\tsconfig.json",
-    "build": "tsc",
+    "build": "webpack-cli",
     "test": "karma start",
     "start": "webpack-dev-server --https"
   },

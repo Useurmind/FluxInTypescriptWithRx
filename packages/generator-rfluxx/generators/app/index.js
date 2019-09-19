@@ -85,6 +85,7 @@ module.exports = class extends Generator {
 
         // rfluxx
         this.npmInstall("rfluxx", { "save": true });
+        this.npmInstall("rfluxx-react", { "save": true });
         this.npmInstall("rfluxx-routing", { "save": true });        
         if(this.answers.includeInternationalization)
         {

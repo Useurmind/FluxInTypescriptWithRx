@@ -1,4 +1,4 @@
-# Home
+# RFluXX Core
 
 This is the documentation for the RFluXX core library.
 

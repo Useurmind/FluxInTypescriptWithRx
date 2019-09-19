@@ -1,7 +1,6 @@
 import { createStyles, Grid, Theme, WithStyles } from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import * as React from "react";
-import { subscribeStoreSelect } from "rfluxx-react";
 <% if (includeTheming) { %>
 import { ThemeChooserBound } from "rfluxx-mui-theming";
 <% } %>

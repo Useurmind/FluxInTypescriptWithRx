@@ -11,11 +11,16 @@ nav:
     - Actions: core/actions.md
     - Container: core/container.md
     - Stores & Infrastructure: core/injecting_infrastructure_into_stores.md
-    - Binding Stores: core/binding_stores_to_components.md
     - Time Travel: core/designing_stores_for_timetravel.md
     - Functional Stores (Alpha): core/functional_stores.md
     - Reducers (TODO): core/reducer.md
     - Unit Testing: core/testing_stores.md
+  - RFluXX-React:
+    - Home: react/index.md
+    - Container Context: react/container_context.md
+    - Bind via Lifecycle: react/binding_via_lifecycle.md
+    - Bind via HOC: react/binding_via_hoc.md
+    - Bind via Hooks: react/binding_via_hooks.md
   - RFluXX-Routing: 
     - Home: routing/index.md
     - Urls: routing/urls.md
@@ -27,3 +32,5 @@ nav:
     - Intra Page Routing: routing/intra_page_routing.md
     - Master Component: routing/master_component.md
     - Page Dependency Injection: routing/page_aware_dependency_injection.md
+  - RFluXX-Internationalization:
+    - Home: internationalization/index.md

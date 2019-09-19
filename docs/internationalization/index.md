@@ -103,7 +103,7 @@ export class GlobalContainerFactory extends GlobalContainerFactoryBase
 
 Now that everything is setup you can use `ResourceText` components in your components:
 
-```typescript
+```typescriptreact
 public render()
 {
     return <div>
