@@ -36,6 +36,7 @@ module.exports = class extends Generator {
     
     writing() {
         this._copyFile('webpack.config.js');
+        this._copyFile('webpack.debug.js');
         this._copyFile('webpack.release.js');
         this._copyFile('tslint.json');
         this._copyFile('tsconfig.json');
