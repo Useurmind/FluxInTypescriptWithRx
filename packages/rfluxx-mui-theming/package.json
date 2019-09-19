@@ -36,6 +36,7 @@
   "dependencies": {
     "rfluxx": "^3.6.2",
     "rfluxx-routing": "^3.6.2",
+    "rfluxx-react": "^3.6.2",
     "tslib": "~1.9.0"
   },
   "devDependencies": {

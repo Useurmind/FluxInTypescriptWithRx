@@ -1,6 +1,5 @@
 import * as React from "react";
 import { StoreSubscription } from "rfluxx";
-import { Subscription } from "rxjs/Subscription";
 
 import { RouteParameters } from "./Routing/RouterStore";
 import { ISiteMapNode } from "./SiteMap/ISiteMapNode";

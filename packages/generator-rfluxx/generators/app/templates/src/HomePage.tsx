@@ -1,7 +1,7 @@
 import { createStyles, Theme, WithStyles } from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import * as React from "react";
-import { subscribeStoreSelect } from "rfluxx";
+import { subscribeStoreSelect } from "rfluxx-react";
 
 <% if (includeInternationalization) { %>
 import { ResourceText } from "./i18n/Languages";

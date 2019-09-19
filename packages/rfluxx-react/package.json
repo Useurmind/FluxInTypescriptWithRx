@@ -1,7 +1,7 @@
 {
-  "name": "rfluxx-routing",
+  "name": "rfluxx-react",
   "version": "3.6.2",
-  "description": "Routing package for rfluxx.",
+  "description": "Some integration logic for integration of Rfluxx with react.",
   "repository": {
     "type": "git",
     "url": "https://github.com/Useurmind/RFluXX.git"
@@ -12,41 +12,33 @@
     "lint": "tslint -p .\\tsconfig.json",
     "build": "tsc",
     "watch": "tsc -w",
-    "start": "webpack-dev-server --https",
     "test": "karma start",
-    "testonce": "karma start --single-run"
+    "testonce": "karma start --single-run",
+    "start": "webpack-dev-server --https"
   },
   "keywords": [
     "flux",
     "rx",
     "rxjs",
     "typescript",
-    "routing"
+    "react",
+    "hooks"
   ],
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "@material-ui/styles": "^4.1.1",
-    "react": "~16.8.4",
-    "react-dom": "~16.8.4",
     "rxjs": "~5.5.7"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
     "rfluxx": "^3.6.2",
-    "rfluxx-react": "^3.6.2",
     "tslib": "~1.9.0",
     "utility-types": "^3.7.0"
   },
   "devDependencies": {
-    "@material-ui/styles": "^4.1.1",
-    "@types/classnames": "^2.2.7",
     "@types/jasmine": "^2.8.6",
     "@types/react": "~16.8.8",
     "@types/react-dom": "~16.8.2",
     "clean-webpack-plugin": "^0.1.18",
-    "es5-shim": "~4.5.12",
-    "es6-shim": "~0.35.5",
     "html-webpack-plugin": "^3.0.6",
     "jasmine": "^3.1.0",
     "jasmine-core": "^3.1.0",
@@ -59,7 +51,6 @@
     "react": "~16.8.4",
     "react-dom": "~16.8.4",
     "rxjs": "~5.5.7",
-    "style-loader": "~0.23.1",
     "ts-loader": "^4.1.0",
     "tslint": "^5.11.0",
     "tslint-eslint-rules": "^5.4.0",

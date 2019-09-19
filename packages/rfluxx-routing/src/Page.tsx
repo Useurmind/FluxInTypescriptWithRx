@@ -1,8 +1,9 @@
 import * as React from "react";
+import { withContainer, ContainerContextProvider } from "rfluxx-react";
 
-import { IPageContextProps, PageContextProvider, withPageContext } from "./PageContextProvider";
 import { IPageData } from "./Pages/IPageData";
 import { SiteMapNode } from "./SiteMap/SiteMapNode";
+import { IPageContextProps, PageContextProvider } from "./PageContext";
 
 /**
  * Props for a master template component that is used to defined
@@ -63,12 +64,14 @@ export class Page extends React.Component<IPageProps, IPageState>
         let renderedElement = pageComponent;
         if (this.props.pageMasterTemplate)
         {
-            renderedElement = withPageContext(React.cloneElement(this.props.pageMasterTemplate, { pageComponent }));
+            renderedElement = withContainer(React.cloneElement(this.props.pageMasterTemplate, { pageComponent }));
         }
 
-        return <PageContextProvider container={this.props.page.container}
-                                    routeParameters={this.props.page.routeParameters} >
-            {renderedElement}
-        </PageContextProvider>;
+        return <ContainerContextProvider container={this.props.page.container}>
+            <PageContextProvider routeParameters={this.props.page.routeParameters}
+                                 container={this.props.page.container}>
+                {renderedElement}
+            </PageContextProvider>
+        </ContainerContextProvider>;
     }
 }

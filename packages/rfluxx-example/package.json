@@ -35,6 +35,7 @@
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.27",
     "rfluxx": "^3.6.2",
+    "rfluxx-react": "^3.6.2",
     "rfluxx-forms": "^3.6.2",
     "rfluxx-i18n": "^3.6.2",
     "rfluxx-routing": "^3.6.2",

@@ -1,7 +1,7 @@
 import { createStyles, MenuItem, Select, Theme, WithStyles } from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import * as React from "react";
-import { subscribeStoreSelect, IResolveStoreFromContainerProps } from "rfluxx";
+import { subscribeStoreSelect, IResolveStoreFromContainerProps } from "rfluxx-react";
 import { IResourceStore, IResourceStoreState } from "rfluxx-i18n";
 import { usePageContext, IPageContextProps } from "rfluxx-routing";
 

@@ -23,8 +23,7 @@ export * from "./RouteMatching";
 export * from "./CurrentPage";
 export * from "./CurrentSiteMapNode";
 export * from "./Page";
-export * from "./PageContextProvider";
-export * from "./usePageContext";
+export * from "./PageContext";
 export * from "./PageManagementStore";
 export * from "./PageStore";
 export * from "./RouterLink";
@@ -92,6 +91,7 @@ export function init(options: IRfluxxOptions)
                                      targetNumberPagesInCache: options.targetNumberOpenPages
                                     })
                                  : new NoPageStateEvictions();
+                                 
     const routes = computeSiteMapRoutesAndSetAbsoluteRouteExpressions(options.siteMap);
 
     configureRouterStore({

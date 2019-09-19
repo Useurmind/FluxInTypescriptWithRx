@@ -8,9 +8,7 @@ module.exports = {
     // from there all required parts of the application are imported
     // wepack will start to traverse imports starting from this file
     entry: {
-        counter: "./example/counter/index.tsx",
-        asyncAction: "./example/asyncAction/index.tsx",
-        middleware: "./example/middleware/index.tsx"
+        subscribe: "./example/subscribe/index.tsx"
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { IStore } from "../IStore";
-import { StoreSubscription } from '../StoreSubscription';
+import { IStore, StoreSubscription } from "rfluxx";
 
 /**
  * A react hook to retrieve the state from a store via subscription.

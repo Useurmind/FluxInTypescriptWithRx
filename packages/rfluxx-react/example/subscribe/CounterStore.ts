@@ -1,4 +1,4 @@
-import * as Flux from "../../src";
+import * as Flux from "rfluxx";
 
 export interface ICounterStoreState {
     counter: number;

@@ -52,6 +52,13 @@
             "path": "packages/rfluxx-mui-theming/",
             "group": "build",
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "build",
+            "path": "packages/rfluxx-react/",
+            "group": "build",
+            "problemMatcher": []
         }
     ]
 }

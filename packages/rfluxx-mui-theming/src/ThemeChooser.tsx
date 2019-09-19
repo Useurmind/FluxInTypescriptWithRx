@@ -1,7 +1,7 @@
 import { createStyles, Theme, WithStyles, Select, MenuItem } from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import * as React from "react";
-import { subscribeStoreSelect } from "rfluxx";
+import { subscribeStoreSelect } from "rfluxx-react";
 
 import { IThemeStore, IThemeStoreState } from "./ThemeStore";
 

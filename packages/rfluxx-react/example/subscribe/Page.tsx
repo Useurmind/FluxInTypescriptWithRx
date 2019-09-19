@@ -1,13 +1,14 @@
 import * as React from "react";
 import { Subscription } from "rxjs/Subscription";
+import { IContainer } from "rfluxx";
+import { IRfluxxInitializerWithContainer } from "rfluxx";
 
-import { IContainer } from "../../src";
-import { IRfluxxInitializerWithContainer } from "../../src/Initialization";
-import { subscribeStoreSelect } from "../../src/withStoreSubscription";
+import { subscribeStoreSelect } from "../../src/subscription/withStoreSubscription";
 
 import { CounterBound } from "./Counter";
 import { ICounterStore } from "./CounterStore";
 import { FuncCounter } from './FuncCounter';
+import { ContainerContext, ContainerContextProvider, withContainer } from '../../src/context/ContainerContext';
 
 export interface IPageProps {
     containerFactory: IRfluxxInitializerWithContainer;
@@ -40,11 +41,13 @@ export class Page extends React.Component<IPageProps, IPageState>
 
     public render(): any
     {
-        return <div>
-            <button onClick={this.onResetCounterStore}>Reset counter store</button>
-            <CounterBound container={this.state.container} storeRegistrationKey="ICounterStore" />
+        return <ContainerContextProvider container={this.state.container}>
+            <div>
+                <button onClick={this.onResetCounterStore}>Reset counter store</button>
+                { withContainer(<CounterBound storeRegistrationKey="ICounterStore" />) }
 
-            <FuncCounter container={this.state.container} storeRegistrationKey="ICounterStore" storeInstanceName="FuncCounterStore" /> 
-        </div>;
+                <FuncCounter storeRegistrationKey="ICounterStore" storeInstanceName="FuncCounterStore" /> 
+            </div>
+        </ContainerContextProvider>;
     }
 }

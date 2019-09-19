@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
-
-import { init as rfluxx_init } from "../../src/Initialization";
+import { init as rfluxx_init } from "rfluxx";
 
 import { CounterStore } from "./CounterStore";
 import { Page } from "./Page";

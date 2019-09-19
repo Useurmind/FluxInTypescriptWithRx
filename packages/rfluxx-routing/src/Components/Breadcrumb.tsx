@@ -4,12 +4,11 @@ import { ClassKeyOfStyles } from "@material-ui/styles/withStyles";
 import classnames from "classnames";
 import * as React from "react";
 import { StoreSubscription } from "rfluxx";
-import { Subscription } from "rxjs/Subscription";
 
-import { IPageContextProps } from "../PageContextProvider";
 import { RouterLink } from "../RouterLink";
 import { getSiteMapNodeCaption, getSiteMapNodeSideBarUrl, ISiteMapNode } from "../SiteMap/ISiteMapNode";
 import { ISiteMapStore, ISiteMapStoreState } from "../SiteMap/SiteMapStore";
+import { IPageContextProps } from "../PageContext";
 
 const styles = createStyles({
     root: {
@@ -34,7 +33,8 @@ export type StyleNames = Record<ClassKeyOfStyles<typeof styles>, string>;
 /**
  * Props for { @see Breadcrumb }.
  */
-export interface IBreadcrumbProps extends IPageContextProps, WithStyles<typeof styles>
+export interface IBreadcrumbProps 
+    extends IPageContextProps, WithStyles<typeof styles>
 {
     /**
      * Function to create a separator, by default we take a /.

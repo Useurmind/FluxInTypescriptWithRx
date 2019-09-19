@@ -69,8 +69,10 @@ export abstract class SiteMapNodeContainerFactoryBase implements ISiteMapNodeCon
     public register(builder: ISiteMapNodeContainerBuilder)
         : void
     {
+        // time travel is currently not working with routing
+        // even if we would have to register it globally i think
         // registerTimeTraveler(builder, true, pageId);
-        registerTimeTraveler(builder, true, null);
+        //registerTimeTraveler(builder, true, null);
 
         this.registerStores(builder);
     }

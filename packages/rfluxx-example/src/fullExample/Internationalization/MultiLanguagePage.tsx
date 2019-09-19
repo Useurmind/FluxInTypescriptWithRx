@@ -1,5 +1,5 @@
 import * as React from "react";
-import { subscribeStoreSelect } from "rfluxx";
+import { subscribeStoreSelect } from "rfluxx-react";
 import { Theme, createStyles, WithStyles, withStyles, Typography, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
 import { ResourceTexts } from "./Resources.en";

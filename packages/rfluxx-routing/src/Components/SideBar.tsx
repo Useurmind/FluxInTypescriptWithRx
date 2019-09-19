@@ -5,10 +5,10 @@ import * as React from "react";
 import { StoreSubscription } from "rfluxx";
 import { Subscription } from "rxjs/Subscription";
 
-import { IPageContextProps } from "../PageContextProvider";
 import { RouterLink } from "../RouterLink";
 import { getSiteMapNodeCaption, getSiteMapNodeSideBarUrl, ISiteMapNode, shouldSiteMapNodeRenderInSideBar } from "../SiteMap/ISiteMapNode";
 import { ISiteMapStore, ISiteMapStoreState } from "../SiteMap/SiteMapStore";
+import { IPageContextProps } from "../PageContext";
 
 const styles = createStyles({
     root: {
@@ -25,7 +25,8 @@ const styles = createStyles({
 /**
  * Props for { @see SideBar }.
  */
-export interface ISideBarProps extends IPageContextProps, WithStyles<typeof styles>
+export interface ISideBarProps 
+    extends IPageContextProps, WithStyles<typeof styles>
 {
     /**
      * The site map store that states the currently active site map node.

@@ -2,7 +2,7 @@ import * as React from "react";
 import { IContainer } from "rfluxx";
 
 import { ISiteMapNodeContainerFactory } from "../DependencyInjection/ISiteMapNodeContainerFactory";
-import { IPageContextProps, withPageContext } from "../PageContextProvider";
+import { IPageContextProps, withPageContext } from "../PageContext";
 import { RouteParameters } from "../Routing/RouterStore";
 
 /**

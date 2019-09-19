@@ -3,7 +3,7 @@ import { StoreSubscription } from "rfluxx";
 import { Subscription } from "rxjs/Subscription";
 
 import { IPageMasterProps, Page } from "./Page";
-import { IPageContextProps, PageContext } from "./PageContextProvider";
+import { IPageContextProps, PageContext } from "./PageContext";
 import { IPageManagementStore, IPageManagementStoreState } from "./PageManagementStore";
 import { IPageData } from "./Pages/IPageData";
 import { RouteParameters } from "./Routing/RouteParameters";

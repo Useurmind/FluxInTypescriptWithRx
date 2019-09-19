@@ -1,7 +1,7 @@
 import { Theme } from "@material-ui/core";
 import * as mui_styles from "@material-ui/styles";
 import * as React from "react";
-import { subscribeStoreSelect } from "rfluxx";
+import { subscribeStoreSelect } from "rfluxx-react";
 import { IPageMasterProps, withPageContext } from "rfluxx-routing";
 
 import { IThemeStore, IThemeStoreState } from "./ThemeStore";

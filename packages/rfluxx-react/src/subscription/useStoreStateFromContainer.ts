@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { IStore } from "../IStore";
-import { StoreSubscription } from '../StoreSubscription';
-import { IContainer } from '../DependencyInjection/IContainer';
+import { IContainer, IStore, StoreSubscription } from "rfluxx";
+
 import { useStoreState } from './useStoreState';
 
 /**
@@ -11,6 +10,7 @@ export interface IUseStoreFromContainerProps
 {
     /**
      * The container to get the store from.
+     * If null then the context container should be used.
      */
     container: IContainer;
 
