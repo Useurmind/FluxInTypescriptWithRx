@@ -2,7 +2,7 @@
 	"name": "rfluxx-code-snippets",
 	"displayName": "Rfluxx VS code snippets",
 	"description": "This package provides VS code snippets that make creating rfluxx components easier",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"publisher": "JochenGruen",
 	"repository": {
 		"type": "git",
