@@ -221,6 +221,34 @@
 		],
 		"description": "A functional material-ui react component with binding to a store via hook."
   },
+  "Rfluxx hook store": {
+    "prefix": "rfluxx_react_hook_store",
+    "description": "Call hook to bind to store state.",
+    "body": [
+      "const [ storeState, store ] = useStoreState(props.store);"
+    ]
+  },
+  "Rfluxx hook store from container": {
+    "prefix": "rfluxx_react_hook_container",
+    "description": "Call hook to bind to store state from container.",
+    "body": [
+      "const [ storeState, store ] = useStoreStateFromContainer<I$1Store, I$1StoreState>(props);"
+    ]
+  },
+  "Rfluxx hook store from context": {
+    "prefix": "rfluxx_react_hook_container",
+    "description": "Call hook to bind to store state from container context.",
+    "body": [
+      "const [ storeState, store ] = useStoreStateFromContainerContext<I$1Store, I$1StoreState>(props);"
+    ]
+  },  
+  "Rfluxx store action callback": {
+    "prefix": "rfluxx_react_hook_action_callback",
+    "description": "Call hook to bind a callback to a store action.",
+    "body": [
+      "const $1 = useCallback(($2$3) => store.$1.trigger($2), [ store ]);"
+    ]
+  },
   "Rfluxx i18n language choose component": {
     "prefix": "rfluxx_i18n_langsel",
     "description": "A component to choose the active language",
