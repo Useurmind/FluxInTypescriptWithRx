@@ -7,14 +7,10 @@ import * as RfluxxRouting from "rfluxx-routing";
 import { ISiteMapNode } from "rfluxx-routing";
 
 import { App } from "./App";
-import { HomePage } from "./HomePage";
+import { siteMapNode as homeSiteMapNode } from "./pages/home/SiteMapNode";
 import { GlobalContainerFactory } from "./GlobalContainerFactory";
 
-const siteMap: ISiteMapNode = {
-    caption: "Home",
-    routeExpression: "home",
-    render: p => <HomePage />
-};
+const siteMap: ISiteMapNode = homeSiteMapNode;
 
 const globalContainerFactory = new GlobalContainerFactory();
 

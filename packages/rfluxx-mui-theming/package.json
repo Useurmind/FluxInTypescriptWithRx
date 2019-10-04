@@ -34,6 +34,8 @@
     "rxjs": "~5.5.7"
   },
   "dependencies": {
+    "@material-ui/core": "^4.3.2",
+    "@material-ui/styles": "^4.3.0",
     "rfluxx": "^4.0.0",
     "rfluxx-react": "^4.0.0",
     "rfluxx-routing": "^4.0.0",

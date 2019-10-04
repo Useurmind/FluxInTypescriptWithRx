@@ -26,9 +26,7 @@ The app skeleton takes an opinionated approach to which frameworks you should us
 
 This is a completely personal choice. But the frameworks that are included have proven to work together. Feel free to replace them as you see fit.
 
-The app skeleton (and also the code snippets for [vs code](https://code.visualstudio.com/)) provide integration with [material-ui](https://material-ui.com/).
-
-If you don't understand the setup of react components take a look at the [typescript guide of material-ui](https://material-ui.com/guides/typescript/).
+The app skeleton (and also the code snippets for [vs code](https://code.visualstudio.com/)) provide integration with [material-ui](https://material-ui.com/). If you don't understand the setup of react components take a look at the [typescript guide of material-ui](https://material-ui.com/guides/typescript/).
 
 It is also preconfigured to be build with webpack. It uses karma and Jasmine for running unit tests.
 
@@ -36,35 +34,32 @@ It is also preconfigured to be build with webpack. It uses karma and Jasmine for
 
 The starting point of each react app is usually the `index.tsx`. To this startup code we will add the creation of the site map tree and the initialization of the rfluxx routing package.
 
-Because the site map tree can become quite large it makes sense to extract it into one or several modules, e.g. `SiteMap.tsx`. But in the app skelleton it is located in the `index.tsx`:
+Because the site map tree can become quite large it makes sense to extract it into one or several modules. In the skelleton it is located in `pages/home/SiteMapNode.tsx`. Its recommended to define each page in its own folder and also collocate the site map node code ther. The home pages site map node is imported and used in the `index.tsx` file.
 
 ```typescript
-const siteMap: ISiteMapNode = {
-    caption: "Home",
-    routeExpression: "home",
+const siteMap: ISiteMapNode = homePageSiteMapNode;
+```
+
+Let's examine the home site map node at `pages/home/SiteMapNode.tsx` in more detail.
+
+```typescript
+export const siteMapNode: ISiteMapNode = 
+{
+    caption: "Home Page",
+    routeExpression: "/home",
+    containerFactory: new ContainerFactory(),
     render: p => <HomePage />
 };
 ```
 
-Let's examine the home site map node in more detail.
+The different properties are:
 
-    caption: "Home",
+- `caption`: Each node has a caption that is shown in different places in the UI to the user, e.g. the breadcrumb. You could also use it as the title of your pages.
+- `routeExpression`: Every node also needs a route expression that defines which URLs should show this node. Routes starting with a slash e.g. `/home` are absolute and interpreted with regard to the base url of the app. Routes without a starting slash e.g. `page1` are combined with the route of the parent. In this case to get `/home/page1`. Here none of these cases apply as home is the root node and its route expression is always absolute. The default initialization code of rfluxx assumes that the routes of nodes further down the tree are more specific ("longer") than the routes at the top of the tree. Therefore the routes further down the tree are matched before the routes at the top of the tree.
+- `containerFactory`: Each page has the possibility to define it's own container factory. This reduces friction between pages as the registrations in one page can be changed without affecting another page. If no container factory is specified for a page the central factory is used. In any case a new container is created per page opened.
+- `render`: In the render property we define which component should be rendered as the content of this site map node.
 
-Each node has a caption that is shown in different places in the UI to the user, e.g. the breadcrumb. You could also use it as the title of your pages.
-
-    routeExpression: "/home",
-
-Every node also needs a route expression that defines which URLs should show this node. Routes starting with a slash e.g. `/home` are absolute and interpreted with regard to the base url of the app. Routes without a starting slash e.g. `page1` are combined with the route of the parent. In this case to get `/home/page1`. Here none of these cases apply as home is the root node and its route expression is always absolute.
-
-The default initialization code of rfluxx assumes that the routes of nodes further down the tree are more specific ("longer") than the routes at the top of the tree. Therefore the routes further down the tree are matched before the routes at the top of the tree.
-
-    containerFactory: new MyPage1ContainerFactory(),
-
-Each page has the possibility to define it's own container factory. This reduces friction between pages as the registrations in one page can be changed without affecting another page. If no container factory is specified for a page the central factory is used. In any case a new container is created per page opened.
-
-    render: p => withPageContext(<Home />),
-
-In the render property we define which component should be rendered as the content of this site map node.
+## TODO from here
 
 The `withPageContext` function injects additional props into components whose props extend/implement the `IPageContextProps` interface. The most important of those props is the `container` which can be used to resolve the different stores for this page.
 

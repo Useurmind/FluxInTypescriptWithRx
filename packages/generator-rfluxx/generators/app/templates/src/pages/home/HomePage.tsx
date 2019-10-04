@@ -3,7 +3,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 
 <% if (includeInternationalization) { %>
-import { ResourceText } from "./i18n/Languages";
+import { ResourceText } from "../../i18n/Languages";
 <% } %>
 
 

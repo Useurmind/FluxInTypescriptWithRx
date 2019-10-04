@@ -59,6 +59,13 @@
             "path": "packages/rfluxx-react/",
             "group": "build",
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "build",
+            "path": "packages/rfluxx-forms/",
+            "group": "build",
+            "problemMatcher": []
         }
     ]
 }

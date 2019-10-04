@@ -14,11 +14,17 @@ import { FormDemoPage } from "./FormDemo/FormDemoPage";
 import { FormPage } from "./FormWithSelectPage/FormPage";
 import { HomePage } from "./HomePage";
 import { IntraRoutingPage } from "./IntraPageRouting/IntraRoutingPage";
-import { ContainerFactory as SelectPageContainerFactory } from "./SelectPage/ContainerFactory";
 import { ContainerFactory as BoundPageContainerFactory} from "./BoundPage/ContainerFactory";
-import { SelectPage } from "./SelectPage/SelectPage";
 import { BoundPageBound } from './BoundPage/BoundPage';
 import { MultiLanguagePage } from './Internationalization/MultiLanguagePage';
+import { siteMapNode as selectPageSiteMapNode} from "./SelectPage/SiteMapNode";
+import { siteMapNode as intraRoutingPageSiteMapNode} from "./IntraPageRouting/SiteMapNode";
+import { siteMapNode as internationalizationPageSiteMapNode} from "./Internationalization/SiteMapNode";
+import { siteMapNode as formPageSiteMapNode} from "./FormWithSelectPage/SiteMapNode";
+import { siteMapNode as formDemoPageSiteMapNode} from "./FormDemo/SiteMapNode";
+import { siteMapNode as endlessSequencePageSiteMapNode} from "./EndlessSequence/SiteMapNode";
+import { siteMapNode as editPageSiteMapNode} from "./EditPage/SiteMapNode";
+import { siteMapNode as boundPageSiteMapNode} from "./BoundPage/SiteMapNode";
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -39,52 +45,14 @@ const siteMap: ISiteMapNode = {
             render: p => <span>Some text in a span</span>,
             showInSidebar: "/home/some/span#fancy"
         },
-        {
-            caption: p => <span>Intra page routing</span>,
-            routeExpression: "/intraPageRouting?moreStuff={*}&moreDifferentStuff={*}",
-            render: p => <IntraRoutingPage />,
-            showInSidebar: new Map([["moreStuff", "false"], ["moreDifferentStuff", "false"]])
-        },
-        {
-            caption: p => <span>Form with select page</span>,
-            routeExpression: "/form/with/select",
-            render: p => <FormPage />
-        },
-        {
-            caption: p => <span style={{color : "red"}}>Select string</span>,
-            routeExpression: "/select/page/",
-            containerFactory: new SelectPageContainerFactory(),
-            render: p => <SelectPage caption="Default"/>,
-            showInSidebar: false
-        },
-        {
-            caption: p => <EditPageCaption />,
-            routeExpression: "edit/page/",
-            render: p => <EditPage />
-        },
-        {
-            caption: "Form Demo",
-            routeExpression: "form/demo/",
-            containerFactory: new FormDemoPageContainerFactory(),
-            render: p => <FormDemoPage />
-        },
-        {
-            caption: "Endless sequence",
-            routeExpression: "/endlessSequence/{sequenceNumber}/",
-            render: p => <EndlessSequencePage />,
-            showInSidebar: new Map([["sequenceNumber", "1"]])
-        },
-        {
-            caption: "Bound page",
-            routeExpression: "/boundPage",
-            containerFactory: new BoundPageContainerFactory(),
-            render: p => <BoundPageBound storeRegistrationKey="IBoundPageStore" />
-        },
-        {
-            caption: "Internationalization",
-            routeExpression: "/internationalization",
-            render: p => <MultiLanguagePage />
-        }
+        intraRoutingPageSiteMapNode,
+        formPageSiteMapNode,
+        selectPageSiteMapNode,
+        editPageSiteMapNode,
+        formDemoPageSiteMapNode,
+        endlessSequencePageSiteMapNode,
+        boundPageSiteMapNode,
+        internationalizationPageSiteMapNode
     ]
 };
 
