@@ -13,7 +13,6 @@ import { configureRouterStore, RouterMode, RouterStore, routerStore } from "./Ro
 import { ISiteMapNode } from "./SiteMap/ISiteMapNode";
 import { computeSiteMapRoutesAndSetAbsoluteRouteExpressions, forEachSiteMapNode, SiteMapStore } from "./SiteMap/SiteMapStore";
 
-export * from "./ConditionalRouteComponent";
 export * from "./Components";
 export * from "./DependencyInjection";
 export * from "./PageCommunication";
@@ -26,7 +25,6 @@ export * from "./Page";
 export * from "./PageContext";
 export * from "./PageManagementStore";
 export * from "./PageStore";
-export * from "./RouterLink";
 export * from "./Routing";
 export * from "./SiteMap";
 

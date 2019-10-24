@@ -5,7 +5,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { StoreSubscription } from "rfluxx";
 
-import { RouterLink } from "../RouterLink";
+import { RouterLink } from "./RouterLink";
 import { getSiteMapNodeCaption, getSiteMapNodeSideBarUrl, ISiteMapNode } from "../SiteMap/ISiteMapNode";
 import { ISiteMapStore, ISiteMapStoreState } from "../SiteMap/SiteMapStore";
 import { IPageContextProps } from "../PageContext";

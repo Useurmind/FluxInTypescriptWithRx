@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { RouterMode, routerStore } from "./Routing/RouterStore";
+import { RouterMode, routerStore } from "../Routing/RouterStore";
 
 /**
  * Props for { @see RouterLink }.

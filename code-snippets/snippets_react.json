@@ -200,7 +200,7 @@
       "/**",
       " * Implementation of $1.",
       " */",
-      "const $1Impl = React.FunctionComponent<I$1Props> = props => {",
+      "const $1Impl: React.FunctionComponent<I$1Props> = props => {",
       "    const [ storeState, store ] = useStoreStateFromContainer<I$3Store, I$3StoreState>(props);",
       "    const $4 = useCallback(() => store.$4.trigger(1), [ store ]);",
       "",

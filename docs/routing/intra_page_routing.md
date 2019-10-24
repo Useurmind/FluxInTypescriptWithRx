@@ -13,10 +13,10 @@ public render(): any
 {
     return <div>
         Some stuff is always there.
-        <ConditionalRouteComponent condition={params => params.getAsBool("showdeeproute") === true }>
+        <ConditionalRoute condition={params => params.getAsBool("showdeeproute") === true }>
             Show this only when the condition is true.
             Which means only show this when the route parameter `showdeeproute` is true.
-        <ConditionalRouteComponent>
+        <ConditionalRoute>
     </div>;
 }
 ```

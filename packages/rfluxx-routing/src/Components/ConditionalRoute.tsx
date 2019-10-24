@@ -2,16 +2,16 @@ import * as React from "react";
 import { StoreSubscription } from "rfluxx";
 import { Subscription } from "rxjs/Subscription";
 
-import { IPageMasterProps, Page } from "./Page";
-import { IPageContextProps, PageContext } from "./PageContext";
-import { IPageManagementStore, IPageManagementStoreState } from "./PageManagementStore";
-import { IPageData } from "./Pages/IPageData";
-import { RouteParameters } from "./Routing/RouteParameters";
+import { IPageMasterProps, Page } from "../Page";
+import { IPageContextProps, PageContext } from "../PageContext";
+import { IPageManagementStore, IPageManagementStoreState } from "../PageManagementStore";
+import { IPageData } from "../Pages/IPageData";
+import { RouteParameters } from "../Routing/RouteParameters";
 
 /**
- * Props for { @see ConditionalRouteComponent }.
+ * Props for { @see ConditionalRoute }.
  */
-export interface IConditionalRouteComponentProps extends IPageContextProps
+export interface IConditionalRouteProps extends IPageContextProps
 {
     /**
      * Condition under which the route is shown.
@@ -32,19 +32,19 @@ export interface IConditionalRouteComponentProps extends IPageContextProps
 }
 
 /**
- * State for { @see ConditionalRouteComponent }.
+ * State for { @see ConditionalRoute }.
  */
-export interface IConditionalRouteComponentState
+export interface IConditionalRouteState
 {
 }
 
 /**
- * The ConditionalRouteComponent renders its children only when the condition is true.
+ * The ConditionalRoute renders its children only when the condition is true.
  */
-export class ConditionalRouteComponent
-    extends React.Component<IConditionalRouteComponentProps, IConditionalRouteComponentState>
+export class ConditionalRoute
+    extends React.Component<IConditionalRouteProps, IConditionalRouteState>
 {
-    constructor(props: IConditionalRouteComponentProps)
+    constructor(props: IConditionalRouteProps)
     {
         super(props);
 
@@ -64,7 +64,7 @@ export class ConditionalRouteComponent
 
         if (!this.props.parameterValue || !this.props.parameterName)
         {
-            throw new Error("Either parameter value or name must be set for ConditionalRouteComponent " +
+            throw new Error("Either parameter value or name must be set for ConditionalRoute " +
             "when no condition is given");
         }
 
