@@ -1,5 +1,5 @@
 import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
-import { IGlobalComponents, ISiteMapNodeContainerBuilder, RouteParameters, SiteMapNodeContainerFactoryBase } from "rfluxx-routing";
+import { ISiteMapNodeContainerBuilder, SiteMapNodeContainerFactoryBase } from "rfluxx-routing";
 
 import { BoundPageStore } from "./BoundPageStore";
 

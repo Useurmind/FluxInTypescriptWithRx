@@ -69,6 +69,25 @@
 		],
 		"description": "A full rfluxx store including state, options etc."
   },
+  "Rfluxx Site Map Node Container Factory": {
+    "prefix": "rfluxx_smn_containerfactory",
+    "body": [
+      "import { IContainer, IContainerBuilder, registerStore, resolveStore } from \"rfluxx\";",
+      "import { ISiteMapNodeContainerBuilder, SiteMapNodeContainerFactoryBase } from \"rfluxx-routing\";",
+      "",
+      "import { $1Store } from \"./$1Store\";",
+      "",
+      "export class ContainerFactory extends SiteMapNodeContainerFactoryBase",
+      "{",
+      "    protected registerStores(builder: ISiteMapNodeContainerBuilder): void",
+      "    {",
+      "        registerStore(builder, \"I$1Store\", (c, injOpt) => new $1Store(injOpt({",
+      "        })));",
+      "    }",
+      "}"        
+    ],
+    "description": "A template for a container factory of a page/sitemap node"
+  },
   "Rfluxx Default Language": {
 		"prefix": "rfluxx_i18n_deflang",
 		"body": [
