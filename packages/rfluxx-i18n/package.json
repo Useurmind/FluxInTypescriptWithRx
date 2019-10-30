@@ -26,21 +26,21 @@
   "author": "Jochen Grün <jochen.gruen@googlemail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "react": "~16.8.4",
-    "react-dom": "~16.8.4",
-    "rxjs": "~5.5.7"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "rxjs": "^5.5.7"
   },
   "dependencies": {
     "rfluxx": "^4.0.0",
     "rfluxx-react": "^4.0.0",
     "rfluxx-routing": "^4.0.0",
-    "tslib": "~1.9.0"
+    "tslib": "^1.9.0"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.7",
     "@types/jasmine": "^2.8.6",
-    "@types/react": "~16.8.8",
-    "@types/react-dom": "~16.8.2",
+    "@types/react": "^16.8.8",
+    "@types/react-dom": "^16.8.2",
     "clean-webpack-plugin": "^0.1.18",
     "html-webpack-plugin": "^3.0.6",
     "jasmine": "^3.1.0",
@@ -51,9 +51,9 @@
     "karma-spec-reporter": "^0.0.32",
     "karma-trx-reporter": "^0.2.9",
     "karma-webpack": "^3.0.0",
-    "react": "~16.8.4",
-    "react-dom": "~16.8.4",
-    "rxjs": "~5.5.7",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "rxjs": "^5.5.7",
     "style-loader": "~0.23.1",
     "ts-loader": "^4.1.0",
     "tslint": "^5.11.0",

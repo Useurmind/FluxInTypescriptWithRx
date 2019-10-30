@@ -1,4 +1,4 @@
 $ErrorActionPreference = "Stop"
 
-lerna bootstrap --hoist
+lerna bootstrap --hoist --nohoist=@types*
 

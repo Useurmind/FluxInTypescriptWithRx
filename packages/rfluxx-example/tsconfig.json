@@ -1,10 +1,31 @@
 {
     "extends": "../../common/tsconfig.common.json",
     "compilerOptions": {
-        "outDir": "out"
+        "outDir": "out",
+        "composite": true
     },
     "exclude": [
         "out",
         "node_modules"
+    ],
+    "references": [
+        {
+            "path": "../rfluxx"
+        },
+        {
+            "path": "../rfluxx-react"
+        },
+        {
+            "path": "../rfluxx-routing"
+        },
+        {
+            "path": "../rfluxx-mui-theming"
+        },
+        {
+            "path": "../rfluxx-forms"
+        },
+        {
+            "path": "../rfluxx-i18n"
+        }
     ]
 }

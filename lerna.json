@@ -4,11 +4,11 @@
   "packages": [
     "packages/generator-rfluxx",
     "packages/rfluxx",
-    "packages/rfluxx-example",
+    "packages/rfluxx-react",
     "packages/rfluxx-forms",
     "packages/rfluxx-i18n",
     "packages/rfluxx-mui-theming",
-    "packages/rfluxx-react",
-    "packages/rfluxx-routing"
+    "packages/rfluxx-routing",
+    "packages/rfluxx-example"
   ]
 }

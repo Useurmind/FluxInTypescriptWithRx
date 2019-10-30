@@ -8,6 +8,6 @@
         "importHelpers": true,
         "jsx": "react",
         "declaration": true,
-        "skipLibCheck": true,
+        "skipLibCheck": true
     }
 }
