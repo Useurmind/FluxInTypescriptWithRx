@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackRootPlugin = require('html-webpack-root-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const appName = "<%= name %>";
 const appTitle = "<%= title %>";
@@ -29,11 +30,21 @@ module.exports = (params) => ({
             { 
                 test: /\.tsx?$/, 
                 loader: "ts-loader",
-                exclude: /node_modules/
+                exclude: /node_modules/,
+                options: {
+                    transpileOnly: true,
+                    experimentalWatchApi: true
+                }
             }
         ]
     },
     plugins: [
+        // checks typescript code for errors asynchronously
+        new ForkTsCheckerWebpackPlugin({
+            useTypescriptIncrementalApi: true
+            // tslint: true
+            // eslint: true
+        }),
         // clean files in webpack_dist before doing anything
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
@@ -51,12 +62,18 @@ module.exports = (params) => ({
         hot: true,
         historyApiFallback: true
     },
+    watchOptions: {
+        // only compile after no changes are detected for a certain amount of time
+        aggregateTimeout: 600,
+        ignored: /node_modules/
+    },
     devtool: 'inline-source-map',
     mode: "development",
     output: {
         libraryTarget: "umd",
         filename: appName + '.[name].bundle.js',
         path: __dirname + 'dist',
+        pathinfo: false,
         publicPath: "/"
     }
 });

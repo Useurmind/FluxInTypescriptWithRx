@@ -1,0 +1,35 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "build",
+            "isBackground": false,
+            // problem matchers from extension https://marketplace.visualstudio.com/items?itemName=eamodio.tsl-problem-matcher
+            "problemMatcher": ["$ts-webpack", "$tslint-webpack", "$ts-checker-webpack"]
+        },
+        {
+            "type": "npm",
+            "script": "build_production",
+            "isBackground": false,
+            // problem matchers from extension https://marketplace.visualstudio.com/items?itemName=eamodio.tsl-problem-matcher
+            "problemMatcher": ["$ts-webpack", "$tslint-webpack", "$ts-checker-webpack"]
+        },
+        {
+            "type": "npm",
+            "script": "start",
+            "isBackground": true,
+            // problem matchers from extension https://marketplace.visualstudio.com/items?itemName=eamodio.tsl-problem-matcher
+            "problemMatcher": ["$ts-webpack-watch", "$tslint-webpack-watch", "$ts-checker-webpack-watch"]
+        },
+        {
+            "type": "npm",
+            "script": "start_production",
+            "isBackground": true,
+            // problem matchers from extension https://marketplace.visualstudio.com/items?itemName=eamodio.tsl-problem-matcher
+            "problemMatcher": ["$ts-webpack-watch", "$tslint-webpack-watch", "$ts-checker-webpack-watch"]
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StoreSubscription } from "rfluxx";
-import { IPageContextProps, PageContext, ConditionalRouteComponent } from "rfluxx-routing";
+import { IPageContextProps, PageContext, ConditionalRoute } from "rfluxx-routing";
 import { RouterLink } from "rfluxx-routing";
 
 export interface IIntraRoutingPageProps extends IPageContextProps
@@ -39,12 +39,12 @@ export class IntraRoutingPage extends React.Component<IIntraRoutingPageProps, II
                 <RouterLink caption="Show all stuff" path={`/intraPageRouting?moreStuff=true&moreDifferentStuff=true`} />
             </div>
 
-            <ConditionalRouteComponent parameterName="moreStuff" parameterValue="true">
+            <ConditionalRoute parameterName="moreStuff" parameterValue="true">
                 <p>This is some <b>MORE</b> stuff only shown when moreStuff is set to true</p>
-            </ConditionalRouteComponent>
-            <ConditionalRouteComponent condition={p => p.getAsBool("moreDifferentStuff") === true}>
+            </ConditionalRoute>
+            <ConditionalRoute condition={p => p.getAsBool("moreDifferentStuff") === true}>
                 <p>This is some more <b>DIFFERENT</b> stuff only shown when moreDifferentStuff is set to true</p>
-            </ConditionalRouteComponent>
+            </ConditionalRoute>
         </div>;
     }
 }

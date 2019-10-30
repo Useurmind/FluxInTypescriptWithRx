@@ -8,7 +8,7 @@
         "target": "es2017",
         "importHelpers": true,
         "jsx": "react",
-        "declaration": true,
+        "declaration": false,  // no declaration files required because its an app
         "skipLibCheck": true
     },
     "exclude": [
