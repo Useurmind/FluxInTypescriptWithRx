@@ -1,14 +1,14 @@
 {
-  "version": "4.0.1",
+  "version": "4.0.2",
   "npmClient": "npm",
   "packages": [
     "packages/generator-rfluxx",
     "packages/rfluxx",
-    "packages/rfluxx-react",
+    "packages/rfluxx-example",
     "packages/rfluxx-forms",
     "packages/rfluxx-i18n",
     "packages/rfluxx-mui-theming",
-    "packages/rfluxx-routing",
-    "packages/rfluxx-example"
+    "packages/rfluxx-react",
+    "packages/rfluxx-routing"
   ]
 }
