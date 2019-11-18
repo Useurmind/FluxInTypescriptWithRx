@@ -1,5 +1,12 @@
 var webpack = require("webpack");
 
+// reuse webpack config
+var webpackConfig = require("./webpack.debug");
+
+// karma determines entry and output itself
+webpackConfig.entry = undefined;
+webpackConfig.output = undefined;
+
 module.exports = function(config) {
   // set more stuff if necessary
   config.set({
@@ -34,37 +41,8 @@ module.exports = function(config) {
       'spec/**/*Spec.ts': [ 'webpack' ]
     },
 
-    webpack: {
-      // karma watches the test entry points
-      // (you don't need to specify the entry option)
-      // webpack watches dependencies
-
-      // webpack configuration
-      node: {
-        fs: 'empty'
-      },
-      mode: "development",
-      module: {
-        rules: [
-          {
-            test: /\.tsx?$/,
-            use: 'ts-loader',
-            exclude: /node_modules/
-          }
-        ]
-      },
-      plugins: [
-        // existing plugins go here
-        new webpack.SourceMapDevToolPlugin({
-          filename: null, // if no value is provided the sourcemap is inlined
-          test: /\.(ts|js)($|\?)/i // process .js and .ts files only
-        })
-      ],
-      resolve: {
-        extensions: [ '.tsx', '.ts', '.js' ]
-      },
-      devtool: 'inline-source-map',
-    },
+    // reuse webpack config
+    webpack: webpackConfig,
 
     // test results reporter to use
     // possible values: 'dots', 'progress'

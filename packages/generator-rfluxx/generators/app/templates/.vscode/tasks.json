@@ -30,6 +30,20 @@
             "isBackground": true,
             // problem matchers from extension https://marketplace.visualstudio.com/items?itemName=eamodio.tsl-problem-matcher
             "problemMatcher": ["$ts-webpack-watch", "$tslint-webpack-watch", "$ts-checker-webpack-watch"]
+        },
+        {
+            "type": "npm",
+            "script": "testonce",
+            "isBackground": false,
+            // problem matchers from extension https://marketplace.visualstudio.com/items?itemName=eamodio.tsl-problem-matcher
+            "problemMatcher": ["$ts-webpack", "$tslint-webpack", "$ts-checker-webpack"]
+        },
+        {
+            "type": "npm",
+            "script": "test",
+            "isBackground": true,
+            // problem matchers from extension https://marketplace.visualstudio.com/items?itemName=eamodio.tsl-problem-matcher
+            "problemMatcher": ["$ts-webpack-watch", "$tslint-webpack-watch", "$ts-checker-webpack-watch"]
         }
     ]
 }
