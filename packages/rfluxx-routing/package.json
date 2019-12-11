@@ -1,6 +1,6 @@
 {
 	"name": "rfluxx-routing",
-	"version": "4.0.2",
+	"version": "4.1.0",
 	"description": "Routing package for rfluxx.",
 	"repository": {
 		"type": "git",
@@ -32,8 +32,8 @@
 	},
 	"dependencies": {
 		"classnames": "^2.2.6",
-		"rfluxx": "^4.0.2",
-		"rfluxx-react": "^4.0.2",
+		"rfluxx": "^4.1.0",
+		"rfluxx-react": "^4.1.0",
 		"tslib": "^1.9.0",
 		"utility-types": "^3.7.0"
 	},
