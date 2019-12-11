@@ -6,6 +6,7 @@ export * from "./Store";
 export * from "./StoreSubscription";
 export * from "./IResetMyState";
 export * from "./Initialization";
+export * from "./FunctionalStores";
 
 export * from "./ActionFactory";
 export * from "./Middleware";

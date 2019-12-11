@@ -8,6 +8,7 @@ nav:
   - RFluXX-Core: 
     - Home: core/index.md
     - Stores: core/stores.md
+    - Functional Stores: core/functional_stores.md
     - Actions: core/actions.md
     - Container: core/container.md
     - Stores & Infrastructure: core/injecting_infrastructure_into_stores.md

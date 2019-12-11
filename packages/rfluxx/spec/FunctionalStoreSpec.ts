@@ -1,53 +1,65 @@
 
 import { BehaviorSubject, Observable } from "rxjs";
-import { IObservableFetcher, Store, IAction } from "../src";
+import { IObservableFetcher, Store, IAction, IStore, IActionFactory } from "../src";
 import { Action } from "../src/Action";
 import { FakeFetcher } from "../src/Fetch/FakeFetcher";
-import { handleAction, reduceAction, createReducer } from '../src/StoreHooks';
+import { handleAction, handleActionVoid } from "../src/FunctionalStores/StoreActions";
+import { reduceAction } from "../src/FunctionalStores/Reducer";
+import { useStoreState, StoreStateSubject } from "../src/FunctionalStores/StoreState";
+import { useStore } from "../src/FunctionalStores/StoreCore";
+
+export interface ISimpleFunctionalStoreState {
+    someState: string
+}
+
+const simpleFunctionalStore = (someOption: string) => {
+    const initialState = { someState: someOption };
+    const [state, setState, store] = useStore<ISimpleFunctionalStoreState>(initialState);
+
+    return {
+        ...store,
+        setSomeState: reduceAction(state, (s, someState: string) => ({ ...s, someState }))
+    }
+}
+
+const store: IStore<ISimpleFunctionalStoreState> = simpleFunctionalStore("asd")
 
 interface ITestStoreState
 {
     someString: string;
 }
 
-interface ITestStore
-{
-    changeSomeString: IAction<string>;
+interface IComplexActionEvent {
+    someString: string;
+    someNumber: number;
 }
 
-export type IStoreStateResult<TState> = [TState, (s: TState) => void];
-
-export function useStoreState<TState>(initialState: TState): [BehaviorSubject<TState>, (s: TState) => void]
+interface ITestStore extends IStore<ITestStoreState>
 {
-    const subject = new BehaviorSubject<TState>(initialState);
+    changeSomeString(someString: string);
 
-    return [
-        subject,
-        (state: TState) =>
-        {
-            if (state)
-            {
-                subject.next(state);
-            }
-        }
-    ];
+    setStateNull();
+
+    setStateToItself();
+
+    fetchSomeStuff(afterFetch: () => void);
+
+    handleComplexAction(params: IComplexActionEvent);
 }
 
-const functionalTestStore = (initialString: string, fetcher?: IObservableFetcher) =>
+const functionalTestStore = (initialString: string, fetcher?: IObservableFetcher, actionFactory?: IActionFactory): ITestStore =>
 {
-    const [state, setState] = useStoreState({ someString: initialString });
+    const initialState = { someString: initialString };
+    const [state, setState, store] = useStore<ITestStoreState>(initialState);
 
-    const setSomeString = createReducer(state)<string>((s, evt) => ({
-        ...s,
-        someString: evt
-    }));
+    const setSomeString = (s: ITestStoreState, someString: string) => ({ ...s, someString })
 
     return {
-        subscribe: x => state.subscribe(x),
-        changeSomeString: reduceAction(state)(setSomeString),
-        setStateNull: handleAction<void>(() => setState(null)),
-        setStateToItself: handleAction<void>(() => setState(state.value)),
-        fetchSomeStuff: handleAction<() => void>(afterFetch =>
+        ...store,
+        changeSomeString: reduceAction(state, setSomeString),
+        setStateNull: handleActionVoid(() => setState(null)),
+        setStateToItself: handleActionVoid(() => setState(state.value)),
+        fetchSomeStuff: handleAction(afterFetch =>
         {
             fetcher.fetch("http://someurl.com")
                     .subscribe(response =>
@@ -61,6 +73,15 @@ const functionalTestStore = (initialString: string, fetcher?: IObservableFetcher
                             afterFetch();
                         });
                     });
+        }),
+        handleComplexAction: handleAction({
+            handleAction: action => action.subscribe(e => {
+                // .. do stuff
+            }),
+            actionMetadata: {
+                name: "complex action"
+            },
+            actionFactory
         })
     };
 };
