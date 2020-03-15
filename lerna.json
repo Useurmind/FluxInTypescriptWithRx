@@ -4,6 +4,7 @@
   "packages": [
     "packages/generator-rfluxx",
     "packages/rfluxx",
+    "packages/rfluxx-debug",
     "packages/rfluxx-example",
     "packages/rfluxx-forms",
     "packages/rfluxx-i18n",

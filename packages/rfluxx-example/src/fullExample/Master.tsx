@@ -8,6 +8,7 @@ import { withPageContext } from "rfluxx-routing";
 import { IPageManagementStore } from "rfluxx-routing";
 import { RouterLink } from "rfluxx-routing";
 import { ISiteMapNode, ISiteMapStore } from "rfluxx-routing";
+import { DebugWindow } from "rfluxx-debug";
 
 export interface IMasterProps extends IPageMasterProps
 {
@@ -48,6 +49,7 @@ export class Master extends React.Component<IMasterProps, IMasterState>
                     {withPageContext(<OpenPageList />)}
                 </div>
             </div>
+            {withPageContext(<DebugWindow storeRegistrationKey="IDebugWindowStore" />)}
         </div>;
     }
 }

@@ -1,0 +1,22 @@
+{
+    "extends": "../../common/tsconfig.common.json",
+    "compilerOptions": {
+        "outDir": "out",
+        "composite": true
+    },
+    "exclude": [
+        "out",
+        "node_modules"
+    ],
+    "references": [
+        {
+            "path": "../rfluxx"
+        },
+        {
+            "path": "../rfluxx-react"
+        },
+        {
+            "path": "../rfluxx-routing"
+        }
+    ]
+}
