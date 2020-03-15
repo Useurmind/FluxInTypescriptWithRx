@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); 
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -35,9 +35,9 @@ module.exports = {
     },
     plugins: [
         // clean files in webpack_dist before doing anything
-        new CleanWebpackPlugin([
-            'dist'
-        ])
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: ["dist"]
+        })
     ],
     plugins: [
         // we provide es5 and es6 shim as plugins via webpack

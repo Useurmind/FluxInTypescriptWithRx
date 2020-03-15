@@ -1,5 +1,6 @@
-import { Observable } from "rxjs/Observable";
-import { fromPromise } from "rxjs/observable/fromPromise";
+import { empty } from "rxjs";
+import { Observable } from "rxjs-compat/Observable";
+import { fromPromise } from "rxjs-compat/observable/fromPromise";
 
 import { INeedToKnowAboutReplay, NeedToKnowAboutReplayMixin } from "../Middleware/ActionEventLog/INeedToKnowAboutReplay";
 import { applyMixins } from "../Utility/Mixin";
@@ -35,7 +36,7 @@ export class ObservableFetcher implements IObservableFetcher,  INeedToKnowAboutR
     {
         if (this.isReplaying)
         {
-            return Observable.empty();
+            return empty();
         }
 
         return fromPromise(fetch(requestInfo, init));

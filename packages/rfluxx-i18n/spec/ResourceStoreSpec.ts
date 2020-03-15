@@ -55,7 +55,7 @@ describe("ResourceStore", () =>
 
         resourceStore.setLanguage.trigger("2")
 
-        currentStoreState(resourceStore).pipe(delay(10)).subscribe(s => {
+        currentStoreState(resourceStore).pipe(delay(100)).subscribe(s => {
             expect(s.activeLanguage.key).toBe("2");
             expect(s.activeResources.text1).toBe(resources2.text1);
         });
@@ -66,7 +66,7 @@ describe("ResourceStore", () =>
         const routerStore = getDefaultRouterStore()
         const resourceStore = getResourceStore(routerStore);
 
-        currentStoreState(routerStore).pipe(delay(10)).subscribe(s => {
+        currentStoreState(routerStore).pipe(delay(100)).subscribe(s => {
             expect(s.currentHit.parameters.get("lang")).toBe("1");
         });
     })
@@ -78,7 +78,7 @@ describe("ResourceStore", () =>
 
         resourceStore.setLanguage.trigger("2")
 
-        currentStoreState(routerStore).pipe(delay(10)).subscribe(s => {
+        currentStoreState(routerStore).pipe(delay(100)).subscribe(s => {
             expect(s.currentHit.parameters.get("lang")).toBe("2");
         });
     })
@@ -90,7 +90,7 @@ describe("ResourceStore", () =>
 
         routerStore.navigateToPath.trigger("/my/route/1");
 
-        currentStoreState(routerStore).pipe(delay(10)).subscribe(s => {
+        currentStoreState(routerStore).pipe(delay(100)).subscribe(s => {
             expect(s.currentHit.parameters.get("lang")).toBe("1");
         });
     })

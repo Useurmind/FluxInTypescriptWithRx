@@ -1,4 +1,4 @@
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { BehaviorSubject } from "rxjs-compat/BehaviorSubject";
 
 /**
  * Simple type declaration for a subject used as store state container.

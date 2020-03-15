@@ -1,4 +1,5 @@
-import { Observable, Observer } from "rxjs";
+import { Observable, Observer } from "rxjs-compat";
+import { of } from "rxjs";
 
 import { IFetchResult, SaveError, SimpleError } from "../stores/ErrorHandling";
 
@@ -67,20 +68,20 @@ export class InMemoryFormStorage<TData> implements IFormStorage<TData>
             const foundDataObject = this.dataObjects.get(id);
             if (foundDataObject)
             {
-                return Observable.of({
+                return of({
                     data: { ...foundDataObject }
                 });
             }
             else
             {
-                return Observable.of({
+                return of({
                     error: `Could not find data object with id ${id}`
                 });
             }
         }
         else
         {
-            return Observable.of({
+            return of({
                 data: { ...this.options.getEmptyDataObject() }
             });
         }
@@ -104,7 +105,7 @@ export class InMemoryFormStorage<TData> implements IFormStorage<TData>
         {
             if (!this.dataObjects.has(id))
             {
-                return Observable.of({
+                return of({
                     error: `Could not update object with id ${id} because it does not exist yet`
                 });
             }
@@ -112,7 +113,7 @@ export class InMemoryFormStorage<TData> implements IFormStorage<TData>
 
         this.dataObjects.set(id, dataCopy);
         // return the same data object
-        return Observable.of({
+        return of({
             data: { ...dataCopy }
         });
     }

@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable } from "rxjs-compat/Observable";
 
 /**
  * Interface for implementations of an observable fetcher.

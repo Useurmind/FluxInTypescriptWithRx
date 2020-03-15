@@ -1,6 +1,6 @@
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
-import { Subscription } from "rxjs/Subscription";
+import { Observable } from "rxjs-compat/Observable";
+import { Subject } from "rxjs-compat/Subject";
+import { Subscription } from "rxjs-compat/Subscription";
 
 import { IAction } from "./IAction";
 import { IObservableAction } from "./IObservableAction";

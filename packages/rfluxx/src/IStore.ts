@@ -1,5 +1,5 @@
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
+import { Observable } from "rxjs-compat/Observable";
+import { Subscription } from "rxjs-compat/Subscription";
 
 import { IResetMyState } from "./IResetMyState";
 

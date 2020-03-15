@@ -1,5 +1,6 @@
 
-import { Observable } from "rxjs";
+import { Observable } from "rxjs-compat/Observable";
+import { of } from "rxjs"
 
 import { IObservableFetcher } from "./IObservableFetcher";
 
@@ -50,6 +51,6 @@ export class FakeFetcher implements IObservableFetcher
                             ? this.options.fixedResponse
                             : this.options.createResponse(requestInfo, init);
 
-        return Observable.of(response);
+        return of(response);
     }
 }
