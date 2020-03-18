@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { IUseStoreFromContainerContextProps, useStoreStateFromContainerContext } from "rfluxx-react";
 
 import { IDebugWindowStore, IDebugWindowStoreState, DebugWindowTabs } from "./DebugWindowStore";
+import { RouteHitTable } from './RouteHitTable';
 
 const styles = (theme: Theme) => createStyles({
     root: {
@@ -48,7 +49,7 @@ const DebugWindowContentImpl: React.FunctionComponent<IDebugWindowContentProps> 
             <Tab label="Other" />
         </Tabs>
         <TabPanel selectedTab={storeState.activeTab} showTab={DebugWindowTabs.RouteHits}>
-            Route Hits
+            <RouteHitTable />
         </TabPanel>
         <TabPanel selectedTab={storeState.activeTab} showTab={DebugWindowTabs.Other}>
             Other

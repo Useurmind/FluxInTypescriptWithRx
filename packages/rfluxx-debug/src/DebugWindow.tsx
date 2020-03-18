@@ -1,4 +1,4 @@
-import { createStyles, Modal, Paper, Theme, WithStyles, IconButton, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@material-ui/core";
+import { createStyles, Modal, Paper, Theme, WithStyles, IconButton, Button, Dialog, DialogTitle, DialogContent, DialogActions, Switch, FormControlLabel } from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import { useCallback } from "react";
@@ -12,9 +12,23 @@ import { DebugWindowContent } from './DebugWindowContent';
 export const styles = (theme: Theme) => createStyles({
     root: {
     },
+    dialog: {
+    },
+    paper: {        
+        width: "90%",
+        height: "90%"
+    },
     button: {
     }
 });
+
+// function PaperComponent(props) {
+//     return (
+//       <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+//         <Paper {...props} />
+//       </Draggable>
+//     );
+//   }
 
 /**
  * Props for { @DebugWindow }
@@ -32,6 +46,8 @@ const DebugWindowImpl: React.FunctionComponent<IDebugWindowProps> = props => {
 
     const [ storeState, store ] = useStoreStateFromContainerContext<IDebugWindowStore, IDebugWindowStoreState>(props);
     const toggleOpen = useCallback(() => store.toggleOpen(), [ store ]);
+    const clear = useCallback(() => store.clear(), [ store ]);
+    const toggleRecording = useCallback(() => store.toggleRecording(), [ store ]);
 
     if (!storeState)
     {
@@ -44,14 +60,27 @@ const DebugWindowImpl: React.FunctionComponent<IDebugWindowProps> = props => {
         <Button className={classes.button}
                     onClick={toggleOpen}>{buttonText}</Button>
         <Dialog open={storeState.isOpen}
-                onClose={toggleOpen}>
+                onClose={toggleOpen}
+                fullWidth
+                maxWidth="lg"
+                className={classes.dialog}
+                >
             <DialogTitle>RFluXX Debug Window</DialogTitle>
             <DialogContent>
                 <DebugWindowContent storeRegistrationKey={props.storeRegistrationKey}></DebugWindowContent>
             </DialogContent>
             <DialogActions>
+                
+                <FormControlLabel control={
+                                    <Switch checked={storeState.isRecording}
+                                            onChange={toggleRecording}></Switch>
+                                    } label="Record?" />
+                
                 <Button className={classes.button}
-                        onClick={toggleOpen}>Hide</Button>
+                        onClick={clear}>Clear</Button>
+                <Button className={classes.button}
+                        onClick={toggleOpen}
+                        variant="contained">Hide</Button>
             </DialogActions>
         </Dialog>
     </div>;

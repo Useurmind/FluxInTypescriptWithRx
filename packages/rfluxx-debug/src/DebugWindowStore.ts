@@ -1,4 +1,5 @@
 import { handleAction, handleActionVoid, IInjectedStoreOptions, IStore, reduceAction, useStore } from "rfluxx";
+import { IRouteHitStore } from './RouteHitStore';
 
 export enum DebugWindowTabs {
     RouteHits,
@@ -16,6 +17,11 @@ export interface IDebugWindowStoreState
     isOpen: boolean;
 
     /**
+     * States whether the window records events.
+     */
+    isRecording: boolean;
+
+    /**
      * The currently selected window tab.
      */
     activeTab: DebugWindowTabs;
@@ -27,6 +33,10 @@ export interface IDebugWindowStoreState
 export interface IDebugWindowStoreOptions
     extends IInjectedStoreOptions
 {
+    /**
+     * The store that manages the recorded route hits.
+     */
+    routeHitStore: IRouteHitStore;
 }
 
 /**
@@ -35,9 +45,19 @@ export interface IDebugWindowStoreOptions
 export interface IDebugWindowStore extends IStore<IDebugWindowStoreState>
 {
     /**
+     * Clear all data gathered until now.
+     */
+    clear();
+
+    /**
      * Switch the isOpen flag.
      */
     toggleOpen();
+
+    /**
+     * Switch recording on or off.
+     */
+    toggleRecording();
 
     /**
      * Set the active tab in the debug window.
@@ -52,13 +72,25 @@ export interface IDebugWindowStore extends IStore<IDebugWindowStoreState>
 export const DebugWindowStore = (options: IDebugWindowStoreOptions) => {
     const initialState = {
         isOpen: false,
+        isRecording: false,
         activeTab: DebugWindowTabs.RouteHits
     };
     const [state, setState, store] = useStore<IDebugWindowStoreState>(initialState);
 
     return {
         ...store,
+        clear: () => {
+            options.routeHitStore.clear();
+        },
         toggleOpen: reduceAction(state, (s) => ({ ...s, isOpen: !s.isOpen })),
-        setActiveTab: reduceAction(state, (s, activeTab: DebugWindowTabs) => ({ ...s, activeTab }))
+        setActiveTab: reduceAction(state, (s, activeTab: DebugWindowTabs) => ({ ...s, activeTab })),
+        toggleRecording: () => {
+            setState({
+                ...state.value,
+                isRecording: !state.value.isRecording
+            });
+
+            options.routeHitStore.setRecording(state.value.isRecording);
+        }
     }
 };

@@ -1,6 +1,6 @@
 import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
 import { GlobalContainerFactoryBase, IGlobalComponents, IGlobalContainerBuilder, RouteParameters } from "rfluxx-routing";
-import { DebugWindowStore } from "rfluxx-debug";
+import { registerRfluxxDebug } from "rfluxx-debug";
 
 import { EditPageStore } from "./EditPage/EditPageStore";
 import { EndlessSequencePageStore } from "./EndlessSequence/EndlessSequencePageStore";
@@ -22,13 +22,11 @@ export class ContainerFactory extends GlobalContainerFactoryBase
             pageStore: c.resolve("IPageStore")
         })));
 
-        registerStore(builder, "IDebugWindowStore", (c, injOpt) => DebugWindowStore(injOpt({
-            // pageStore: c.resolve("IPageStore")
-        })));
-
         registerStore(builder, "IEndlessSequencePageStore", (c, injOpt) => new EndlessSequencePageStore(injOpt({
             pageStore: c.resolve("IPageStore"),
             sequenceNumber: c.resolve<RouteParameters>("RouteParameters").getAsInt("sequenceNumber")
         })));
+
+        registerRfluxxDebug(builder);
     }
 }
