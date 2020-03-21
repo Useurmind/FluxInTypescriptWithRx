@@ -1,4 +1,7 @@
 import { IContainer, IContainerBuilder, registerStore, resolveStore } from "rfluxx";
+<% if (includeDebug) { %>
+import { registerRfluxxDebug } from "rfluxx-debug";
+<% } %>
 <% if (includeTheming) { %>
 import { registerThemesGlobally } from "rfluxx-mui-theming";
 <% } %>
@@ -19,6 +22,10 @@ export class GlobalContainerFactory extends GlobalContainerFactoryBase
 
         <% if (includeInternationalization) { %>
         registerResourcesGlobally(builder, languages);
+        <% } %>        
+
+        <% if (includeDebug) { %>
+        registerRfluxxDebug(builder);
         <% } %>
 
         // register your global stores here

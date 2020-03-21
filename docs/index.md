@@ -26,3 +26,4 @@ The framework currently contains the following sub packages:
 | rfluxx-routing | Routing support integrated with the rfluxx library completely based on the store infrastructure. |
 | rfluxx-i18n | Internationalization package for rfluxx. |
 | rfluxx-mui-theming | Integration with material-ui.com theming. |
+| rfluxx-debug | A debug window for the rfluxx library. |

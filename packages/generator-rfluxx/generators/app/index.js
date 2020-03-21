@@ -30,6 +30,11 @@ module.exports = class extends Generator {
                 type    : 'confirm',
                 name    : 'includeTheming',
                 message : 'Do you want to include theming support?',
+            },
+            {
+                type    : 'confirm',
+                name    : 'includeDebug',
+                message : 'Do you want to include the rfluxx debug window?',
             }
         ]);
     }
@@ -94,6 +99,10 @@ module.exports = class extends Generator {
         if(this.answers.includeTheming)
         {
             this.npmInstall("rfluxx-mui-theming", { "save": true });
+        }
+        if(this.answers.includeDebug)
+        {
+            this.npmInstall("rfluxx-debug", { "save": true });
         }
 
         // material-ui
