@@ -35,3 +35,5 @@ nav:
     - Page Dependency Injection: routing/page_aware_dependency_injection.md
   - RFluXX-Internationalization:
     - Home: internationalization/index.md
+  - RFluXX-Debug:
+    - Home: debug/index.md
