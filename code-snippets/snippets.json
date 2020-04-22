@@ -107,7 +107,7 @@
           "/**",
           " * Store that $2.",
           " */",
-          "const $1Store = (options: I$1StoreOptions) => {",
+          "export const $1Store = (options: I$1StoreOptions) => {",
           "    const initialState = {",
           "        someString: \"\"",
           "    };",
