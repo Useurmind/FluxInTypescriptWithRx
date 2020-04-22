@@ -11,6 +11,7 @@ import { IPageEvictionStrategy } from "./Pages/IPageEvictionStrategy";
 import { IPageIdAlgorithm } from "./Pages/IPageIdAlgorithm";
 import { IRouterStore } from "./Routing/RouterStore";
 import { ISiteMapNode, ISiteMapNodeHit, ISiteMapStore } from "./SiteMap";
+import { Subject, BehaviorSubject } from 'rxjs';
 
 /**
  * The options to configure the { @see PageManagementStore }
@@ -324,6 +325,10 @@ export class PageManagementStore
                 siteMapNodeHit.parameters,
                 pendingRequest);
 
+            const routeParametersStream = new BehaviorSubject(siteMapNodeHit.parameters);
+            routeParametersStream.next(siteMapNodeHit.parameters);
+            siteMapNodeContainerBuilder.register(c => routeParametersStream).as("RouteParametersStream");
+
             const pageContainer = pageContainerBuilder.createContainer(siteMapNodeHit.siteMapNode);
 
             initAfterContainerCreation(pageContainer);
@@ -336,12 +341,16 @@ export class PageManagementStore
                 isInEditMode: false,
                 routeParameters: siteMapNodeHit.parameters,
                 pageRequest: pendingRequest,
-                openRequests: new Map()
+                openRequests: new Map(),
+                routeParametersStream
             });
             openPages = Array.from(this.pageMap.values());
         }
 
         const page = this.getPageOrThrow(pageId);
+        if (!hasPageState) {
+            page.routeParametersStream.next(siteMapNodeHit.parameters);
+        }
 
         const evictedPages = this.options
                                  .pageEvictionStrategy

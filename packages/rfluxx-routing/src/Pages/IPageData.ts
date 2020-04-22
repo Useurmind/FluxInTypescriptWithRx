@@ -3,6 +3,7 @@ import * as Rfluxx from "rfluxx";
 import { IPageRequest } from "../PageCommunication";
 import { RouteParameters } from "../Routing/RouterStore";
 import { ISiteMapNode } from "../SiteMap/ISiteMapNode";
+import { Subject } from 'rxjs';
 
 /**
  * A page represents the UI for a single site map node.
@@ -55,4 +56,10 @@ export interface IPageData
      * It can influence how state is evicted.
      */
     openRequests: Map<string, IPageRequest>;
+
+    /**
+     * An RX subject that will be signaled with the most recent router parameters
+     * everytime they change for the page.
+     */
+    routeParametersStream: Subject<RouteParameters>;
 }

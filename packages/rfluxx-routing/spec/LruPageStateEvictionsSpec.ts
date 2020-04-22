@@ -67,7 +67,8 @@ describe("LruPageStateEvictions", () =>
             pageRequest: null,
             url: siteMapNodeHit.url,
             routeParameters: siteMapNodeHit.parameters,
-            container: null
+            container: null,
+            routeParametersStream: null
         });
     }
 

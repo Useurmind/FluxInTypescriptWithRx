@@ -27,6 +27,7 @@ nav:
     - Urls: routing/urls.md
     - Routing: routing/routing.md
     - Route parameters: routing/route_parameters.md
+    - Using Route Parameters: routing/using_route_parameters.md
     - Sitemaps: routing/sitemaps.md
     - State eviction: routing/state_eviction.md
     - Forms of Navigation: routing/navigation_forms.md

@@ -25,6 +25,7 @@ import { siteMapNode as formDemoPageSiteMapNode} from "./FormDemo/SiteMapNode";
 import { siteMapNode as endlessSequencePageSiteMapNode} from "./EndlessSequence/SiteMapNode";
 import { siteMapNode as editPageSiteMapNode} from "./EditPage/SiteMapNode";
 import { siteMapNode as boundPageSiteMapNode} from "./BoundPage/SiteMapNode";
+import { siteMapNode as parametersInStoreSiteMapNode} from "./StoreUsesParameters/SiteMapNode";
 
 // use these variables to insert the corresponding shims through webpack
 declare var es5;
@@ -52,6 +53,7 @@ const siteMap: ISiteMapNode = {
         formDemoPageSiteMapNode,
         endlessSequencePageSiteMapNode,
         boundPageSiteMapNode,
+        parametersInStoreSiteMapNode,
         internationalizationPageSiteMapNode
     ]
 };
