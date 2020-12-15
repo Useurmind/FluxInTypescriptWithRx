@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-mui-theming",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "Material-UI.com theme support for rfluxx.",
   "repository": {
     "type": "git",
@@ -37,9 +37,9 @@
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/styles": "^4.11.2",
-    "rfluxx": "^5.0.0",
-    "rfluxx-react": "^5.0.0",
-    "rfluxx-routing": "^5.1.0",
+    "rfluxx": "^5.2.0",
+    "rfluxx-react": "^5.2.0",
+    "rfluxx-routing": "^5.2.0",
     "tslib": "^2.0.3"
   },
   "devDependencies": {

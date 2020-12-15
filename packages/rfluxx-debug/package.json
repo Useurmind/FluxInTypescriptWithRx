@@ -1,6 +1,6 @@
 {
   "name": "rfluxx-debug",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "Tools for debugging an rfluxx application.",
   "repository": {
     "type": "git",
@@ -35,9 +35,9 @@
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/styles": "^4.11.2",
-    "rfluxx": "^5.0.0",
-    "rfluxx-react": "^5.0.0",
-    "rfluxx-routing": "^5.1.0",
+    "rfluxx": "^5.2.0",
+    "rfluxx-react": "^5.2.0",
+    "rfluxx-routing": "^5.2.0",
     "tslib": "^2.0.3"
   },
   "devDependencies": {
