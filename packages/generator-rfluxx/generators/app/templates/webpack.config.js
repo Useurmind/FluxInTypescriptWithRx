@@ -51,8 +51,7 @@ module.exports = (params) => ({
             title: appTitle
         }),
         new HtmlWebpackRootPlugin(),
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin(),        
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
             PRODUCTION: JSON.stringify(params.isProduction)
         })

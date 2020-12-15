@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin'); 
 const CopyPlugin = require('copy-webpack-plugin');
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 
 module.exports = (env) => {
     const environmentConfig = require("./webpack.config." + Object.keys(env)[0] + ".js")(env);
@@ -50,16 +50,15 @@ module.exports = (env) => {
                 es5: 'es5-shim',
                 es6: 'es6-shim'
             }),
-            new CopyPlugin([
-                {
+            new CopyPlugin({
+                patterns: [{
                     from: "src/fullExample/index.html",
                     to: "index.html"
-                }
-            ]),
+                }]
+            }),
             // new HtmlWebpackPlugin({
             //     title: 'RFluxx Routing Examples'
             // }),    
-            new webpack.NamedModulesPlugin(),
             new webpack.HotModuleReplacementPlugin()
         ],
         devServer: {

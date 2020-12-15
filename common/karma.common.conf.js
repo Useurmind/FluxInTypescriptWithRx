@@ -13,10 +13,16 @@ module.exports = function(webpack, config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
+    plugins: [
+      'karma-chrome-launcher',
+      'karma-webpack',
+      'karma-jasmine',
+      'karma-spec-reporter'
+    ],
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'webpack'],
 
     // add mime type for typescript so chrome will load it
     mime: {
@@ -47,9 +53,9 @@ module.exports = function(webpack, config) {
       // webpack watches dependencies
 
       // webpack configuration
-      node: {
-        fs: 'empty'
-      },
+      // node: {
+      //   fs: 'empty'
+      // },
       mode: "development",
       module: {
         rules: [

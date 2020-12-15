@@ -6,6 +6,7 @@ param(
 
 $packages = @(
     "rfluxx"
+    "rfluxx-debug"
     "rfluxx-react"
     "rfluxx-routing"
     "rfluxx-i18n"
